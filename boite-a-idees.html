@@ -314,6 +314,33 @@
       margin-top: 0.75rem;
       line-height: 1.5;
     }
+
+    /* Honeypot — invisible pour les humains */
+    .form-trap {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      tab-index: -1;
+    }
+
+    /* Cooldown */
+    .form-cooldown {
+      display: none;
+      background: #fff3d6;
+      border: 2px solid var(--color-orange);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      text-align: center;
+      color: var(--color-text);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-top: 1rem;
+    }
+    .form-cooldown strong { color: var(--color-teal); }
   </style>
 </head>
 <body>
@@ -351,12 +378,23 @@
               <p class="form-hint">🔒 Ces coordonnées ne sont jamais affichées publiquement — visibles uniquement par le CA.</p>
             </div>
 
+
+            <!-- Honeypot anti-spam — invisible pour les humains, rempli automatiquement par les bots -->
+            <div class="form-trap" aria-hidden="true">
+              <label for="website">Ne pas remplir ce champ</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
             <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
               <span id="submit-text">Envoyer mon idée 🚀</span>
             </button>
 
             <div class="form-success" id="form-success" role="alert">
               🎉 Merci ! Votre idée a bien été ajoutée au tableau.
+            </div>
+
+            <div class="form-cooldown" id="form-cooldown" role="alert">
+              ⏳ Vous avez déjà soumis <strong id="cooldown-count"></strong> idée(s) aujourd'hui.<br>
+              Revenez dans <strong id="cooldown-remaining"></strong> pour en soumettre une nouvelle !
             </div>
             <div class="form-error" id="form-error" role="alert">
               Une erreur est survenue. Veuillez réessayer.
@@ -442,8 +480,8 @@
     const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // ── GitHub ───────────────────────────────────────────────
-    const GITHUB_OWNER = 'SKOHscripts';
-    const GITHUB_REPO  = 'le-village-cafe-associatif.github.io';
+    const GITHUB_OWNER = 'cafe-levillage';
+    const GITHUB_REPO  = 'site-web';
 
     // ── Fonctions utilitaires ────────────────────────────────
     function escapeHtml(str) {
@@ -564,8 +602,76 @@
       // Écouter le formulaire idées
       const form = document.getElementById('idee-form');
       if (form) {
+        // ── Constantes cooldown ──
+        const COOLDOWN_MAX      = 5;    // Nombre max d'idées par jour
+        const COOLDOWN_MS       = 24 * 60 * 60 * 1000; // 24h en ms
+        const COOLDOWN_KEY      = 'village_idees_log'; // Clé localStorage
+
+        // Lire l'historique des soumissions du navigateur
+        function lireHistorique() {
+          try {
+            const raw = localStorage.getItem(COOLDOWN_KEY);
+            if (!raw) return [];
+            const log = JSON.parse(raw);
+            const now = Date.now();
+            // Ne garder que les soumissions des dernières 24h
+            return log.filter(ts => now - ts < COOLDOWN_MS);
+          } catch { return []; }
+        }
+
+        // Enregistrer une nouvelle soumission
+        function enregistrerSoumission() {
+          const log = lireHistorique();
+          log.push(Date.now());
+          localStorage.setItem(COOLDOWN_KEY, JSON.stringify(log));
+        }
+
+        // Vérifier et afficher l'état du cooldown au chargement
+        function verifierCooldown() {
+          const log   = lireHistorique();
+          const btn   = document.getElementById('submit-btn');
+          const msg   = document.getElementById('form-cooldown');
+          if (!btn || !msg) return;
+
+          if (log.length >= COOLDOWN_MAX) {
+            // Calculer le temps restant avant que la plus ancienne soumission expire
+            const plusAncienne  = Math.min(...log);
+            const expireDs      = plusAncienne + COOLDOWN_MS - Date.now();
+            const heures        = Math.ceil(expireDs / (1000 * 60 * 60));
+
+            btn.disabled = true;
+            msg.style.display = 'block';
+            document.getElementById('cooldown-count').textContent     = log.length;
+            document.getElementById('cooldown-remaining').textContent = `${heures}h`;
+          } else {
+            btn.disabled = false;
+            msg.style.display = 'none';
+          }
+        }
+
+        // Appeler au chargement
+        verifierCooldown();
+
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
+
+          // ── Vérification honeypot ──
+          const honeypot = document.getElementById('website');
+          if (honeypot && honeypot.value.trim() !== '') {
+            // Bot détecté — on simule un succès sans rien envoyer
+            console.log('Honeypot déclenché');
+            document.getElementById('form-success').style.display = 'block';
+            form.reset();
+            return;
+          }
+
+          // ── Vérification cooldown ──
+          const log = lireHistorique();
+          if (log.length >= COOLDOWN_MAX) {
+            verifierCooldown();
+            return;
+          }
+
           const pseudo  = document.getElementById('pseudo').value.trim();
           const idee    = document.getElementById('idee').value.trim();
           const contact = document.getElementById('contact').value.trim();
@@ -573,19 +679,30 @@
           const txtBtn  = document.getElementById('submit-text');
           const success = document.getElementById('form-success');
           const erreur  = document.getElementById('form-error');
+
           if (!pseudo || !idee || !contact) return;
+
           btn.disabled = true;
           txtBtn.textContent = 'Envoi en cours…';
           success.style.display = 'none';
           erreur.style.display  = 'none';
+
           try {
             const { error } = await sbClient
               .from('idees')
               .insert([{ pseudo, idee, contact, visible: true }]);
             if (error) throw error;
+
+            // Enregistrer la soumission dans localStorage
+            enregistrerSoumission();
+
             success.style.display = 'block';
             form.reset();
             await chargerIdees();
+
+            // Revérifier le cooldown après soumission
+            verifierCooldown();
+
           } catch (err) {
             console.error('Erreur soumission:', err);
             erreur.style.display = 'block';
