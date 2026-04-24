@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Boîte à idées du Café Associatif Le Village — soumettez vos idées pour faire évoluer le café.">
+  <title>Boîte à idées — Le Village · Café Associatif Lyon 8e</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    .page-header {
+      background: var(--color-teal);
+      padding: 3rem 0 2.5rem;
+      text-align: center;
+    }
+    .page-header h1 { color: white; margin-bottom: 0.4rem; }
+    .page-header p { font-family: var(--font-script); font-size: 1.2rem; color: rgba(255,255,255,0.85); }
+
+    /* Formulaire */
+    .section-formulaire { padding: 2.5rem 0 2rem; }
+
+    .form-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.75rem;
+    }
+
+    .form-card h2 {
+      margin-bottom: 1.25rem;
+      font-size: 1.2rem;
+    }
+    .form-card h2::after { display: none; }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--color-teal);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--color-teal);
+      box-shadow: 0 0 0 3px rgba(26,138,122,0.12);
+      background: white;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-hint {
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      margin-top: 0.3rem;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 1.05rem;
+      justify-content: center;
+    }
+
+    .form-success {
+      display: none;
+      background: var(--color-teal-light);
+      border: 2px solid var(--color-teal);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      text-align: center;
+      color: var(--color-teal);
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+
+    .form-error {
+      display: none;
+      background: #fef2f2;
+      border: 2px solid #f87171;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      text-align: center;
+      color: #dc2626;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    /* Post-its */
+    .section-postits { padding: 0 0 3rem; }
+
+    .postits-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .postits-count {
+      font-family: var(--font-script);
+      font-size: 1.1rem;
+      color: var(--color-text-light);
+    }
+
+    .postits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 600px) {
+      .postits-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    .postit {
+      background: #fff9c4;
+      border-radius: 4px 16px 16px 4px;
+      padding: 1.1rem 1rem;
+      box-shadow: 3px 4px 12px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.06);
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .postit:nth-child(3n+1) { transform: rotate(-1.2deg); background: #fff9c4; }
+    .postit:nth-child(3n+2) { transform: rotate(0.8deg);  background: #fce4d6; }
+    .postit:nth-child(3n+3) { transform: rotate(-0.5deg); background: #e8f5e9; }
+
+    .postit:hover {
+      transform: rotate(0deg) translateY(-3px) scale(1.02);
+      box-shadow: 4px 8px 20px rgba(0,0,0,0.15);
+      z-index: 1;
+    }
+
+    /* Épingle décorative */
+    .postit::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      background: var(--color-teal);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .postit-pseudo {
+      font-family: var(--font-script);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-teal);
+      margin-bottom: 0.5rem;
+    }
+
+    .postit-texte {
+      font-family: var(--font-script);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #3d3d3d;
+    }
+
+    .postit-date {
+      font-size: 0.72rem;
+      color: #999;
+      margin-top: 0.6rem;
+      text-align: right;
+    }
+
+    /* Bouton supprimer (CA admin) */
+    .postit-delete {
+      display: none;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(220,38,38,0.1);
+      border: none;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #dc2626;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .postit-delete:hover { background: rgba(220,38,38,0.2); }
+
+    /* Quand le mode modération est actif */
+    body.mode-moderation .postit-delete { display: flex; }
+
+    .moderation-banner {
+      display: none;
+      background: #fef3c7;
+      border: 2px solid var(--color-orange);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--color-text);
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    body.mode-moderation .moderation-banner { display: flex; }
+
+    .postits-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--color-text-light);
+      font-family: var(--font-script);
+      font-size: 1.3rem;
+    }
+
+    .postits-loading {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text-light);
+    }
+
+    /* ── Section suggestions site ── */
+    .section-site { padding: 0 0 3rem; }
+
+    .site-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.75rem;
+      border-left: 5px solid var(--color-blue-light);
+    }
+
+    .site-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .site-card-icon { font-size: 2rem; flex-shrink: 0; }
+
+    .site-card h2 {
+      font-size: 1.15rem;
+      color: var(--color-teal);
+      margin: 0;
+    }
+    .site-card h2::after { display: none; }
+
+    .site-card-desc {
+      font-size: 0.92rem;
+      color: var(--color-text-light);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+
+    .site-form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .site-preview {
+      display: none;
+      background: var(--color-bg);
+      border: 1.5px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .site-preview strong { color: var(--color-teal); }
+
+    .site-note {
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Boîte à idées 💡</h1>
+      <p>votre avis compte pour faire vivre le Village</p>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <div class="container">
+
+      <!-- FORMULAIRE -->
+      <section class="section-formulaire fade-up fade-up-1" aria-labelledby="form-title">
+        <div class="form-card">
+          <h2 id="form-title">✏️ Partager une idée</h2>
+          <form id="idee-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="pseudo">Votre prénom ou pseudo *</label>
+              <input class="form-input" type="text" id="pseudo" name="pseudo" placeholder="Marie, Le voisin du 3e…" required maxlength="50" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="idee">Votre idée *</label>
+              <textarea class="form-textarea" id="idee" name="idee" placeholder="Et si on organisait… On pourrait aussi…" required maxlength="500"></textarea>
+              <p class="form-hint">Toutes les idées sont les bienvenues !</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contact">Votre téléphone ou email *</label>
+              <input class="form-input" type="text" id="contact" name="contact" placeholder="Pour que le CA puisse vous recontacter si besoin" required maxlength="100" autocomplete="off">
+              <p class="form-hint">🔒 Ces coordonnées ne sont jamais affichées publiquement — visibles uniquement par le CA.</p>
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
+              <span id="submit-text">Envoyer mon idée 🚀</span>
+            </button>
+
+            <div class="form-success" id="form-success" role="alert">
+              🎉 Merci ! Votre idée a bien été ajoutée au tableau.
+            </div>
+            <div class="form-error" id="form-error" role="alert">
+              Une erreur est survenue. Veuillez réessayer.
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- POST-ITS -->
+      <section class="section-postits fade-up fade-up-2" aria-labelledby="postits-title">
+
+        <div class="moderation-banner" aria-live="polite">
+          <span aria-hidden="true">🛡️</span>
+          <span>Mode modération actif — cliquez sur ✕ pour masquer une idée.</span>
+        </div>
+
+        <div class="postits-header">
+          <h2 id="postits-title" style="margin:0;">Les idées du Village</h2>
+          <span class="postits-count" id="postits-count"></span>
+        </div>
+
+        <div class="postits-grid" id="postits-grid" aria-live="polite">
+          <p class="postits-loading">Chargement des idées…</p>
+        </div>
+
+      </section>
+
+      <!-- SUGGESTIONS SITE WEB -->
+      <section class="section-site fade-up fade-up-3" aria-labelledby="site-title">
+        <div class="site-card">
+          <div class="site-card-header">
+            <span class="site-card-icon" aria-hidden="true">🖥️</span>
+            <h2 id="site-title">Améliorer le site web</h2>
+          </div>
+          <p class="site-card-desc">
+            Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ?
+            Votre proposition sera directement transmise au responsable technique sous forme d'issue GitHub.
+          </p>
+
+          <div class="site-form-row">
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label" for="site-titre">Titre de la suggestion *</label>
+              <input class="form-input" type="text" id="site-titre"
+                placeholder="ex : Le menu ne se ferme pas sur mobile"
+                maxlength="100" autocomplete="off"
+                oninput="updateSitePreview()">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label" for="site-desc">Description (optionnel)</label>
+              <textarea class="form-textarea" id="site-desc"
+                placeholder="Décrivez le problème ou l'amélioration souhaitée…"
+                maxlength="1000" style="min-height:80px"
+                oninput="updateSitePreview()"></textarea>
+            </div>
+          </div>
+
+          <!-- Aperçu de l'issue -->
+          <div class="site-preview" id="site-preview">
+            <strong>Titre :</strong> <span id="preview-titre"></span><br>
+            <strong>Description :</strong> <span id="preview-desc">—</span>
+          </div>
+
+          <button class="btn btn-secondary" id="site-submit" onclick="ouvrirIssueGitHub()" style="width:100%; justify-content:center;">
+            Ouvrir une suggestion sur GitHub →
+          </button>
+
+          <p class="site-note">
+            <span aria-hidden="true">ℹ️</span>
+            Un compte GitHub est nécessaire pour soumettre. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur "Submit new issue".
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script>
+    // ── Config Supabase ──────────────────────────────────────
+    const SUPABASE_URL     = 'https://evifxtecjhemmaxaiozt.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
+    const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ── GitHub ───────────────────────────────────────────────
+    const GITHUB_OWNER = 'SKOHscripts';
+    const GITHUB_REPO  = 'le-village-cafe-associatif.github.io';
+
+    // ── Fonctions utilitaires ────────────────────────────────
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+    }
+
+    function formatDate(isoString) {
+      const d = new Date(isoString);
+      return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    // ── Charger les idées ────────────────────────────────────
+    async function chargerIdees() {
+      const grid  = document.getElementById('postits-grid');
+      const count = document.getElementById('postits-count');
+      if (!grid) return;
+
+      try {
+        const { data, error } = await sbClient
+          .from('idees')
+          .select('id, pseudo, idee, created_at')
+          .eq('visible', true)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          grid.innerHTML = '<p class="postits-empty">Soyez le premier à partager une idée ! 💡</p>';
+          if (count) count.textContent = '';
+          return;
+        }
+
+        if (count) count.textContent = `${data.length} idée${data.length > 1 ? 's' : ''}`;
+
+        grid.innerHTML = data.map(idee => `
+          <div class="postit" data-id="${idee.id}">
+            <button class="postit-delete" onclick="supprimerIdee('${idee.id}')" aria-label="Supprimer cette idée" title="Masquer">✕</button>
+            <p class="postit-pseudo">✏️ ${escapeHtml(idee.pseudo)}</p>
+            <p class="postit-texte">${escapeHtml(idee.idee)}</p>
+            <p class="postit-date">${formatDate(idee.created_at)}</p>
+          </div>
+        `).join('');
+
+      } catch (err) {
+        console.error('Erreur chargement idées:', err);
+        if (grid) grid.innerHTML = '<p class="postits-empty">Impossible de charger les idées pour le moment.</p>';
+      }
+    }
+
+    // ── Supprimer une idée (CA admin) ────────────────────────
+    async function supprimerIdee(id) {
+      if (!confirm('Masquer cette idée ?')) return;
+      const serviceKey = window.SUPABASE_SERVICE_KEY;
+      if (!serviceKey) return;
+      const sbAdmin = window.supabase.createClient(SUPABASE_URL, serviceKey);
+      try {
+        const { error } = await sbAdmin.from('idees').update({ visible: false }).eq('id', id);
+        if (error) throw error;
+        const el = document.querySelector(`.postit[data-id="${id}"]`);
+        if (el) el.remove();
+        await chargerIdees();
+      } catch (err) {
+        console.error('Erreur suppression:', err);
+        alert('Impossible de supprimer cette idée.');
+      }
+    }
+
+    // ── Mode modération ──────────────────────────────────────
+    function activerModeration(serviceKey) {
+      window.SUPABASE_SERVICE_KEY = serviceKey;
+      document.body.classList.add('mode-moderation');
+    }
+
+    // ── Suggestions site → GitHub ────────────────────────────
+    function updateSitePreview() {
+      const titre   = document.getElementById('site-titre').value.trim();
+      const desc    = document.getElementById('site-desc').value.trim();
+      const preview = document.getElementById('site-preview');
+      const btn     = document.getElementById('site-submit');
+      if (titre) {
+        preview.style.display = 'block';
+        document.getElementById('preview-titre').textContent = titre;
+        document.getElementById('preview-desc').textContent  = desc || '—';
+        btn.disabled = false;
+      } else {
+        preview.style.display = 'none';
+        btn.disabled = true;
+      }
+    }
+
+    function ouvrirIssueGitHub() {
+      const titre = document.getElementById('site-titre').value.trim();
+      const desc  = document.getElementById('site-desc').value.trim();
+      if (!titre) { document.getElementById('site-titre').focus(); return; }
+      const body = [
+        desc ? `### Description\n${desc}` : '',
+        '\n---\n*Suggestion soumise via la boîte à idées du site Le Village*',
+      ].filter(Boolean).join('\n');
+      const url = new URL(`https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/issues/new`);
+      url.searchParams.set('title', `[Site] ${titre}`);
+      url.searchParams.set('body', body);
+      url.searchParams.set('labels', 'amélioration');
+      window.open(url.toString(), '_blank', 'noopener,noreferrer');
+      document.getElementById('site-titre').value = '';
+      document.getElementById('site-desc').value  = '';
+      document.getElementById('site-preview').style.display = 'none';
+    }
+
+    // ── Init — dans DOMContentLoaded car components.js est async ─
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Désactiver bouton GitHub tant que le titre est vide
+      const btnSite = document.getElementById('site-submit');
+      if (btnSite) btnSite.disabled = true;
+
+      // Écouter le formulaire idées
+      const form = document.getElementById('idee-form');
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const pseudo  = document.getElementById('pseudo').value.trim();
+          const idee    = document.getElementById('idee').value.trim();
+          const contact = document.getElementById('contact').value.trim();
+          const btn     = document.getElementById('submit-btn');
+          const txtBtn  = document.getElementById('submit-text');
+          const success = document.getElementById('form-success');
+          const erreur  = document.getElementById('form-error');
+          if (!pseudo || !idee || !contact) return;
+          btn.disabled = true;
+          txtBtn.textContent = 'Envoi en cours…';
+          success.style.display = 'none';
+          erreur.style.display  = 'none';
+          try {
+            const { error } = await sbClient
+              .from('idees')
+              .insert([{ pseudo, idee, contact, visible: true }]);
+            if (error) throw error;
+            success.style.display = 'block';
+            form.reset();
+            await chargerIdees();
+          } catch (err) {
+            console.error('Erreur soumission:', err);
+            erreur.style.display = 'block';
+          } finally {
+            btn.disabled = false;
+            txtBtn.textContent = 'Envoyer mon idée 🚀';
+          }
+        });
+      }
+
+      // Charger les idées
+      chargerIdees();
+
+      // Activer modération si CA admin
+      if (typeof isAuthenticated === 'function' && isAuthenticated(3)) {
+        if (window.CA_ADMIN_SERVICE_KEY) activerModeration(window.CA_ADMIN_SERVICE_KEY);
+      }
+    });
+
+  </script>
+</body>

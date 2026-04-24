@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contacter le Café Associatif Le Village — 8 rue Chalumeaux, Lyon 8e.">
+  <title>Contact — Le Village · Café Associatif Lyon 8e</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+
+  <style>
+    .page-header {
+      background: var(--color-teal);
+      color: white;
+      padding: 3rem 0 2.5rem;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      font-family: var(--font-script);
+      font-size: 1.2rem;
+      opacity: 0.85;
+    }
+
+    .contact-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 2.5rem 0;
+    }
+
+    .contact-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+      color: var(--color-text);
+    }
+
+    .contact-card:hover {
+      border-color: var(--color-teal-light);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .contact-card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      background: var(--color-bg);
+    }
+
+    .contact-card-icon.teal { background: var(--color-teal-light); }
+    .contact-card-icon.orange { background: var(--color-orange-light); }
+
+    .contact-card-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .contact-card-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-light);
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-card-value {
+      font-weight: 600;
+      color: var(--color-teal);
+      font-size: 1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-card-sub {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-top: 0.15rem;
+    }
+
+    .contact-card-arrow {
+      color: var(--color-text-light);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .section-map {
+      padding: 0 0 3rem;
+    }
+
+    .map-wrapper {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .map-wrapper iframe {
+      display: block;
+      width: 100%;
+      height: 340px;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="container">
+      <h1>Contact</h1>
+      <p>On est là pour vous accueillir 😊</p>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <div class="container">
+
+      <div class="contact-grid">
+
+        <!-- Adresse -->
+        <div class="contact-card" style="cursor:default;">
+          <div class="contact-card-icon teal">📍</div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Adresse</p>
+            <p class="contact-card-value">8 rue Chalumeaux</p>
+            <p class="contact-card-sub">Lyon 8e arrondissement</p>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <a href="mailto:projetcafeassociatif@gmail.com" class="contact-card">
+          <div class="contact-card-icon orange">✉️</div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Email</p>
+            <p class="contact-card-value">projetcafeassociatif@gmail.com</p>
+            <p class="contact-card-sub">On vous répond avec plaisir !</p>
+          </div>
+          <span class="contact-card-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/profile.php?id=61574530611496" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <div class="contact-card-icon" style="background:#e8f0fe;">
+            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <rect width="48" height="48" rx="10" fill="#1877F2"/>
+              <path d="M33 24C33 19.029 28.971 15 24 15C19.029 15 15 19.029 15 24C15 28.482 18.157 32.215 22.359 33V26.578H19.938V24H22.359V22.008C22.359 19.619 23.783 18.297 25.957 18.297C27 18.297 28.09 18.484 28.09 18.484V20.828H26.887C25.699 20.828 25.313 21.597 25.313 22.385V24H27.979L27.543 26.578H25.313V33C29.843 32.215 33 28.482 33 24Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Facebook</p>
+            <p class="contact-card-value">Café associatif Le Village</p>
+            <p class="contact-card-sub">Actualités & événements</p>
+          </div>
+          <span class="contact-card-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/cafe_associatif_le_village" target="_blank" rel="noopener noreferrer" class="contact-card">
+          <div class="contact-card-icon" style="background:#fce4ec;">
+            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <defs>
+                <radialGradient id="ig2" cx="30%" cy="107%" r="150%">
+                  <stop offset="0%" stop-color="#fdf497"/>
+                  <stop offset="50%" stop-color="#fd5949"/>
+                  <stop offset="68%" stop-color="#d6249f"/>
+                  <stop offset="100%" stop-color="#285AEB"/>
+                </radialGradient>
+              </defs>
+              <rect width="48" height="48" rx="10" fill="url(#ig2)"/>
+              <rect x="15" y="15" width="18" height="18" rx="5" stroke="white" stroke-width="2.2" fill="none"/>
+              <circle cx="24" cy="24" r="4.5" stroke="white" stroke-width="2.2" fill="none"/>
+              <circle cx="30.5" cy="17.5" r="1.3" fill="white"/>
+            </svg>
+          </div>
+          <div class="contact-card-body">
+            <p class="contact-card-label">Instagram</p>
+            <p class="contact-card-value">@cafe_associatif_le_village</p>
+            <p class="contact-card-sub">Photos & moments du Village</p>
+          </div>
+          <span class="contact-card-arrow" aria-hidden="true">→</span>
+        </a>
+
+      </div>
+
+      <!-- CARTE -->
+      <section class="section-map" aria-labelledby="map-title">
+        <h2 class="section-title" id="map-title">Nous trouver</h2>
+        <div class="map-wrapper">
+          <iframe
+            src="https://cartes.app/?allez=Café Associatif Le Village|n13308296369|4.85404|45.73579#14.35/45.73606/4.85336"
+            title="Carte — Café Associatif Le Village, 8 rue Chalumeaux Lyon 8e"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+
+  <script src="assets/js/components.js"></script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Qui sommes-nous — Le Café Associatif Le Village, une association de quartier à Lyon 8e.">
+  <title>Qui sommes-nous — Le Village · Café Associatif Lyon 8e</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+
+  <style>
+    .page-header {
+      background: var(--color-teal);
+      padding: 3rem 0 2.5rem;
+      text-align: center;
+    }
+    .page-header h1 { color: white; margin-bottom: 0.4rem; }
+    .page-header p { font-family: var(--font-script); font-size: 1.2rem; color: rgba(255,255,255,0.85); }
+
+    /* Présentation */
+    .section-presentation {
+      padding: 3rem 0 2rem;
+    }
+    .presentation-text {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: var(--color-text);
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid var(--color-teal);
+    }
+
+    /* Valeurs */
+    .section-valeurs { padding: 0 0 3rem; }
+    .valeurs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .valeur-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1rem;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+    .valeur-card:hover { box-shadow: var(--shadow-md); }
+    .valeur-emoji { font-size: 2rem; margin-bottom: 0.5rem; }
+    .valeur-titre {
+      font-weight: 600;
+      color: var(--color-teal);
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .valeur-texte { font-size: 0.88rem; color: var(--color-text-light); line-height: 1.5; }
+
+    /* Équipe */
+    .section-equipe { padding: 0 0 3rem; }
+    .equipe-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .membre-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1rem;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+    .membre-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-teal-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.75rem;
+      font-size: 1.6rem;
+      overflow: hidden;
+    }
+    .membre-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .membre-nom {
+      font-weight: 600;
+      color: var(--color-teal);
+      font-size: 1rem;
+    }
+    .membre-role {
+      font-size: 0.85rem;
+      color: var(--color-text-light);
+      margin-top: 0.2rem;
+    }
+    .membre-pole {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      background: var(--color-teal-light);
+      color: var(--color-teal);
+      padding: 0.15rem 0.65rem;
+      border-radius: var(--radius-pill);
+      font-weight: 500;
+    }
+
+    /* Galerie événements */
+    .section-galerie { padding: 0 0 3rem; }
+    .galerie-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .galerie-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .galerie-card:hover { box-shadow: var(--shadow-md); }
+    .galerie-photo {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: var(--color-teal-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--color-teal);
+    }
+    .galerie-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .galerie-body { padding: 1.1rem 1.25rem; }
+    .galerie-date {
+      font-size: 0.8rem;
+      color: var(--color-orange);
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+    .galerie-titre {
+      font-weight: 600;
+      color: var(--color-teal);
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+    .galerie-desc { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.5; }
+
+    /* Règlement */
+    .section-reglement { padding: 0 0 3rem; }
+    .reglement-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .reglement-icon { font-size: 2.5rem; flex-shrink: 0; }
+    .reglement-body h3 { color: var(--color-teal); margin-bottom: 0.3rem; }
+    .reglement-body p { font-size: 0.9rem; color: var(--color-text-light); margin-bottom: 0.75rem; }
+
+    @media (min-width: 600px) {
+      .galerie-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Qui sommes-nous ?</h1>
+      <p>un lieu pour et avec les habitants du quartier</p>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <div class="container">
+
+      <!-- PRÉSENTATION -->
+      <section class="section-presentation fade-up fade-up-1" aria-labelledby="presentation-title">
+        <h2 class="section-title" id="presentation-title">Notre histoire</h2>
+        <p class="presentation-text" id="presentation-text">Chargement…</p>
+      </section>
+
+      <!-- VALEURS -->
+      <section class="section-valeurs fade-up fade-up-2" aria-labelledby="valeurs-title">
+        <h2 class="section-title" id="valeurs-title">Nos valeurs</h2>
+        <div class="valeurs-grid" id="valeurs-grid">
+          <!-- Chargé via JS -->
+        </div>
+      </section>
+
+      <!-- ÉQUIPE -->
+      <section class="section-equipe fade-up fade-up-3" aria-labelledby="equipe-title">
+        <h2 class="section-title" id="equipe-title">L'équipe</h2>
+        <div class="equipe-grid" id="equipe-grid">
+          <!-- Chargé via JS -->
+        </div>
+      </section>
+
+      <!-- GALERIE -->
+      <section class="section-galerie fade-up fade-up-4" aria-labelledby="galerie-title">
+        <h2 class="section-title" id="galerie-title">Nos événements</h2>
+        <div class="galerie-grid" id="galerie-grid">
+          <!-- Chargé via JS -->
+        </div>
+      </section>
+
+      <!-- RÈGLEMENT -->
+      <section class="section-reglement fade-up fade-up-5" aria-labelledby="reglement-title">
+        <h2 class="section-title" id="reglement-title">Règlement intérieur</h2>
+        <div class="reglement-card">
+          <div class="reglement-icon" aria-hidden="true">📋</div>
+          <div class="reglement-body">
+            <h3>Consulter le règlement</h3>
+            <p>Le règlement intérieur définit les règles de vie et de fonctionnement du café associatif.</p>
+            <a href="assets/docs/reglement-interieur.pdf" target="_blank" rel="noopener" class="btn btn-secondary">
+              Lire le règlement →
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="assets/js/components.js"></script>
+  <script>
+    // Charger contenu.json
+    fetch('data/contenu.json')
+      .then(r => r.json())
+      .then(data => {
+        // Présentation
+        const pres = document.getElementById('presentation-text');
+        if (pres && data.presentation) pres.textContent = data.presentation;
+
+        // Valeurs
+        const vGrid = document.getElementById('valeurs-grid');
+        if (vGrid && data.valeurs) {
+          vGrid.innerHTML = data.valeurs.map(v => `
+            <div class="valeur-card">
+              <div class="valeur-emoji">${v.emoji}</div>
+              <p class="valeur-titre">${v.titre}</p>
+              <p class="valeur-texte">${v.texte}</p>
+            </div>
+          `).join('');
+        }
+      })
+      .catch(() => {
+        const pres = document.getElementById('presentation-text');
+        if (pres) pres.textContent = "Le Café Associatif Le Village est un espace ouvert à tous, géré par des bénévoles passionnés.";
+      });
+
+    // Charger equipe.json
+    fetch('data/equipe.json')
+      .then(r => r.json())
+      .then(membres => {
+        const grid = document.getElementById('equipe-grid');
+        if (!grid) return;
+        grid.innerHTML = membres.map(m => `
+          <div class="membre-card">
+            <div class="membre-avatar">
+              ${m.photo
+                ? `<img src="${m.photo}" alt="Photo de ${m.nom}">`
+                : `<span aria-hidden="true">👤</span>`
+              }
+            </div>
+            <p class="membre-nom">${m.nom}</p>
+            <p class="membre-role">${m.role}</p>
+            <span class="membre-pole">${m.pole}</span>
+          </div>
+        `).join('');
+      });
+
+    // Charger evenements-passes.json
+    fetch('data/evenements-passes.json')
+      .then(r => r.json())
+      .then(events => {
+        const grid = document.getElementById('galerie-grid');
+        if (!grid) return;
+        grid.innerHTML = events.map(e => `
+          <article class="galerie-card">
+            <div class="galerie-photo">
+              ${e.photo
+                ? `<img src="${e.photo}" alt="${e.titre}">`
+                : `<span aria-hidden="true">🎉</span>`
+              }
+            </div>
+            <div class="galerie-body">
+              <p class="galerie-date">${e.date}</p>
+              <p class="galerie-titre">${e.titre}</p>
+              <p class="galerie-desc">${e.description}</p>
+            </div>
+          </article>
+        `).join('');
+      });
+  </script>
+</body>
+</html>

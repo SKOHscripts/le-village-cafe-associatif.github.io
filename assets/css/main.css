@@ -1,0 +1,351 @@
+/* =============================================
+   LE VILLAGE — main.css
+   Variables, reset, typographie, layout global
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap');
+
+/* --- Variables --- */
+:root {
+  --color-teal:        #1a8a7a;
+  --color-teal-dark:   #156e62;
+  --color-teal-light:  #d0ede8;
+  --color-orange:      #f5a623;
+  --color-orange-light:#fff3d6;
+  --color-bg:          #e8f5f0;
+  --color-blue-light:  #dceefb;
+  --color-white:       #ffffff;
+  --color-text:        #2d2d2d;
+  --color-text-light:  #6b7c75;
+  --color-border:      #c8e0d8;
+
+  --font-main:    'Fredoka', sans-serif;
+  --font-script:  'Caveat', cursive;
+
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+  --radius-pill: 50px;
+
+  --shadow-sm:  0 2px 8px rgba(26,138,122,0.08);
+  --shadow-md:  0 4px 20px rgba(26,138,122,0.12);
+  --shadow-lg:  0 8px 40px rgba(26,138,122,0.16);
+
+  --max-width: 700px;
+  --padding-page: 1.25rem;
+}
+
+/* --- Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--color-teal);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* --- Typographie --- */
+h1, h2, h3, h4 {
+  font-family: var(--font-main);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-teal);
+}
+
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); }
+h2 { font-size: clamp(1.4rem, 4vw, 1.9rem); }
+h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+/* --- Layout --- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--padding-page);
+}
+
+.section {
+  padding: 3rem 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 4px;
+  background: var(--color-orange);
+  border-radius: 2px;
+  margin: 0.5rem auto 0;
+}
+
+/* --- Cards --- */
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Boutons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--color-orange);
+  color: var(--color-white);
+  border-color: var(--color-orange);
+}
+
+.btn-primary:hover {
+  background: #e09620;
+  border-color: #e09620;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(245,166,35,0.35);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-teal);
+  border-color: var(--color-teal);
+}
+
+.btn-secondary:hover {
+  background: var(--color-teal);
+  color: var(--color-white);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-teal);
+  border-color: transparent;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.btn-ghost:hover {
+  color: var(--color-teal-dark);
+  text-decoration: none;
+}
+
+/* --- Badge --- */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: var(--color-teal-light);
+  color: var(--color-teal);
+}
+
+
+/* --- Animations d'entrée --- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+.fade-up-2 { animation-delay: 0.2s; opacity: 0; }
+.fade-up-3 { animation-delay: 0.3s; opacity: 0; }
+.fade-up-4 { animation-delay: 0.4s; opacity: 0; }
+.fade-up-5 { animation-delay: 0.5s; opacity: 0; }
+
+/* --- Utilitaires --- */
+.text-center { text-align: center; }
+.text-teal   { color: var(--color-teal); }
+.text-orange { color: var(--color-orange); }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+
+/* --- Responsive --- */
+@media (min-width: 768px) {
+  :root {
+    --padding-page: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --max-width: 780px;
+    --padding-page: 2.5rem;
+  }
+}
+
+
+/* =============================================
+   FOOTER SITE — style inspiré du footer carte
+   ============================================= */
+
+.site-footer {
+  background: var(--color-teal);
+  margin-top: 4rem;
+}
+
+.site-footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 2rem 0 1.5rem;
+}
+
+.sf-brand { min-width: 140px; }
+.sf-brand-name {
+  font-family: var(--font-main);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-orange);
+  display: block;
+}
+.sf-brand-sub {
+  font-family: var(--font-script);
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.6);
+  display: block;
+  margin-top: 3px;
+}
+
+.sf-divider {
+  width: 2px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  align-self: stretch;
+  flex-shrink: 0;
+  min-height: 60px;
+}
+
+.sf-info {
+  flex: 1;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sf-label {
+  font-family: var(--font-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-orange);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.sf-line {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sf-line span { color: rgba(255,255,255,0.55); font-weight: 400; }
+.sf-line a { color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.2s; }
+.sf-line a:hover { color: var(--color-orange); }
+
+.sf-dot {
+  width: 6px; height: 6px;
+  background: var(--color-orange);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sf-bottom {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+}
+
+.sf-secret-links { display: flex; gap: 1.25rem; }
+.sf-secret-links a { color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+.sf-secret-links a:hover { color: rgba(255,255,255,0.7); }
+
+@media (max-width: 560px) {
+  .site-footer-inner { flex-direction: column; }
+  .sf-divider { width: 100%; height: 1px; min-height: unset; align-self: auto; }
+  .sf-bottom { flex-direction: column; text-align: center; }
+  .sf-secret-links { justify-content: center; }
+}

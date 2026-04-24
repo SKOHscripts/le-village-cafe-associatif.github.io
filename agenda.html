@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agenda du Café Associatif Le Village — ateliers, animations et événements à Lyon 8e.">
+  <title>Agenda — Le Village · Café Associatif Lyon 8e</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+
+  <style>
+    .page-header {
+      background: var(--color-teal);
+      padding: 3rem 0 2.5rem;
+      text-align: center;
+    }
+    .page-header h1 { color: white; margin-bottom: 0.4rem; }
+    .page-header p { font-family: var(--font-script); font-size: 1.2rem; color: rgba(255,255,255,0.85); }
+
+    .section-agenda { padding: 2.5rem 0 3rem; }
+
+    /* Tabs vue mobile/desktop */
+    .agenda-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      background: var(--color-white);
+      border-radius: var(--radius-pill);
+      padding: 0.35rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .agenda-tab {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: none;
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-text-light);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .agenda-tab.active {
+      background: var(--color-teal);
+      color: white;
+    }
+
+    /* Iframe wrapper */
+    .calendar-wrapper {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .calendar-wrapper iframe {
+      display: block;
+      width: 100%;
+      border: none;
+      height: 520px;
+    }
+
+    @media (min-width: 768px) {
+      .calendar-wrapper iframe {
+        height: 640px;
+      }
+    }
+
+    /* Note d'information */
+    .agenda-note {
+      margin-top: 1.5rem;
+      background: var(--color-orange-light);
+      border: 2px solid var(--color-orange);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--color-text);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Agenda</h1>
+      <p>ateliers, animations &amp; événements au Village</p>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <div class="container">
+      <section class="section-agenda fade-up fade-up-1">
+
+        <!-- Switcher vue Liste / Mois -->
+        <div class="agenda-tabs" role="tablist" aria-label="Vue du calendrier">
+          <button class="agenda-tab active" id="tab-liste" role="tab" aria-selected="true" aria-controls="calendar-panel" data-mode="AGENDA">
+            📋 Liste
+          </button>
+          <button class="agenda-tab" id="tab-mois" role="tab" aria-selected="false" aria-controls="calendar-panel" data-mode="MONTH">
+            📅 Mois
+          </button>
+        </div>
+
+        <!-- Calendrier Google -->
+        <div class="calendar-wrapper" id="calendar-panel" role="tabpanel">
+          <iframe
+            id="google-calendar"
+            src="https://calendar.google.com/calendar/embed?src=projetcafeassociatif%40gmail.com&ctz=Europe%2FParis&mode=AGENDA&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff&color=%231a8a7a"
+            title="Agenda du Café Associatif Le Village"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="agenda-note" role="note">
+          <span aria-hidden="true">💡</span>
+          <p>
+            L'agenda est mis à jour automatiquement. Les événements sont ajoutés par l'équipe bénévole directement dans Google Calendar.
+            Pour ne rien manquer, suivez-nous sur
+            <a href="https://www.facebook.com/profile.php?id=61574530611496" target="_blank" rel="noopener">Facebook</a>
+            et
+            <a href="https://www.instagram.com/cafe_associatif_le_village" target="_blank" rel="noopener">Instagram</a>.
+          </p>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script src="assets/js/components.js"></script>
+  <script>
+    // Switcher vue Liste / Mois
+    const tabs = document.querySelectorAll('.agenda-tab');
+    const iframe = document.getElementById('google-calendar');
+    const baseUrl = 'https://calendar.google.com/calendar/embed?src=projetcafeassociatif%40gmail.com&ctz=Europe%2FParis&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff&color=%231a8a7a&mode=';
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        iframe.src = baseUrl + tab.dataset.mode;
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace CA — Le Village</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+  <style>
+    .page-header {
+      background: var(--color-teal);
+      padding: 3rem 0 2.5rem;
+      text-align: center;
+    }
+    .page-header h1 { color: white; margin-bottom: 0.4rem; }
+    .page-header p  { font-family: var(--font-script); font-size: 1.2rem; color: rgba(255,255,255,0.85); }
+    .access-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.9);
+      margin-top: 0.75rem;
+    }
+
+    .section-outils { padding: 2.5rem 0 2rem; }
+
+    .outils-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .outil-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      border-left: 5px solid var(--color-teal);
+      transition: box-shadow 0.2s;
+    }
+    .outil-card:hover { box-shadow: var(--shadow-lg); }
+
+    .outil-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .outil-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+    .outil-titre {
+      font-family: var(--font-main);
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--color-teal);
+    }
+    .outil-desc {
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+
+    /* Lien vers espace admin si niveau 3 */
+    .admin-link-banner {
+      display: none;
+      background: var(--color-orange-light);
+      border: 2px solid var(--color-orange);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      margin-bottom: 2rem;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.92rem;
+    }
+    body.level-3 .admin-link-banner { display: flex; }
+
+    .section-liens { padding: 0 0 3rem; }
+
+    .liens-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .lien-card {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+      color: var(--color-text);
+    }
+    .lien-card:hover {
+      border-color: var(--color-teal-light);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .lien-card-icon { font-size: 1.75rem; }
+    .lien-card-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--color-teal);
+    }
+    .lien-card-sub {
+      font-size: 0.78rem;
+      color: var(--color-text-light);
+    }
+
+    .logout-btn {
+      display: block;
+      text-align: center;
+      margin: 0 auto 1rem;
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font-main);
+      text-decoration: underline;
+    }
+    .logout-btn:hover { color: var(--color-teal); }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Espace CA ⚙️</h1>
+      <p>outils de gestion du Café Associatif Le Village</p>
+      <div class="access-badge">🔒 Accès membres CA</div>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <div class="container">
+
+      <!-- Lien espace admin si niveau 3 -->
+      <div class="admin-link-banner" role="note">
+        <span aria-hidden="true">🔐</span>
+        <span>Vous avez également accès à l'<a href="ca-admin.html"><strong>Espace Admin</strong></a> (modifier la carte, modérer la boîte à idées).</span>
+      </div>
+
+      <!-- OUTILS PRINCIPAUX -->
+      <section class="section-outils fade-up fade-up-1" aria-labelledby="outils-title">
+        <h2 class="section-title" id="outils-title">Vos outils</h2>
+        <div class="outils-grid">
+
+          <!-- Paheko -->
+          <div class="outil-card">
+            <div class="outil-header">
+              <span class="outil-icon" aria-hidden="true">📊</span>
+              <span class="outil-titre">Paheko</span>
+            </div>
+            <p class="outil-desc">
+              Gestion de l'association — adhérents, comptabilité, documents administratifs.
+              Connectez-vous avec vos identifiants habituels.
+            </p>
+            <a href="https://PAHEKO.fr" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;">
+              Accéder à Paheko →
+            </a>
+          </div>
+
+          <!-- Script stocks Corentin -->
+          <div class="outil-card" style="border-left-color: var(--color-orange);">
+            <div class="outil-header">
+              <span class="outil-icon" aria-hidden="true">📦</span>
+              <span class="outil-titre">Rapport des stocks</span>
+            </div>
+            <p class="outil-desc">
+              Script développé par Corentin — génère un rapport automatique de l'état des stocks du café.
+            </p>
+            <a href="https://LIEN_SCRIPT_CORENTIN" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="align-self:flex-start;">
+              Lancer le script →
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- LIENS RAPIDES -->
+      <section class="section-liens fade-up fade-up-2" aria-labelledby="liens-title">
+        <h2 class="section-title" id="liens-title">Liens rapides</h2>
+        <div class="liens-grid">
+          <a href="benevoles.html" class="lien-card">
+            <span class="lien-card-icon" aria-hidden="true">🤝</span>
+            <span class="lien-card-label">Espace bénévoles</span>
+            <span class="lien-card-sub">Créneaux & infos pratiques</span>
+          </a>
+          <a href="agenda.html" class="lien-card">
+            <span class="lien-card-icon" aria-hidden="true">📅</span>
+            <span class="lien-card-label">Agenda</span>
+            <span class="lien-card-sub">Événements du Village</span>
+          </a>
+          <a href="boite-a-idees.html" class="lien-card">
+            <span class="lien-card-icon" aria-hidden="true">💡</span>
+            <span class="lien-card-label">Boîte à idées</span>
+            <span class="lien-card-sub">Idées du quartier</span>
+          </a>
+          <a href="carte.html" class="lien-card">
+            <span class="lien-card-icon" aria-hidden="true">🍺</span>
+            <span class="lien-card-label">La Carte</span>
+            <span class="lien-card-sub">Boissons & en-cas</span>
+          </a>
+        </div>
+      </section>
+
+      <button class="logout-btn" onclick="logout()">Se déconnecter</button>
+
+    </div>
+  </main>
+
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script>
+    requireAuth(2);
+    const level = getAuthLevel();
+    if (level >= 3) document.body.classList.add('level-3');
+  </script>
+</body>
+</html>

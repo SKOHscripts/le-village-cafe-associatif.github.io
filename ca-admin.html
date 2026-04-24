@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace Admin — Le Village</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+
+  <!-- Supabase pour la modération -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    .page-header {
+      background: linear-gradient(135deg, var(--color-teal) 0%, #0f5e52 100%);
+      padding: 3rem 0 2.5rem;
+      text-align: center;
+    }
+    .page-header h1 { color: white; margin-bottom: 0.4rem; }
+    .page-header p  { font-family: var(--font-script); font-size: 1.2rem; color: rgba(255,255,255,0.85); }
+    .access-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(245,166,35,0.25);
+      border: 1px solid rgba(245,166,35,0.5);
+      border-radius: 50px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      color: var(--color-orange);
+      margin-top: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* Actions rapides */
+    .section-actions { padding: 2.5rem 0 2rem; }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .action-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--color-text);
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+    .action-card:hover {
+      border-color: var(--color-teal-light);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .action-card-icon { font-size: 2.2rem; }
+    .action-card-titre {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--color-teal);
+    }
+    .action-card-sub {
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      line-height: 1.4;
+    }
+
+    /* Modération boîte à idées */
+    .section-moderation { padding: 0 0 3rem; }
+
+    .moderation-panel {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .moderation-panel-header {
+      background: var(--color-teal);
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .moderation-panel-header h2 {
+      color: white;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+    .moderation-panel-header h2::after { display: none; }
+    .moderation-count {
+      background: rgba(255,255,255,0.2);
+      border-radius: 50px;
+      padding: 0.2rem 0.75rem;
+      font-size: 0.82rem;
+      color: white;
+      font-weight: 500;
+    }
+
+    .idee-admin-list {
+      padding: 0.5rem 0;
+    }
+
+    .idee-admin-item {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      transition: background 0.15s;
+    }
+    .idee-admin-item:last-child { border-bottom: none; }
+    .idee-admin-item:hover { background: #f9fffe; }
+
+    .idee-admin-pseudo {
+      font-weight: 600;
+      color: var(--color-teal);
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+    .idee-admin-texte {
+      font-size: 0.9rem;
+      color: var(--color-text);
+      line-height: 1.5;
+      margin-bottom: 0.35rem;
+    }
+    .idee-admin-contact {
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      background: var(--color-orange-light);
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      display: inline-block;
+    }
+    .idee-admin-contact strong { color: var(--color-teal); }
+    .idee-admin-date {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+      margin-top: 0.3rem;
+    }
+
+    .idee-delete-btn {
+      background: #fef2f2;
+      border: 1.5px solid #fca5a5;
+      color: #dc2626;
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.75rem;
+      font-family: var(--font-main);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .idee-delete-btn:hover {
+      background: #dc2626;
+      color: white;
+      border-color: #dc2626;
+    }
+
+    .moderation-empty {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--color-text-light);
+      font-family: var(--font-script);
+      font-size: 1.2rem;
+    }
+    .moderation-loading {
+      text-align: center;
+      padding: 2rem;
+      color: var(--color-text-light);
+    }
+
+    .logout-btn {
+      display: block;
+      text-align: center;
+      margin: 0 auto 1rem;
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font-main);
+      text-decoration: underline;
+    }
+    .logout-btn:hover { color: var(--color-teal); }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Espace Admin 🔐</h1>
+      <p>gestion du contenu et modération</p>
+      <div class="access-badge">⭐ Accès administrateur</div>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <div class="container">
+
+      <!-- ACTIONS RAPIDES -->
+      <section class="section-actions fade-up fade-up-1" aria-labelledby="actions-title">
+        <h2 class="section-title" id="actions-title">Actions rapides</h2>
+        <div class="actions-grid">
+
+          <a href="carte.html?edit=1" class="action-card">
+            <span class="action-card-icon" aria-hidden="true">✏️</span>
+            <span class="action-card-titre">Modifier la carte</span>
+            <span class="action-card-sub">Prix, articles, sections</span>
+          </a>
+
+          <a href="ca.html" class="action-card">
+            <span class="action-card-icon" aria-hidden="true">⚙️</span>
+            <span class="action-card-titre">Espace CA</span>
+            <span class="action-card-sub">Paheko & script stocks</span>
+          </a>
+
+          <a href="benevoles.html" class="action-card">
+            <span class="action-card-icon" aria-hidden="true">🤝</span>
+            <span class="action-card-titre">Espace bénévoles</span>
+            <span class="action-card-sub">Créneaux & infos</span>
+          </a>
+
+          <a href="qui-sommes-nous.html" class="action-card">
+            <span class="action-card-icon" aria-hidden="true">👥</span>
+            <span class="action-card-titre">Qui sommes-nous</span>
+            <span class="action-card-sub">Équipe & galerie</span>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- MODÉRATION BOÎTE À IDÉES -->
+      <section class="section-moderation fade-up fade-up-2" aria-labelledby="moderation-title">
+        <div class="moderation-panel">
+          <div class="moderation-panel-header">
+            <h2 id="moderation-title">💡 Modération — Boîte à idées</h2>
+            <span class="moderation-count" id="moderation-count">…</span>
+          </div>
+          <div class="idee-admin-list" id="idee-admin-list" aria-live="polite">
+            <p class="moderation-loading">Chargement des idées…</p>
+          </div>
+        </div>
+      </section>
+
+      <button class="logout-btn" onclick="logout()">Se déconnecter</button>
+
+    </div>
+  </main>
+
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script>
+    // Protection niveau 3 strict
+    requireAuth(3);
+
+    // ── Configuration Supabase (clé service pour accès complet) ──
+    const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';        // ex: https://xxxx.supabase.co
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';   // clé "anon" du projet
+
+    const serviceKey = window.CA_ADMIN_SERVICE_KEY || SUPABASE_ANON_KEY;
+    const sbAdmin = window.supabase.createClient(SUPABASE_URL, serviceKey);
+
+    // ── Charger TOUTES les idées (dont colonne contact) ──
+    async function chargerIdees() {
+      const list  = document.getElementById('idee-admin-list');
+      const count = document.getElementById('moderation-count');
+
+      try {
+        const { data, error } = await sbAdmin
+          .from('idees')
+          .select('id, pseudo, idee, contact, created_at, visible')
+          .eq('visible', true)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        count.textContent = `${data.length} idée${data.length !== 1 ? 's' : ''}`;
+
+        if (!data || data.length === 0) {
+          list.innerHTML = '<p class="moderation-empty">Aucune idée pour le moment 🌱</p>';
+          return;
+        }
+
+        list.innerHTML = data.map(idee => `
+          <div class="idee-admin-item" id="idee-${idee.id}">
+            <div>
+              <p class="idee-admin-pseudo">✏️ ${escapeHtml(idee.pseudo)}</p>
+              <p class="idee-admin-texte">${escapeHtml(idee.idee)}</p>
+              <span class="idee-admin-contact"><strong>Contact :</strong> ${escapeHtml(idee.contact)}</span>
+              <p class="idee-admin-date">${formatDate(idee.created_at)}</p>
+            </div>
+            <button class="idee-delete-btn" onclick="masquerIdee('${idee.id}')" aria-label="Masquer l'idée de ${escapeHtml(idee.pseudo)}">
+              🗑 Masquer
+            </button>
+          </div>
+        `).join('');
+
+      } catch (err) {
+        console.error('Erreur chargement:', err);
+        list.innerHTML = '<p class="moderation-empty">Impossible de charger les idées.</p>';
+      }
+    }
+
+    // ── Masquer une idée ──
+    async function masquerIdee(id) {
+      if (!confirm('Masquer cette idée ? Elle ne sera plus visible sur le site.')) return;
+
+      try {
+        const { error } = await sbAdmin
+          .from('idees')
+          .update({ visible: false })
+          .eq('id', id);
+
+        if (error) throw error;
+
+        const el = document.getElementById(`idee-${id}`);
+        if (el) {
+          el.style.opacity = '0';
+          el.style.transition = 'opacity 0.3s ease';
+          setTimeout(() => { el.remove(); chargerIdees(); }, 300);
+        }
+      } catch (err) {
+        console.error('Erreur suppression:', err);
+        alert('Impossible de masquer cette idée. Vérifiez la connexion Supabase.');
+      }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.appendChild(document.createTextNode(str || ''));
+      return div.innerHTML;
+    }
+
+    function formatDate(iso) {
+      return new Date(iso).toLocaleDateString('fr-FR', {
+        day: 'numeric', month: 'long', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+    }
+
+    // Init
+    chargerIdees();
+  </script>
+</body>
+</html>

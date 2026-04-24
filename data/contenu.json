@@ -1,0 +1,19 @@
+{
+  "description": "Le Café Associatif Le Village est un espace ouvert à tous pour se rencontrer, partager, tisser du lien entre générations et rompre l'isolement. Autour d'un café, on échange, on crée, on fédère les acteurs du quartier. Un lieu vivant, géré par des bénévoles, pour et avec les habitants.",
+  "presentation": "Né de l'envie de créer un lieu de vie de quartier accessible à toutes et tous, Le Village a ouvert ses portes au cœur du 8e arrondissement de Lyon. Association loi 1901, nous fonctionnons grâce à l'engagement de bénévoles passionnés et au soutien de nos adhérents. Notre mission : tisser du lien social, favoriser les échanges intergénérationnels et faire du quartier Grand Trou – Moulin à Vent – Petite Guille un endroit où il fait bon vivre ensemble.",
+  "valeurs": [
+    { "emoji": "🤝", "titre": "Solidarité", "texte": "Un lieu ouvert à toutes et tous, sans condition." },
+    { "emoji": "🌱", "titre": "Engagement", "texte": "Des bénévoles investis pour faire vivre le Village." },
+    { "emoji": "💬", "titre": "Lien social", "texte": "Rompre l'isolement, créer des rencontres vraies." },
+    { "emoji": "🏘️", "titre": "Ancrage local", "texte": "Fédérer les acteurs du quartier autour de projets communs." }
+  ],
+  "horaires": [
+    { "jour": "Mardis", "heures": "14h30 – 19h00" },
+    { "jour": "Vendredis", "heures": "16h00 – 21h00" },
+    { "jour": "Dimanches", "heures": "10h00 – 13h00" }
+  ],
+  "adresse": "8 rue Chalumeaux, Lyon 8e",
+  "email": "projetcafeassociatif@gmail.com",
+  "facebook": "https://www.facebook.com/profile.php?id=61574530611496",
+  "instagram": "https://www.instagram.com/cafe_associatif_le_village"
+}
