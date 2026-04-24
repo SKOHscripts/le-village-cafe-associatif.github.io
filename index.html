@@ -42,8 +42,8 @@
       background: linear-gradient(
         to bottom,
         rgba(255,255,255,0) 30%,
-        rgba(232,245,240,0.75) 80%,
-        rgba(232,245,240,1) 100%
+        rgba(242,250,247,0.78) 80%,
+        rgba(242,250,247,1) 100%
       );
     }
 
@@ -132,9 +132,6 @@
     .horaires-header {
       background: var(--color-teal);
       padding: 1.1rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
     }
 
     .horaires-header h2 {
@@ -145,10 +142,6 @@
 
     .horaires-header h2::after {
       display: none;
-    }
-
-    .horaires-icon {
-      font-size: 1.4rem;
     }
 
     .horaires-list {
@@ -186,16 +179,7 @@
       border: 2px solid var(--color-orange);
       border-radius: var(--radius-md);
       padding: 1rem 1.25rem;
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
       margin: 0 0 2.5rem;
-    }
-
-    .notice-adhesion-icon {
-      font-size: 1.4rem;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
     }
 
     .notice-adhesion p {
@@ -344,7 +328,6 @@
       <section class="section-horaires fade-up fade-up-3" aria-labelledby="horaires-title">
         <div class="horaires-card">
           <div class="horaires-header">
-            <span class="horaires-icon" aria-hidden="true">🕐</span>
             <h2 id="horaires-title">Horaires d'ouverture</h2>
           </div>
           <ul class="horaires-list" id="horaires-list">
@@ -366,7 +349,6 @@
 
       <!-- NOTICE ADHÉSION -->
       <div class="notice-adhesion fade-up fade-up-3" role="note">
-        <span class="notice-adhesion-icon" aria-hidden="true">ℹ️</span>
         <p>
           Le Village est un <strong>café associatif</strong>. L'adhésion est obligatoire pour la vente d'alcool.
           Non-adhérents : <strong>+1€ par consommation</strong>. Adhésions disponibles sur place tous les jours d'ouverture.
@@ -431,7 +413,6 @@
       <!-- EMAIL -->
       <section class="section-email fade-up fade-up-5" aria-label="Contact par email">
         <a href="mailto:projetcafeassociatif@gmail.com" class="email-link">
-          <span aria-hidden="true">✉️</span>
           projetcafeassociatif@gmail.com
         </a>
       </section>

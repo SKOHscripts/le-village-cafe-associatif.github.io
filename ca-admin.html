@@ -14,25 +14,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    /* Header admin avec gradient */
     .page-header {
-      background: linear-gradient(135deg, var(--color-teal) 0%, #0f5e52 100%);
-      padding: 3rem 0 2.5rem;
-      text-align: center;
+      background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
     }
-    .page-header h1 { color: white; margin-bottom: 0.4rem; }
-    .page-header p  { font-family: var(--font-script); font-size: 1.2rem; color: rgba(255,255,255,0.85); }
     .access-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(245,166,35,0.25);
-      border: 1px solid rgba(245,166,35,0.5);
-      border-radius: 50px;
-      padding: 0.3rem 1rem;
-      font-size: 0.8rem;
+      background: rgba(240,160,48,0.2);
+      border-color: rgba(240,160,48,0.45);
       color: var(--color-orange);
-      margin-top: 0.75rem;
-      font-weight: 500;
     }
 
     /* Actions rapides */
@@ -65,7 +54,6 @@
       transform: translateY(-2px);
       text-decoration: none;
     }
-    .action-card-icon { font-size: 2.2rem; }
     .action-card-titre {
       font-weight: 600;
       font-size: 0.95rem;
@@ -123,7 +111,7 @@
       transition: background 0.15s;
     }
     .idee-admin-item:last-child { border-bottom: none; }
-    .idee-admin-item:hover { background: #f9fffe; }
+    .idee-admin-item:hover { background: #f6fdf9; }
 
     .idee-admin-pseudo {
       font-weight: 600;
@@ -184,29 +172,15 @@
       padding: 2rem;
       color: var(--color-text-light);
     }
-
-    .logout-btn {
-      display: block;
-      text-align: center;
-      margin: 0 auto 1rem;
-      font-size: 0.8rem;
-      color: var(--color-text-light);
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-family: var(--font-main);
-      text-decoration: underline;
-    }
-    .logout-btn:hover { color: var(--color-teal); }
   </style>
 </head>
 <body>
 
   <div class="page-header">
     <div class="container">
-      <h1>Espace Admin 🔐</h1>
+      <h1>Espace Admin</h1>
       <p>gestion du contenu et modération</p>
-      <div class="access-badge">⭐ Accès administrateur</div>
+      <div class="access-badge">★ Accès administrateur</div>
     </div>
   </div>
 
@@ -219,25 +193,33 @@
         <div class="actions-grid">
 
           <a href="carte.html?edit=1" class="action-card">
-            <span class="action-card-icon" aria-hidden="true">✏️</span>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/></svg>
+            </div>
             <span class="action-card-titre">Modifier la carte</span>
             <span class="action-card-sub">Prix, articles, sections</span>
           </a>
 
           <a href="ca.html" class="action-card">
-            <span class="action-card-icon" aria-hidden="true">⚙️</span>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+            </div>
             <span class="action-card-titre">Espace CA</span>
             <span class="action-card-sub">Paheko & script stocks</span>
           </a>
 
           <a href="benevoles.html" class="action-card">
-            <span class="action-card-icon" aria-hidden="true">🤝</span>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg>
+            </div>
             <span class="action-card-titre">Espace bénévoles</span>
             <span class="action-card-sub">Créneaux & infos</span>
           </a>
 
           <a href="qui-sommes-nous.html" class="action-card">
-            <span class="action-card-icon" aria-hidden="true">👥</span>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
+            </div>
             <span class="action-card-titre">Qui sommes-nous</span>
             <span class="action-card-sub">Équipe & galerie</span>
           </a>
@@ -249,7 +231,7 @@
       <section class="section-moderation fade-up fade-up-2" aria-labelledby="moderation-title">
         <div class="moderation-panel">
           <div class="moderation-panel-header">
-            <h2 id="moderation-title">💡 Modération — Boîte à idées</h2>
+            <h2 id="moderation-title">Modération — Boîte à idées</h2>
             <span class="moderation-count" id="moderation-count">…</span>
           </div>
           <div class="idee-admin-list" id="idee-admin-list" aria-live="polite">
@@ -266,17 +248,14 @@
   <script src="assets/js/components.js"></script>
   <script src="assets/js/auth.js"></script>
   <script>
-    // Protection niveau 3 strict
     requireAuth(3);
 
-    // ── Configuration Supabase (clé service pour accès complet) ──
-    const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';        // ex: https://xxxx.supabase.co
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';   // clé "anon" du projet
+    const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
 
     const serviceKey = window.CA_ADMIN_SERVICE_KEY || SUPABASE_ANON_KEY;
     const sbAdmin = window.supabase.createClient(SUPABASE_URL, serviceKey);
 
-    // ── Charger TOUTES les idées (dont colonne contact) ──
     async function chargerIdees() {
       const list  = document.getElementById('idee-admin-list');
       const count = document.getElementById('moderation-count');
@@ -293,20 +272,20 @@
         count.textContent = `${data.length} idée${data.length !== 1 ? 's' : ''}`;
 
         if (!data || data.length === 0) {
-          list.innerHTML = '<p class="moderation-empty">Aucune idée pour le moment 🌱</p>';
+          list.innerHTML = '<p class="moderation-empty">Aucune idée pour le moment.</p>';
           return;
         }
 
         list.innerHTML = data.map(idee => `
           <div class="idee-admin-item" id="idee-${idee.id}">
             <div>
-              <p class="idee-admin-pseudo">✏️ ${escapeHtml(idee.pseudo)}</p>
+              <p class="idee-admin-pseudo">${escapeHtml(idee.pseudo)}</p>
               <p class="idee-admin-texte">${escapeHtml(idee.idee)}</p>
               <span class="idee-admin-contact"><strong>Contact :</strong> ${escapeHtml(idee.contact)}</span>
               <p class="idee-admin-date">${formatDate(idee.created_at)}</p>
             </div>
             <button class="idee-delete-btn" onclick="masquerIdee('${idee.id}')" aria-label="Masquer l'idée de ${escapeHtml(idee.pseudo)}">
-              🗑 Masquer
+              Masquer
             </button>
           </div>
         `).join('');
@@ -317,7 +296,6 @@
       }
     }
 
-    // ── Masquer une idée ──
     async function masquerIdee(id) {
       if (!confirm('Masquer cette idée ? Elle ne sera plus visible sur le site.')) return;
 
@@ -354,7 +332,6 @@
       });
     }
 
-    // Init
     chargerIdees();
   </script>
 </body>

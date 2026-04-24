@@ -7,17 +7,17 @@
 
 /* --- Variables --- */
 :root {
-  --color-teal:        #1a8a7a;
-  --color-teal-dark:   #156e62;
-  --color-teal-light:  #d0ede8;
-  --color-orange:      #f5a623;
-  --color-orange-light:#fff3d6;
-  --color-bg:          #e8f5f0;
+  --color-teal:        #2a9d8f;
+  --color-teal-dark:   #1d7d6f;
+  --color-teal-light:  #d8f2ec;
+  --color-orange:      #f0a030;
+  --color-orange-light:#fef5e4;
+  --color-bg:          #f2faf7;
   --color-blue-light:  #dceefb;
   --color-white:       #ffffff;
-  --color-text:        #2d2d2d;
-  --color-text-light:  #6b7c75;
-  --color-border:      #c8e0d8;
+  --color-text:        #2d3836;
+  --color-text-light:  #7a8f88;
+  --color-border:      #c4ddd6;
 
   --font-main:    'Fredoka', sans-serif;
   --font-script:  'Caveat', cursive;
@@ -27,9 +27,9 @@
   --radius-lg:  24px;
   --radius-pill: 50px;
 
-  --shadow-sm:  0 2px 8px rgba(26,138,122,0.08);
-  --shadow-md:  0 4px 20px rgba(26,138,122,0.12);
-  --shadow-lg:  0 8px 40px rgba(26,138,122,0.16);
+  --shadow-sm:  0 2px 8px rgba(42,157,143,0.08);
+  --shadow-md:  0 4px 20px rgba(42,157,143,0.12);
+  --shadow-lg:  0 8px 40px rgba(42,157,143,0.16);
 
   --max-width: 700px;
   --padding-page: 1.25rem;
@@ -112,7 +112,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   content: '';
   display: block;
   width: 48px;
-  height: 4px;
+  height: 3px;
   background: var(--color-orange);
   border-radius: 2px;
   margin: 0.5rem auto 0;
@@ -136,29 +136,32 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
+  padding: 0.7rem 1.6rem;
   border-radius: var(--radius-pill);
   font-family: var(--font-main);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   cursor: pointer;
   border: 2px solid transparent;
-  transition: all 0.2s ease;
+  transition: all 0.22s ease;
   text-decoration: none;
+  line-height: 1.2;
 }
 
 .btn-primary {
   background: var(--color-orange);
   color: var(--color-white);
   border-color: var(--color-orange);
+  box-shadow: 0 2px 8px rgba(240,160,48,0.22);
 }
 
 .btn-primary:hover {
-  background: #e09620;
-  border-color: #e09620;
+  background: #d98e22;
+  border-color: #d98e22;
   text-decoration: none;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(245,166,35,0.35);
+  box-shadow: 0 5px 16px rgba(240,160,48,0.35);
 }
 
 .btn-secondary {
@@ -172,6 +175,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   color: var(--color-white);
   text-decoration: none;
   transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(42,157,143,0.22);
 }
 
 .btn-ghost {
@@ -184,6 +188,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 
 .btn-ghost:hover {
   color: var(--color-teal-dark);
+  background: var(--color-teal-light);
   text-decoration: none;
 }
 
@@ -196,6 +201,99 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   font-weight: 500;
   background: var(--color-teal-light);
   color: var(--color-teal);
+}
+
+/* --- Composants mutualisés — pages internes --- */
+
+/* En-tête de page (teal) */
+.page-header {
+  background: var(--color-teal);
+  padding: 3rem 0 2.5rem;
+  text-align: center;
+}
+.page-header h1 {
+  color: white;
+  margin-bottom: 0.4rem;
+}
+.page-header p {
+  font-family: var(--font-script);
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Badge d'accès restreint */
+.access-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50px;
+  padding: 0.3rem 1rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.9);
+  margin-top: 0.75rem;
+}
+
+/* Bouton de déconnexion */
+.logout-btn {
+  display: block;
+  text-align: center;
+  margin: 0 auto 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-main);
+  text-decoration: underline;
+}
+.logout-btn:hover { color: var(--color-teal); }
+
+/* Bannière info/note partagée */
+.info-banner {
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.info-banner.teal {
+  background: var(--color-teal-light);
+  border: 2px solid var(--color-teal);
+  color: var(--color-text);
+}
+
+.info-banner.orange {
+  background: var(--color-orange-light);
+  border: 2px solid var(--color-orange);
+  color: var(--color-text);
+}
+
+/* Icône décorative ronde (remplace les emoji dans les cartes) */
+.icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon-circle.teal {
+  background: var(--color-teal-light);
+  color: var(--color-teal);
+}
+.icon-circle.orange {
+  background: var(--color-orange-light);
+  color: var(--color-orange);
+}
+.icon-circle svg {
+  width: 20px;
+  height: 20px;
 }
 
 
@@ -249,7 +347,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 
 
 /* =============================================
-   FOOTER SITE — style inspiré du footer carte
+   FOOTER SITE
    ============================================= */
 
 .site-footer {

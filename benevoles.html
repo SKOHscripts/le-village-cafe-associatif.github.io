@@ -10,27 +10,6 @@
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/nav.css">
   <style>
-    .page-header {
-      background: var(--color-teal);
-      padding: 3rem 0 2.5rem;
-      text-align: center;
-    }
-    .page-header h1 { color: white; margin-bottom: 0.4rem; }
-    .page-header p  { font-family: var(--font-script); font-size: 1.2rem; color: rgba(255,255,255,0.85); }
-
-    .access-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 50px;
-      padding: 0.3rem 1rem;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.9);
-      margin-top: 0.75rem;
-    }
-
     /* Bloc principal créneaux */
     .section-creneaux { padding: 2.5rem 0 2rem; }
 
@@ -41,7 +20,6 @@
       padding: 2rem;
       text-align: center;
     }
-    .creneaux-icon { font-size: 3rem; margin-bottom: 1rem; }
     .creneaux-card h2 { margin-bottom: 0.75rem; }
     .creneaux-card h2::after { display: none; }
     .creneaux-card p { color: var(--color-text-light); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
@@ -64,11 +42,6 @@
       gap: 1rem;
       align-items: flex-start;
     }
-    .info-card-icon {
-      font-size: 1.5rem;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
     .info-card h3 {
       font-size: 1rem;
       color: var(--color-teal);
@@ -84,40 +57,19 @@
     /* Lien vers espace CA si niveau 2+ */
     .ca-link-banner {
       display: none;
-      background: var(--color-teal-light);
-      border: 2px solid var(--color-teal);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
       margin-bottom: 2rem;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.92rem;
     }
     body.level-2 .ca-link-banner,
     body.level-3 .ca-link-banner { display: flex; }
-
-    .logout-btn {
-      display: block;
-      text-align: center;
-      margin: 0 auto 1rem;
-      font-size: 0.8rem;
-      color: var(--color-text-light);
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-family: var(--font-main);
-      text-decoration: underline;
-    }
-    .logout-btn:hover { color: var(--color-teal); }
   </style>
 </head>
 <body>
 
   <div class="page-header">
     <div class="container">
-      <h1>Espace Bénévoles 🤝</h1>
+      <h1>Espace Bénévoles</h1>
       <p>merci pour votre engagement au Village !</p>
-      <div class="access-badge">🔒 Accès bénévoles</div>
+      <div class="access-badge">Accès bénévoles</div>
     </div>
   </div>
 
@@ -125,22 +77,20 @@
     <div class="container">
 
       <!-- Lien vers espace CA si niveau 2+ -->
-      <div class="ca-link-banner" role="note">
-        <span aria-hidden="true">⚙️</span>
+      <div class="ca-link-banner info-banner teal" role="note">
         <span>Vous avez également accès à l'<a href="ca.html"><strong>Espace CA</strong></a>.</span>
       </div>
 
       <!-- CRÉNEAUX -->
       <section class="section-creneaux fade-up fade-up-1" aria-labelledby="creneaux-title">
         <div class="creneaux-card">
-          <div class="creneaux-icon" aria-hidden="true">📋</div>
           <h2 id="creneaux-title">Les créneaux de comptoir</h2>
           <p>
             Consultez les créneaux disponibles et inscrivez-vous directement dans le tableau partagé.
             Cet outil est géré par <strong>Corinne</strong>, responsable des bénévoles.
           </p>
           <a href="https://docs.google.com/spreadsheets/d/ID_SHEETS" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            📅 Voir les créneaux disponibles
+            Voir les créneaux disponibles
           </a>
           <p style="margin-top:1rem; font-size:0.82rem; color:var(--color-text-light);">
             S'ouvre dans Google Sheets — connectez-vous avec votre compte Google.
@@ -154,7 +104,9 @@
         <div class="info-grid">
 
           <div class="info-card">
-            <div class="info-card-icon" aria-hidden="true">🏠</div>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2.5L2 9.5V18h5.5v-5h5v5H18V9.5L10 2.5z"/></svg>
+            </div>
             <div>
               <h3>Accès au local</h3>
               <p>Le local est situé au <strong>8 rue Chalumeaux, Lyon 8e</strong>. Le code d'entrée et les clés vous sont remis lors de votre intégration par Corinne.</p>
@@ -162,7 +114,9 @@
           </div>
 
           <div class="info-card">
-            <div class="info-card-icon" aria-hidden="true">☕</div>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v1H3a1 1 0 000 2h1v5h12v-5h1a1 1 0 100-2h-1V8a6 6 0 00-6-6zm0 2a4 4 0 014 4v1H6V8a4 4 0 014-4z"/></svg>
+            </div>
             <div>
               <h3>Ouverture du comptoir</h3>
               <p>
@@ -173,7 +127,9 @@
           </div>
 
           <div class="info-card">
-            <div class="info-card-icon" aria-hidden="true">💰</div>
+            <div class="icon-circle orange" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a1 1 0 100-2 1 1 0 000 2z"/></svg>
+            </div>
             <div>
               <h3>La caisse</h3>
               <p>
@@ -184,7 +140,9 @@
           </div>
 
           <div class="info-card">
-            <div class="info-card-icon" aria-hidden="true">📞</div>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+            </div>
             <div>
               <h3>Contacts utiles</h3>
               <p>
@@ -195,7 +153,9 @@
           </div>
 
           <div class="info-card">
-            <div class="info-card-icon" aria-hidden="true">📋</div>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
+            </div>
             <div>
               <h3>Règlement intérieur</h3>
               <p>
@@ -216,10 +176,7 @@
   <script src="assets/js/components.js"></script>
   <script src="assets/js/auth.js"></script>
   <script>
-    // Protéger la page — niveau 1 minimum
     requireAuth(1);
-
-    // Appliquer la classe de niveau sur body pour afficher les liens contextuels
     const level = getAuthLevel();
     if (level >= 2) document.body.classList.add('level-2');
     if (level >= 3) document.body.classList.add('level-3');
