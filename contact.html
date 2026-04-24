@@ -14,24 +14,6 @@
   <link rel="stylesheet" href="assets/css/nav.css">
 
   <style>
-    .page-header {
-      background: var(--color-teal);
-      color: white;
-      padding: 3rem 0 2.5rem;
-      text-align: center;
-    }
-
-    .page-header h1 {
-      color: white;
-      margin-bottom: 0.5rem;
-    }
-
-    .page-header p {
-      font-family: var(--font-script);
-      font-size: 1.2rem;
-      opacity: 0.85;
-    }
-
     .contact-grid {
       display: flex;
       flex-direction: column;
@@ -67,13 +49,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
       flex-shrink: 0;
       background: var(--color-bg);
+      color: var(--color-teal);
     }
 
-    .contact-card-icon.teal { background: var(--color-teal-light); }
-    .contact-card-icon.orange { background: var(--color-orange-light); }
+    .contact-card-icon svg { width: 26px; height: 26px; }
+    .contact-card-icon.teal { background: var(--color-teal-light); color: var(--color-teal); }
+    .contact-card-icon.orange { background: var(--color-orange-light); color: var(--color-orange); }
+    .contact-card-icon.fb { background: #e8f0fe; }
+    .contact-card-icon.ig { background: #fce4ec; }
 
     .contact-card-body {
       flex: 1;
@@ -136,7 +121,7 @@
   <div class="page-header">
     <div class="container">
       <h1>Contact</h1>
-      <p>On est là pour vous accueillir 😊</p>
+      <p>on est là pour vous accueillir</p>
     </div>
   </div>
 
@@ -147,7 +132,9 @@
 
         <!-- Adresse -->
         <div class="contact-card" style="cursor:default;">
-          <div class="contact-card-icon teal">📍</div>
+          <div class="contact-card-icon teal">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+          </div>
           <div class="contact-card-body">
             <p class="contact-card-label">Adresse</p>
             <p class="contact-card-value">8 rue Chalumeaux</p>
@@ -157,7 +144,9 @@
 
         <!-- Email -->
         <a href="mailto:projetcafeassociatif@gmail.com" class="contact-card">
-          <div class="contact-card-icon orange">✉️</div>
+          <div class="contact-card-icon orange">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+          </div>
           <div class="contact-card-body">
             <p class="contact-card-label">Email</p>
             <p class="contact-card-value">projetcafeassociatif@gmail.com</p>
@@ -168,7 +157,7 @@
 
         <!-- Facebook -->
         <a href="https://www.facebook.com/profile.php?id=61574530611496" target="_blank" rel="noopener noreferrer" class="contact-card">
-          <div class="contact-card-icon" style="background:#e8f0fe;">
+          <div class="contact-card-icon fb">
             <svg width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
               <rect width="48" height="48" rx="10" fill="#1877F2"/>
               <path d="M33 24C33 19.029 28.971 15 24 15C19.029 15 15 19.029 15 24C15 28.482 18.157 32.215 22.359 33V26.578H19.938V24H22.359V22.008C22.359 19.619 23.783 18.297 25.957 18.297C27 18.297 28.09 18.484 28.09 18.484V20.828H26.887C25.699 20.828 25.313 21.597 25.313 22.385V24H27.979L27.543 26.578H25.313V33C29.843 32.215 33 28.482 33 24Z" fill="white"/>
@@ -184,7 +173,7 @@
 
         <!-- Instagram -->
         <a href="https://www.instagram.com/cafe_associatif_le_village" target="_blank" rel="noopener noreferrer" class="contact-card">
-          <div class="contact-card-icon" style="background:#fce4ec;">
+          <div class="contact-card-icon ig">
             <svg width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
               <defs>
                 <radialGradient id="ig2" cx="30%" cy="107%" r="150%">

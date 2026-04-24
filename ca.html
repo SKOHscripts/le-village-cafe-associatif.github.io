@@ -10,26 +10,6 @@
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/nav.css">
   <style>
-    .page-header {
-      background: var(--color-teal);
-      padding: 3rem 0 2.5rem;
-      text-align: center;
-    }
-    .page-header h1 { color: white; margin-bottom: 0.4rem; }
-    .page-header p  { font-family: var(--font-script); font-size: 1.2rem; color: rgba(255,255,255,0.85); }
-    .access-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 50px;
-      padding: 0.3rem 1rem;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.9);
-      margin-top: 0.75rem;
-    }
-
     .section-outils { padding: 2.5rem 0 2rem; }
 
     .outils-grid {
@@ -56,10 +36,6 @@
       align-items: center;
       gap: 0.85rem;
     }
-    .outil-icon {
-      font-size: 2rem;
-      flex-shrink: 0;
-    }
     .outil-titre {
       font-family: var(--font-main);
       font-weight: 600;
@@ -75,14 +51,7 @@
     /* Lien vers espace admin si niveau 3 */
     .admin-link-banner {
       display: none;
-      background: var(--color-orange-light);
-      border: 2px solid var(--color-orange);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
       margin-bottom: 2rem;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.92rem;
     }
     body.level-3 .admin-link-banner { display: flex; }
 
@@ -115,7 +84,6 @@
       transform: translateY(-2px);
       text-decoration: none;
     }
-    .lien-card-icon { font-size: 1.75rem; }
     .lien-card-label {
       font-weight: 600;
       font-size: 0.9rem;
@@ -125,29 +93,15 @@
       font-size: 0.78rem;
       color: var(--color-text-light);
     }
-
-    .logout-btn {
-      display: block;
-      text-align: center;
-      margin: 0 auto 1rem;
-      font-size: 0.8rem;
-      color: var(--color-text-light);
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-family: var(--font-main);
-      text-decoration: underline;
-    }
-    .logout-btn:hover { color: var(--color-teal); }
   </style>
 </head>
 <body>
 
   <div class="page-header">
     <div class="container">
-      <h1>Espace CA ⚙️</h1>
+      <h1>Espace CA</h1>
       <p>outils de gestion du Café Associatif Le Village</p>
-      <div class="access-badge">🔒 Accès membres CA</div>
+      <div class="access-badge">Accès membres CA</div>
     </div>
   </div>
 
@@ -155,8 +109,7 @@
     <div class="container">
 
       <!-- Lien espace admin si niveau 3 -->
-      <div class="admin-link-banner" role="note">
-        <span aria-hidden="true">🔐</span>
+      <div class="admin-link-banner info-banner orange" role="note">
         <span>Vous avez également accès à l'<a href="ca-admin.html"><strong>Espace Admin</strong></a> (modifier la carte, modérer la boîte à idées).</span>
       </div>
 
@@ -168,7 +121,9 @@
           <!-- Paheko -->
           <div class="outil-card">
             <div class="outil-header">
-              <span class="outil-icon" aria-hidden="true">📊</span>
+              <div class="icon-circle teal" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+              </div>
               <span class="outil-titre">Paheko</span>
             </div>
             <p class="outil-desc">
@@ -183,7 +138,9 @@
           <!-- Script stocks Corentin -->
           <div class="outil-card" style="border-left-color: var(--color-orange);">
             <div class="outil-header">
-              <span class="outil-icon" aria-hidden="true">📦</span>
+              <div class="icon-circle orange" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+              </div>
               <span class="outil-titre">Rapport des stocks</span>
             </div>
             <p class="outil-desc">
@@ -202,22 +159,30 @@
         <h2 class="section-title" id="liens-title">Liens rapides</h2>
         <div class="liens-grid">
           <a href="benevoles.html" class="lien-card">
-            <span class="lien-card-icon" aria-hidden="true">🤝</span>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg>
+            </div>
             <span class="lien-card-label">Espace bénévoles</span>
             <span class="lien-card-sub">Créneaux & infos pratiques</span>
           </a>
           <a href="agenda.html" class="lien-card">
-            <span class="lien-card-icon" aria-hidden="true">📅</span>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h1a2 2 0 012 2v11a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zm-1 6a1 1 0 000 2h8a1 1 0 100-2H5z" clip-rule="evenodd"/></svg>
+            </div>
             <span class="lien-card-label">Agenda</span>
             <span class="lien-card-sub">Événements du Village</span>
           </a>
           <a href="boite-a-idees.html" class="lien-card">
-            <span class="lien-card-icon" aria-hidden="true">💡</span>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.298.025-.597.025-.9C12.025 11.4 11.1 10 10 10S7.975 11.4 7.975 13.1c0 .303.01.602.025.9H12z"/></svg>
+            </div>
             <span class="lien-card-label">Boîte à idées</span>
             <span class="lien-card-sub">Idées du quartier</span>
           </a>
           <a href="carte.html" class="lien-card">
-            <span class="lien-card-icon" aria-hidden="true">🍺</span>
+            <div class="icon-circle teal" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1h8V3a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+            </div>
             <span class="lien-card-label">La Carte</span>
             <span class="lien-card-sub">Boissons & en-cas</span>
           </a>
