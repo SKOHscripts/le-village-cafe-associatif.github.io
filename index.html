@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille.">
+  <title>Le Village — Café Associatif · Lyon 8e</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+
+  <style>
+    /* ---- HERO ---- */
+    .hero {
+      position: relative;
+      height: 75vh;
+      min-height: 420px;
+      max-height: 640px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+    }
+
+    /* Dégradé bas → opacité pour lisibilité */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0) 30%,
+        rgba(232,245,240,0.75) 80%,
+        rgba(232,245,240,1) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 2rem var(--padding-page) 2.5rem;
+    }
+
+    .hero-logo-wrap {
+      display: inline-flex;
+      flex-direction: column;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.6rem 1rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-logo-top {
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-teal);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.1rem;
+    }
+
+    .hero-logo-name {
+      font-family: var(--font-main);
+      font-weight: 600;
+      font-size: 2rem;
+      color: var(--color-teal);
+      line-height: 1.05;
+    }
+
+    .hero-logo-name span {
+      color: var(--color-orange);
+    }
+
+    .hero-logo-baseline {
+      font-family: var(--font-script);
+      font-size: 1rem;
+      color: var(--color-text-light);
+      margin-top: 0.3rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-img {
+        object-position: center center;
+      }
+
+      .hero-logo-name {
+        font-size: 2.6rem;
+      }
+    }
+
+    /* ---- DESCRIPTION ---- */
+    .section-description {
+      padding: 2.5rem 0 2rem;
+    }
+
+    .description-text {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: var(--color-text);
+      text-align: center;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    /* ---- HORAIRES ---- */
+    .section-horaires {
+      padding: 0 0 2.5rem;
+    }
+
+    .horaires-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .horaires-header {
+      background: var(--color-teal);
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .horaires-header h2 {
+      color: var(--color-white);
+      font-size: 1.15rem;
+      margin: 0;
+    }
+
+    .horaires-header h2::after {
+      display: none;
+    }
+
+    .horaires-icon {
+      font-size: 1.4rem;
+    }
+
+    .horaires-list {
+      padding: 0.5rem 0;
+    }
+
+    .horaire-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+      gap: 1rem;
+    }
+
+    .horaire-item:last-child {
+      border-bottom: none;
+    }
+
+    .horaire-jour {
+      font-weight: 600;
+      color: var(--color-teal);
+      font-size: 1.05rem;
+    }
+
+    .horaire-heures {
+      font-family: var(--font-script);
+      font-size: 1.2rem;
+      color: var(--color-text);
+    }
+
+    /* ---- NOTICE ADHÉSION ---- */
+    .notice-adhesion {
+      background: var(--color-orange-light);
+      border: 2px solid var(--color-orange);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin: 0 0 2.5rem;
+    }
+
+    .notice-adhesion-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .notice-adhesion p {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--color-text);
+    }
+
+    .notice-adhesion strong {
+      color: var(--color-teal);
+    }
+
+    /* ---- CARTE ---- */
+    .section-carte {
+      padding: 0 0 2.5rem;
+    }
+
+    .carte-wrapper {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .carte-wrapper iframe {
+      display: block;
+      width: 100%;
+      height: 320px;
+      border: none;
+    }
+
+    @media (min-width: 768px) {
+      .carte-wrapper iframe {
+        height: 400px;
+      }
+    }
+
+    /* ---- RÉSEAUX SOCIAUX ---- */
+    .section-reseaux {
+      padding: 0 0 3rem;
+    }
+
+    .reseaux-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .reseau-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1.5rem 1rem;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+    }
+
+    .reseau-card:hover {
+      border-color: var(--color-teal-light);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .reseau-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .reseau-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--color-teal);
+    }
+
+    .reseau-handle {
+      font-size: 0.82rem;
+      color: var(--color-text-light);
+    }
+
+    /* ---- CONTACT EMAIL ---- */
+    .section-email {
+      padding: 0 0 1rem;
+      text-align: center;
+    }
+
+    .email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      color: var(--color-teal);
+      font-weight: 500;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-pill);
+      border: 2px solid var(--color-teal-light);
+      transition: all 0.2s ease;
+    }
+
+    .email-link:hover {
+      background: var(--color-teal);
+      color: var(--color-white);
+      border-color: var(--color-teal);
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- ===== MAIN ===== -->
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Illustration du café">
+      <img
+        src="assets/images/aquarelle.jpeg"
+        alt="Illustration du Café Associatif Le Village — terrasse ensoleillée avec arbres et habitants du quartier"
+        class="hero-img"
+        loading="eager"
+      >
+      <div class="hero-content">
+        <div class="hero-logo-wrap fade-up fade-up-1">
+          <span class="hero-logo-top">Café Associatif</span>
+          <span class="hero-logo-name">le <span>Village</span></span>
+          <span class="hero-logo-baseline">grand trou · moulin à vent · petite guille</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <!-- DESCRIPTION -->
+      <section class="section-description fade-up fade-up-2" aria-labelledby="desc-title">
+        <p class="description-text" id="description-text">
+          <!-- Chargé depuis data/contenu.json -->
+        </p>
+      </section>
+
+      <!-- HORAIRES -->
+      <section class="section-horaires fade-up fade-up-3" aria-labelledby="horaires-title">
+        <div class="horaires-card">
+          <div class="horaires-header">
+            <span class="horaires-icon" aria-hidden="true">🕐</span>
+            <h2 id="horaires-title">Horaires d'ouverture</h2>
+          </div>
+          <ul class="horaires-list" id="horaires-list">
+            <li class="horaire-item">
+              <span class="horaire-jour">Mardis</span>
+              <span class="horaire-heures">14h30 – 19h00</span>
+            </li>
+            <li class="horaire-item">
+              <span class="horaire-jour">Vendredis</span>
+              <span class="horaire-heures">16h00 – 21h00</span>
+            </li>
+            <li class="horaire-item">
+              <span class="horaire-jour">Dimanches</span>
+              <span class="horaire-heures">10h00 – 13h00</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- NOTICE ADHÉSION -->
+      <div class="notice-adhesion fade-up fade-up-3" role="note">
+        <span class="notice-adhesion-icon" aria-hidden="true">ℹ️</span>
+        <p>
+          Le Village est un <strong>café associatif</strong>. L'adhésion est obligatoire pour la vente d'alcool.
+          Non-adhérents : <strong>+1€ par consommation</strong>. Adhésions disponibles sur place tous les jours d'ouverture.
+        </p>
+      </div>
+
+      <!-- CARTE GOOGLE MAPS -->
+      <section class="section-carte fade-up fade-up-4" aria-labelledby="carte-title">
+        <h2 class="section-title" id="carte-title">Où nous trouver</h2>
+        <p class="text-center mb-3" style="color: var(--color-text-light); font-size: 0.95rem;">
+          8 rue Chalumeaux, Lyon 8e
+        </p>
+        <div class="carte-wrapper">
+          <iframe
+            src="https://cartes.app/?allez=Café Associatif Le Village|n13308296369|4.85404|45.73579#14.35/45.73606/4.85336"
+            title="Carte — Café Associatif Le Village, 8 rue Chalumeaux Lyon 8e"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </section>
+
+      <!-- RÉSEAUX SOCIAUX -->
+      <section class="section-reseaux fade-up fade-up-4" aria-labelledby="reseaux-title">
+        <h2 class="section-title" id="reseaux-title">Suivez-nous</h2>
+        <div class="reseaux-grid">
+
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/profile.php?id=61574530611496" target="_blank" rel="noopener noreferrer" class="reseau-card" aria-label="Notre page Facebook">
+            <svg class="reseau-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="48" height="48" rx="12" fill="#1877F2"/>
+              <path d="M33 24C33 19.029 28.971 15 24 15C19.029 15 15 19.029 15 24C15 28.482 18.157 32.215 22.359 33V26.578H19.938V24H22.359V22.008C22.359 19.619 23.783 18.297 25.957 18.297C27 18.297 28.09 18.484 28.09 18.484V20.828H26.887C25.699 20.828 25.313 21.597 25.313 22.385V24H27.979L27.543 26.578H25.313V33C29.843 32.215 33 28.482 33 24Z" fill="white"/>
+            </svg>
+            <span class="reseau-name">Facebook</span>
+            <span class="reseau-handle">Café associatif Le Village</span>
+          </a>
+
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/cafe_associatif_le_village" target="_blank" rel="noopener noreferrer" class="reseau-card" aria-label="Notre compte Instagram">
+            <svg class="reseau-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
+                  <stop offset="0%" stop-color="#fdf497"/>
+                  <stop offset="10%" stop-color="#fdf497"/>
+                  <stop offset="50%" stop-color="#fd5949"/>
+                  <stop offset="68%" stop-color="#d6249f"/>
+                  <stop offset="100%" stop-color="#285AEB"/>
+                </radialGradient>
+              </defs>
+              <rect width="48" height="48" rx="12" fill="url(#ig-grad)"/>
+              <rect x="15" y="15" width="18" height="18" rx="5" stroke="white" stroke-width="2.2" fill="none"/>
+              <circle cx="24" cy="24" r="4.5" stroke="white" stroke-width="2.2" fill="none"/>
+              <circle cx="30.5" cy="17.5" r="1.3" fill="white"/>
+            </svg>
+            <span class="reseau-name">Instagram</span>
+            <span class="reseau-handle">@cafe_associatif_le_village</span>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- EMAIL -->
+      <section class="section-email fade-up fade-up-5" aria-label="Contact par email">
+        <a href="mailto:projetcafeassociatif@gmail.com" class="email-link">
+          <span aria-hidden="true">✉️</span>
+          projetcafeassociatif@gmail.com
+        </a>
+      </section>
+
+    </div><!-- /container -->
+  </main>
+
+
+  <script src="assets/js/components.js"></script>
+  <script>
+    // Charger la description depuis data/contenu.json
+    fetch('data/contenu.json')
+      .then(r => r.json())
+      .then(data => {
+        const el = document.getElementById('description-text');
+        if (el && data.description) {
+          el.textContent = data.description;
+        }
+      })
+      .catch(() => {
+        // Fallback si fetch échoue (ex: ouverture en local sans serveur)
+        const el = document.getElementById('description-text');
+        if (el) {
+          el.textContent = "Le Café Associatif Le Village est un espace ouvert à tous pour se rencontrer, partager et tisser du lien dans le quartier.";
+        }
+      });
+  </script>
+
+</body>
+</html>
