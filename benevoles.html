@@ -59,8 +59,7 @@
       display: none;
       margin-bottom: 2rem;
     }
-    body.level-2 .ca-link-banner,
-    body.level-3 .ca-link-banner { display: flex; }
+    body.level-2 .ca-link-banner { display: flex; }
   </style>
 </head>
 <body>
@@ -179,7 +178,6 @@
     requireAuth(1);
     const level = getAuthLevel();
     if (level >= 2) document.body.classList.add('level-2');
-    if (level >= 3) document.body.classList.add('level-3');
   </script>
 </body>
 </html>

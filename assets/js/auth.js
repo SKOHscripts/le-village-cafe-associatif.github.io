@@ -5,8 +5,7 @@
 
    NIVEAUX :
    1 = Bénévoles
-   2 = CA standard (inclut niveau 1)
-   3 = CA admin    (inclut niveaux 1 + 2)
+   2 = CA (inclut niveau 1)
 
    CHANGER UN CODE :
    1. Générer le hash SHA-256 du nouveau code sur https://emn178.github.io/online-tools/sha256.html
@@ -16,12 +15,9 @@
    ============================================= */
 
 const AUTH_HASHES = {
-  1: '5cd24c2cb86ddc9169b6be3c8453ed5719d56f483e402521da135519a58fd583', 
-  2: '23ac212e4dc1b89813894753aa9d6951b0ecd02d3df52ef1504860e0845849ee', 
-  3: '71d8554b983043980cc1fd2139ac11a4df7b7bf5612d1f3dd00311ea8537b108', 
+  1: '5cd24c2cb86ddc9169b6be3c8453ed5719d56f483e402521da135519a58fd583',
+  2: '23ac212e4dc1b89813894753aa9d6951b0ecd02d3df52ef1504860e0845849ee',
 };
-
-const SUPABASE_SERVICE_KEY_ENCRYPTED = '';
 
 // ── Hasher une chaîne en SHA-256 ──────────────────────────────
 const SALT = 'levillage-lyon8-2026';
@@ -52,11 +48,6 @@ function getAuthLevel() {
   return parseInt(sessionStorage.getItem('auth_level') || '0');
 }
 
-// ── Exposer la clé service si CA admin authentifié ────────────
-if (isAuthenticated(3)) {
-  window.CA_ADMIN_SERVICE_KEY = SUPABASE_SERVICE_KEY_ENCRYPTED;
-}
-
 // ── Afficher la modale de connexion ──────────────────────────
 function showAuthModal(levelRequired, onSuccess) {
   // Supprimer une modale existante
@@ -64,9 +55,8 @@ function showAuthModal(levelRequired, onSuccess) {
   if (existing) existing.remove();
 
   const labels = {
-    1: { titre: 'Espace bénévoles',  icon: '🤝', desc: 'Entrez le code bénévoles' },
-    2: { titre: 'Espace CA',         icon: '⚙️', desc: 'Entrez le code CA' },
-    3: { titre: 'Accès admin',       icon: '🔐', desc: 'Entrez le code CA admin' },
+    1: { titre: 'Espace bénévoles', icon: '🤝', desc: 'Entrez le code bénévoles' },
+    2: { titre: 'Espace CA',        icon: '⚙️', desc: 'Entrez le code CA' },
   };
   const info = labels[levelRequired] || labels[1];
 
@@ -241,13 +231,9 @@ function showAuthModal(levelRequired, onSuccess) {
     const hash = await sha256double(code);
 
     // Vérifier du niveau le plus élevé au plus bas
-    for (const level of [3, 2, 1]) {
+    for (const level of [2, 1]) {
       if (hash === AUTH_HASHES[level] && level >= levelRequired) {
-        // Succès
         sessionStorage.setItem('auth_level', level.toString());
-        if (level === 3) {
-          window.CA_ADMIN_SERVICE_KEY = SUPABASE_SERVICE_KEY_ENCRYPTED;
-        }
         modal.remove();
         if (onSuccess) onSuccess(level);
         return;
@@ -300,6 +286,5 @@ function requireAuth(levelRequired, redirectOnFail = false) {
 // ── Déconnexion ──
 function logout() {
   sessionStorage.removeItem('auth_level');
-  window.CA_ADMIN_SERVICE_KEY = null;
   window.location.href = 'index.html';
 }

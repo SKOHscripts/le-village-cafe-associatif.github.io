@@ -48,13 +48,6 @@
       line-height: 1.6;
     }
 
-    /* Lien vers espace admin si niveau 3 */
-    .admin-link-banner {
-      display: none;
-      margin-bottom: 2rem;
-    }
-    body.level-3 .admin-link-banner { display: flex; }
-
     .section-liens { padding: 0 0 3rem; }
 
     .liens-grid {
@@ -108,11 +101,6 @@
   <main id="main-content">
     <div class="container">
 
-      <!-- Lien espace admin si niveau 3 -->
-      <div class="admin-link-banner info-banner orange" role="note">
-        <span>Vous avez également accès à l'<a href="ca-admin.html"><strong>Espace Admin</strong></a>, avec un lien direct vers la base de données Supabase.</span>
-      </div>
-
       <!-- OUTILS PRINCIPAUX -->
       <section class="section-outils fade-up fade-up-1" aria-labelledby="outils-title">
         <h2 class="section-title" id="outils-title">Vos outils</h2>
@@ -148,6 +136,22 @@
             </p>
             <a href="https://LIEN_SCRIPT_CORENTIN" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="align-self:flex-start;">
               Lancer le script →
+            </a>
+          </div>
+
+          <!-- Base de données Supabase -->
+          <div class="outil-card" style="border-left-color: var(--color-teal-dark, #156e62);">
+            <div class="outil-header">
+              <div class="icon-circle teal" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z"/><path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z"/><path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z"/></svg>
+              </div>
+              <span class="outil-titre">Base de données</span>
+            </div>
+            <p class="outil-desc">
+              Accès direct au table editor Supabase — voir et éditer les données du site (boîte à idées, etc.).
+            </p>
+            <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;">
+              Ouvrir Supabase →
             </a>
           </div>
 
@@ -198,8 +202,6 @@
   <script src="assets/js/auth.js"></script>
   <script>
     requireAuth(2);
-    const level = getAuthLevel();
-    if (level >= 3) document.body.classList.add('level-3');
   </script>
 </body>
 </html>
