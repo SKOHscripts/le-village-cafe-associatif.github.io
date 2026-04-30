@@ -188,46 +188,7 @@
       text-align: right;
     }
 
-    /* Bouton supprimer (CA admin) */
-    .postit-delete {
-      display: none;
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(220,38,38,0.1);
-      border: none;
-      border-radius: 50%;
-      width: 26px;
-      height: 26px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      color: #dc2626;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-    }
-
-    .postit-delete:hover { background: rgba(220,38,38,0.2); }
-
-    /* Quand le mode modération est actif */
-    body.mode-moderation .postit-delete { display: flex; }
-
-    .moderation-banner {
-      display: none;
-      background: #fef3c7;
-      border: 2px solid var(--color-orange);
-      border-radius: var(--radius-md);
-      padding: 0.75rem 1.25rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-      color: var(--color-text);
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    body.mode-moderation .moderation-banner { display: flex; }
-
-    .postits-empty {
+.postits-empty {
       grid-column: 1 / -1;
       text-align: center;
       padding: 3rem 1rem;
@@ -396,10 +357,6 @@
       <!-- POST-ITS -->
       <section class="section-postits fade-up fade-up-2" aria-labelledby="postits-title">
 
-        <div class="moderation-banner" aria-live="polite">
-          <span>Mode modération actif — cliquez sur × pour masquer une idée.</span>
-        </div>
-
         <div class="postits-header">
           <h2 id="postits-title" style="margin:0;">Les idées du Village</h2>
           <span class="postits-count" id="postits-count"></span>
@@ -459,7 +416,6 @@
   </main>
 
   <script src="assets/js/components.js"></script>
-  <script src="assets/js/auth.js"></script>
   <script>
     // ── Config Supabase ──────────────────────────────────────
     const SUPABASE_URL     = 'https://evifxtecjhemmaxaiozt.supabase.co';
@@ -507,7 +463,6 @@
 
         grid.innerHTML = data.map(idee => `
           <div class="postit" data-id="${idee.id}">
-            <button class="postit-delete" onclick="supprimerIdee('${idee.id}')" aria-label="Supprimer cette idée" title="Masquer">✕</button>
             <p class="postit-pseudo">${escapeHtml(idee.pseudo)}</p>
             <p class="postit-texte">${escapeHtml(idee.idee)}</p>
             <p class="postit-date">${formatDate(idee.created_at)}</p>
@@ -518,30 +473,6 @@
         console.error('Erreur chargement idées:', err);
         if (grid) grid.innerHTML = '<p class="postits-empty">Impossible de charger les idées pour le moment.</p>';
       }
-    }
-
-    // ── Supprimer une idée (CA admin) ────────────────────────
-    async function supprimerIdee(id) {
-      if (!confirm('Masquer cette idée ?')) return;
-      const serviceKey = window.SUPABASE_SERVICE_KEY;
-      if (!serviceKey) return;
-      const sbAdmin = window.supabase.createClient(SUPABASE_URL, serviceKey);
-      try {
-        const { error } = await sbAdmin.from('idees').update({ visible: false }).eq('id', id);
-        if (error) throw error;
-        const el = document.querySelector(`.postit[data-id="${id}"]`);
-        if (el) el.remove();
-        await chargerIdees();
-      } catch (err) {
-        console.error('Erreur suppression:', err);
-        alert('Impossible de supprimer cette idée.');
-      }
-    }
-
-    // ── Mode modération ──────────────────────────────────────
-    function activerModeration(serviceKey) {
-      window.SUPABASE_SERVICE_KEY = serviceKey;
-      document.body.classList.add('mode-moderation');
     }
 
     // ── Suggestions site → GitHub ────────────────────────────
@@ -702,11 +633,6 @@
 
       // Charger les idées
       chargerIdees();
-
-      // Activer modération si CA admin
-      if (typeof isAuthenticated === 'function' && isAuthenticated(3)) {
-        if (window.CA_ADMIN_SERVICE_KEY) activerModeration(window.CA_ADMIN_SERVICE_KEY);
-      }
     });
 
   </script>

@@ -129,54 +129,6 @@
       font-weight: 800;
     }
 
-    /* ── BARRE ÉDITION ── */
-    .edit-bar {
-      margin: 14px 20px 0;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    /* Bouton édition — caché par défaut, visible si CA admin authentifié */
-    .btn-edit-wrap {
-      display: none;
-    }
-    body.ca-admin-auth .btn-edit-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn-carte {
-      border: none;
-      border-radius: 100px;
-      padding: 8px 20px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: all 0.18s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .btn-edit {
-      background: var(--teal);
-      color: white;
-    }
-    .btn-edit:hover { background: #23887a; transform: scale(1.03); }
-    .btn-edit.active { background: var(--orange); color: var(--text); }
-
-    .add-hint {
-      font-size: 0.75rem;
-      color: var(--text-lt);
-      font-style: italic;
-      font-family: 'Nunito', sans-serif;
-      display: none;
-    }
-
     /* ── GRILLE ── */
     .grid {
       display: grid;
@@ -210,23 +162,7 @@
       align-items: center;
       gap: 7px;
     }
-    .sec-add-btn {
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: white;
-      border-radius: 100px;
-      padding: 3px 10px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.72rem;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: none;
-    }
-    .sec-add-btn:hover { background: rgba(255,255,255,0.32); }
-    .editMode .sec-add-btn { display: block; }
-
-    .sec-sub {
+.sec-sub {
       background: var(--teal-pale);
       padding: 6px 16px;
       font-family: 'Fredoka', sans-serif;
@@ -261,13 +197,7 @@
       font-family: 'Nunito', sans-serif;
       display: block;
     }
-    .item-name[contenteditable="true"] {
-      outline: none;
-      border-bottom: 1.5px dashed var(--teal);
-      padding-bottom: 1px;
-      cursor: text;
-    }
-    .item-desc {
+.item-desc {
       font-size: 0.73rem;
       color: var(--text-lt);
       display: block;
@@ -294,32 +224,8 @@
       text-align: center;
       white-space: nowrap;
     }
-    .price[contenteditable="true"] {
-      cursor: text;
-      border-color: var(--teal-mid);
-      background: white;
-      box-shadow: 0 0 0 3px rgba(42,157,143,0.12);
-      outline: none;
-    }
-    .del-btn {
-      background: #ffe0e0;
-      border: none;
-      color: #e05252;
-      border-radius: 50%;
-      width: 22px; height: 22px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.15s;
-      font-weight: 700;
-    }
-    .del-btn:hover { background: #e05252; color: white; }
-    .editMode .del-btn { display: flex; }
 
-    /* ── FOOTER carte ── */
+/* ── FOOTER carte ── */
     .carte-footer {
       margin: 0 20px 24px;
       background: white;
@@ -413,72 +319,60 @@
             <span class="adh-text">Tarifs <em>adhérent·es</em> — Non membre ? <em>+1 € par boisson.</em> Adhésions disponibles tous nos jours d'ouverture.</span>
           </div>
 
-          <!-- BARRE ÉDITION — visible uniquement pour le CA admin -->
-          <div class="edit-bar">
-            <div class="btn-edit-wrap">
-              <button class="btn-carte btn-edit" id="editBtn" onclick="toggleEdit()">Modifier les prix &amp; noms</button>
-              <span class="add-hint" id="addHint">Cliquez sur <strong>+ Ajouter</strong> dans chaque section pour ajouter un article</span>
-            </div>
-          </div>
-
           <!-- GRILLE -->
           <div class="grid">
 
             <div class="sec">
               <div class="sec-head">
                 <div class="sec-title">☕ Boissons chaudes</div>
-                <button class="sec-add-btn" onclick="addItem(this)">+ Ajouter</button>
               </div>
               <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Café allongé / Expresso</span></div><div class="item-right"><span class="price">1,00 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Double expresso</span></div><div class="item-right"><span class="price">1,50 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Chocolat chaud</span></div><div class="item-right"><span class="price">1,50 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Thé</span></div><div class="item-right"><span class="price">1,00 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Café allongé / Expresso</span></div><div class="item-right"><span class="price">1,00 €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Double expresso</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Chocolat chaud</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Thé</span></div><div class="item-right"><span class="price">1,00 €</span></div></div>
               </div>
             </div>
 
             <div class="sec">
               <div class="sec-head">
                 <div class="sec-title">🍺 Bières pression</div>
-                <button class="sec-add-btn" onclick="addItem(this)">+ Ajouter</button>
               </div>
               <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Demi (33 cl)</span></div><div class="item-right"><span class="price">2,50 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Pichet (1 L)</span></div><div class="item-right"><span class="price">7,00 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Demi (33 cl)</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Pichet (1 L)</span></div><div class="item-right"><span class="price">7,00 €</span></div></div>
               </div>
               <div class="sec-sub">🍾 Bouteilles (33 cl)</div>
               <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Blanche</span></div><div class="item-right"><span class="price">2,50 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Ambrée</span></div><div class="item-right"><span class="price">2,50 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Blanche</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Ambrée</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
               </div>
             </div>
 
             <div class="sec">
               <div class="sec-head">
                 <div class="sec-title">🍷 Vins &amp; Apéros</div>
-                <button class="sec-add-btn" onclick="addItem(this)">+ Ajouter</button>
               </div>
               <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Verre rouge / blanc / rosé</span><span class="item-desc">15 cl</span></div><div class="item-right"><span class="price">2,50 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Pot lyonnais rouge / blanc / rosé</span><span class="item-desc">46 cl</span></div><div class="item-right"><span class="price">6,00 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Kir</span></div><div class="item-right"><span class="price">2,50 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Communard</span></div><div class="item-right"><span class="price">2,50 €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Verre rouge / blanc / rosé</span><span class="item-desc">15 cl</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Pot lyonnais rouge / blanc / rosé</span><span class="item-desc">46 cl</span></div><div class="item-right"><span class="price">6,00 €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Kir</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Communard</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
               </div>
             </div>
 
             <div class="sec">
               <div class="sec-head">
                 <div class="sec-title">🫒 À grignoter</div>
-                <button class="sec-add-btn" onclick="addItem(this)">+ Ajouter</button>
               </div>
               <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Chips</span></div><div class="item-right"><span class="price">— €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Petit saucisson</span></div><div class="item-right"><span class="price">— €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Gros saucisson</span></div><div class="item-right"><span class="price">— €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Pop-corn salés</span></div><div class="item-right"><span class="price">— €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Cacahuètes à partager</span></div><div class="item-right"><span class="price">— €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Olives</span></div><div class="item-right"><span class="price">— €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name">Biscuits sucrés</span></div><div class="item-right"><span class="price">— €</span><button class="del-btn" onclick="delItem(this)">✕</button></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Chips</span></div><div class="item-right"><span class="price">— €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Petit saucisson</span></div><div class="item-right"><span class="price">— €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Gros saucisson</span></div><div class="item-right"><span class="price">— €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Pop-corn salés</span></div><div class="item-right"><span class="price">— €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Cacahuètes à partager</span></div><div class="item-right"><span class="price">— €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Olives</span></div><div class="item-right"><span class="price">— €</span></div></div>
+                <div class="item"><div class="item-name-wrap"><span class="item-name">Biscuits sucrés</span></div><div class="item-right"><span class="price">— €</span></div></div>
               </div>
             </div>
 
@@ -511,78 +405,6 @@
     </div>
   </main>
   <script src="assets/js/components.js"></script>
-  <script src="assets/js/auth.js"></script>
-  <script>
-    // ── Activer le bouton d'édition si CA admin authentifié ──
-    document.addEventListener('DOMContentLoaded', () => {
-      if (typeof isAuthenticated === 'function' && isAuthenticated(3)) {
-        document.body.classList.add('ca-admin-auth');
-      }
-
-      // Activer via paramètre URL ?edit=1 (appelé depuis ca-admin.html)
-      if (new URLSearchParams(window.location.search).get('edit') === '1') {
-        if (typeof isAuthenticated === 'function' && isAuthenticated(3)) {
-          document.body.classList.add('ca-admin-auth');
-          toggleEdit();
-        }
-      }
-    });
-
-    // ── Logique d'édition (conservée de l'original) ──
-    let editMode = false;
-
-    function toggleEdit() {
-      editMode = !editMode;
-      const btn   = document.getElementById('editBtn');
-      const hint  = document.getElementById('addHint');
-      const carte = document.getElementById('carte');
-
-      btn.textContent = editMode ? 'Terminer les modifications' : 'Modifier les prix & noms';
-      btn.classList.toggle('active', editMode);
-      hint.style.display = editMode ? 'inline' : 'none';
-      carte.classList.toggle('editMode', editMode);
-
-      document.querySelectorAll('.price').forEach(el => {
-        el.contentEditable = editMode ? 'true' : 'false';
-      });
-      document.querySelectorAll('.item-name').forEach(el => {
-        el.contentEditable = editMode ? 'true' : 'false';
-      });
-    }
-
-    function addItem(btn) {
-      const sec = btn.closest('.sec');
-      const allItems = sec.querySelectorAll('.items');
-      const container = allItems[allItems.length - 1];
-
-      const div = document.createElement('div');
-      div.className = 'item';
-      div.innerHTML = `
-        <div class="item-name-wrap">
-          <span class="item-name" contenteditable="true" style="border-bottom:1.5px dashed var(--teal); outline:none; min-width:80px; display:inline-block;">Nouveau</span>
-        </div>
-        <div class="item-right">
-          <span class="price" contenteditable="true">— €</span>
-          <button class="del-btn" onclick="delItem(this)" style="display:flex">✕</button>
-        </div>`;
-      container.appendChild(div);
-
-      const nameEl = div.querySelector('.item-name');
-      nameEl.focus();
-      const range = document.createRange();
-      range.selectNodeContents(nameEl);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
-    }
-
-    function delItem(btn) {
-      const item = btn.closest('.item');
-      item.style.opacity = '0';
-      item.style.transform = 'translateX(10px)';
-      item.style.transition = 'all 0.2s ease';
-      setTimeout(() => item.remove(), 200);
-    }
-  </script>
 
 </body>
 </html>
