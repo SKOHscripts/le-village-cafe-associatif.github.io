@@ -81,7 +81,7 @@ const FOOTER_HTML = `
         <div class="sf-line">8 rue Chalumeaux</div>
         <div class="sf-line">Lyon 8e</div>
         <div class="sf-line" style="margin-top:4px">
-          <a href="mailto:projetcafeassociatif@gmail.com">projetcafeassociatif@gmail.com</a>
+          <a href="mailto:contact@cafe-levillage.org">contact@cafe-levillage.org</a>
         </div>
       </div>
 

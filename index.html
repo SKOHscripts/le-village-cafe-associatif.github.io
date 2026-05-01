@@ -195,54 +195,6 @@
       }
     }
 
-    /* ---- RÉSEAUX SOCIAUX ---- */
-    .section-reseaux {
-      padding: 0 0 3rem;
-    }
-
-    .reseaux-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .reseau-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 1.5rem 1rem;
-      background: var(--color-white);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      text-decoration: none;
-      transition: all 0.2s ease;
-      border: 2px solid transparent;
-    }
-
-    .reseau-card:hover {
-      border-color: var(--color-border);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-      text-decoration: none;
-    }
-
-    .reseau-icon {
-      width: 48px;
-      height: 48px;
-    }
-
-    .reseau-name {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--color-teal);
-    }
-
-    .reseau-handle {
-      font-size: 0.82rem;
-      color: var(--color-text-light);
-    }
-
     /* ---- CONTACT EMAIL ---- */
     .section-email {
       padding: 0 0 1rem;
@@ -348,49 +300,10 @@
         </div>
       </section>
 
-      <!-- RÉSEAUX SOCIAUX -->
-      <section class="section-reseaux fade-up fade-up-4" aria-labelledby="reseaux-title">
-        <h2 class="section-title" id="reseaux-title">Suivez-nous</h2>
-        <div class="reseaux-grid">
-
-          <!-- Facebook -->
-          <a href="https://www.facebook.com/profile.php?id=61574530611496" target="_blank" rel="noopener noreferrer" class="reseau-card" aria-label="Notre page Facebook">
-            <svg class="reseau-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect width="48" height="48" rx="12" fill="#1877F2"/>
-              <path d="M33 24C33 19.029 28.971 15 24 15C19.029 15 15 19.029 15 24C15 28.482 18.157 32.215 22.359 33V26.578H19.938V24H22.359V22.008C22.359 19.619 23.783 18.297 25.957 18.297C27 18.297 28.09 18.484 28.09 18.484V20.828H26.887C25.699 20.828 25.313 21.597 25.313 22.385V24H27.979L27.543 26.578H25.313V33C29.843 32.215 33 28.482 33 24Z" fill="white"/>
-            </svg>
-            <span class="reseau-name">Facebook</span>
-            <span class="reseau-handle">Café associatif Le Village</span>
-          </a>
-
-          <!-- Instagram -->
-          <a href="https://www.instagram.com/cafe_associatif_le_village" target="_blank" rel="noopener noreferrer" class="reseau-card" aria-label="Notre compte Instagram">
-            <svg class="reseau-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
-                  <stop offset="0%" stop-color="#fdf497"/>
-                  <stop offset="10%" stop-color="#fdf497"/>
-                  <stop offset="50%" stop-color="#fd5949"/>
-                  <stop offset="68%" stop-color="#d6249f"/>
-                  <stop offset="100%" stop-color="#285AEB"/>
-                </radialGradient>
-              </defs>
-              <rect width="48" height="48" rx="12" fill="url(#ig-grad)"/>
-              <rect x="15" y="15" width="18" height="18" rx="5" stroke="white" stroke-width="2.2" fill="none"/>
-              <circle cx="24" cy="24" r="4.5" stroke="white" stroke-width="2.2" fill="none"/>
-              <circle cx="30.5" cy="17.5" r="1.3" fill="white"/>
-            </svg>
-            <span class="reseau-name">Instagram</span>
-            <span class="reseau-handle">@cafe_associatif_le_village</span>
-          </a>
-
-        </div>
-      </section>
-
       <!-- EMAIL -->
       <section class="section-email fade-up fade-up-5" aria-label="Contact par email">
-        <a href="mailto:projetcafeassociatif@gmail.com" class="email-link">
-          projetcafeassociatif@gmail.com
+        <a href="mailto:contact@cafe-levillage.org" class="email-link">
+          contact@cafe-levillage.org
         </a>
       </section>
 
