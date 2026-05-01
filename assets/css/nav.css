@@ -40,9 +40,9 @@
 }
 
 .header-logo-img {
+  display: block;
   height: 44px;
   width: auto;
-  display: block;
 }
 
 /* Navigation desktop */
