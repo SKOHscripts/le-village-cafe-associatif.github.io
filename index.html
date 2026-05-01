@@ -42,8 +42,8 @@
       background: linear-gradient(
         to bottom,
         rgba(255,255,255,0) 30%,
-        rgba(242,250,247,0.78) 80%,
-        rgba(242,250,247,1) 100%
+        rgba(244,243,242,0.78) 80%,
+        rgba(244,243,242,1) 100%
       );
     }
 
@@ -55,42 +55,14 @@
     }
 
     .hero-logo-wrap {
-      display: inline-flex;
-      flex-direction: column;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(8px);
-      border-radius: var(--radius-lg);
-      padding: 1.1rem 1.6rem 1rem;
-      box-shadow: var(--shadow-md);
+      display: inline-block;
     }
 
-    .hero-logo-top {
-      font-family: var(--font-main);
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--color-teal);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.1rem;
-    }
-
-    .hero-logo-name {
-      font-family: var(--font-main);
-      font-weight: 600;
-      font-size: 2rem;
-      color: var(--color-teal);
-      line-height: 1.05;
-    }
-
-    .hero-logo-name span {
-      color: var(--color-orange);
-    }
-
-    .hero-logo-baseline {
-      font-family: var(--font-script);
-      font-size: 1rem;
-      color: var(--color-text-light);
-      margin-top: 0.3rem;
+    .hero-logo-img {
+      height: 140px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.15));
     }
 
     @media (min-width: 768px) {
@@ -98,8 +70,8 @@
         object-position: center center;
       }
 
-      .hero-logo-name {
-        font-size: 2.6rem;
+      .hero-logo-img {
+        height: 180px;
       }
     }
 
@@ -308,9 +280,7 @@
       >
       <div class="hero-content">
         <div class="hero-logo-wrap fade-up fade-up-1">
-          <span class="hero-logo-top">Café Associatif</span>
-          <span class="hero-logo-name">le <span>Village</span></span>
-          <span class="hero-logo-baseline">grand trou · moulin à vent · petite guille</span>
+          <img src="assets/images/logo-detoure-vert.png" alt="Café Associatif le Village — grand trou · moulin à vent · petite guille" class="hero-logo-img">
         </div>
       </div>
     </section>

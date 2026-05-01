@@ -7,17 +7,17 @@
 
 /* --- Variables --- */
 :root {
-  --color-teal:        #2a9d8f;
-  --color-teal-dark:   #1d7d6f;
-  --color-teal-light:  #d8f2ec;
-  --color-orange:      #f0a030;
-  --color-orange-light:#fef5e4;
-  --color-bg:          #f2faf7;
+  --color-teal:        #00818A;
+  --color-teal-dark:   #006870;
+  --color-teal-light:  #d6ecee;
+  --color-orange:      #FFA70B;
+  --color-orange-light:#fff4d6;
+  --color-bg:          #f4f3f2;
   --color-blue-light:  #dceefb;
   --color-white:       #ffffff;
-  --color-text:        #2d3836;
-  --color-text-light:  #7a8f88;
-  --color-border:      #c4ddd6;
+  --color-text:        #403B3A;
+  --color-text-light:  #8a8480;
+  --color-border:      #e0d9d7;
 
   --font-main:    'Fredoka', sans-serif;
   --font-script:  'Caveat', cursive;
@@ -27,9 +27,9 @@
   --radius-lg:  24px;
   --radius-pill: 50px;
 
-  --shadow-sm:  0 2px 8px rgba(42,157,143,0.08);
-  --shadow-md:  0 4px 20px rgba(42,157,143,0.12);
-  --shadow-lg:  0 8px 40px rgba(42,157,143,0.16);
+  --shadow-sm:  0 2px 8px rgba(0,129,138,0.08);
+  --shadow-md:  0 4px 20px rgba(0,129,138,0.12);
+  --shadow-lg:  0 8px 40px rgba(0,129,138,0.16);
 
   --max-width: 700px;
   --padding-page: 1.25rem;
@@ -153,15 +153,15 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   background: var(--color-orange);
   color: var(--color-white);
   border-color: var(--color-orange);
-  box-shadow: 0 2px 8px rgba(240,160,48,0.22);
+  box-shadow: 0 2px 8px rgba(255,167,11,0.22);
 }
 
 .btn-primary:hover {
-  background: #d98e22;
-  border-color: #d98e22;
+  background: #e09200;
+  border-color: #e09200;
   text-decoration: none;
   transform: translateY(-1px);
-  box-shadow: 0 5px 16px rgba(240,160,48,0.35);
+  box-shadow: 0 5px 16px rgba(255,167,11,0.35);
 }
 
 .btn-secondary {
@@ -175,7 +175,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   color: var(--color-white);
   text-decoration: none;
   transform: translateY(-1px);
-  box-shadow: 0 5px 16px rgba(42,157,143,0.22);
+  box-shadow: 0 5px 16px rgba(0,129,138,0.22);
 }
 
 .btn-ghost {
@@ -364,19 +364,11 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 }
 
 .sf-brand { min-width: 140px; }
-.sf-brand-name {
-  font-family: var(--font-main);
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--color-orange);
+.sf-brand-logo {
+  height: 80px;
+  width: auto;
   display: block;
-}
-.sf-brand-sub {
-  font-family: var(--font-script);
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.6);
-  display: block;
-  margin-top: 3px;
+  opacity: 0.92;
 }
 
 .sf-divider {
