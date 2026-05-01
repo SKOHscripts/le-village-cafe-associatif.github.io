@@ -29,6 +29,27 @@
       border-left: 4px solid var(--color-teal);
     }
 
+    /* Rythme de vie */
+    .section-rythme { padding: 0 0 2rem; }
+    .rythme-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--color-text);
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border-left: 4px solid var(--color-orange);
+    }
+    .rythme-text p { margin-bottom: 0.9rem; }
+    .rythme-text p:last-child { margin-bottom: 0; }
+    .rythme-titre {
+      font-family: var(--font-script);
+      font-size: 1.35rem;
+      color: var(--color-orange);
+      margin-bottom: 1rem;
+    }
+
     /* Valeurs */
     .section-valeurs { padding: 0 0 3rem; }
     .valeurs-grid {
@@ -196,8 +217,21 @@
         <p class="presentation-text" id="presentation-text">Chargement…</p>
       </section>
 
+      <!-- RYTHME DE VIE -->
+      <section class="section-rythme fade-up fade-up-2" aria-labelledby="rythme-title">
+        <h2 class="section-title" id="rythme-title">Le Village, c'est comment ?</h2>
+        <div class="rythme-text">
+          <p>Ouvert trois jours par semaine, Le Village ne vit pas au même rythme chaque jour d'ouverture.</p>
+          <p><strong>Le mardi de 14h30 à 19h</strong>, il accueille en début d'après-midi différents ateliers qui fonctionnent en groupe (tricot, crochet, ateliers manuels, jeux de carte ou autre), puis viennent l'heure du goûter et de l'apéritif (rencontres parents/enfants, passage à l'improviste, jeux de société&nbsp;...)</p>
+          <p><strong>Le vendredi de 16h à 21h</strong>, c'est le &laquo;&nbsp;break&nbsp;&raquo; de fin de semaine&nbsp;: sorties d'école, verres partagés entre amis après le travail, en famille, seul ou avec ses voisins, jeux, animations&hellip;</p>
+          <p><strong>Le dimanche entre 10h et 13h</strong>, pendant le marché voisin, place Belleville, c'est l'heure d'un café, d'un verre de vin blanc, d'une partie de pétanque, ou d'une discussion entre voisins ou amis&nbsp;!</p>
+          <p>Dès les beaux jours, le café permet de se retrouver en extérieur également. Des animations festives sont programmées tout au long de l'année.</p>
+          <p><em>Au Village, chacun amène un peu de soi.</em></p>
+        </div>
+      </section>
+
       <!-- VALEURS -->
-      <section class="section-valeurs fade-up fade-up-2" aria-labelledby="valeurs-title">
+      <section class="section-valeurs fade-up fade-up-3" aria-labelledby="valeurs-title">
         <h2 class="section-title" id="valeurs-title">Nos valeurs</h2>
         <div class="valeurs-grid" id="valeurs-grid">
           <!-- Chargé via JS -->
@@ -205,7 +239,7 @@
       </section>
 
       <!-- ÉQUIPE -->
-      <section class="section-equipe fade-up fade-up-3" aria-labelledby="equipe-title">
+      <section class="section-equipe fade-up fade-up-4" aria-labelledby="equipe-title">
         <h2 class="section-title" id="equipe-title">L'équipe</h2>
         <div class="equipe-grid" id="equipe-grid">
           <!-- Chargé via JS -->
@@ -213,7 +247,7 @@
       </section>
 
       <!-- GALERIE -->
-      <section class="section-galerie fade-up fade-up-4" aria-labelledby="galerie-title">
+      <section class="section-galerie fade-up fade-up-5" aria-labelledby="galerie-title">
         <h2 class="section-title" id="galerie-title">Nos événements</h2>
         <div class="galerie-grid" id="galerie-grid">
           <!-- Chargé via JS -->
@@ -221,7 +255,7 @@
       </section>
 
       <!-- RÈGLEMENT -->
-      <section class="section-reglement fade-up fade-up-5" aria-labelledby="reglement-title">
+      <section class="section-reglement fade-up fade-up-6" aria-labelledby="reglement-title">
         <h2 class="section-title" id="reglement-title">Règlement intérieur</h2>
         <div class="reglement-card">
           <div class="icon-circle teal" aria-hidden="true">
