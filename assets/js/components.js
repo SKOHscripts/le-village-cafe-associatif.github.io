@@ -89,7 +89,7 @@ const FOOTER_HTML = `
     </div>
 
     <div class="sf-bottom">
-      <p>© 2026 · Café Associatif · Lyon 8e</p>
+      <p>© 2026 Café Associatif Le Village · Association loi 1901</p>
       <div class="sf-secret-links">
         <a href="benevoles.html">Espace bénévoles</a>
         <a href="ca.html">Espace CA</a>
