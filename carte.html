@@ -17,15 +17,15 @@
   <style>
     /* ── Variables carte ── */
     :root {
-      --teal:      #2a9d8f;
-      --teal-mid:  #3db8a8;
-      --teal-pale: #d8f2ec;
-      --orange:    #f0a030;
-      --orange-lt: #fcd17a;
-      --yellow:    #ffe066;
+      --teal:      #00818A;
+      --teal-mid:  #00a0aa;
+      --teal-pale: #d6ecee;
+      --orange:    #FFA70B;
+      --orange-lt: #ffcf6b;
+      --yellow:    #FFA70B;
       --cream:     #fdfcf7;
-      --text:      #1d3530;
-      --text-lt:   #5a8078;
+      --text:      #403B3A;
+      --text-lt:   #8a8480;
     }
 
     /* ── Wrapper page ── */
@@ -40,8 +40,8 @@
       background: var(--bg);
       border-radius: 28px;
       overflow: hidden;
-      box-shadow: 0 10px 50px rgba(42,157,143,0.14), 0 2px 10px rgba(42,157,143,0.08);
-      border: 3px solid rgba(42,157,143,0.18);
+      box-shadow: 0 10px 50px rgba(0,129,138,0.14), 0 2px 10px rgba(0,129,138,0.08);
+      border: 3px solid rgba(0,129,138,0.18);
     }
 
     /* ── HEADER carte ── */
@@ -76,12 +76,15 @@
       position: relative; z-index: 1;
     }
     .header-village {
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(3rem, 9vw, 5.2rem);
-      font-weight: 700;
-      color: var(--yellow);
-      line-height: 1;
       position: relative; z-index: 1;
+      margin: 0.25rem auto;
+    }
+    .header-village img {
+      height: clamp(100px, 20vw, 160px);
+      width: auto;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
     }
     .header-sub {
       font-family: 'Caveat', cursive;
@@ -140,8 +143,8 @@
       background: var(--cream);
       border-radius: 18px;
       overflow: hidden;
-      border: 2px solid rgba(42,157,143,0.12);
-      box-shadow: 0 3px 14px rgba(42,157,143,0.08);
+      border: 2px solid rgba(0,129,138,0.12);
+      box-shadow: 0 3px 14px rgba(0,129,138,0.08);
     }
     .sec.full { grid-column: 1 / -1; }
 
@@ -178,7 +181,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 9px 0;
-      border-bottom: 1.5px dashed rgba(42,157,143,0.13);
+      border-bottom: 1.5px dashed rgba(0,129,138,0.13);
       gap: 10px;
       animation: fadeIn 0.25s ease;
     }
@@ -230,14 +233,14 @@
       margin: 0 20px 24px;
       background: white;
       border-radius: 20px;
-      border: 2px solid rgba(42,157,143,0.15);
+      border: 2px solid rgba(0,129,138,0.15);
       padding: 20px 24px;
       display: flex;
       gap: 24px;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-start;
-      box-shadow: 0 3px 14px rgba(42,157,143,0.07);
+      box-shadow: 0 3px 14px rgba(0,129,138,0.07);
     }
     .footer-brand .brand-name {
       font-family: 'Fredoka', sans-serif;
@@ -309,7 +312,9 @@
           <!-- HEADER CARTE -->
           <div class="header">
             <div class="header-label">Café Associatif · Lyon 8e</div>
-            <div class="header-village">le Village ♥</div>
+            <div class="header-village">
+              <img src="assets/images/logo-detoure-orange.png" alt="le Village">
+            </div>
             <div class="header-sub">grand trou &nbsp;–&nbsp; moulin à vent &nbsp;–&nbsp; petite guille</div>
             <div class="header-carte-tag">Notre Carte</div>
           </div>
