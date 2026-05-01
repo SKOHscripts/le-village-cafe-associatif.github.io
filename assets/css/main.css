@@ -365,10 +365,10 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 
 .sf-brand { min-width: 140px; }
 .sf-brand-logo {
-  height: 80px;
-  width: auto;
   display: block;
+  height: 80px;
   opacity: 0.92;
+  width: auto;
 }
 
 .sf-divider {
