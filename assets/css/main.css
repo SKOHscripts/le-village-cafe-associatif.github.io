@@ -9,7 +9,7 @@
 :root {
   --color-teal:        #00818A;
   --color-teal-dark:   #006870;
-  --color-teal-light:  #d6ecee;
+  --color-teal-light:  #edf4f5;
   --color-orange:      #FFA70B;
   --color-orange-light:#fff4d6;
   --color-bg:          #f4f3f2;
@@ -187,20 +187,20 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 }
 
 .btn-ghost:hover {
+  background: var(--color-bg);
   color: var(--color-teal-dark);
-  background: var(--color-teal-light);
   text-decoration: none;
 }
 
 /* --- Badge --- */
 .badge {
-  display: inline-block;
-  padding: 0.25rem 0.85rem;
+  background: var(--color-teal);
   border-radius: var(--radius-pill);
+  color: var(--color-white);
+  display: inline-block;
   font-size: 0.85rem;
   font-weight: 500;
-  background: var(--color-teal-light);
-  color: var(--color-teal);
+  padding: 0.25rem 0.85rem;
 }
 
 /* --- Composants mutualisés — pages internes --- */
@@ -262,7 +262,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 }
 
 .info-banner.teal {
-  background: var(--color-teal-light);
+  background: rgba(0,129,138,0.08);
   border: 2px solid var(--color-teal);
   color: var(--color-text);
 }
@@ -284,8 +284,8 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   flex-shrink: 0;
 }
 .icon-circle.teal {
-  background: var(--color-teal-light);
-  color: var(--color-teal);
+  background: var(--color-teal);
+  color: var(--color-white);
 }
 .icon-circle.orange {
   background: var(--color-orange-light);

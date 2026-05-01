@@ -23,7 +23,8 @@ const HEADER_HTML = `
 <header class="site-header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="header-logo" aria-label="Le Village — retour à l'accueil">
-      <img src="assets/images/logo-detoure-vert.png" alt="Café Associatif le Village" class="header-logo-img">
+      <span class="header-logo-name">le <span>Village</span></span>
+      <span class="header-logo-baseline">café associatif · Lyon 8e</span>
     </a>
 
     <nav class="nav-desktop" aria-label="Navigation principale">
@@ -88,7 +89,7 @@ const FOOTER_HTML = `
     </div>
 
     <div class="sf-bottom">
-      <p>© 2026 Café Associatif Le Village · Association loi 1901</p>
+      <p>© 2026 · Café Associatif · Lyon 8e</p>
       <div class="sf-secret-links">
         <a href="benevoles.html">Espace bénévoles</a>
         <a href="ca.html">Espace CA</a>
