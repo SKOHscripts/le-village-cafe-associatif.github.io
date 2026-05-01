@@ -39,23 +39,10 @@
   text-decoration: none;
 }
 
-.header-logo-name {
-  color: var(--color-teal);
-  font-family: var(--font-main);
-  font-size: 1.35rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.header-logo-name span {
-  color: var(--color-orange);
-}
-
-.header-logo-baseline {
-  color: var(--color-text-light);
-  font-family: var(--font-script);
-  font-size: 0.78rem;
-  margin-top: 1px;
+.header-logo-img {
+  display: block;
+  height: 44px;
+  width: auto;
 }
 
 /* Navigation desktop */

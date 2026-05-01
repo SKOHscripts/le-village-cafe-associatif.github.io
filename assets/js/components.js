@@ -23,8 +23,7 @@ const HEADER_HTML = `
 <header class="site-header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="header-logo" aria-label="Le Village — retour à l'accueil">
-      <span class="header-logo-name">le <span>Village</span></span>
-      <span class="header-logo-baseline">café associatif · Lyon 8e</span>
+      <img src="assets/images/logo-header.png" alt="" width="3544" height="3708" class="header-logo-img">
     </a>
 
     <nav class="nav-desktop" aria-label="Navigation principale">
@@ -71,7 +70,7 @@ const FOOTER_HTML = `
       <div class="sf-info">
         <div class="sf-label">Horaires</div>
         <div class="sf-line"><span class="sf-dot"></span> Mar <span>14h30 – 19h00</span></div>
-        <div class="sf-line"><span class="sf-dot"></span> Ven <span>16h00 – 21h00</span></div>
+        <div class="sf-line"><span class="sf-dot"></span> Ven <span>16h00 – <s>21h00</s> <span class="sf-ete">22h00 en été</span></span></div>
         <div class="sf-line"><span class="sf-dot"></span> Dim <span>10h00 – 13h00</span></div>
       </div>
 

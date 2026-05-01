@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
 
+  <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/nav.css">
 
@@ -143,6 +144,12 @@
       font-family: var(--font-script);
       font-size: 1.2rem;
       color: var(--color-text);
+    }
+
+    .horaire-ete {
+      color: #ffa70b;
+      font-size: 0.95rem;
+      white-space: nowrap;
     }
 
     /* ---- NOTICE ADHÉSION ---- */
@@ -307,7 +314,7 @@
             </li>
             <li class="horaire-item">
               <span class="horaire-jour">Vendredis</span>
-              <span class="horaire-heures">16h00 – 21h00</span>
+              <span class="horaire-heures">16h00 – <s>21h00</s> <span class="horaire-ete">22h00 en été</span></span>
             </li>
             <li class="horaire-item">
               <span class="horaire-jour">Dimanches</span>
