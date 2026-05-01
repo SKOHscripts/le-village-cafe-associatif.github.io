@@ -23,7 +23,7 @@ const HEADER_HTML = `
 <header class="site-header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="header-logo" aria-label="Le Village — retour à l'accueil">
-      <img src="assets/images/logo-header.png" alt="Café Associatif Le Village" class="header-logo-img">
+      <img src="assets/images/logo-header.png" alt="" width="3544" height="3708" class="header-logo-img">
     </a>
 
     <nav class="nav-desktop" aria-label="Navigation principale">
