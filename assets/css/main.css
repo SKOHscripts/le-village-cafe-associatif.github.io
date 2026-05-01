@@ -409,8 +409,9 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 .sf-line span { color: rgba(255,255,255,0.55); font-weight: 400; }
 .sf-line a { color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.2s; }
 .sf-line a:hover { color: var(--color-orange); }
+
 .sf-ete {
-  color: #FFA70B;
+  color: #ffa70b;
   font-size: 0.85rem;
   white-space: nowrap;
 }
