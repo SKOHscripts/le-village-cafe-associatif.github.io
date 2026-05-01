@@ -29,10 +29,8 @@
 
 /* Logo */
 .header-logo {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
+  display: block;
+  line-height: 0;
   text-decoration: none;
 }
 
@@ -43,7 +41,6 @@
 .header-logo-img {
   display: block;
   height: 44px;
-  max-height: 44px;
   width: auto;
 }
 
