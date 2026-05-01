@@ -23,8 +23,7 @@ const HEADER_HTML = `
 <header class="site-header" role="banner">
   <div class="header-inner">
     <a href="index.html" class="header-logo" aria-label="Le Village — retour à l'accueil">
-      <span class="header-logo-name">le <span>Village</span></span>
-      <span class="header-logo-baseline">café associatif · Lyon 8e</span>
+      <img src="assets/images/logo-header.png" alt="Café Associatif Le Village" class="header-logo-img">
     </a>
 
     <nav class="nav-desktop" aria-label="Navigation principale">
