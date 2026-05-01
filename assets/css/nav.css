@@ -41,6 +41,7 @@
 .header-logo-img {
   display: block;
   height: 44px;
+  max-width: none;
   width: auto;
 }
 
