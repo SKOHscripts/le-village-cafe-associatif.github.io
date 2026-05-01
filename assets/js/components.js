@@ -70,7 +70,7 @@ const FOOTER_HTML = `
       <div class="sf-info">
         <div class="sf-label">Horaires</div>
         <div class="sf-line"><span class="sf-dot"></span> Mar <span>14h30 – 19h00</span></div>
-        <div class="sf-line"><span class="sf-dot"></span> Ven <span>16h00 – 21h00</span></div>
+        <div class="sf-line"><span class="sf-dot"></span> Ven <span>16h00 – <s>21h00</s> <span class="sf-ete">22h00 en été</span></span></div>
         <div class="sf-line"><span class="sf-dot"></span> Dim <span>10h00 – 13h00</span></div>
       </div>
 
