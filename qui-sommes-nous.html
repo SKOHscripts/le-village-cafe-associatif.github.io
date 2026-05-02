@@ -267,6 +267,16 @@
         <h2 class="section-title" id="organigramme-title">Organisation par pôles</h2>
         <div class="organigramme-wrapper">
           <div class="mermaid">
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#FFFFFF',
+  'primaryTextColor': '#403B3A',
+  'primaryBorderColor': '#00818A',
+  'lineColor': '#00818A',
+  'clusterBkg': '#eef7f7',
+  'clusterBorder': '#00818A',
+  'titleColor': '#403B3A',
+  'fontFamily': 'Fredoka, sans-serif'
+}}}%%
 graph TD
     CAC["Conseil d'Administration Collégial"]
 
@@ -307,6 +317,8 @@ graph TD
     CAC --- anim
     CAC --- gvq
     CAC --- comm
+
+    style CAC fill:#00818A,stroke:#403B3A,color:#FFFFFF,font-weight:600
           </div>
         </div>
       </section>
