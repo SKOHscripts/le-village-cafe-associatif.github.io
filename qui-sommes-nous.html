@@ -12,6 +12,7 @@
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/nav.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 
   <style>
     /* Présentation */
@@ -134,6 +135,20 @@
       padding: 0.15rem 0.65rem;
     }
 
+    /* Organigramme Mermaid */
+    .section-organigramme { padding: 0 0 3rem; }
+    .organigramme-wrapper {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 1.5rem 1rem;
+      overflow-x: auto;
+    }
+    .organigramme-wrapper .mermaid {
+      display: flex;
+      justify-content: center;
+    }
+
     /* Galerie événements */
     .section-galerie { padding: 0 0 3rem; }
     .galerie-grid {
@@ -238,11 +253,61 @@
         </div>
       </section>
 
-      <!-- ÉQUIPE -->
+      <!-- CAC -->
       <section class="section-equipe fade-up fade-up-4" aria-labelledby="equipe-title">
-        <h2 class="section-title" id="equipe-title">L'équipe</h2>
+        <h2 class="section-title" id="equipe-title">Le Conseil d'Administration Collégial (CAC)</h2>
+        <p style="font-size:0.9rem; color:var(--color-text-light); margin-bottom:1.25rem;">Membres listés par ordre alphabétique.</p>
         <div class="equipe-grid" id="equipe-grid">
           <!-- Chargé via JS -->
+        </div>
+      </section>
+
+      <!-- ORGANIGRAMME -->
+      <section class="section-organigramme fade-up" aria-labelledby="organigramme-title">
+        <h2 class="section-title" id="organigramme-title">Organisation par pôles</h2>
+        <div class="organigramme-wrapper">
+          <div class="mermaid">
+graph TD
+    CAC["Conseil d'Administration Collégial"]
+
+    subgraph admin["Pôle administration – coordination"]
+        Roger
+        Sandrine
+        Brigitte
+    end
+
+    subgraph fin["Pôle finances"]
+        Myriam
+        Lionel
+        Corentin
+    end
+
+    subgraph anim["Pôle animations"]
+        Andrès
+        Béatrice
+        Nina
+        Colette
+    end
+
+    subgraph gvq["Pôle gestion vie quotidienne"]
+        Serge
+        Corinne
+        Colette2["Colette"]
+        Béatrice2["Béatrice"]
+    end
+
+    subgraph comm["Pôle communication"]
+        Brigitte2["Brigitte"]
+        Colette3["Colette"]
+        Florent
+    end
+
+    CAC --- admin
+    CAC --- fin
+    CAC --- anim
+    CAC --- gvq
+    CAC --- comm
+          </div>
         </div>
       </section>
 
@@ -275,6 +340,9 @@
   </main>
 
   <script src="assets/js/components.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  </script>
   <script>
     // Charger contenu.json
     fetch('data/contenu.json')
@@ -316,8 +384,8 @@
               }
             </div>
             <p class="membre-nom">${m.nom}</p>
-            <p class="membre-role">${m.role}</p>
-            <span class="membre-pole">${m.pole}</span>
+            ${m.titre ? `<p class="membre-role">${m.titre}</p>` : ''}
+            ${(m.poles || []).map(p => `<span class="membre-pole">${p}</span>`).join(' ')}
           </div>
         `).join('');
       });

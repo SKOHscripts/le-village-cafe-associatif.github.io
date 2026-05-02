@@ -1,32 +1,68 @@
 [
   {
-    "nom": "À compléter",
-    "role": "Présidente",
-    "pole": "Conseil d'Administration",
+    "nom": "Andrès",
+    "poles": ["Pôle animations"],
     "photo": ""
   },
   {
-    "nom": "À compléter",
-    "role": "Trésorière",
-    "pole": "Conseil d'Administration",
+    "nom": "Béatrice",
+    "poles": ["Pôle animations", "Pôle gestion vie quotidienne"],
     "photo": ""
   },
   {
-    "nom": "À compléter",
-    "role": "Secrétaire",
-    "pole": "Conseil d'Administration",
+    "nom": "Brigitte",
+    "poles": ["Pôle administration – coordination", "Pôle communication"],
     "photo": ""
   },
   {
-    "nom": "Corinne",
-    "role": "Responsable bénévoles",
-    "pole": "Pôle bénévoles",
+    "nom": "Colette",
+    "poles": ["Pôle animations", "Pôle gestion vie quotidienne", "Pôle communication"],
     "photo": ""
   },
   {
     "nom": "Corentin",
-    "role": "Responsable technique",
-    "pole": "Pôle technique",
+    "poles": ["Pôle finances"],
+    "titre": "le geek",
+    "photo": ""
+  },
+  {
+    "nom": "Corinne",
+    "poles": ["Pôle gestion vie quotidienne"],
+    "photo": ""
+  },
+  {
+    "nom": "Florent",
+    "poles": ["Pôle communication"],
+    "photo": ""
+  },
+  {
+    "nom": "Lionel",
+    "poles": ["Pôle finances"],
+    "photo": ""
+  },
+  {
+    "nom": "Myriam",
+    "poles": ["Pôle finances"],
+    "photo": ""
+  },
+  {
+    "nom": "Nina",
+    "poles": ["Pôle animations"],
+    "photo": ""
+  },
+  {
+    "nom": "Roger",
+    "poles": ["Pôle administration – coordination"],
+    "photo": ""
+  },
+  {
+    "nom": "Sandrine",
+    "poles": ["Pôle administration – coordination"],
+    "photo": ""
+  },
+  {
+    "nom": "Serge",
+    "poles": ["Pôle gestion vie quotidienne"],
     "photo": ""
   }
 ]
