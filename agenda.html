@@ -87,7 +87,16 @@
       line-height: 1.55;
       color: var(--color-text);
     }
-  </style>
+  
+        .social-card { margin-top: 2rem; }
+        .social-frame { background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,248,240,.88)); border: 1px solid rgba(139, 94, 60, 0.12); border-radius: 24px; padding: 1rem; box-shadow: 0 14px 30px rgba(139, 94, 60, 0.08); }
+        .social-frame-header { display:flex; align-items:center; gap:.6rem; font-weight:700; color:#6f4e37; margin-bottom:.9rem; letter-spacing:.02em; }
+        .social-dot { width:10px; height:10px; border-radius:50%; background: linear-gradient(135deg, #f58529, #dd2a7b 55%, #8134af); box-shadow: 0 0 0 4px rgba(221,42,123,.12); }
+        .social-frame iframe { border:0 !important; border-radius: 18px; width:100% !important; background:#fff7f0; }
+        .facebook-embed-wrapper, .instagram-embed-wrapper { border-radius:18px; overflow:hidden; background:#fff; }
+        .instagram-media { min-width: 0 !important; width: 100% !important; }
+
+    </style>
 </head>
 <body>
 
@@ -116,7 +125,7 @@
         <div class="calendar-wrapper" id="calendar-panel" role="tabpanel">
           <iframe
             id="google-calendar"
-            src="https://calendar.google.com/calendar/embed?src=projetcafeassociatif%40gmail.com&src=8afe16c6b5bc918e9a86a1323560173df9a267e9bdea30308a03a2d50d95272e%40group.calendar.google.com&src=6f4152f5ae5f836bdd2d0386c29772163a803580bf5872cfec8cd0081f99fcd7%40group.calendar.google.com&ctz=Europe%2FParis&mode=AGENDA&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff&color=%232a9d8f"
+            src="https://calendar.google.com/calendar/embed?mode=WEEK&showTitle=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&wkst=2&src=projetcafeassociatif%40gmail.com&src=8afe16c6b5bc918e9a86a1323560173df9a267e9bdea30308a03a2d50d95272e%40group.calendar.google.com&src=6f4152f5ae5f836bdd2d0386c29772163a803580bf5872cfec8cd0081f99fcd7%40group.calendar.google.com&ctz=Europe%2FParis&mode=AGENDA&showTitle=0&showNav=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff&color=%232a9d8f"
             title="Agenda du Café Associatif Le Village"
             loading="lazy"
             allowfullscreen>
@@ -140,7 +149,7 @@
         <h2 class="section-title" id="fb-section-title">Suivez-nous sur Facebook</h2>
         <div class="calendar-wrapper" style="display:flex; justify-content:center; padding:1.5rem 1rem;">
           <iframe
-            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2F104008222369933&tabs=timeline%2Cevents&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+            src="https://www.facebook.com/plugins/page.php?hide_cover=false&small_header=true&adapt_container_width=true&tabs=timeline&href=https%3A%2F%2Fwww.facebook.com%2F104008222369933&tabs=timeline%2Cevents&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
             width="500"
             height="600"
             style="border:none;overflow:hidden;max-width:100%"
@@ -171,5 +180,6 @@
       });
     });
   </script>
+    <script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
