@@ -293,7 +293,12 @@
       margin-top: 1rem;
     }
     .form-cooldown strong { color: var(--color-teal); }
-  </style>
+  
+        .github-direct-link { display:inline-flex; align-items:center; gap:.65rem; margin-top:.85rem; padding:.7rem 1rem; border-radius:999px; background:rgba(36,41,46,.08); color:#24292e; text-decoration:none; font-weight:700; border:1px solid rgba(36,41,46,.12); transition:transform .2s ease, background .2s ease, box-shadow .2s ease; }
+        .github-direct-link:hover { transform:translateY(-1px); background:rgba(36,41,46,.12); box-shadow:0 10px 20px rgba(36,41,46,.08); }
+        .github-direct-link svg { width:1.1rem; height:1.1rem; }
+
+    </style>
 </head>
 <body>
 
@@ -374,6 +379,10 @@
         <div class="site-card">
           <div class="site-card-header">
             <h2 id="site-title">Améliorer le site web</h2>
+                    <a class="github-direct-link" href="https://github.com/SKOHscripts" target="_blank" rel="noopener noreferrer" aria-label="Voir le profil GitHub de SKOHscripts">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.24 3.32.95.1-.74.4-1.24.73-1.53-2.56-.29-5.25-1.28-5.25-5.71 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.97.13 2.88.39 2.19-1.5 3.16-1.19 3.16-1.19.63 1.58.24 2.75.12 3.04.73.81 1.18 1.85 1.18 3.11 0 4.44-2.69 5.41-5.26 5.7.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.13 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+                        <span>Voir mon GitHub</span>
+                    </a>
           </div>
           <p class="site-card-desc">
             Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ?
