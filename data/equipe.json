@@ -27,12 +27,12 @@
   },
   {
     "nom": "Corinne",
-    "poles": ["Pôle gestion vie quotidienne"],
+    "poles": ["Pôle gestion vie quotidienne", "Pôle gestion bénévoles"],
     "photo": ""
   },
   {
     "nom": "Florent",
-    "poles": ["Pôle communication"],
+    "poles": ["Pôle communication", "Pôle gestion vie quotidienne"],
     "photo": ""
   },
   {
