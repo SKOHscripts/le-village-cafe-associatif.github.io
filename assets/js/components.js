@@ -16,6 +16,8 @@ const ICONS = {
   menu:     `<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1h8V3a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>`,
   lightbulb:`<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.298.025-.597.025-.9C12.025 11.4 11.1 10 10 10S7.975 11.4 7.975 13.1c0 .303.01.602.025.9H12z"/></svg>`,
   mail:     `<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>`,
+  card:     `<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>`,
+  heart:    `<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>`,
 };
 
 // ── HTML du header ─────────────────────────────
@@ -32,6 +34,8 @@ const HEADER_HTML = `
         <li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
         <li><a href="agenda.html">Agenda</a></li>
         <li><a href="carte.html">La Carte</a></li>
+        <li><a href="adhesion.html">Adhésion</a></li>
+        <li><a href="don.html">Faire un don</a></li>
         <li><a href="boite-a-idees.html">Boîte à idées</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -48,6 +52,8 @@ const HEADER_HTML = `
   <a href="qui-sommes-nous.html"><span class="nav-icon">${ICONS.people}</span> Qui sommes-nous</a>
   <a href="agenda.html"><span class="nav-icon">${ICONS.calendar}</span> Agenda</a>
   <a href="carte.html"><span class="nav-icon">${ICONS.menu}</span> La Carte</a>
+  <a href="adhesion.html"><span class="nav-icon">${ICONS.card}</span> Adhésion</a>
+  <a href="don.html"><span class="nav-icon">${ICONS.heart}</span> Faire un don</a>
   <a href="boite-a-idees.html"><span class="nav-icon">${ICONS.lightbulb}</span> Boîte à idées</a>
   <a href="contact.html"><span class="nav-icon">${ICONS.mail}</span> Contact</a>
 </nav>

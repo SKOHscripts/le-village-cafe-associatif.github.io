@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Adhérez au Café Associatif Le Village en ligne — formulaire d'adhésion en quelques clics.">
+  <title>Adhésion — Le Village · Café Associatif Lyon 8e</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/nav.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    .section-stats { padding: 2rem 0 1rem; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-script);
+      font-size: 3rem;
+      color: var(--color-teal);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.88rem;
+      color: var(--color-text-light);
+      margin-top: 0.35rem;
+    }
+
+    .section-formulaire { padding: 1.5rem 0 3rem; }
+
+    .form-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 1.75rem;
+    }
+
+    .form-card h2 {
+      margin-bottom: 1.25rem;
+      font-size: 1.2rem;
+    }
+    .form-card h2::after { display: none; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 500px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group { margin-bottom: 1.1rem; }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--color-teal);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--color-teal);
+      box-shadow: 0 0 0 3px rgba(26,138,122,0.12);
+      background: white;
+    }
+
+    .form-hint {
+      font-size: 0.8rem;
+      color: var(--color-text-light);
+      margin-top: 0.3rem;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 1.05rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .form-success {
+      display: none;
+      background: rgba(0,129,138,0.08);
+      border: 2px solid var(--color-teal);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      text-align: center;
+      color: var(--color-teal);
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+
+    .form-error {
+      display: none;
+      background: #fef2f2;
+      border: 2px solid #f87171;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      text-align: center;
+      color: #dc2626;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .form-trap {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .notice-info {
+      background: var(--color-orange-light);
+      border: 2px solid var(--color-orange);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      margin: 2rem 0 0;
+    }
+
+    .notice-info p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--color-text);
+    }
+
+    .notice-info strong { color: var(--color-teal); }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Adhésion</h1>
+      <p>rejoindre la communauté du Village</p>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <div class="container">
+
+      <!-- NOTICE -->
+      <div class="notice-info fade-up fade-up-1" role="note">
+        <p>
+          Le Village est un <strong>café associatif</strong> : l'adhésion permet de participer à la vie de l'association
+          et est obligatoire pour la vente d'alcool. La cotisation est de <strong>5 € par an</strong>,
+          à régler sur place lors de votre première visite.
+          Ce formulaire nous permet de préparer votre adhésion à l'avance — rapide et sans déplacement immédiat.
+        </p>
+      </div>
+
+      <!-- STATS -->
+      <section class="section-stats fade-up fade-up-2" aria-labelledby="stats-title">
+        <h2 id="stats-title" class="section-title">En chiffres</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-number" id="stat-mois">—</span>
+            <p class="stat-label">adhésion(s) ce mois-ci</p>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="stat-annee">—</span>
+            <p class="stat-label">adhésion(s) cette année</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FORMULAIRE -->
+      <section class="section-formulaire fade-up fade-up-3" aria-labelledby="form-title">
+        <div class="form-card">
+          <h2 id="form-title">Formulaire d'adhésion</h2>
+
+          <form id="adhesion-form" novalidate>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="prenom">Prénom *</label>
+                <input class="form-input" type="text" id="prenom" name="prenom"
+                  placeholder="Marie" required maxlength="50" autocomplete="given-name">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="nom">Nom *</label>
+                <input class="form-input" type="text" id="nom" name="nom"
+                  placeholder="Dupont" required maxlength="50" autocomplete="family-name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" type="email" id="email" name="email"
+                placeholder="marie@exemple.fr" maxlength="100" autocomplete="email">
+              <p class="form-hint">Optionnel — pour que le CA puisse vous confirmer votre adhésion.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="telephone">Téléphone</label>
+              <input class="form-input" type="tel" id="telephone" name="telephone"
+                placeholder="06 12 34 56 78" maxlength="20" autocomplete="tel">
+              <p class="form-hint">Optionnel.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="adresse">Adresse</label>
+              <input class="form-input" type="text" id="adresse" name="adresse"
+                placeholder="8 rue du Chalumeaux, Lyon 8e" maxlength="150" autocomplete="street-address">
+              <p class="form-hint">Optionnel.</p>
+            </div>
+
+            <!-- Honeypot anti-spam -->
+            <div class="form-trap" aria-hidden="true">
+              <label for="website">Ne pas remplir ce champ</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
+              <span id="submit-text">Envoyer mon adhésion</span>
+            </button>
+
+            <div class="form-success" id="form-success" role="alert">
+              Merci ! Votre demande d'adhésion a bien été enregistrée. À bientôt au Village !
+            </div>
+            <div class="form-error" id="form-error" role="alert">
+              Une erreur est survenue. Veuillez réessayer ou contacter le café directement.
+            </div>
+
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="assets/js/components.js"></script>
+  <script>
+    const SUPABASE_URL      = 'https://evifxtecjhemmaxaiozt.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
+    const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function chargerStats() {
+      try {
+        const { data, error } = await sbClient.rpc('get_adhesion_stats');
+        if (error) throw error;
+        const statMois  = document.getElementById('stat-mois');
+        const statAnnee = document.getElementById('stat-annee');
+        if (statMois)  statMois.textContent  = data?.total_mois  ?? '0';
+        if (statAnnee) statAnnee.textContent = data?.total_annee ?? '0';
+      } catch (err) {
+        console.error('Erreur stats adhésions:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      chargerStats();
+
+      const form = document.getElementById('adhesion-form');
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const honeypot = document.getElementById('website');
+        if (honeypot && honeypot.value.trim() !== '') return;
+
+        const prenom    = document.getElementById('prenom').value.trim();
+        const nom       = document.getElementById('nom').value.trim();
+        const email     = document.getElementById('email').value.trim();
+        const telephone = document.getElementById('telephone').value.trim();
+        const adresse   = document.getElementById('adresse').value.trim();
+
+        if (!prenom || !nom) {
+          document.getElementById(prenom ? 'nom' : 'prenom').focus();
+          return;
+        }
+
+        const btn     = document.getElementById('submit-btn');
+        const txtBtn  = document.getElementById('submit-text');
+        const success = document.getElementById('form-success');
+        const erreur  = document.getElementById('form-error');
+
+        btn.disabled = true;
+        txtBtn.textContent = 'Envoi en cours…';
+        success.style.display = 'none';
+        erreur.style.display  = 'none';
+
+        try {
+          const payload = { prenom, nom };
+          if (email)     payload.email     = email;
+          if (telephone) payload.telephone = telephone;
+          if (adresse)   payload.adresse   = adresse;
+
+          const { error } = await sbClient.from('adhesions').insert([payload]);
+          if (error) throw error;
+
+          success.style.display = 'block';
+          form.reset();
+          chargerStats();
+
+        } catch (err) {
+          console.error('Erreur soumission adhésion:', err);
+          erreur.style.display = 'block';
+        } finally {
+          btn.disabled = false;
+          txtBtn.textContent = 'Envoyer mon adhésion';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
