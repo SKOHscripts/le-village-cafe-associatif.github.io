@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="assets/css/nav.css">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <style>
     .section-stats { padding: 2rem 0 1rem; }
@@ -231,20 +232,20 @@
               <div class="form-group">
                 <label class="form-label" for="prenom">Prénom *</label>
                 <input class="form-input" type="text" id="prenom" name="prenom"
-                  placeholder="Marie" required maxlength="50" autocomplete="given-name">
+                  placeholder="Marie" required pattern=".*\S.*" maxlength="50" autocomplete="given-name">
               </div>
               <div class="form-group">
                 <label class="form-label" for="nom">Nom *</label>
                 <input class="form-input" type="text" id="nom" name="nom"
-                  placeholder="Dupont" required maxlength="50" autocomplete="family-name">
+                  placeholder="Dupont" required pattern=".*\S.*" maxlength="50" autocomplete="family-name">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="email">Email</label>
+              <label class="form-label" for="email">Email *</label>
               <input class="form-input" type="email" id="email" name="email"
-                placeholder="marie@exemple.fr" maxlength="100" autocomplete="email">
-              <p class="form-hint">Optionnel — pour que le CA puisse vous confirmer votre adhésion.</p>
+                placeholder="marie@exemple.fr" required maxlength="100" autocomplete="email">
+              <p class="form-hint">Requis — vous recevrez un email de confirmation à présenter au café pour le paiement.</p>
             </div>
 
             <div class="form-group">
@@ -298,6 +299,12 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
     const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // EmailJS — à remplir après création du compte sur https://www.emailjs.com
+    const EMAILJS_PUBLIC_KEY  = 'p_RGCZSSSSeb2UBzu';
+    const EMAILJS_SERVICE_ID  = 'service_446bi4r';
+    const EMAILJS_TEMPLATE_ID = 'template_usqzf09';
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
     async function chargerStats() {
       try {
         const { data, error } = await sbClient.rpc('get_adhesion_stats');
@@ -329,10 +336,7 @@
         const telephone = document.getElementById('telephone').value.trim();
         const adresse   = document.getElementById('adresse').value.trim();
 
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
+        if (!form.reportValidity()) return;
 
         const btn     = document.getElementById('submit-btn');
         const txtBtn  = document.getElementById('submit-text');
@@ -352,6 +356,16 @@
 
           const { error } = await sbClient.from('adhesions').insert([payload]);
           if (error) throw error;
+
+          try {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+              to_name:       `${prenom} ${nom}`,
+              to_email:      email,
+              adhesion_date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
+            });
+          } catch (mailErr) {
+            console.error('Erreur envoi email de confirmation:', mailErr);
+          }
 
           success.style.display = 'block';
           form.reset();
