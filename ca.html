@@ -87,6 +87,21 @@
       font-size: 0.78rem;
       color: var(--color-text-light);
     }
+
+    .section-streamlit { padding: 0 0 2rem; }
+
+    .streamlit-embed-wrapper {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-top: 0.5rem;
+      min-height: 700px;
+    }
+    .streamlit-embed-wrapper iframe {
+      display: block;
+      border: none;
+      width: 100%;
+      height: 700px;
+    }
   </style>
 </head>
 <body>
@@ -165,8 +180,32 @@
         </div>
       </section>
 
+      <!-- STREAMLIT EMBED -->
+      <section class="section-streamlit fade-up fade-up-2" aria-labelledby="streamlit-title">
+        <h2 class="section-title" id="streamlit-title">Suite logicielle — Rapport des stocks</h2>
+        <div class="outil-card" style="border-left-color: var(--color-orange); padding-bottom: 1.25rem;">
+          <div class="outil-header">
+            <div class="icon-circle orange" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+            </div>
+            <span class="outil-titre">Rapport des stocks</span>
+          </div>
+          <div class="streamlit-embed-wrapper">
+            <iframe
+              src="https://sumupautoreport.streamlit.app/?embed=true"
+              title="Suite logicielle — Rapport des stocks"
+              allow="fullscreen"
+              loading="lazy">
+              <p>Votre navigateur ne prend pas en charge les iframes.
+                <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer">Ouvrir l'application →</a>
+              </p>
+            </iframe>
+          </div>
+        </div>
+      </section>
+
       <!-- LIENS RAPIDES -->
-      <section class="section-liens fade-up fade-up-2" aria-labelledby="liens-title">
+      <section class="section-liens fade-up fade-up-3" aria-labelledby="liens-title">
         <h2 class="section-title" id="liens-title">Liens rapides</h2>
         <div class="liens-grid">
           <a href="benevoles.html" class="lien-card">
