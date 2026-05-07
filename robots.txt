@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /benevoles.html
+Disallow: /ca.html
+
+Sitemap: https://cafe-levillage.org/sitemap.xml
