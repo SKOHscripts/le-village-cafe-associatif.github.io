@@ -5,7 +5,8 @@
     { "emoji": "🤝", "titre": "Solidarité", "texte": "Un lieu ouvert à toutes et tous, sans condition." },
     { "emoji": "🌱", "titre": "Engagement", "texte": "Des bénévoles investis pour faire vivre le Village." },
     { "emoji": "💬", "titre": "Lien social", "texte": "Rompre l'isolement, créer des rencontres vraies." },
-    { "emoji": "🏘️", "titre": "Ancrage local", "texte": "Fédérer les acteurs du quartier autour de projets communs." }
+    { "emoji": "🏘️", "titre": "Ancrage local", "texte": "Fédérer les acteurs du quartier autour de projets communs." },
+    { "emoji": "🌍", "titre": "Ouverture", "texte": "Tisser du lien intergénérationnel et interculturel, faire de nos différences une richesse." }
   ],
   "horaires": [
     { "jour": "Mardis", "heures": "14h30 – 19h00" },
