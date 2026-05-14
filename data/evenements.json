@@ -1,0 +1,37 @@
+[
+  {
+    "id": "cafe-familles-2026-05-16",
+    "titre": "Café des familles",
+    "date": "2026-05-16",
+    "dateAffichage": "16 mai 2026",
+    "heureDebut": "16:00",
+    "heureFin": "19:00",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "description": "Premier créneau d'une série d'évènements pour créer un temps convivial entre les familles du quartier. Ambiance goûter de 16h à 19h, autour d'un partage d'idées.",
+    "photos": []
+  },
+  {
+    "id": "soiree-jeux-2026-03-27",
+    "titre": "Soirée Jeux de société",
+    "date": "2026-03-27",
+    "dateAffichage": "27 mars 2026",
+    "description": "Une soirée conviviale autour des jeux de société, de 18h à 20h30.",
+    "photos": []
+  },
+  {
+    "id": "ateliers-village-2026-03-21",
+    "titre": "Les Ateliers du Village",
+    "date": "2026-03-21",
+    "dateAffichage": "21 mars 2026",
+    "description": "Plantations, remise en état des bancs, ponçage et pique-nique partagé à midi.",
+    "photos": []
+  },
+  {
+    "id": "st-patrick-2026-03-17",
+    "titre": "La St Patrick au Village",
+    "date": "2026-03-17",
+    "dateAffichage": "17 mars 2026",
+    "description": "Une soirée festive avec musique et jeux, réservée à nos adhérents.",
+    "photos": []
+  }
+]
