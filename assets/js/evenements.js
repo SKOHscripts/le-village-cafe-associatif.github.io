@@ -8,7 +8,7 @@
   'use strict';
 
   const POPUP_WINDOW_DAYS = 21;
-  const DISMISS_KEY_PREFIX = 'evt-dismissed:';
+  const DISMISS_NAMESPACE = 'evt-dismissed:';
   const FALLBACK_FB = 'https://www.facebook.com/profile.php?id=61574530611496';
   const FALLBACK_IG = 'https://www.instagram.com/cafe_associatif_le_village';
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -155,7 +155,7 @@
   // ── Pop-up ───────────────────────────────────────────────────
   function isDismissed(evt) {
     try {
-      return sessionStorage.getItem(DISMISS_KEY_PREFIX + evt.id) === '1';
+      return sessionStorage.getItem(DISMISS_NAMESPACE + evt.id) === '1';
     } catch {
       return false;
     }
@@ -163,7 +163,7 @@
 
   function markDismissed(evt) {
     try {
-      sessionStorage.setItem(DISMISS_KEY_PREFIX + evt.id, '1');
+      sessionStorage.setItem(DISMISS_NAMESPACE + evt.id, '1');
     } catch {
       // sessionStorage indisponible (mode privé strict) — ignoré volontairement
     }
@@ -294,22 +294,26 @@
     // Focus
     closeBtn.focus();
 
+    function cleanup() {
+      overlay.remove();
+      document.body.classList.remove('has-event-modal');
+      document.removeEventListener('keydown', onKeydown);
+      if (previouslyFocused && previouslyFocused.focus) {
+        previouslyFocused.focus();
+      }
+    }
+
     function close() {
       if (modal.classList.contains('is-closing')) return;
       modal.classList.add('is-closing');
       overlay.classList.add('is-closing');
       markDismissed(evt);
-      const cleanup = () => {
-        overlay.remove();
-        document.body.classList.remove('has-event-modal');
-        document.removeEventListener('keydown', onKeydown);
-        if (previouslyFocused && previouslyFocused.focus) {
-          previouslyFocused.focus();
-        }
-      };
-      // Fallback if animationend doesn't fire (e.g. reduced motion)
-      const t = setTimeout(cleanup, 350);
-      modal.addEventListener('animationend', () => { clearTimeout(t); cleanup(); }, { once: true });
+      // Fallback si animationend ne se déclenche pas (ex : reduced motion)
+      const fallbackTimer = setTimeout(cleanup, 350);
+      modal.addEventListener('animationend', () => {
+        clearTimeout(fallbackTimer);
+        cleanup();
+      }, { once: true });
     }
 
     function onKeydown(e) {
