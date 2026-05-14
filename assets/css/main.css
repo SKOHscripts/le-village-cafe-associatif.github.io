@@ -332,12 +332,15 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 
 .evenement-photo {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  padding-top: 56.25%;
+  position: relative;
   overflow: hidden;
   background: var(--color-teal-light);
 }
 
 .evenement-photo img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -475,11 +478,14 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   border-radius: var(--radius-md);
   overflow: hidden;
   margin-bottom: 1rem;
-  aspect-ratio: 16 / 9;
+  padding-top: 56.25%;
+  position: relative;
   background: var(--color-teal-light);
 }
 
 .event-modal__photo img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -521,6 +527,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   color: var(--color-teal);
   border-color: var(--color-teal-light);
 }
+
 .event-modal__link--fb:hover {
   background: var(--color-teal);
   color: var(--color-white);
@@ -532,6 +539,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   color: var(--color-teal);
   border-color: var(--color-teal-light);
 }
+
 .event-modal__link--ig:hover {
   background: var(--color-teal);
   color: var(--color-white);
@@ -544,6 +552,7 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   border-color: var(--color-orange);
   flex: 1 1 100%;
 }
+
 .event-modal__link--agenda:hover {
   background: #e09200;
   border-color: #e09200;
@@ -560,23 +569,43 @@ body.has-event-modal {
 }
 
 @keyframes eventOverlayFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes eventOverlayFadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes eventPopIn {
-  from { opacity: 0; transform: translateY(16px) scale(0.92); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes eventPopOut {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to   { opacity: 0; transform: translateY(8px) scale(0.96); }
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -586,8 +615,14 @@ body.has-event-modal {
   .event-modal.is-closing {
     animation: none;
   }
-  .event-modal__close:hover { transform: none; }
-  .evenement-card:hover { transform: none; }
+
+  .event-modal__close:hover {
+    transform: none;
+  }
+
+  .evenement-card:hover {
+    transform: none;
+  }
 }
 
 /* --- Animations d'entrée --- */

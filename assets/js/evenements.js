@@ -88,7 +88,7 @@
     const card = document.createElement('article');
     card.className = 'evenement-card';
 
-    if (evt.photos && evt.photos.length) {
+    if (evt.photos && evt.photos.length && isSafeUrl(evt.photos[0])) {
       const photoWrap = document.createElement('div');
       photoWrap.className = 'evenement-photo';
       const img = document.createElement('img');
@@ -154,13 +154,34 @@
 
   // ── Pop-up ───────────────────────────────────────────────────
   function isDismissed(evt) {
-    try { return sessionStorage.getItem(DISMISS_KEY_PREFIX + evt.id) === '1'; }
-    catch (_) { return false; }
+    try {
+      return sessionStorage.getItem(DISMISS_KEY_PREFIX + evt.id) === '1';
+    } catch (e) {
+      return false;
+    }
   }
 
   function markDismissed(evt) {
-    try { sessionStorage.setItem(DISMISS_KEY_PREFIX + evt.id, '1'); }
-    catch (_) { /* sessionStorage indisponible — pas grave */ }
+    try {
+      sessionStorage.setItem(DISMISS_KEY_PREFIX + evt.id, '1');
+    } catch (e) {
+      // sessionStorage indisponible (mode privé strict) — pas grave
+    }
+  }
+
+  function isSafeUrl(url) {
+    if (typeof url !== 'string') return false;
+    return /^https?:\/\//i.test(url) || /^[^:]+\.html(\?|#|$)/i.test(url);
+  }
+
+  function buildExternalLink(href, label, className) {
+    const a = document.createElement('a');
+    a.rel = 'noopener noreferrer';
+    a.target = '_blank';
+    a.href = href;
+    a.className = className;
+    a.textContent = label;
+    return a;
   }
 
   function trapFocus(container, event) {
@@ -220,7 +241,7 @@
 
     modal.append(closeBtn, eyebrow, titre, date);
 
-    if (evt.photos && evt.photos.length) {
+    if (evt.photos && evt.photos.length && isSafeUrl(evt.photos[0])) {
       const photoWrap = document.createElement('div');
       photoWrap.className = 'event-modal__photo';
       const img = document.createElement('img');
@@ -250,22 +271,13 @@
     const links = document.createElement('div');
     links.className = 'event-modal__links';
 
-    const fbUrl = (evt.liens && evt.liens.facebook) || (contenu && contenu.facebook) || FALLBACK_FB;
-    const igUrl = (evt.liens && evt.liens.instagram) || (contenu && contenu.instagram) || FALLBACK_IG;
+    const candidateFb = (evt.liens && evt.liens.facebook) || (contenu && contenu.facebook) || FALLBACK_FB;
+    const candidateIg = (evt.liens && evt.liens.instagram) || (contenu && contenu.instagram) || FALLBACK_IG;
+    const fbUrl = isSafeUrl(candidateFb) ? candidateFb : FALLBACK_FB;
+    const igUrl = isSafeUrl(candidateIg) ? candidateIg : FALLBACK_IG;
 
-    const fb = document.createElement('a');
-    fb.href = fbUrl;
-    fb.target = '_blank';
-    fb.rel = 'noopener noreferrer';
-    fb.className = 'event-modal__link event-modal__link--fb';
-    fb.textContent = 'Facebook';
-
-    const ig = document.createElement('a');
-    ig.href = igUrl;
-    ig.target = '_blank';
-    ig.rel = 'noopener noreferrer';
-    ig.className = 'event-modal__link event-modal__link--ig';
-    ig.textContent = 'Instagram';
+    const fb = buildExternalLink(fbUrl, 'Facebook', 'event-modal__link event-modal__link--fb');
+    const ig = buildExternalLink(igUrl, 'Instagram', 'event-modal__link event-modal__link--ig');
 
     const agenda = document.createElement('a');
     agenda.href = 'agenda.html';
