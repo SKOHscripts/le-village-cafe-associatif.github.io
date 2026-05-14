@@ -236,13 +236,9 @@
 }
 
 .lang-switch--mobile {
+  display: inline-flex;
   align-self: flex-start;
   margin-top: 1rem;
-}
-
-/* Desktop : show desktop switcher only, hide mobile-only one */
-.lang-switch--mobile {
-  display: inline-flex;
 }
 
 /* Mobile : hide the in-header switcher (it would crowd the burger row),

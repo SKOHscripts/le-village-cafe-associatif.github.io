@@ -13,6 +13,7 @@
   const DEFAULT_LOCALE = 'en';
   const STORAGE_KEY = 'village.lang';
   const DICT_URL = 'data/i18n.json';
+  const KEY_RE = /^[A-Za-z][A-Za-z0-9._-]*$/;
 
   function resolveLocale() {
     try {
@@ -43,6 +44,8 @@
 
   function t(key, vars) {
     if (!state.dict) return '';
+    if (typeof key !== 'string' || !KEY_RE.test(key)) return '';
+    if (!Object.prototype.hasOwnProperty.call(state.dict, key)) return key;
     const entry = state.dict[key];
     if (!entry) return key;
     let value = entry[state.locale];
@@ -73,18 +76,19 @@
 
     scope.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      if (!key) return;
+      if (!key || !KEY_RE.test(key)) return;
       el.textContent = t(key);
     });
 
     scope.querySelectorAll('[data-i18n-html]').forEach(el => {
       const key = el.getAttribute('data-i18n-html');
-      if (!key) return;
+      if (!key || !KEY_RE.test(key)) return;
       el.innerHTML = t(key);
     });
 
     scope.querySelectorAll('[data-i18n-attr]').forEach(el => {
       parseAttrSpec(el.getAttribute('data-i18n-attr')).forEach(([attr, key]) => {
+        if (!KEY_RE.test(attr) || !KEY_RE.test(key)) return;
         el.setAttribute(attr, t(key));
       });
     });
@@ -92,7 +96,7 @@
     document.documentElement.lang = state.locale;
 
     const titleKey = document.documentElement.getAttribute('data-i18n-title');
-    if (titleKey) document.title = t(titleKey);
+    if (titleKey && KEY_RE.test(titleKey)) document.title = t(titleKey);
   }
 
   function setLocale(loc) {
