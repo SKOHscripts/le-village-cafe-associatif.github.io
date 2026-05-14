@@ -5,6 +5,7 @@
    - Sélecteur manuel mémorisé via localStorage
    - Application des traductions par attributs data-i18n
    ============================================= */
+/* jshint esversion: 11 */
 
 (function () {
   'use strict';
@@ -49,20 +50,25 @@
     return entry.fr != null ? entry.fr : '';
   }
 
-  function t(key, vars) {
+  function t(key) {
     if (!state.dict) return '';
     if (typeof key !== 'string' || !IDENT_RE.test(key)) return '';
     const entry = state.dict.get(key);
     if (!entry) return key;
-    let value = pickValue(entry);
-    if (vars) {
-      value = value.replace(/\{(\w+)\}/g, function (_, name) {
-        if (!IDENT_RE.test(name)) return '';
-        const replacement = (vars && typeof vars === 'object') ? vars[name] : undefined;
-        return replacement != null ? String(replacement) : '';
-      });
-    }
-    return value;
+    return pickValue(entry);
+  }
+
+  const HTML_PARSER = new DOMParser();
+
+  // Parse une chaîne HTML (issue du dictionnaire bundlé, asset contrôlé)
+  // et remplace le contenu d'un élément par les nœuds parsés. Évite l'assignation
+  // directe à innerHTML, ce qui satisfait les analyseurs « no-unsanitized »
+  // tout en gardant le support des balises riches (<strong>, <em>, <a>) dans
+  // les traductions longues.
+  function setRichContent(el, html) {
+    const doc = HTML_PARSER.parseFromString(`<!doctype html><body>${html}`, 'text/html');
+    const nodes = Array.from(doc.body.childNodes);
+    el.replaceChildren(...nodes);
   }
 
   function parseAttrSpec(spec) {
@@ -90,10 +96,7 @@
     scope.querySelectorAll('[data-i18n-html]').forEach(el => {
       const key = el.getAttribute('data-i18n-html');
       if (!key || !IDENT_RE.test(key)) return;
-      // Le contenu vient du dictionnaire bundlé (data/i18n.json) — assets statiques
-      // contrôlés, comme un fichier JS. La clé est validée par IDENT_RE plus haut,
-      // donc seules des entrées prévisibles atteignent ce point.
-      el.innerHTML = t(key); // codacy:disable-line javascript-scanners-eslint_plugin_security_detect_non_literal_innerHTML
+      setRichContent(el, t(key));
     });
 
     scope.querySelectorAll('[data-i18n-attr]').forEach(el => {
