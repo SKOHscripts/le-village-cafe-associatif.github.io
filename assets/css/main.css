@@ -297,6 +297,334 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
 }
 
 
+/* =============================================
+   ÉVÈNEMENTS — liste (accueil & agenda)
+   ============================================= */
+
+.section-evenements,
+.section-evenements-passes {
+  padding: 0 0 2.5rem;
+}
+
+.evenements-list {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .evenements-list { grid-template-columns: 1fr 1fr; }
+}
+
+.evenement-card {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.evenement-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.evenement-photo {
+  width: 100%;
+  padding-top: 56.25%;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-teal-light);
+}
+
+.evenement-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.evenement-body {
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.evenement-date {
+  font-family: var(--font-script);
+  font-size: 1.15rem;
+  color: var(--color-orange);
+  margin-bottom: 0.25rem;
+}
+
+.evenement-titre {
+  font-size: 1.1rem;
+  color: var(--color-teal);
+  margin: 0 0 0.4rem;
+}
+
+.evenement-meta {
+  font-size: 0.88rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.2rem;
+}
+
+.evenement-desc {
+  margin-top: 0.5rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.evenements-empty {
+  text-align: center;
+  color: var(--color-text-light);
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* =============================================
+   POP-UP ÉVÈNEMENT (accueil)
+   ============================================= */
+
+.event-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: eventOverlayFadeIn 0.25s ease-out both;
+}
+
+.event-modal-overlay.is-closing {
+  animation: eventOverlayFadeOut 0.2s ease-in forwards;
+}
+
+.event-modal {
+  position: relative;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 2rem 1.5rem 1.75rem;
+  animation: eventPopIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.event-modal.is-closing {
+  animation: eventPopOut 0.2s ease-in forwards;
+}
+
+.event-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-teal-light);
+  color: var(--color-teal);
+  font-size: 1.1rem;
+  font-family: var(--font-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.event-modal__close:hover {
+  background: var(--color-teal);
+  color: var(--color-white);
+  transform: rotate(90deg);
+}
+
+.event-modal__close:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+}
+
+.event-modal__eyebrow {
+  font-family: var(--font-script);
+  font-size: 1.2rem;
+  color: var(--color-orange);
+  margin-bottom: 0.15rem;
+}
+
+.event-modal__title {
+  font-size: 1.5rem;
+  color: var(--color-teal);
+  margin: 0 0 0.4rem;
+  padding-right: 2.5rem;
+}
+
+.event-modal__date {
+  font-size: 0.95rem;
+  color: var(--color-text);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.event-modal__photo {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  padding-top: 56.25%;
+  position: relative;
+  background: var(--color-teal-light);
+}
+
+.event-modal__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-modal__lieu {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.5rem;
+}
+
+.event-modal__desc {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.event-modal__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.event-modal__link {
+  flex: 1 1 auto;
+  text-align: center;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.event-modal__link--fb {
+  background: var(--color-teal-light);
+  color: var(--color-teal);
+  border-color: var(--color-teal-light);
+}
+
+.event-modal__link--fb:hover {
+  background: var(--color-teal);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.event-modal__link--ig {
+  background: var(--color-teal-light);
+  color: var(--color-teal);
+  border-color: var(--color-teal-light);
+}
+
+.event-modal__link--ig:hover {
+  background: var(--color-teal);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.event-modal__link--agenda {
+  background: var(--color-orange);
+  color: var(--color-white);
+  border-color: var(--color-orange);
+  flex: 1 1 100%;
+}
+
+.event-modal__link--agenda:hover {
+  background: #e09200;
+  border-color: #e09200;
+  text-decoration: none;
+}
+
+.event-modal__link:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+}
+
+body.has-event-modal {
+  overflow: hidden;
+}
+
+@keyframes eventOverlayFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes eventOverlayFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes eventPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes eventPopOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-modal-overlay,
+  .event-modal,
+  .event-modal-overlay.is-closing,
+  .event-modal.is-closing {
+    animation: none;
+  }
+
+  .event-modal__close:hover {
+    transform: none;
+  }
+
+  .evenement-card:hover {
+    transform: none;
+  }
+}
+
 /* --- Animations d'entrée --- */
 @keyframes fadeUp {
   from {

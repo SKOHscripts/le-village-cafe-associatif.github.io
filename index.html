@@ -316,6 +316,12 @@
         </p>
       </section>
 
+      <!-- ÉVÈNEMENTS À VENIR -->
+      <section class="section-evenements fade-up fade-up-2" aria-labelledby="evt-title">
+        <h2 class="section-title" id="evt-title">Évènements à venir</h2>
+        <div class="evenements-list" data-evenements="upcoming"></div>
+      </section>
+
       <!-- HORAIRES -->
       <section class="section-horaires fade-up fade-up-3" aria-labelledby="horaires-title">
         <div class="horaires-card">
@@ -380,10 +386,14 @@
       </section>
 
     </div><!-- /container -->
+
+    <!-- POP-UP ÉVÈNEMENT (monté dynamiquement par evenements.js) -->
+    <div data-evenements="popup"></div>
   </main>
 
 
   <script src="assets/js/components.js"></script>
+  <script src="assets/js/evenements.js"></script>
   <script>
     // Charger la description depuis data/contenu.json
     fetch('data/contenu.json')

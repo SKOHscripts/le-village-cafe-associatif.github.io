@@ -240,52 +240,6 @@
     }
     .lb-close:hover { opacity: 1; }
 
-    /* Galerie événements */
-    .section-galerie { padding: 0 0 3rem; }
-    .galerie-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-    }
-    .galerie-card {
-      background: var(--color-white);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-      transition: box-shadow 0.2s;
-    }
-    .galerie-card:hover { box-shadow: var(--shadow-md); }
-    .galerie-photo {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background: var(--color-bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      color: var(--color-teal);
-    }
-    .galerie-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .galerie-body { padding: 1.1rem 1.25rem; }
-    .galerie-date {
-      font-size: 0.8rem;
-      color: var(--color-orange);
-      font-weight: 500;
-      margin-bottom: 0.25rem;
-    }
-    .galerie-titre {
-      font-weight: 600;
-      color: var(--color-teal);
-      font-size: 1rem;
-      margin-bottom: 0.4rem;
-    }
-    .galerie-desc { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.5; }
-
     /* Règlement */
     .section-reglement { padding: 0 0 3rem; }
     .reglement-card {
@@ -300,9 +254,6 @@
     .reglement-body h3 { color: var(--color-teal); margin-bottom: 0.3rem; }
     .reglement-body p { font-size: 0.9rem; color: var(--color-text-light); margin-bottom: 0.75rem; }
 
-    @media (min-width: 600px) {
-      .galerie-grid { grid-template-columns: 1fr 1fr; }
-    }
   </style>
 </head>
 <body>
@@ -442,14 +393,6 @@ graph TD
         <div class="lb-svg-box" id="lb-svg-box"></div>
       </div>
 
-      <!-- GALERIE -->
-      <section class="section-galerie fade-up fade-up-5" aria-labelledby="galerie-title">
-        <h2 class="section-title" id="galerie-title">Nos événements</h2>
-        <div class="galerie-grid" id="galerie-grid">
-          <!-- Chargé via JS -->
-        </div>
-      </section>
-
       <!-- RÈGLEMENT -->
       <section class="section-reglement fade-up fade-up-6" aria-labelledby="reglement-title">
         <h2 class="section-title" id="reglement-title">Règlement intérieur</h2>
@@ -561,29 +504,6 @@ graph TD
             ${m.titre ? `<p class="membre-role">${m.titre}</p>` : ''}
             ${(m.poles || []).map(p => `<span class="membre-pole">${p}</span>`).join(' ')}
           </div>
-        `).join('');
-      });
-
-    // Charger evenements-passes.json
-    fetch('data/evenements-passes.json')
-      .then(r => r.json())
-      .then(events => {
-        const grid = document.getElementById('galerie-grid');
-        if (!grid) return;
-        grid.innerHTML = events.map(e => `
-          <article class="galerie-card">
-            <div class="galerie-photo">
-              ${e.photo
-                ? `<img src="${e.photo}" alt="${e.titre}">`
-                : ``
-              }
-            </div>
-            <div class="galerie-body">
-              <p class="galerie-date">${e.date}</p>
-              <p class="galerie-titre">${e.titre}</p>
-              <p class="galerie-desc">${e.description}</p>
-            </div>
-          </article>
         `).join('');
       });
   </script>
