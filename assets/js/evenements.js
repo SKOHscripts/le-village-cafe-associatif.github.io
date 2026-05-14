@@ -156,7 +156,7 @@
   function isDismissed(evt) {
     try {
       return sessionStorage.getItem(DISMISS_KEY_PREFIX + evt.id) === '1';
-    } catch (e) {
+    } catch {
       return false;
     }
   }
@@ -164,8 +164,8 @@
   function markDismissed(evt) {
     try {
       sessionStorage.setItem(DISMISS_KEY_PREFIX + evt.id, '1');
-    } catch (e) {
-      // sessionStorage indisponible (mode privé strict) — pas grave
+    } catch {
+      // sessionStorage indisponible (mode privé strict) — ignoré volontairement
     }
   }
 
@@ -176,9 +176,9 @@
 
   function buildExternalLink(href, label, className) {
     const a = document.createElement('a');
-    a.rel = 'noopener noreferrer';
-    a.target = '_blank';
-    a.href = href;
+    a.setAttribute('rel', 'noopener noreferrer');
+    a.setAttribute('target', '_blank');
+    a.setAttribute('href', href);
     a.className = className;
     a.textContent = label;
     return a;
