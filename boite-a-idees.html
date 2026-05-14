@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-i18n-title="meta.ideas.title">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Boîte à idées du Café Associatif Le Village — soumettez vos idées pour faire évoluer le café.">
+  <meta name="description" content="Boîte à idées du Café Associatif Le Village — soumettez vos idées pour faire évoluer le café." data-i18n-attr="content:meta.ideas.desc">
   <title>Boîte à idées — Le Village · Café Associatif Lyon 8e</title>
   <link rel="canonical" href="https://cafe-levillage.org/boite-a-idees.html">
+  <link rel="alternate" hreflang="fr" href="https://cafe-levillage.org/boite-a-idees.html">
+  <link rel="alternate" hreflang="en" href="https://cafe-levillage.org/boite-a-idees.html?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://cafe-levillage.org/boite-a-idees.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Le Village — Café Associatif">
   <meta property="og:url" content="https://cafe-levillage.org/boite-a-idees.html">
-  <meta property="og:title" content="Boîte à idées — Le Village · Café Associatif Lyon 8e">
-  <meta property="og:description" content="Boîte à idées du Café Associatif Le Village — soumettez vos idées pour faire évoluer le café.">
+  <meta property="og:title" content="Boîte à idées — Le Village · Café Associatif Lyon 8e" data-i18n-attr="content:meta.ideas.title">
+  <meta property="og:description" content="Boîte à idées du Café Associatif Le Village — soumettez vos idées pour faire évoluer le café." data-i18n-attr="content:meta.ideas.desc">
   <meta property="og:image" content="https://cafe-levillage.org/assets/images/aquarelle.jpeg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -334,8 +337,8 @@
 
   <div class="page-header">
     <div class="container">
-      <h1>Boîte à idées</h1>
-      <p>votre avis compte pour faire vivre le Village</p>
+      <h1 data-i18n="ideas.header.title">Boîte à idées</h1>
+      <p data-i18n="ideas.header.sub">votre avis compte pour faire vivre le Village</p>
     </div>
   </div>
 
@@ -345,45 +348,45 @@
       <!-- FORMULAIRE -->
       <section class="section-formulaire fade-up fade-up-1" aria-labelledby="form-title">
         <div class="form-card">
-          <h2 id="form-title">Partager une idée</h2>
+          <h2 id="form-title" data-i18n="ideas.form.title">Partager une idée</h2>
           <form id="idee-form" novalidate>
 
             <div class="form-group">
-              <label class="form-label" for="pseudo">Votre prénom ou pseudo *</label>
-              <input class="form-input" type="text" id="pseudo" name="pseudo" placeholder="Marie, Le voisin du 3e…" required maxlength="50" autocomplete="off">
+              <label class="form-label" for="pseudo" data-i18n="ideas.form.pseudo">Votre prénom ou pseudo *</label>
+              <input class="form-input" type="text" id="pseudo" name="pseudo" placeholder="Marie, Le voisin du 3e…" data-i18n-attr="placeholder:ideas.form.pseudo.ph" required maxlength="50" autocomplete="off">
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="idee">Votre idée *</label>
-              <textarea class="form-textarea" id="idee" name="idee" placeholder="Et si on organisait… On pourrait aussi…" required maxlength="500"></textarea>
-              <p class="form-hint">Toutes les idées sont les bienvenues !</p>
+              <label class="form-label" for="idee" data-i18n="ideas.form.idea">Votre idée *</label>
+              <textarea class="form-textarea" id="idee" name="idee" placeholder="Et si on organisait… On pourrait aussi…" data-i18n-attr="placeholder:ideas.form.idea.ph" required maxlength="500"></textarea>
+              <p class="form-hint" data-i18n="ideas.form.idea.hint">Toutes les idées sont les bienvenues !</p>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="contact">Votre téléphone ou email *</label>
-              <input class="form-input" type="text" id="contact" name="contact" placeholder="Pour que le CA puisse vous recontacter si besoin" required maxlength="100" autocomplete="off">
-              <p class="form-hint">Ces coordonnées ne sont jamais affichées publiquement — visibles uniquement par le CA.</p>
+              <label class="form-label" for="contact" data-i18n="ideas.form.contact">Votre téléphone ou email *</label>
+              <input class="form-input" type="text" id="contact" name="contact" placeholder="Pour que le CA puisse vous recontacter si besoin" data-i18n-attr="placeholder:ideas.form.contact.ph" required maxlength="100" autocomplete="off">
+              <p class="form-hint" data-i18n="ideas.form.contact.hint">Ces coordonnées ne sont jamais affichées publiquement — visibles uniquement par le CA.</p>
             </div>
 
 
             <!-- Honeypot anti-spam — invisible pour les humains, rempli automatiquement par les bots -->
             <div class="form-trap" aria-hidden="true">
-              <label for="website">Ne pas remplir ce champ</label>
+              <label for="website" data-i18n="ideas.honey">Ne pas remplir ce champ</label>
               <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
             </div>
             <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
-              <span id="submit-text">Envoyer mon idée</span>
+              <span id="submit-text" data-i18n="ideas.form.submit">Envoyer mon idée</span>
             </button>
 
-            <div class="form-success" id="form-success" role="alert">
+            <div class="form-success" id="form-success" role="alert" data-i18n="ideas.form.success">
               Merci ! Votre idée a bien été ajoutée au tableau.
             </div>
 
-            <div class="form-cooldown" id="form-cooldown" role="alert">
+            <div class="form-cooldown" id="form-cooldown" role="alert" data-i18n-html="ideas.form.cooldown.html">
               Vous avez déjà soumis <strong id="cooldown-count"></strong> idée(s) aujourd'hui.<br>
               Revenez dans <strong id="cooldown-remaining"></strong> pour en soumettre une nouvelle.
             </div>
-            <div class="form-error" id="form-error" role="alert">
+            <div class="form-error" id="form-error" role="alert" data-i18n="ideas.form.error">
               Une erreur est survenue. Veuillez réessayer.
             </div>
           </form>
@@ -394,12 +397,12 @@
       <section class="section-postits fade-up fade-up-2" aria-labelledby="postits-title">
 
         <div class="postits-header">
-          <h2 id="postits-title" style="margin:0;">Les idées du Village</h2>
+          <h2 id="postits-title" style="margin:0;" data-i18n="ideas.list.title">Les idées du Village</h2>
           <span class="postits-count" id="postits-count"></span>
         </div>
 
         <div class="postits-grid" id="postits-grid" aria-live="polite">
-          <p class="postits-loading">Chargement des idées…</p>
+          <p class="postits-loading" data-i18n="ideas.list.loading">Chargement des idées…</p>
         </div>
 
       </section>
@@ -409,30 +412,30 @@
         <div class="site-card">
           <div class="site-card-header">
             <div class="site-card-header" style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center;">
-              <h2 id="site-title" style="margin-bottom: 0;">Améliorer le site web</h2>
-              <a href="https://github.com/SKOHscripts" target="_blank" rel="noopener noreferrer" aria-label="Voir le GitHub de SKOHscripts" class="github-direct-link" style="font-size: 0.9rem; margin-top: 0;">
+              <h2 id="site-title" style="margin-bottom: 0;" data-i18n="ideas.site.title">Améliorer le site web</h2>
+              <a href="https://github.com/SKOHscripts" target="_blank" rel="noopener noreferrer" aria-label="Voir le GitHub de SKOHscripts" data-i18n-attr="aria-label:ideas.site.profile.aria" class="github-direct-link" style="font-size: 0.9rem; margin-top: 0;">
                 <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.24 3.32.95.1-.74.4-1.24.73-1.53-2.56-.29-5.25-1.28-5.25-5.71 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.97.13 2.88.39 2.19-1.5 3.16-1.19 3.16-1.19.63 1.58.24 2.75.12 3.04.73.81 1.18 1.85 1.18 3.11 0 4.44-2.69 5.41-5.26 5.7.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.13 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
-                <span>Voir le profil</span>
+                <span data-i18n="ideas.site.profile">Voir le profil</span>
               </a>
             </div>
           </div>
-          <p class="site-card-desc">
+          <p class="site-card-desc" data-i18n="ideas.site.desc">
             Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ?
             Votre proposition sera directement transmise au responsable technique sous forme d'issue GitHub.
           </p>
 
           <div class="site-form-row">
             <div class="form-group" style="margin-bottom:0">
-              <label class="form-label" for="site-titre">Titre de la suggestion *</label>
+              <label class="form-label" for="site-titre" data-i18n="ideas.site.titleLbl">Titre de la suggestion *</label>
               <input class="form-input" type="text" id="site-titre"
-                placeholder="ex : Le menu ne se ferme pas sur mobile"
+                placeholder="ex : Le menu ne se ferme pas sur mobile" data-i18n-attr="placeholder:ideas.site.titlePh"
                 maxlength="100" autocomplete="off"
                 oninput="updateSitePreview()">
             </div>
             <div class="form-group" style="margin-bottom:0">
-              <label class="form-label" for="site-desc">Description (optionnel)</label>
+              <label class="form-label" for="site-desc" data-i18n="ideas.site.descLbl">Description (optionnel)</label>
               <textarea class="form-textarea" id="site-desc"
-                placeholder="Décrivez le problème ou l'amélioration souhaitée…"
+                placeholder="Décrivez le problème ou l'amélioration souhaitée…" data-i18n-attr="placeholder:ideas.site.descPh"
                 maxlength="1000" style="min-height:80px"
                 oninput="updateSitePreview()"></textarea>
             </div>
@@ -440,15 +443,15 @@
 
           <!-- Aperçu de l'issue -->
           <div class="site-preview" id="site-preview">
-            <strong>Titre :</strong> <span id="preview-titre"></span><br>
-            <strong>Description :</strong> <span id="preview-desc">—</span>
+            <strong data-i18n="ideas.site.preview.t">Titre :</strong> <span id="preview-titre"></span><br>
+            <strong data-i18n="ideas.site.preview.d">Description :</strong> <span id="preview-desc">—</span>
           </div>
 
-          <button class="btn btn-secondary" id="site-submit" onclick="ouvrirIssueGitHub()" style="width:100%; justify-content:center;">
+          <button class="btn btn-secondary" id="site-submit" onclick="ouvrirIssueGitHub()" style="width:100%; justify-content:center;" data-i18n="ideas.site.cta">
             Ouvrir une suggestion sur GitHub →
           </button>
 
-          <p class="site-note">
+          <p class="site-note" data-i18n="ideas.site.note">
             Un compte GitHub est nécessaire pour soumettre. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur "Submit new issue".
           </p>
         </div>
@@ -457,6 +460,7 @@
     </div>
   </main>
 
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/components.js"></script>
   <script src="assets/js/lightbox.js" defer></script>
   <script>
@@ -476,47 +480,68 @@
       return div.innerHTML;
     }
 
+    function i18nT(key, fallback) {
+      return (window.i18n && window.i18n.dict) ? window.i18n.t(key) : fallback;
+    }
+
+    function dateTag() {
+      return (window.i18n && window.i18n.locale === 'en') ? 'en-GB' : 'fr-FR';
+    }
+
     function formatDate(isoString) {
       const d = new Date(isoString);
-      return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+      return d.toLocaleDateString(dateTag(), { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     // ── Charger les idées ────────────────────────────────────
-    async function chargerIdees() {
+    let cachedIdees = null;
+
+    function renderIdees() {
       const grid  = document.getElementById('postits-grid');
       const count = document.getElementById('postits-count');
-      if (!grid) return;
+      if (!grid || !cachedIdees) return;
 
+      if (!cachedIdees.length) {
+        grid.innerHTML = `<p class="postits-empty">${escapeHtml(i18nT('ideas.list.empty', 'Soyez le premier à partager une idée !'))}</p>`;
+        if (count) count.textContent = '';
+        return;
+      }
+
+      if (count) {
+        const key = cachedIdees.length > 1 ? 'ideas.list.count.many' : 'ideas.list.count';
+        const tpl = i18nT(key, `${cachedIdees.length} idée${cachedIdees.length > 1 ? 's' : ''}`);
+        count.textContent = tpl.replace('{count}', cachedIdees.length);
+      }
+
+      grid.innerHTML = cachedIdees.map(idee => `
+        <div class="postit" data-id="${idee.id}">
+          <p class="postit-pseudo">${escapeHtml(idee.pseudo)}</p>
+          <p class="postit-texte">${escapeHtml(idee.idee)}</p>
+          <p class="postit-date">${formatDate(idee.created_at)}</p>
+        </div>
+      `).join('');
+    }
+
+    async function chargerIdees() {
+      const grid = document.getElementById('postits-grid');
+      if (!grid) return;
       try {
         const { data, error } = await sbClient
           .from('idees')
           .select('id, pseudo, idee, created_at')
           .eq('visible', true)
           .order('created_at', { ascending: false });
-
         if (error) throw error;
-
-        if (!data || data.length === 0) {
-          grid.innerHTML = '<p class="postits-empty">Soyez le premier à partager une idée !</p>';
-          if (count) count.textContent = '';
-          return;
-        }
-
-        if (count) count.textContent = `${data.length} idée${data.length > 1 ? 's' : ''}`;
-
-        grid.innerHTML = data.map(idee => `
-          <div class="postit" data-id="${idee.id}">
-            <p class="postit-pseudo">${escapeHtml(idee.pseudo)}</p>
-            <p class="postit-texte">${escapeHtml(idee.idee)}</p>
-            <p class="postit-date">${formatDate(idee.created_at)}</p>
-          </div>
-        `).join('');
-
+        cachedIdees = data || [];
+        renderIdees();
       } catch (err) {
         console.error('Erreur chargement idées:', err);
-        if (grid) grid.innerHTML = '<p class="postits-empty">Impossible de charger les idées pour le moment.</p>';
+        grid.innerHTML = `<p class="postits-empty">${escapeHtml(i18nT('ideas.list.unavailable', 'Impossible de charger les idées pour le moment.'))}</p>`;
       }
     }
+
+    document.addEventListener('i18n:changed', renderIdees);
+    document.addEventListener('i18n:ready', renderIdees);
 
     // ── Suggestions site → GitHub ────────────────────────────
     function updateSitePreview() {
@@ -644,7 +669,7 @@
           if (!pseudo || !idee || !contact) return;
 
           btn.disabled = true;
-          txtBtn.textContent = 'Envoi en cours…';
+          txtBtn.textContent = i18nT('ideas.form.sending', 'Envoi en cours…');
           success.style.display = 'none';
           erreur.style.display  = 'none';
 
@@ -669,7 +694,7 @@
             erreur.style.display = 'block';
           } finally {
             btn.disabled = false;
-            txtBtn.textContent = 'Envoyer mon idée';
+            txtBtn.textContent = i18nT('ideas.form.submit', 'Envoyer mon idée');
           }
         });
       }

@@ -2,36 +2,41 @@
   {
     "id": "cafe-familles-2026-05-16",
     "titre": "Café des familles",
+    "titre_en": "Family café",
     "date": "2026-05-16",
-    "dateAffichage": "16 mai 2026",
     "heureDebut": "16:00",
     "heureFin": "19:00",
     "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
     "description": "Premier créneau d'une série d'évènements pour créer un temps convivial entre les familles du quartier. Ambiance goûter de 16h à 19h, autour d'un partage d'idées.",
+    "description_en": "First in a series of events bringing families of the neighbourhood together for a friendly afternoon. Tea-time from 4pm to 7pm, sharing ideas.",
     "photos": []
   },
   {
     "id": "soiree-jeux-2026-03-27",
     "titre": "Soirée Jeux de société",
+    "titre_en": "Board games night",
     "date": "2026-03-27",
-    "dateAffichage": "27 mars 2026",
     "description": "Une soirée conviviale autour des jeux de société, de 18h à 20h30.",
+    "description_en": "A friendly evening around board games, from 6pm to 8:30pm.",
     "photos": []
   },
   {
     "id": "ateliers-village-2026-03-21",
     "titre": "Les Ateliers du Village",
+    "titre_en": "Village workshops",
     "date": "2026-03-21",
-    "dateAffichage": "21 mars 2026",
     "description": "Plantations, remise en état des bancs, ponçage et pique-nique partagé à midi.",
+    "description_en": "Planting, repairing benches, sanding and a shared picnic at lunchtime.",
     "photos": []
   },
   {
     "id": "st-patrick-2026-03-17",
     "titre": "La St Patrick au Village",
+    "titre_en": "St Patrick's at Le Village",
     "date": "2026-03-17",
-    "dateAffichage": "17 mars 2026",
     "description": "Une soirée festive avec musique et jeux, réservée à nos adhérents.",
+    "description_en": "A festive evening with music and games, members only.",
     "photos": []
   }
 ]

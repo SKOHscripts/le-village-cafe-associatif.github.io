@@ -202,6 +202,57 @@
   height: 64px;
 }
 
+/* Language switcher */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  background: var(--color-bg);
+  border-radius: var(--radius-pill);
+  padding: 0.2rem;
+}
+
+.lang-switch-btn {
+  font-family: var(--font-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text-light);
+  background: none;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lang-switch-btn:hover {
+  color: var(--color-teal);
+}
+
+.lang-switch-btn.is-active {
+  background: var(--color-teal);
+  color: var(--color-white);
+}
+
+.lang-switch--mobile {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+/* Desktop : show desktop switcher only, hide mobile-only one */
+.lang-switch--mobile {
+  display: inline-flex;
+}
+
+/* Mobile : hide the in-header switcher (it would crowd the burger row),
+   the duplicate in the mobile drawer remains accessible */
+@media (max-width: 767px) {
+  .header-inner > .lang-switch {
+    display: none;
+  }
+}
+
 /* Desktop : afficher nav, cacher burger */
 @media (min-width: 768px) {
   .nav-desktop {
@@ -218,5 +269,9 @@
 
   .nav-overlay {
     display: none !important;
+  }
+
+  .lang-switch--mobile {
+    display: none;
   }
 }
