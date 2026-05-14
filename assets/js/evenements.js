@@ -93,7 +93,8 @@
       photoWrap.className = 'evenement-photo';
       const img = document.createElement('img');
       img.loading = 'lazy';
-      img.alt = evt.titre || '';
+      img.className = 'js-zoomable';
+      img.alt = evt.photo_alt || (evt.titre ? 'Photo de l’événement : ' + evt.titre : 'Photo de l’événement');
       img.src = evt.photos[0];
       img.addEventListener('error', () => { photoWrap.style.display = 'none'; });
       photoWrap.appendChild(img);
@@ -246,7 +247,8 @@
       photoWrap.className = 'event-modal__photo';
       const img = document.createElement('img');
       img.loading = 'lazy';
-      img.alt = evt.titre || '';
+      img.className = 'js-zoomable';
+      img.alt = evt.photo_alt || (evt.titre ? 'Photo de l’événement : ' + evt.titre : 'Photo de l’événement');
       img.src = evt.photos[0];
       img.addEventListener('error', () => { photoWrap.style.display = 'none'; });
       photoWrap.appendChild(img);
