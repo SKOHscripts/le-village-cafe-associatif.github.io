@@ -680,6 +680,79 @@ body.has-event-modal {
 
 
 /* =============================================
+   LIGHTBOX — zoom d'images partagé
+   ============================================= */
+
+.js-zoomable {
+  cursor: zoom-in;
+  transition: opacity 0.2s;
+}
+
+.js-zoomable:hover {
+  opacity: 0.9;
+}
+
+.zoom-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--color-teal);
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.lb-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 9999;
+  cursor: zoom-out;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.lb-overlay.is-open {
+  display: flex;
+}
+
+.lb-overlay img,
+.lb-overlay svg {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+  object-fit: contain;
+}
+
+.lb-overlay svg {
+  background: var(--color-white);
+  padding: 1rem;
+}
+
+.lb-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.lb-close:hover,
+.lb-close:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
+/* =============================================
    FOOTER SITE
    ============================================= */
 
