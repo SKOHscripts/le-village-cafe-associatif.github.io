@@ -47,13 +47,19 @@
     return '';
   }
 
-  function localizedField(evt, key) {
+  function localizedField(evt, kind) {
     if (!evt) return '';
-    if (currentLocale() === 'en') {
-      const candidate = evt[key + '_en'];
-      if (candidate != null && String(candidate).trim() !== '') return candidate;
+    const en = currentLocale() === 'en';
+    let fr;
+    let translated;
+    switch (kind) {
+      case 'titre':       fr = evt.titre;       translated = evt.titre_en;       break;
+      case 'lieu':        fr = evt.lieu;        translated = evt.lieu_en;        break;
+      case 'description': fr = evt.description; translated = evt.description_en; break;
+      default: return '';
     }
-    return evt[key] || '';
+    if (en && translated != null && String(translated).trim() !== '') return translated;
+    return fr || '';
   }
 
   // ── Chargement ───────────────────────────────────────────────
