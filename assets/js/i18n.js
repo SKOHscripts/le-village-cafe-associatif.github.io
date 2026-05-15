@@ -17,16 +17,26 @@
   const IDENT_RE = /^[A-Za-z][A-Za-z0-9._-]*$/;
 
   function resolveLocale() {
+    let forceAuto = false;
     try {
       const params = new URLSearchParams(window.location.search);
       const fromUrl = params.get('lang');
-      if (fromUrl && SUPPORTED.includes(fromUrl)) return fromUrl;
+      if (fromUrl === 'auto') {
+        // ?lang=auto : oublie le choix mémorisé et retombe sur la détection navigateur.
+        // Utile pour re-tester l'auto-détection (notamment sur mobile, sans DevTools).
+        forceAuto = true;
+        try { localStorage.removeItem(STORAGE_NAME); } catch (_) { /* ignore */ }
+      } else if (fromUrl && SUPPORTED.includes(fromUrl)) {
+        return fromUrl;
+      }
     } catch (_) { /* ignore */ }
 
-    try {
-      const stored = localStorage.getItem(STORAGE_NAME);
-      if (stored && SUPPORTED.includes(stored)) return stored;
-    } catch (_) { /* ignore */ }
+    if (!forceAuto) {
+      try {
+        const stored = localStorage.getItem(STORAGE_NAME);
+        if (stored && SUPPORTED.includes(stored)) return stored;
+      } catch (_) { /* ignore */ }
+    }
 
     const candidates = (navigator.languages && navigator.languages.length)
       ? navigator.languages
