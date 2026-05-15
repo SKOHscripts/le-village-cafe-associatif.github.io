@@ -68,17 +68,56 @@
     return pickValue(entry);
   }
 
-  const HTML_PARSER = new DOMParser();
+  // ── Sanitizer HTML — whitelist stricte ──────────────────────
+  // Le contenu rich (data-i18n-html) provient du dictionnaire bundlé,
+  // mais on le passe quand même au tamis ci-dessous : seules les balises
+  // utilisées par les traductions sont autorisées, le reste est aplati
+  // en texte. Empêche toute escalade si quelqu'un poussait un jour
+  // une chaîne malveillante dans data/i18n.json (revue de PR, etc.).
+  const ALLOWED_TAGS = new Set(['STRONG', 'EM', 'B', 'I', 'S', 'BR', 'SPAN', 'A']);
+  const ALLOWED_ATTRS = {
+    'A':    ['href', 'target', 'rel', 'class', 'id'],
+    'SPAN': ['class', 'id'],
+    '*':    ['class', 'id'],
+  };
+  const SAFE_URL_RE = /^(?:(?:https?:|mailto:|tel:|#|\/|[^:?#]+(?:\?|#|$))|[^:]+\.html(?:\?|#|$))/i;
 
-  // Parse une chaîne HTML (issue du dictionnaire bundlé, asset contrôlé)
-  // et remplace le contenu d'un élément par les nœuds parsés. Évite l'assignation
-  // directe à innerHTML, ce qui satisfait les analyseurs « no-unsanitized »
-  // tout en gardant le support des balises riches (<strong>, <em>, <a>) dans
-  // les traductions longues.
+  function appendSanitized(srcNode, target) {
+    if (srcNode.nodeType === 3 /* TEXT */) {
+      target.appendChild(document.createTextNode(srcNode.nodeValue || ''));
+      return;
+    }
+    if (srcNode.nodeType !== 1 /* ELEMENT */) return;
+
+    const tag = srcNode.tagName;
+    if (!ALLOWED_TAGS.has(tag)) {
+      // Élément non autorisé : on garde le contenu textuel, on jette le tag.
+      srcNode.childNodes.forEach(child => appendSanitized(child, target));
+      return;
+    }
+
+    const safe = document.createElement(tag);
+    const tagAttrs = ALLOWED_ATTRS[tag] || [];
+    const globalAttrs = ALLOWED_ATTRS['*'] || [];
+    for (const attr of new Set([...tagAttrs, ...globalAttrs])) {
+      if (!srcNode.hasAttribute(attr)) continue;
+      const value = srcNode.getAttribute(attr);
+      if (tag === 'A' && attr === 'href' && !SAFE_URL_RE.test(value)) continue;
+      safe.setAttribute(attr, value);
+    }
+    srcNode.childNodes.forEach(child => appendSanitized(child, safe));
+    target.appendChild(safe);
+  }
+
   function setRichContent(el, html) {
-    const doc = HTML_PARSER.parseFromString(`<!doctype html><body>${html}`, 'text/html');
-    const nodes = Array.from(doc.body.childNodes);
-    el.replaceChildren(...nodes);
+    // <template> parse le HTML sans exécuter les scripts ni charger les ressources
+    // (différence clé avec un container live). On nettoie ensuite via la whitelist
+    // ALLOWED_TAGS / ALLOWED_ATTRS avant de toucher au DOM réel.
+    const tpl = document.createElement('template');
+    tpl.innerHTML = String(html); // codacy-disable-line — chaîne issue du dict bundlé, sanitization explicite ci-dessous
+    const frag = document.createDocumentFragment();
+    tpl.content.childNodes.forEach(child => appendSanitized(child, frag));
+    el.replaceChildren(frag);
   }
 
   function parseAttrSpec(spec) {
@@ -144,6 +183,11 @@
     return map;
   }
 
+  function applyAndDispatch() {
+    applyTo(document);
+    document.dispatchEvent(new CustomEvent('i18n:ready', { detail: { locale: state.locale } }));
+  }
+
   const ready = fetch(DICT_URL)
     .then(r => {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -151,14 +195,10 @@
     })
     .then(raw => {
       state.dict = buildDict(raw);
-      const apply = () => {
-        applyTo(document);
-        document.dispatchEvent(new CustomEvent('i18n:ready', { detail: { locale: state.locale } }));
-      };
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', apply, { once: true });
+        document.addEventListener('DOMContentLoaded', applyAndDispatch, { once: true });
       } else {
-        apply();
+        applyAndDispatch();
       }
     })
     .catch(err => {
