@@ -273,3 +273,27 @@
     display: none;
   }
 }
+
+/* Bureau étroit (tablette en paysage, smartphone en « voir la version
+   ordinateur ») — entre 768 et 1099px le menu desktop est actif mais les
+   8 libellés français + le switcher ne tiennent pas sur une ligne.
+   On resserre items et padding pour garantir que le switcher reste
+   visible à droite. */
+@media (min-width: 768px) and (max-width: 1099px) {
+  .header-inner {
+    gap: 0.5rem;
+  }
+
+  .nav-desktop ul {
+    gap: 0.1rem;
+  }
+
+  .nav-desktop a {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .lang-switch-btn {
+    padding: 0.25rem 0.55rem;
+  }
+}
