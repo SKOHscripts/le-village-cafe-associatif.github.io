@@ -24,38 +24,47 @@ const ICONS = {
 const HEADER_HTML = `
 <header class="site-header" role="banner">
   <div class="header-inner">
-    <a href="index.html" class="header-logo" aria-label="Le Village — retour à l'accueil">
+    <a href="index.html" class="header-logo" data-i18n-attr="aria-label:nav.aria.logo">
       <img src="assets/images/logo-header.png" alt="" class="header-logo-img">
     </a>
 
-    <nav class="nav-desktop" aria-label="Navigation principale">
+    <nav class="nav-desktop" data-i18n-attr="aria-label:nav.aria.main">
       <ul>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="qui-sommes-nous.html">Qui sommes-nous</a></li>
-        <li><a href="agenda.html">Agenda</a></li>
-        <li><a href="carte.html">La Carte</a></li>
-        <li><a href="adhesion.html">Adhésion</a></li>
-        <li><a href="don.html">Faire un don</a></li>
-        <li><a href="boite-a-idees.html">Boîte à idées</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="index.html" data-i18n="nav.home">Accueil</a></li>
+        <li><a href="qui-sommes-nous.html" data-i18n="nav.about">Qui sommes-nous</a></li>
+        <li><a href="agenda.html" data-i18n="nav.agenda">Agenda</a></li>
+        <li><a href="carte.html" data-i18n="nav.menu">La Carte</a></li>
+        <li><a href="adhesion.html" data-i18n="nav.membership">Adhésion</a></li>
+        <li><a href="don.html" data-i18n="nav.donate">Faire un don</a></li>
+        <li><a href="boite-a-idees.html" data-i18n="nav.ideas">Boîte à idées</a></li>
+        <li><a href="contact.html" data-i18n="nav.contact">Contact</a></li>
       </ul>
     </nav>
 
-    <button class="nav-burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-mobile">
+    <div class="lang-switch" role="group" data-i18n-attr="aria-label:lang.switch.aria">
+      <button type="button" class="lang-switch-btn" data-lang="fr" data-i18n-attr="aria-label:lang.fr.aria">FR</button>
+      <button type="button" class="lang-switch-btn" data-lang="en" data-i18n-attr="aria-label:lang.en.aria">EN</button>
+    </div>
+
+    <button class="nav-burger" id="nav-burger" data-i18n-attr="aria-label:nav.aria.burger" aria-expanded="false" aria-controls="nav-mobile">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
-<nav class="nav-mobile" id="nav-mobile" aria-label="Menu mobile">
-  <a href="index.html"><span class="nav-icon">${ICONS.home}</span> Accueil</a>
-  <a href="qui-sommes-nous.html"><span class="nav-icon">${ICONS.people}</span> Qui sommes-nous</a>
-  <a href="agenda.html"><span class="nav-icon">${ICONS.calendar}</span> Agenda</a>
-  <a href="carte.html"><span class="nav-icon">${ICONS.menu}</span> La Carte</a>
-  <a href="adhesion.html"><span class="nav-icon">${ICONS.card}</span> Adhésion</a>
-  <a href="don.html"><span class="nav-icon">${ICONS.heart}</span> Faire un don</a>
-  <a href="boite-a-idees.html"><span class="nav-icon">${ICONS.lightbulb}</span> Boîte à idées</a>
-  <a href="contact.html"><span class="nav-icon">${ICONS.mail}</span> Contact</a>
+<nav class="nav-mobile" id="nav-mobile" data-i18n-attr="aria-label:nav.aria.mobile">
+  <a href="index.html"><span class="nav-icon">${ICONS.home}</span> <span data-i18n="nav.home">Accueil</span></a>
+  <a href="qui-sommes-nous.html"><span class="nav-icon">${ICONS.people}</span> <span data-i18n="nav.about">Qui sommes-nous</span></a>
+  <a href="agenda.html"><span class="nav-icon">${ICONS.calendar}</span> <span data-i18n="nav.agenda">Agenda</span></a>
+  <a href="carte.html"><span class="nav-icon">${ICONS.menu}</span> <span data-i18n="nav.menu">La Carte</span></a>
+  <a href="adhesion.html"><span class="nav-icon">${ICONS.card}</span> <span data-i18n="nav.membership">Adhésion</span></a>
+  <a href="don.html"><span class="nav-icon">${ICONS.heart}</span> <span data-i18n="nav.donate">Faire un don</span></a>
+  <a href="boite-a-idees.html"><span class="nav-icon">${ICONS.lightbulb}</span> <span data-i18n="nav.ideas">Boîte à idées</span></a>
+  <a href="contact.html"><span class="nav-icon">${ICONS.mail}</span> <span data-i18n="nav.contact">Contact</span></a>
+  <div class="lang-switch lang-switch--mobile" role="group" data-i18n-attr="aria-label:lang.switch.aria">
+    <button type="button" class="lang-switch-btn" data-lang="fr" data-i18n-attr="aria-label:lang.fr.aria">FR</button>
+    <button type="button" class="lang-switch-btn" data-lang="en" data-i18n-attr="aria-label:lang.en.aria">EN</button>
+  </div>
 </nav>
 <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
 <div class="header-spacer"></div>
@@ -68,22 +77,22 @@ const FOOTER_HTML = `
     <div class="site-footer-inner">
 
       <div class="sf-brand">
-        <img src="assets/images/logo-detoure-orange.png" alt="Café Associatif le Village" class="sf-brand-logo">
+        <img src="assets/images/logo-detoure-orange.png" data-i18n-attr="alt:footer.brand.alt" class="sf-brand-logo">
       </div>
 
       <div class="sf-divider"></div>
 
       <div class="sf-info">
-        <div class="sf-label">Horaires</div>
-        <div class="sf-line"><span class="sf-dot"></span> Mar <span>14h30 – 19h00</span></div>
-        <div class="sf-line"><span class="sf-dot"></span> Ven <span>16h00 – <s>21h00</s> <span class="sf-ete">22h00 en été</span></span></div>
-        <div class="sf-line"><span class="sf-dot"></span> Dim <span>10h00 – 13h00</span></div>
+        <div class="sf-label" data-i18n="footer.hours">Horaires</div>
+        <div class="sf-line"><span class="sf-dot"></span> <span data-i18n="footer.hours.tue">Mar</span> <span data-i18n="hours.tue.value">14h30 – 19h00</span></div>
+        <div class="sf-line"><span class="sf-dot"></span> <span data-i18n="footer.hours.fri">Ven</span> <span>16h00 – <s>21h00</s> <span class="sf-ete" data-i18n="footer.hours.summer">22h00 en été</span></span></div>
+        <div class="sf-line"><span class="sf-dot"></span> <span data-i18n="footer.hours.sun">Dim</span> <span data-i18n="hours.sun.value">10h00 – 13h00</span></div>
       </div>
 
       <div class="sf-divider"></div>
 
       <div class="sf-info">
-        <div class="sf-label">Nous trouver</div>
+        <div class="sf-label" data-i18n="footer.find">Nous trouver</div>
         <div class="sf-line">8 rue Chalumeaux</div>
         <div class="sf-line">Lyon 8e</div>
         <div class="sf-line" style="margin-top:4px">
@@ -94,10 +103,10 @@ const FOOTER_HTML = `
     </div>
 
     <div class="sf-bottom">
-      <p>© 2026 Café Associatif Le Village · Association loi 1901</p>
+      <p data-i18n="footer.legal">© 2026 Café Associatif Le Village · Association loi 1901</p>
       <div class="sf-secret-links">
-        <a href="benevoles.html">Espace bénévoles</a>
-        <a href="ca.html">Espace CA</a>
+        <a href="benevoles.html" data-i18n="footer.volunteers">Espace bénévoles</a>
+        <a href="ca.html" data-i18n="footer.board">Espace CA</a>
       </div>
     </div>
   </div>
@@ -131,6 +140,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     initBurger();
+    initLangSwitch();
+
+    if (window.i18n && window.i18n.dict) {
+      window.i18n.apply(document);
+    }
   }
 });
 
@@ -164,4 +178,26 @@ function initBurger() {
 
   if (overlay) overlay.addEventListener('click', closeMenu);
   menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+}
+
+// ── Logique sélecteur de langue ────────────────
+function initLangSwitch() {
+  if (!window.i18n) return;
+
+  function refreshPressed() {
+    document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+      const active = btn.dataset.lang === window.i18n.locale;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      window.i18n.setLocale(btn.dataset.lang);
+    });
+  });
+
+  refreshPressed();
+  document.addEventListener('i18n:changed', refreshPressed);
 }

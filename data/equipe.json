@@ -1,68 +1,68 @@
 [
   {
     "nom": "Andrès",
-    "poles": ["Pôle animations"],
+    "poles": ["pole.animation"],
     "photo": ""
   },
   {
     "nom": "Béatrice",
-    "poles": ["Pôle animations", "Pôle gestion vie quotidienne"],
+    "poles": ["pole.animation", "pole.daily"],
     "photo": ""
   },
   {
     "nom": "Brigitte",
-    "poles": ["Pôle administration – coordination", "Pôle communication"],
+    "poles": ["pole.admin", "pole.comm"],
     "photo": ""
   },
   {
     "nom": "Colette",
-    "poles": ["Pôle animations", "Pôle gestion vie quotidienne", "Pôle communication"],
+    "poles": ["pole.animation", "pole.daily", "pole.comm"],
     "photo": ""
   },
   {
     "nom": "Corentin",
-    "poles": ["Pôle finances"],
-    "titre": "le geek",
+    "poles": ["pole.finance"],
+    "titre": "title.geek",
     "photo": ""
   },
   {
     "nom": "Corinne",
-    "poles": ["Pôle gestion vie quotidienne", "Pôle gestion bénévoles"],
+    "poles": ["pole.daily", "pole.volunteers"],
     "photo": ""
   },
   {
     "nom": "Florent",
-    "poles": ["Pôle communication", "Pôle gestion vie quotidienne"],
+    "poles": ["pole.comm", "pole.daily"],
     "photo": ""
   },
   {
     "nom": "Lionel",
-    "poles": ["Pôle finances"],
+    "poles": ["pole.finance"],
     "photo": ""
   },
   {
     "nom": "Myriam",
-    "poles": ["Pôle finances"],
+    "poles": ["pole.finance"],
     "photo": ""
   },
   {
     "nom": "Nina",
-    "poles": ["Pôle animations"],
+    "poles": ["pole.animation"],
     "photo": ""
   },
   {
     "nom": "Roger",
-    "poles": ["Pôle administration – coordination"],
+    "poles": ["pole.admin"],
     "photo": ""
   },
   {
     "nom": "Sandrine",
-    "poles": ["Pôle administration – coordination"],
+    "poles": ["pole.admin"],
     "photo": ""
   },
   {
     "nom": "Serge",
-    "poles": ["Pôle gestion vie quotidienne"],
+    "poles": ["pole.daily"],
     "photo": ""
   }
 ]

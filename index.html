@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-i18n-title="meta.home.title">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille.">
+  <meta name="description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille." data-i18n-attr="content:meta.home.desc">
   <title>Le Village — Café Associatif · Lyon 8e</title>
   <link rel="canonical" href="https://cafe-levillage.org/">
+  <link rel="alternate" hreflang="fr" href="https://cafe-levillage.org/">
+  <link rel="alternate" hreflang="en" href="https://cafe-levillage.org/?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://cafe-levillage.org/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Le Village — Café Associatif">
   <meta property="og:url" content="https://cafe-levillage.org/">
-  <meta property="og:title" content="Le Village — Café Associatif · Lyon 8e">
-  <meta property="og:description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille.">
+  <meta property="og:title" content="Le Village — Café Associatif · Lyon 8e" data-i18n-attr="content:meta.home.title">
+  <meta property="og:description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille." data-i18n-attr="content:meta.home.desc">
   <meta property="og:image" content="https://cafe-levillage.org/assets/images/aquarelle.jpeg">
   <script type="application/ld+json">
   {
@@ -292,33 +295,34 @@
   <main id="main-content">
 
     <!-- HERO -->
-    <section class="hero" aria-label="Illustration du café">
+    <section class="hero" data-i18n-attr="aria-label:home.hero.label">
       <img
         src="assets/images/aquarelle.jpeg"
         alt="Illustration du Café Associatif Le Village — terrasse ensoleillée avec arbres et habitants du quartier"
+        data-i18n-attr="alt:home.hero.alt"
         class="hero-img js-zoomable"
         loading="eager"
       >
       <div class="hero-content">
         <div class="hero-logo-wrap fade-up fade-up-1">
-          <img src="assets/images/logo-detoure-vert.png" alt="Café Associatif le Village — grand trou · moulin à vent · petite guille" class="hero-logo-img">
+          <img src="assets/images/logo-detoure-vert.png" alt="Café Associatif le Village — grand trou · moulin à vent · petite guille" data-i18n-attr="alt:home.hero.logo.alt" class="hero-logo-img">
         </div>
       </div>
-      <p class="hero-credit">Illustration : Collectif Pourquoi Pas / Lucie Bulot architecte</p>
+      <p class="hero-credit" data-i18n="home.hero.credit">Illustration : Collectif Pourquoi Pas / Lucie Bulot architecte</p>
     </section>
 
     <div class="container">
 
       <!-- DESCRIPTION -->
       <section class="section-description fade-up fade-up-2" aria-labelledby="desc-title">
-        <p class="description-text" id="description-text">
-          <!-- Chargé depuis data/contenu.json -->
+        <p class="description-text" id="description-text" data-i18n="content.description">
+          Le Café Associatif Le Village est un espace ouvert à tous pour se rencontrer, partager et tisser du lien dans le quartier.
         </p>
       </section>
 
       <!-- ÉVÈNEMENTS À VENIR -->
       <section class="section-evenements fade-up fade-up-2" aria-labelledby="evt-title">
-        <h2 class="section-title" id="evt-title">Évènements à venir</h2>
+        <h2 class="section-title" id="evt-title" data-i18n="home.events.title">Évènements à venir</h2>
         <div class="evenements-list" data-evenements="upcoming"></div>
       </section>
 
@@ -326,20 +330,20 @@
       <section class="section-horaires fade-up fade-up-3" aria-labelledby="horaires-title">
         <div class="horaires-card">
           <div class="horaires-header">
-            <h2 id="horaires-title">Horaires d'ouverture</h2>
+            <h2 id="horaires-title" data-i18n="home.hours.title">Horaires d'ouverture</h2>
           </div>
           <ul class="horaires-list" id="horaires-list">
             <li class="horaire-item">
-              <span class="horaire-jour">Mardis</span>
-              <span class="horaire-heures">14h30 – 19h00</span>
+              <span class="horaire-jour" data-i18n="hours.tuesday">Mardis</span>
+              <span class="horaire-heures" data-i18n="hours.tue.value">14h30 – 19h00</span>
             </li>
             <li class="horaire-item">
-              <span class="horaire-jour">Vendredis</span>
-              <span class="horaire-heures">16h00 – <s>21h00</s> <span class="horaire-ete">22h00 en heures d’été</span></span>
+              <span class="horaire-jour" data-i18n="hours.friday">Vendredis</span>
+              <span class="horaire-heures" data-i18n-html="hours.fri.html">16h00 – <s>21h00</s> <span class="horaire-ete">22h00 en heures d’été</span></span>
             </li>
             <li class="horaire-item">
-              <span class="horaire-jour">Dimanches</span>
-              <span class="horaire-heures">10h00 – 13h00</span>
+              <span class="horaire-jour" data-i18n="hours.sunday">Dimanches</span>
+              <span class="horaire-heures" data-i18n="hours.sun.value">10h00 – 13h00</span>
             </li>
           </ul>
         </div>
@@ -347,12 +351,12 @@
 
       <!-- NOTICE ADHÉSION -->
       <div class="notice-adhesion fade-up fade-up-3" role="note">
-        <p>
+        <p data-i18n-html="home.notice.html">
           Le Village est un <strong>café associatif</strong>. L'adhésion est obligatoire pour la vente d'alcool.
           Adhésions disponibles sur place tous les jours d'ouverture ou en avance via le formulaire en ligne.
         </p>
         <p style="margin-top:0.75rem;text-align:center">
-          <a href="adhesion.html" class="btn btn-primary" style="font-size:0.9rem;padding:0.55rem 1.3rem">
+          <a href="adhesion.html" class="btn btn-primary" style="font-size:0.9rem;padding:0.55rem 1.3rem" data-i18n="home.notice.cta">
             Adhérer en ligne →
           </a>
         </p>
@@ -360,13 +364,14 @@
 
       <!-- CARTE -->
       <section class="section-carte fade-up fade-up-4" aria-labelledby="carte-title">
-        <h2 class="section-title" id="carte-title">Où nous trouver</h2>
-        <p class="text-center mb-3" style="color: var(--color-text-light); font-size: 0.95rem;">
+        <h2 class="section-title" id="carte-title" data-i18n="home.find.title">Où nous trouver</h2>
+        <p class="text-center mb-3" style="color: var(--color-text-light); font-size: 0.95rem;" data-i18n="home.find.address">
           8 rue du Chalumeaux, Lyon 8e
         </p>
         <div class="carte-wrapper">
   				<iframe
   					title="Carte de localisation du Café Associatif Le Village, 8 rue du Chalumeaux, Lyon 8e"
+  					data-i18n-attr="title:home.find.iframe"
   					src="https://cartes.app/?allez=Café Associatif Le Village|n13308296369|4.85406|45.73576#15/45.73655/4.8552"
   					style="
   					width: 95%;
@@ -393,27 +398,10 @@
   </main>
 
 
+  <script src="assets/js/i18n.js"></script>
   <script src="assets/js/components.js"></script>
   <script src="assets/js/evenements.js"></script>
   <script src="assets/js/lightbox.js" defer></script>
-  <script>
-    // Charger la description depuis data/contenu.json
-    fetch('data/contenu.json')
-      .then(r => r.json())
-      .then(data => {
-        const el = document.getElementById('description-text');
-        if (el && data.description) {
-          el.textContent = data.description;
-        }
-      })
-      .catch(() => {
-        // Fallback si fetch échoue (ex: ouverture en local sans serveur)
-        const el = document.getElementById('description-text');
-        if (el) {
-          el.textContent = "Le Café Associatif Le Village est un espace ouvert à tous pour se rencontrer, partager et tisser du lien dans le quartier.";
-        }
-      });
-  </script>
 
 </body>
 </html>

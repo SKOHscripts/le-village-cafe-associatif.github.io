@@ -202,6 +202,55 @@
   height: 64px;
 }
 
+/* Language switcher */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.2rem;
+  flex-shrink: 0;
+}
+
+.lang-switch-btn {
+  font-family: var(--font-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text-light);
+  background: none;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lang-switch-btn:hover {
+  color: var(--color-teal);
+}
+
+.lang-switch-btn.is-active {
+  background: var(--color-teal);
+  color: var(--color-white);
+}
+
+.lang-switch--mobile {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+/* Mobile : hide the in-header switcher (it would crowd the burger row),
+   the duplicate in the mobile drawer remains accessible */
+@media (max-width: 767px) {
+  .header-inner > .lang-switch {
+    display: none;
+  }
+}
+
 /* Desktop : afficher nav, cacher burger */
 @media (min-width: 768px) {
   .nav-desktop {
@@ -218,5 +267,33 @@
 
   .nav-overlay {
     display: none !important;
+  }
+
+  .lang-switch--mobile {
+    display: none;
+  }
+}
+
+/* Bureau étroit (tablette en paysage, smartphone en « voir la version
+   ordinateur ») — entre 768 et 1099px le menu desktop est actif mais les
+   8 libellés français + le switcher ne tiennent pas sur une ligne.
+   On resserre items et padding pour garantir que le switcher reste
+   visible à droite. */
+@media (min-width: 768px) and (max-width: 1099px) {
+  .header-inner {
+    gap: 0.5rem;
+  }
+
+  .nav-desktop ul {
+    gap: 0.1rem;
+  }
+
+  .nav-desktop a {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .lang-switch-btn {
+    padding: 0.25rem 0.55rem;
   }
 }
