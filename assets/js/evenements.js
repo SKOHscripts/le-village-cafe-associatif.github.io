@@ -9,7 +9,7 @@
 
   const POPUP_WINDOW_DAYS = 21;
   const DISMISS_NAMESPACE = 'evt-dismissed:';
-  const FALLBACK_FB = 'https://www.facebook.com/profile.php?id=61574530611496';
+  const FALLBACK_FB = 'https://www.facebook.com/LeVillageLyon8/';
   const FALLBACK_IG = 'https://www.instagram.com/cafe_associatif_le_village';
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
