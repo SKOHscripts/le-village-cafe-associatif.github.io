@@ -224,9 +224,40 @@
     if (!SUPPORTED.includes(loc) || loc === state.locale) return;
     state.locale = loc;
     try { localStorage.setItem(STORAGE_NAME, loc); } catch (_) { /* ignore */ }
+    // Si l'URL a hérité du ?lang=auto auto-injecté sur l'index, on le retire
+    // pour que le choix utilisateur soit respecté aux rechargements suivants.
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('lang') === 'auto') {
+        url.searchParams.delete('lang');
+        const qs = url.searchParams.toString();
+        history.replaceState(null, '', url.pathname + (qs ? '?' + qs : '') + url.hash);
+      }
+    } catch (_) { /* ignore */ }
     applyTo(document);
     document.dispatchEvent(new CustomEvent('i18n:changed', { detail: { locale: loc } }));
   }
+
+  // Sur l'index, à la première visite (aucun choix mémorisé, aucun param de
+  // langue dans l'URL), on reflète ?lang=auto dans la barre d'URL. Le visiteur
+  // voit que la détection navigateur est active, et l'URL devient partageable
+  // pour ce comportement. Dès qu'un choix est posé via le switcher, le param
+  // disparaît (cf. setLocale ci-dessus) et le choix persiste normalement.
+  function reflectAutoOnIndex() {
+    try {
+      const path = window.location.pathname;
+      const onIndex = path === '/' || path === '' || path.endsWith('/index.html');
+      if (!onIndex) return;
+      const url = new URL(window.location.href);
+      if (url.searchParams.has('lang')) return;
+      let stored = null;
+      try { stored = localStorage.getItem(STORAGE_NAME); } catch (_) { /* ignore */ }
+      if (stored) return;
+      url.searchParams.set('lang', 'auto');
+      history.replaceState(null, '', url.pathname + '?' + url.searchParams.toString() + url.hash);
+    } catch (_) { /* ignore */ }
+  }
+  reflectAutoOnIndex();
 
   function buildDict(raw) {
     const map = new Map();

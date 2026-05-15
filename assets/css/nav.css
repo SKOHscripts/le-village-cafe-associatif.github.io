@@ -208,8 +208,10 @@
   align-items: center;
   gap: 0.15rem;
   background: var(--color-bg);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
   padding: 0.2rem;
+  flex-shrink: 0;
 }
 
 .lang-switch-btn {
