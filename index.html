@@ -119,6 +119,23 @@
       filter: drop-shadow(0 4px 16px rgba(0,0,0,0.15));
     }
 
+    @keyframes hero-pan {
+      from { object-position: 0% 50%; }
+      to   { object-position: 100% 50%; }
+    }
+
+    @media (max-width: 767px) {
+      .hero-img {
+        animation: hero-pan 20s ease-in-out infinite alternate;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-img {
+        animation: none;
+      }
+    }
+
     @media (min-width: 768px) {
       .hero-img {
         object-position: center center;
