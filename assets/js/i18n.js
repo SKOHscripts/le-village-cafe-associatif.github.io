@@ -100,13 +100,15 @@
     });
   }
 
-  // Découpe une chaîne HTML simple en jetons {type:'text'|'open'|'close', ...}.
+  const ATTR_RE = /([A-Za-z_][\w-]*)\s*=\s*"([^"]*)"/g;
+
+  // Découpe une chaîne simple en jetons {type:'text'|'open'|'close', ...}.
   // Hypothèses (vérifiées par les contenus de data/i18n.json) : pas de
-  // commentaires, pas de CDATA, attributs entre guillemets, pas de '>' dans
-  // les valeurs.
-  function tokenize(html) {
+  // commentaires, pas de CDATA, attributs entre guillemets, pas de '>'
+  // dans les valeurs.
+  function tokenize(source) {
     const tokens = [];
-    const s = String(html);
+    const s = source == null ? '' : String(source);
     let i = 0;
     while (i < s.length) {
       const lt = s.indexOf('<', i);
@@ -128,9 +130,7 @@
         const name = (sp < 0 ? body : body.slice(0, sp)).toUpperCase();
         const attrsStr = sp < 0 ? '' : body.slice(sp + 1);
         const attrs = new Map();
-        const attrRe = /([A-Za-z_][\w-]*)\s*=\s*"([^"]*)"/g;
-        let m;
-        while ((m = attrRe.exec(attrsStr)) !== null) {
+        for (const m of attrsStr.matchAll(ATTR_RE)) {
           attrs.set(m[1].toLowerCase(), decodeEntities(m[2]));
         }
         tokens.push({ type: 'open', name, attrs, selfClose: selfClose || VOID_TAGS.has(name) });
@@ -140,8 +140,8 @@
     return tokens;
   }
 
-  function buildFragment(html) {
-    const tokens = tokenize(html);
+  function buildFragment(source) {
+    const tokens = tokenize(source);
     const frag = document.createDocumentFragment();
     const stack = [frag];
     for (const tok of tokens) {
@@ -175,8 +175,8 @@
     return frag;
   }
 
-  function setRichContent(el, html) {
-    el.replaceChildren(buildFragment(html));
+  function setRichContent(el, source) {
+    el.replaceChildren(buildFragment(source));
   }
 
   function parseAttrSpec(spec) {
