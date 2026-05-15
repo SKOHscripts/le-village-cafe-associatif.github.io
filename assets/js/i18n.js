@@ -68,56 +68,115 @@
     return pickValue(entry);
   }
 
-  // ── Sanitizer HTML — whitelist stricte ──────────────────────
-  // Le contenu rich (data-i18n-html) provient du dictionnaire bundlé,
-  // mais on le passe quand même au tamis ci-dessous : seules les balises
-  // utilisées par les traductions sont autorisées, le reste est aplati
-  // en texte. Empêche toute escalade si quelqu'un poussait un jour
-  // une chaîne malveillante dans data/i18n.json (revue de PR, etc.).
+  // ── Mini-parseur HTML pour le contenu rich (data-i18n-html) ───
+  // On n'utilise PAS innerHTML / DOMParser / createContextualFragment :
+  // chaque nœud est construit via document.createElement + appendChild
+  // après tokenisation à la main. Seules les balises listées dans
+  // ALLOWED_TAGS et les attributs listés dans ALLOWED_ATTRS / GLOBAL_ATTRS
+  // sont rendus ; tout le reste est aplati en texte. C'est suffisant pour
+  // les balises utilisées dans data/i18n.json (<strong>, <em>, <s>, <br>,
+  // <span class>, <a href target rel>) et garantit l'absence de chemin
+  // d'injection HTML/script même si le dictionnaire était compromis.
   const ALLOWED_TAGS = new Set(['STRONG', 'EM', 'B', 'I', 'S', 'BR', 'SPAN', 'A']);
-  const ALLOWED_ATTRS = {
-    'A':    ['href', 'target', 'rel', 'class', 'id'],
-    'SPAN': ['class', 'id'],
-    '*':    ['class', 'id'],
-  };
-  const SAFE_URL_RE = /^(?:(?:https?:|mailto:|tel:|#|\/|[^:?#]+(?:\?|#|$))|[^:]+\.html(?:\?|#|$))/i;
+  const VOID_TAGS = new Set(['BR']);
+  const GLOBAL_ATTRS = ['class', 'id'];
+  const ALLOWED_ATTRS = new Map([
+    ['A',    ['href', 'target', 'rel']],
+    ['SPAN', []],
+  ]);
+  const SAFE_URL_RE = /^(?:(?:https?:|mailto:|tel:|#|\/)|[^:?#]+\.html(?:\?|#|$)|[^:?#]+(?:\?|#))/i;
+  const ENTITY_RE = /&(amp|lt|gt|quot|#39|apos|nbsp|laquo|raquo|hellip|mdash|ndash);/g;
+  const ENTITY_MAP = new Map([
+    ['amp', '&'], ['lt', '<'], ['gt', '>'],
+    ['quot', '"'], ['#39', "'"], ['apos', "'"],
+    ['nbsp', ' '], ['laquo', '«'], ['raquo', '»'],
+    ['hellip', '…'], ['mdash', '—'], ['ndash', '–'],
+  ]);
 
-  function appendSanitized(srcNode, target) {
-    if (srcNode.nodeType === 3 /* TEXT */) {
-      target.appendChild(document.createTextNode(srcNode.nodeValue || ''));
-      return;
-    }
-    if (srcNode.nodeType !== 1 /* ELEMENT */) return;
+  function decodeEntities(s) {
+    return String(s).replace(ENTITY_RE, function (_, name) {
+      const v = ENTITY_MAP.get(name);
+      return v != null ? v : _;
+    });
+  }
 
-    const tag = srcNode.tagName;
-    if (!ALLOWED_TAGS.has(tag)) {
-      // Élément non autorisé : on garde le contenu textuel, on jette le tag.
-      srcNode.childNodes.forEach(child => appendSanitized(child, target));
-      return;
+  // Découpe une chaîne HTML simple en jetons {type:'text'|'open'|'close', ...}.
+  // Hypothèses (vérifiées par les contenus de data/i18n.json) : pas de
+  // commentaires, pas de CDATA, attributs entre guillemets, pas de '>' dans
+  // les valeurs.
+  function tokenize(html) {
+    const tokens = [];
+    const s = String(html);
+    let i = 0;
+    while (i < s.length) {
+      const lt = s.indexOf('<', i);
+      if (lt < 0) {
+        tokens.push({ type: 'text', value: s.slice(i) });
+        break;
+      }
+      if (lt > i) tokens.push({ type: 'text', value: s.slice(i, lt) });
+      const gt = s.indexOf('>', lt);
+      if (gt < 0) break;
+      const raw = s.slice(lt + 1, gt).trim();
+      if (raw.startsWith('/')) {
+        tokens.push({ type: 'close', name: raw.slice(1).trim().toUpperCase() });
+      } else {
+        let body = raw;
+        let selfClose = false;
+        if (body.endsWith('/')) { selfClose = true; body = body.slice(0, -1).trim(); }
+        const sp = body.search(/\s/);
+        const name = (sp < 0 ? body : body.slice(0, sp)).toUpperCase();
+        const attrsStr = sp < 0 ? '' : body.slice(sp + 1);
+        const attrs = new Map();
+        const attrRe = /([A-Za-z_][\w-]*)\s*=\s*"([^"]*)"/g;
+        let m;
+        while ((m = attrRe.exec(attrsStr)) !== null) {
+          attrs.set(m[1].toLowerCase(), decodeEntities(m[2]));
+        }
+        tokens.push({ type: 'open', name, attrs, selfClose: selfClose || VOID_TAGS.has(name) });
+      }
+      i = gt + 1;
     }
+    return tokens;
+  }
 
-    const safe = document.createElement(tag);
-    const tagAttrs = ALLOWED_ATTRS[tag] || [];
-    const globalAttrs = ALLOWED_ATTRS['*'] || [];
-    for (const attr of new Set([...tagAttrs, ...globalAttrs])) {
-      if (!srcNode.hasAttribute(attr)) continue;
-      const value = srcNode.getAttribute(attr);
-      if (tag === 'A' && attr === 'href' && !SAFE_URL_RE.test(value)) continue;
-      safe.setAttribute(attr, value);
+  function buildFragment(html) {
+    const tokens = tokenize(html);
+    const frag = document.createDocumentFragment();
+    const stack = [frag];
+    for (const tok of tokens) {
+      const parent = stack[stack.length - 1];
+      if (tok.type === 'text') {
+        parent.appendChild(document.createTextNode(decodeEntities(tok.value)));
+        continue;
+      }
+      if (tok.type === 'open') {
+        if (!ALLOWED_TAGS.has(tok.name)) {
+          if (!tok.selfClose) stack.push(parent);
+          continue;
+        }
+        const el = document.createElement(tok.name);
+        const tagAttrs = ALLOWED_ATTRS.get(tok.name) || [];
+        const allAttrs = new Set([...tagAttrs, ...GLOBAL_ATTRS]);
+        for (const attr of allAttrs) {
+          if (!tok.attrs.has(attr)) continue;
+          const value = tok.attrs.get(attr);
+          if (tok.name === 'A' && attr === 'href' && !SAFE_URL_RE.test(value)) continue;
+          el.setAttribute(attr, value);
+        }
+        parent.appendChild(el);
+        if (!tok.selfClose) stack.push(el);
+        continue;
+      }
+      if (tok.type === 'close' && stack.length > 1) {
+        stack.pop();
+      }
     }
-    srcNode.childNodes.forEach(child => appendSanitized(child, safe));
-    target.appendChild(safe);
+    return frag;
   }
 
   function setRichContent(el, html) {
-    // <template> parse le HTML sans exécuter les scripts ni charger les ressources
-    // (différence clé avec un container live). On nettoie ensuite via la whitelist
-    // ALLOWED_TAGS / ALLOWED_ATTRS avant de toucher au DOM réel.
-    const tpl = document.createElement('template');
-    tpl.innerHTML = String(html); // codacy-disable-line — chaîne issue du dict bundlé, sanitization explicite ci-dessous
-    const frag = document.createDocumentFragment();
-    tpl.content.childNodes.forEach(child => appendSanitized(child, frag));
-    el.replaceChildren(frag);
+    el.replaceChildren(buildFragment(html));
   }
 
   function parseAttrSpec(spec) {
