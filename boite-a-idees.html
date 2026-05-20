@@ -95,36 +95,36 @@
     <!-- Formulaire -->
     <section class="band-teal">
       <div class="container">
-        <p class="s-label reveal">Soumettre une idée</p>
-        <h2 class="s-title reveal" style="color:var(--white);margin-bottom:2rem;">Partagez votre idée avec le CA</h2>
+        <p class="s-label reveal" data-fr="Soumettre une idée" data-en="Submit an idea">Soumettre une idée</p>
+        <h2 class="s-title reveal" style="color:var(--white);margin-bottom:2rem;" data-fr="Partagez votre idée avec le CA" data-en="Share your idea with the board">Partagez votre idée avec le CA</h2>
         <div class="form-card reveal">
           <form id="idee-form" novalidate>
             <div class="form-group">
-              <label class="form-label" for="pseudo">Votre prénom ou pseudo *</label>
-              <input class="form-input" type="text" id="pseudo" name="pseudo" placeholder="Marie, Le voisin du 3e…" required maxlength="50" autocomplete="off">
+              <label class="form-label" for="pseudo" data-fr="Votre prénom ou pseudo *" data-en="Your first name or nickname *">Votre prénom ou pseudo *</label>
+              <input class="form-input" type="text" id="pseudo" name="pseudo" placeholder="Marie, Le voisin du 3e…" data-fr-placeholder="Marie, Le voisin du 3e…" data-en-placeholder="Marie, the 3rd floor neighbour…" required maxlength="50" autocomplete="off">
             </div>
             <div class="form-group">
-              <label class="form-label" for="idee">Votre idée *</label>
-              <textarea class="form-textarea" id="idee" name="idee" placeholder="Et si on organisait… On pourrait aussi…" required maxlength="500"></textarea>
-              <p class="form-hint">Toutes les idées sont les bienvenues !</p>
+              <label class="form-label" for="idee" data-fr="Votre idée *" data-en="Your idea *">Votre idée *</label>
+              <textarea class="form-textarea" id="idee" name="idee" placeholder="Et si on organisait… On pourrait aussi…" data-fr-placeholder="Et si on organisait… On pourrait aussi…" data-en-placeholder="What if we organised… We could also…" required maxlength="500"></textarea>
+              <p class="form-hint" data-fr="Toutes les idées sont les bienvenues !" data-en="All ideas are welcome!">Toutes les idées sont les bienvenues !</p>
             </div>
             <div class="form-group">
-              <label class="form-label" for="contact">Votre téléphone ou email *</label>
-              <input class="form-input" type="text" id="contact" name="contact" placeholder="Pour que le CA puisse vous recontacter si besoin" required maxlength="100" autocomplete="off">
-              <p class="form-hint">Visible uniquement par le CA — jamais affiché publiquement.</p>
+              <label class="form-label" for="contact" data-fr="Votre téléphone ou email *" data-en="Your phone or email *">Votre téléphone ou email *</label>
+              <input class="form-input" type="text" id="contact" name="contact" placeholder="Pour que le CA puisse vous recontacter si besoin" data-fr-placeholder="Pour que le CA puisse vous recontacter si besoin" data-en-placeholder="So the board can reach you if needed" required maxlength="100" autocomplete="off">
+              <p class="form-hint" data-fr="Visible uniquement par le CA — jamais affiché publiquement." data-en="Visible only to the board — never displayed publicly.">Visible uniquement par le CA — jamais affiché publiquement.</p>
             </div>
             <div class="form-trap" aria-hidden="true">
               <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
             </div>
             <button type="submit" class="btn btn-amber form-submit" id="submit-btn">
-              <span id="submit-text">Envoyer mon idée</span>
+              <span id="submit-text" data-fr="Envoyer mon idée" data-en="Send my idea">Envoyer mon idée</span>
             </button>
-            <div class="form-success" id="form-success" role="alert">Merci ! Votre idée a bien été ajoutée au tableau.</div>
+            <div class="form-success" id="form-success" role="alert" data-fr="Merci ! Votre idée a bien été ajoutée au tableau." data-en="Thank you! Your idea has been added to the board.">Merci ! Votre idée a bien été ajoutée au tableau.</div>
             <div class="form-cooldown" id="form-cooldown" role="alert">
               Vous avez déjà soumis <strong id="cooldown-count"></strong> idée(s) aujourd'hui.<br>
               Revenez dans <strong id="cooldown-remaining"></strong> pour en soumettre une nouvelle.
             </div>
-            <div class="form-error" id="form-error" role="alert">Une erreur est survenue. Veuillez réessayer.</div>
+            <div class="form-error" id="form-error" role="alert" data-fr="Une erreur est survenue. Veuillez réessayer." data-en="An error occurred. Please try again.">Une erreur est survenue. Veuillez réessayer.</div>
           </form>
         </div>
       </div>
@@ -135,13 +135,13 @@
       <div class="container">
         <div class="postits-header reveal">
           <div>
-            <p class="s-label">Idées partagées</p>
-            <h2 class="s-title">Les idées du Village</h2>
+            <p class="s-label" data-fr="Idées partagées" data-en="Shared ideas">Idées partagées</p>
+            <h2 class="s-title" data-fr="Les idées du Village" data-en="Village ideas">Les idées du Village</h2>
           </div>
           <span class="postits-count" id="postits-count"></span>
         </div>
         <div class="postits-grid reveal" id="postits-grid" aria-live="polite">
-          <p class="postits-loading">Chargement des idées…</p>
+          <p class="postits-loading" data-fr="Chargement des idées…" data-en="Loading ideas…">Chargement des idées…</p>
         </div>
       </div>
     </section>
@@ -149,33 +149,33 @@
     <!-- GitHub section -->
     <section class="band-dark">
       <div class="container">
-        <p class="s-label reveal">Pour les technophiles</p>
-        <h2 class="s-title reveal" style="margin-bottom:1.75rem;">Améliorer le site web</h2>
+        <p class="s-label reveal" data-fr="Pour les technophiles" data-en="For tech enthusiasts">Pour les technophiles</p>
+        <h2 class="s-title reveal" style="margin-bottom:1.75rem;" data-fr="Améliorer le site web" data-en="Improve the website">Améliorer le site web</h2>
         <div class="site-card reveal">
           <div class="site-card-top">
-            <h2>Ouvrir une suggestion GitHub</h2>
+            <h2 data-fr="Ouvrir une suggestion GitHub" data-en="Open a GitHub suggestion">Ouvrir une suggestion GitHub</h2>
             <a href="https://github.com/SKOHscripts" target="_blank" rel="noopener noreferrer" class="github-btn">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.24 3.32.95.1-.74.4-1.24.73-1.53-2.56-.29-5.25-1.28-5.25-5.71 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.97.13 2.88.39 2.19-1.5 3.16-1.19 3.16-1.19.63 1.58.24 2.75.12 3.04.73.81 1.18 1.85 1.18 3.11 0 4.44-2.69 5.41-5.26 5.7.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.13 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
-              Voir le profil
+              <span data-fr="Voir le profil" data-en="View profile">Voir le profil</span>
             </a>
           </div>
-          <p class="site-card-desc">Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ? Votre proposition sera transmise au responsable technique sous forme d'issue GitHub.</p>
+          <p class="site-card-desc" data-fr="Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ? Votre proposition sera transmise au responsable technique sous forme d'issue GitHub." data-en="A suggestion for the site — bug, usability, new feature? Your proposal will be sent to the technical lead as a GitHub issue.">Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ? Votre proposition sera transmise au responsable technique sous forme d'issue GitHub.</p>
           <div class="form-group">
-            <label class="form-label" for="site-titre">Titre de la suggestion *</label>
-            <input class="form-input" type="text" id="site-titre" placeholder="ex : Le menu ne se ferme pas sur mobile" maxlength="100" autocomplete="off">
+            <label class="form-label" for="site-titre" data-fr="Titre de la suggestion *" data-en="Suggestion title *">Titre de la suggestion *</label>
+            <input class="form-input" type="text" id="site-titre" placeholder="ex : Le menu ne se ferme pas sur mobile" data-fr-placeholder="ex : Le menu ne se ferme pas sur mobile" data-en-placeholder="e.g. The menu doesn't close on mobile" maxlength="100" autocomplete="off">
           </div>
           <div class="form-group">
-            <label class="form-label" for="site-desc">Description (optionnel)</label>
-            <textarea class="form-textarea" id="site-desc" placeholder="Décrivez le problème ou l'amélioration souhaitée…" maxlength="1000"></textarea>
+            <label class="form-label" for="site-desc" data-fr="Description (optionnel)" data-en="Description (optional)">Description (optionnel)</label>
+            <textarea class="form-textarea" id="site-desc" placeholder="Décrivez le problème ou l'amélioration souhaitée…" data-fr-placeholder="Décrivez le problème ou l'amélioration souhaitée…" data-en-placeholder="Describe the issue or improvement…" maxlength="1000"></textarea>
           </div>
           <div class="site-preview" id="site-preview">
-            <strong>Titre :</strong> <span id="preview-titre"></span><br>
-            <strong>Description :</strong> <span id="preview-desc">—</span>
+            <strong data-fr="Titre :" data-en="Title:">Titre :</strong> <span id="preview-titre"></span><br>
+            <strong data-fr="Description :" data-en="Description:">Description :</strong> <span id="preview-desc">—</span>
           </div>
-          <button class="btn btn-primary form-submit" id="site-submit" type="button" style="margin-top:0;">
+          <button class="btn btn-primary form-submit" id="site-submit" type="button" style="margin-top:0;" data-fr="Ouvrir une suggestion sur GitHub →" data-en="Open a suggestion on GitHub →">
             Ouvrir une suggestion sur GitHub →
           </button>
-          <p class="site-note">Un compte GitHub est nécessaire. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur "Submit new issue".</p>
+          <p class="site-note" data-fr="Un compte GitHub est nécessaire. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur &quot;Submit new issue&quot;." data-en="A GitHub account is required. A new tab will open with the suggestion pre-filled — just click 'Submit new issue'.">Un compte GitHub est nécessaire. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur "Submit new issue".</p>
         </div>
       </div>
     </section>
@@ -185,11 +185,11 @@
     <div class="container">
       <div class="footer-grid">
         <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline" data-fr="Un espace de vie associatif au cœur du 8e arrondissement de Lyon." data-en="An associative space at the heart of Lyon's 8th arrondissement.">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p><div class="footer-social"><a href="https://www.facebook.com/profile.php?id=61574530611496" class="soc-btn" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="https://www.instagram.com/cafe_associatif_le_village" class="soc-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></div></div>
-        <div><p class="fc-title">Navigation</p><nav class="fc-links"><a href="index.html">Accueil</a><a href="agenda.html">Agenda</a><a href="qui-sommes-nous.html">Qui sommes-nous</a><a href="carte.html">La Carte</a><a href="contact.html">Contact</a></nav></div>
-        <div><p class="fc-title">Participer</p><nav class="fc-links"><a href="adhesion.html">Adhérer</a><a href="don.html">Faire un don</a><a href="boite-a-idees.html">Boîte à idées</a></nav></div>
-        <div><p class="fc-title">Horaires</p><div class="fc-hours"><p class="fc-hour"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour"><strong>Dim</strong> 10h00 – 13h00</p></div><p style="font-size:.78rem;color:rgba(255,255,255,.22);margin-top:1rem;line-height:1.5;">8 rue du Chalumeaux<br>Lyon 8e</p></div>
+        <div><p class="fc-title" data-fr="Navigation" data-en="Navigation">Navigation</p><nav class="fc-links"><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a><a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a><a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a><a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a><a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a></nav></div>
+        <div><p class="fc-title" data-fr="Participer" data-en="Get involved">Participer</p><nav class="fc-links"><a href="adhesion.html" data-fr="Adhérer" data-en="Join">Adhérer</a><a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a><a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Idea box">Boîte à idées</a></nav></div>
+        <div><p class="fc-title" data-fr="Horaires" data-en="Hours">Horaires</p><div class="fc-hours"><p class="fc-hour" data-fr-html="<strong>Mar</strong> 14h30 – 19h00" data-en-html="<strong>Tue</strong> 2:30pm – 7:00pm"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour" data-fr-html="<strong>Ven</strong> 16h00 – 21h00" data-en-html="<strong>Fri</strong> 4:00pm – 9:00pm"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour" data-fr-html="<strong>Dim</strong> 10h00 – 13h00" data-en-html="<strong>Sun</strong> 10:00am – 1:00pm"><strong>Dim</strong> 10h00 – 13h00</p></div><p style="font-size:.78rem;color:rgba(255,255,255,.22);margin-top:1rem;line-height:1.5;">8 rue du Chalumeaux<br>Lyon 8e</p></div>
       </div>
-      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="contact.html">Mentions légales</a><a href="benevoles.html">Bénévoles</a><a href="ca.html">Espace CA</a></div></div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="contact.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a><a href="benevoles.html" data-fr="Bénévoles" data-en="Volunteers">Bénévoles</a><a href="ca.html" data-fr="Espace CA" data-en="Board area">Espace CA</a></div></div>
     </div>
   </footer>
 

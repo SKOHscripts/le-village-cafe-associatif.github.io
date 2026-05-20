@@ -43,7 +43,7 @@
         <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
       </div>
       <div class="nav-right">
-        <a href="adhesion.html" class="btn btn-primary nav-adhere">Adhérer</a>
+        <a href="adhesion.html" class="btn btn-primary nav-adhere" data-fr="Adhérer" data-en="Join">Adhérer</a>
         <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -61,9 +61,9 @@
 
   <div class="page-hd">
     <div class="page-hd-inner">
-      <span class="page-hd-label fin fin-1">Accès membres CA</span>
-      <h1 class="page-hd-title fin fin-2">Espace CA</h1>
-      <p class="page-hd-sub fin fin-3">Outils de gestion du Café Associatif Le Village</p>
+      <span class="page-hd-label fin fin-1" data-fr="Accès membres CA" data-en="Board member access">Accès membres CA</span>
+      <h1 class="page-hd-title fin fin-2" data-fr="Espace CA" data-en="Board area">Espace CA</h1>
+      <p class="page-hd-sub fin fin-3" data-fr="Outils de gestion du Café Associatif Le Village" data-en="Management tools for Le Village Associative Café">Outils de gestion du Café Associatif Le Village</p>
     </div>
   </div>
 
@@ -72,7 +72,7 @@
       <div class="container">
 
         <!-- OUTILS PRINCIPAUX -->
-        <p class="s-label reveal">Vos outils</p>
+        <p class="s-label reveal" data-fr="Vos outils" data-en="Your tools">Vos outils</p>
         <div class="outils-grid reveal">
 
           <!-- Paheko -->
@@ -83,8 +83,8 @@
               </div>
               <span class="outil-titre">Paheko</span>
             </div>
-            <p class="outil-desc">Gestion de l'association — adhérents, comptabilité, documents administratifs. Connectez-vous avec vos identifiants habituels.</p>
-            <a href="https://cafe-associatif-le-village.paheko.cloud/admin/login.php" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;">
+            <p class="outil-desc" data-fr="Gestion de l'association — adhérents, comptabilité, documents administratifs. Connectez-vous avec vos identifiants habituels." data-en="Association management — members, accounting, administrative documents. Log in with your usual credentials.">Gestion de l'association — adhérents, comptabilité, documents administratifs. Connectez-vous avec vos identifiants habituels.</p>
+            <a href="https://cafe-associatif-le-village.paheko.cloud/admin/login.php" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;" data-fr="Accéder à Paheko →" data-en="Open Paheko →">
               Accéder à Paheko →
             </a>
           </div>
@@ -95,10 +95,10 @@
               <div class="icon-circle amber" aria-hidden="true">
                 <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
               </div>
-              <span class="outil-titre">Rapport des stocks</span>
+              <span class="outil-titre" data-fr="Rapport des stocks" data-en="Stock report">Rapport des stocks</span>
             </div>
-            <p class="outil-desc">Suite d'outils pour la gestion des stocks, des adhésions, les statistiques sur les finances et les membres.</p>
-            <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="align-self:flex-start;">
+            <p class="outil-desc" data-fr="Suite d'outils pour la gestion des stocks, des adhésions, les statistiques sur les finances et les membres." data-en="Tool suite for stock management, memberships, financial and member statistics.">Suite d'outils pour la gestion des stocks, des adhésions, les statistiques sur les finances et les membres.</p>
+            <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="align-self:flex-start;" data-fr="Lancer les scripts →" data-en="Run the scripts →">
               Lancer les scripts →
             </a>
           </div>
@@ -109,14 +109,14 @@
               <div class="icon-circle teal" aria-hidden="true">
                 <svg viewBox="0 0 20 20" fill="currentColor"><path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z"/><path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z"/><path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z"/></svg>
               </div>
-              <span class="outil-titre">Base de données</span>
+              <span class="outil-titre" data-fr="Base de données" data-en="Database">Base de données</span>
             </div>
-            <p class="outil-desc">Accès direct au table editor Supabase — voir et éditer les données du site. Pensez à cocher la colonne <strong>membre_ajoute</strong> une fois l'adhérent ajouté dans Paheko.</p>
+            <p class="outil-desc" data-fr-html="Accès direct au table editor Supabase — voir et éditer les données du site. Pensez à cocher la colonne <strong>membre_ajoute</strong> une fois l'adhérent ajouté dans Paheko." data-en-html="Direct access to the Supabase table editor — view and edit site data. Remember to tick the <strong>member_added</strong> column once the member has been added in Paheko.">Accès direct au table editor Supabase — voir et éditer les données du site. Pensez à cocher la colonne <strong>membre_ajoute</strong> une fois l'adhérent ajouté dans Paheko.</p>
             <div style="display:flex;flex-wrap:wrap;gap:.75rem;">
-              <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor/17751?schema=public" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;">
+              <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor/17751?schema=public" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;" data-fr="Table Adhésions →" data-en="Memberships table →">
                 Table Adhésions →
               </a>
-              <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor/17545?schema=public" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="align-self:flex-start;">
+              <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor/17545?schema=public" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="align-self:flex-start;" data-fr="Table Boîte à idées →" data-en="Idea box table →">
                 Table Boîte à idées →
               </a>
             </div>
@@ -125,57 +125,57 @@
         </div>
 
         <!-- STREAMLIT EMBED -->
-        <p class="s-label reveal">Suite logicielle</p>
+        <p class="s-label reveal" data-fr="Suite logicielle" data-en="Software suite">Suite logicielle</p>
         <div class="outil-card amber reveal" style="margin-bottom:2rem;">
           <div class="outil-header">
             <div class="icon-circle amber" aria-hidden="true">
               <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
             </div>
-            <span class="outil-titre">Rapport des stocks</span>
+            <span class="outil-titre" data-fr="Rapport des stocks" data-en="Stock report">Rapport des stocks</span>
           </div>
           <div class="streamlit-wrapper">
             <iframe src="https://sumupautoreport.streamlit.app/?embed=true" title="Suite logicielle — Rapport des stocks" allow="fullscreen" loading="lazy">
-              <p>Votre navigateur ne prend pas en charge les iframes. <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer">Ouvrir l'application →</a></p>
+              <p data-fr-html="Votre navigateur ne prend pas en charge les iframes. <a href=&quot;https://sumupautoreport.streamlit.app/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;>Ouvrir l'application →</a>" data-en-html="Your browser does not support iframes. <a href=&quot;https://sumupautoreport.streamlit.app/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;>Open the app →</a>">Votre navigateur ne prend pas en charge les iframes. <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer">Ouvrir l'application →</a></p>
             </iframe>
           </div>
         </div>
 
         <!-- LIENS RAPIDES -->
-        <p class="s-label reveal">Liens rapides</p>
+        <p class="s-label reveal" data-fr="Liens rapides" data-en="Quick links">Liens rapides</p>
         <div class="liens-grid reveal">
           <a href="benevoles.html" class="lien-card">
             <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg></div>
-            <span class="lien-card-label">Espace bénévoles</span>
-            <span class="lien-card-sub">Créneaux & infos pratiques</span>
+            <span class="lien-card-label" data-fr="Espace bénévoles" data-en="Volunteers area">Espace bénévoles</span>
+            <span class="lien-card-sub" data-fr="Créneaux & infos pratiques" data-en="Shifts & practical info">Créneaux & infos pratiques</span>
           </a>
           <a href="agenda.html" class="lien-card">
             <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h1a2 2 0 012 2v11a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zm-1 6a1 1 0 000 2h8a1 1 0 100-2H5z" clip-rule="evenodd"/></svg></div>
-            <span class="lien-card-label">Agenda</span>
-            <span class="lien-card-sub">Événements du Village</span>
+            <span class="lien-card-label" data-fr="Agenda" data-en="Agenda">Agenda</span>
+            <span class="lien-card-sub" data-fr="Événements du Village" data-en="Village events">Événements du Village</span>
           </a>
           <a href="boite-a-idees.html" class="lien-card">
             <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.298.025-.597.025-.9C12.025 11.4 11.1 10 10 10S7.975 11.4 7.975 13.1c0 .303.01.602.025.9H12z"/></svg></div>
-            <span class="lien-card-label">Boîte à idées</span>
-            <span class="lien-card-sub">Idées du quartier</span>
+            <span class="lien-card-label" data-fr="Boîte à idées" data-en="Idea box">Boîte à idées</span>
+            <span class="lien-card-sub" data-fr="Idées du quartier" data-en="Neighbourhood ideas">Idées du quartier</span>
           </a>
           <a href="carte.html" class="lien-card">
             <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1h8V3a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg></div>
-            <span class="lien-card-label">La Carte</span>
-            <span class="lien-card-sub">Boissons & en-cas</span>
+            <span class="lien-card-label" data-fr="La Carte" data-en="Menu">La Carte</span>
+            <span class="lien-card-sub" data-fr="Boissons & en-cas" data-en="Drinks & snacks">Boissons & en-cas</span>
           </a>
           <a href="qui-sommes-nous.html" class="lien-card">
             <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg></div>
-            <span class="lien-card-label">Qui sommes-nous</span>
-            <span class="lien-card-sub">Équipe & organigramme</span>
+            <span class="lien-card-label" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</span>
+            <span class="lien-card-sub" data-fr="Équipe & organigramme" data-en="Team & org chart">Équipe & organigramme</span>
           </a>
           <a href="adhesion.html" class="lien-card">
             <div class="icon-circle amber" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/></svg></div>
-            <span class="lien-card-label">Adhésions</span>
-            <span class="lien-card-sub">Formulaire en ligne</span>
+            <span class="lien-card-label" data-fr="Adhésions" data-en="Memberships">Adhésions</span>
+            <span class="lien-card-sub" data-fr="Formulaire en ligne" data-en="Online form">Formulaire en ligne</span>
           </a>
         </div>
 
-        <button class="logout-btn" onclick="logout()">Se déconnecter</button>
+        <button class="logout-btn" onclick="logout()" data-fr="Se déconnecter" data-en="Log out">Se déconnecter</button>
 
       </div>
     </section>
@@ -184,12 +184,12 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
-        <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p></div>
-        <div><p class="fc-title">Navigation</p><nav class="fc-links"><a href="index.html">Accueil</a><a href="agenda.html">Agenda</a><a href="qui-sommes-nous.html">Qui sommes-nous</a><a href="carte.html">La Carte</a><a href="contact.html">Contact</a></nav></div>
-        <div><p class="fc-title">Participer</p><nav class="fc-links"><a href="adhesion.html">Adhérer</a><a href="don.html">Faire un don</a><a href="boite-a-idees.html">Boîte à idées</a></nav></div>
-        <div><p class="fc-title">Horaires</p><div class="fc-hours"><p class="fc-hour"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour"><strong>Dim</strong> 10h00 – 13h00</p></div></div>
+        <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline" data-fr="Un espace de vie associatif au cœur du 8e arrondissement de Lyon." data-en="An associative space at the heart of Lyon's 8th arrondissement.">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p></div>
+        <div><p class="fc-title" data-fr="Navigation" data-en="Navigation">Navigation</p><nav class="fc-links"><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a><a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a><a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a><a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a><a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a></nav></div>
+        <div><p class="fc-title" data-fr="Participer" data-en="Get involved">Participer</p><nav class="fc-links"><a href="adhesion.html" data-fr="Adhérer" data-en="Join">Adhérer</a><a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a><a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Idea box">Boîte à idées</a></nav></div>
+        <div><p class="fc-title" data-fr="Horaires" data-en="Hours">Horaires</p><div class="fc-hours"><p class="fc-hour" data-fr-html="<strong>Mar</strong> 14h30 – 19h00" data-en-html="<strong>Tue</strong> 2:30pm – 7:00pm"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour" data-fr-html="<strong>Ven</strong> 16h00 – 21h00" data-en-html="<strong>Fri</strong> 4:00pm – 9:00pm"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour" data-fr-html="<strong>Dim</strong> 10h00 – 13h00" data-en-html="<strong>Sun</strong> 10:00am – 1:00pm"><strong>Dim</strong> 10h00 – 13h00</p></div></div>
       </div>
-      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="benevoles.html">Bénévoles</a><a href="ca.html">Espace CA</a></div></div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="benevoles.html" data-fr="Bénévoles" data-en="Volunteers">Bénévoles</a><a href="ca.html" data-fr="Espace CA" data-en="Board area">Espace CA</a></div></div>
     </div>
   </footer>
 
