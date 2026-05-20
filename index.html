@@ -348,6 +348,8 @@
     const MOIS_FR = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
     const MOIS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
+    function escHtml(s) { const d = document.createElement('div'); d.appendChild(document.createTextNode(String(s))); return d.innerHTML; }
+
     function buildEventCard(ev, lang) {
       const d = new Date(ev.date + 'T00:00:00');
       const dd = d.getDate();
@@ -361,9 +363,9 @@
           <span class="ecard-mm">${mm}</span>
         </div>
         <div class="ecard-body">
-          ${ev.categorie ? `<p class="ecard-cat">${ev.categorie}</p>` : ''}
-          <p class="ecard-title">${ev.titre}</p>
-          ${meta ? `<p class="ecard-meta">${meta}</p>` : ''}
+          ${ev.categorie ? `<p class="ecard-cat">${escHtml(ev.categorie)}</p>` : ''}
+          <p class="ecard-title">${escHtml(ev.titre)}</p>
+          ${meta ? `<p class="ecard-meta">${escHtml(meta)}</p>` : ''}
         </div>
       </div>`;
     }

@@ -69,7 +69,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ─── NAV ────────────────────────────────── */
 .site-nav { position:fixed; top:0; left:0; right:0; z-index:200; height:70px; display:flex; align-items:center; transition:background .35s, box-shadow .35s; }
-.site-nav.scrolled { background:oklch(0.98 0.008 75 / 0.96); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 1px 0 var(--border); }
+.site-nav.scrolled { background:rgba(247, 245, 241, 0.96); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); box-shadow:0 1px 0 var(--border); }
 .nav-inner { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:var(--max-w); margin:0 auto; padding:0 var(--pad); gap:1rem; }
 .nav-logo { display:flex; align-items:center; flex-shrink:0; }
 .nav-logo img { height:52px; width:auto; transition:opacity .2s; }

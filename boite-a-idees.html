@@ -159,17 +159,17 @@
           <p class="site-card-desc">Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ? Votre proposition sera transmise au responsable technique sous forme d'issue GitHub.</p>
           <div class="form-group">
             <label class="form-label" for="site-titre">Titre de la suggestion *</label>
-            <input class="form-input" type="text" id="site-titre" placeholder="ex : Le menu ne se ferme pas sur mobile" maxlength="100" autocomplete="off" oninput="updateSitePreview()">
+            <input class="form-input" type="text" id="site-titre" placeholder="ex : Le menu ne se ferme pas sur mobile" maxlength="100" autocomplete="off">
           </div>
           <div class="form-group">
             <label class="form-label" for="site-desc">Description (optionnel)</label>
-            <textarea class="form-textarea" id="site-desc" placeholder="Décrivez le problème ou l'amélioration souhaitée…" maxlength="1000" oninput="updateSitePreview()"></textarea>
+            <textarea class="form-textarea" id="site-desc" placeholder="Décrivez le problème ou l'amélioration souhaitée…" maxlength="1000"></textarea>
           </div>
           <div class="site-preview" id="site-preview">
             <strong>Titre :</strong> <span id="preview-titre"></span><br>
             <strong>Description :</strong> <span id="preview-desc">—</span>
           </div>
-          <button class="btn btn-primary form-submit" id="site-submit" onclick="ouvrirIssueGitHub()" style="margin-top:0;">
+          <button class="btn btn-primary form-submit" id="site-submit" type="button" style="margin-top:0;">
             Ouvrir une suggestion sur GitHub →
           </button>
           <p class="site-note">Un compte GitHub est nécessaire. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur "Submit new issue".</p>
@@ -256,6 +256,10 @@
       }
     }
 
+    document.getElementById('site-titre').addEventListener('input', updateSitePreview);
+    document.getElementById('site-desc').addEventListener('input', updateSitePreview);
+    document.getElementById('site-submit').addEventListener('click', function() { ouvrirIssueGitHub(); });
+
     function ouvrirIssueGitHub() {
       const titre = document.getElementById('site-titre').value.trim();
       const desc  = document.getElementById('site-desc').value.trim();
@@ -278,7 +282,7 @@
 
       function lireHisto() {
         try { const r = localStorage.getItem(COOLDOWN_KEY); if (!r) return []; return JSON.parse(r).filter(ts => Date.now() - ts < COOLDOWN_MS); }
-        catch { return []; }
+        catch(_e) { return []; }
       }
       function saveSoumission() { const l = lireHisto(); l.push(Date.now()); localStorage.setItem(COOLDOWN_KEY, JSON.stringify(l)); }
       function checkCooldown() {
