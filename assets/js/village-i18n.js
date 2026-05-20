@@ -47,7 +47,10 @@
 
     document.querySelectorAll('[data-fr-html]').forEach(el => {
       const val = lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml;
-      if (val !== undefined) el.innerHTML = val;
+      if (val !== undefined) {
+        const doc = new DOMParser().parseFromString(val, 'text/html');
+        el.replaceChildren.apply(el, doc.body.childNodes);
+      }
     });
 
     document.querySelectorAll('.lang-btn').forEach(btn => {

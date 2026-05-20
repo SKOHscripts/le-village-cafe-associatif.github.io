@@ -6,6 +6,9 @@
     "URLSearchParams": false,
     "MutationObserver": false,
     "sessionStorage": false,
-    "localStorage": false
+    "localStorage": false,
+    "React": false,
+    "ReactDOM": false,
+    "Babel": false
   }
 }
