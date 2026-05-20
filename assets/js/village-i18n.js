@@ -145,8 +145,9 @@
     });
 
     document.querySelectorAll('[data-fr-html]').forEach(el => {
-      const chosen = lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml;
-      if (chosen !== undefined) el.replaceChildren(buildFragment(chosen));
+      if (el.dataset.frHtml !== undefined) {
+        el.replaceChildren(buildFragment(lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml));
+      }
     });
 
     document.querySelectorAll('.lang-btn').forEach(btn => {
