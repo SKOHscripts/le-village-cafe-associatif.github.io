@@ -27,6 +27,24 @@
     .social-body { font-size:.9rem; color:var(--muted); line-height:1.65; }
     .social-foot { display:flex; justify-content:flex-end; }
     @media (min-width:768px) { .cal-wrap iframe { height:640px; } }
+
+    /* ─── EVENT CARDS (shared with index.html) ─── */
+    .events-grid { display:grid; gap:1.1rem; }
+    .ecard { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; display:flex; align-items:stretch; box-shadow:var(--shadow-sm); transition:box-shadow .2s, transform .2s; }
+    .ecard:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
+    .ecard-date  { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.25rem 1.4rem; min-width:76px; background:var(--teal); color:var(--white); text-align:center; flex-shrink:0; }
+    .ecard-date.amber { background:var(--amber); }
+    .ecard-date.past  { background:var(--muted); }
+    .ecard-dd    { font-family:var(--font-display); font-size:2rem; line-height:1; }
+    .ecard-mm    { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; opacity:.65; margin-top:.2rem; }
+    .ecard-body  { padding:1.2rem 1.4rem; flex:1; display:flex; flex-direction:column; justify-content:center; }
+    .ecard-cat   { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--amber); margin-bottom:.25rem; }
+    .ecard-title { font-weight:600; color:var(--dark); font-size:1rem; line-height:1.3; margin-bottom:.25rem; }
+    .ecard-meta  { font-size:.8rem; color:var(--muted); }
+    .ecard-past .ecard-title { color:var(--muted); }
+    .events-empty { text-align:center; padding:2rem; color:var(--muted); font-size:.95rem; }
+    @media (min-width:640px) { .events-grid { grid-template-columns:1fr 1fr; } }
+    @media (min-width:1024px) { .events-grid { grid-template-columns:repeat(3,1fr); } }
   </style>
 </head>
 <body>
@@ -91,6 +109,21 @@
               L'agenda est mis à jour par l'équipe bénévole. Pour ne rien manquer, suivez-nous sur <a href="https://www.facebook.com/profile.php?id=61574530611496" target="_blank" rel="noopener" style="color:var(--teal);font-weight:600;">Facebook</a> et <a href="https://www.instagram.com/cafe_associatif_le_village" target="_blank" rel="noopener" style="color:var(--teal);font-weight:600;">Instagram</a>.
             </p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÉVÉNEMENTS PASSÉS -->
+    <section style="padding:5rem 0; background:var(--cream-dark);">
+      <div class="container-sm">
+        <div class="events-head reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;">
+          <div>
+            <p class="s-label" data-fr="Archives" data-en="Archives">Archives</p>
+            <h2 class="s-title" data-fr="Événements passés" data-en="Past events">Événements passés</h2>
+          </div>
+        </div>
+        <div class="events-grid reveal" id="past-events-grid">
+          <p class="events-empty" style="grid-column:1/-1;">Chargement…</p>
         </div>
       </div>
     </section>
@@ -162,6 +195,55 @@
         document.getElementById('gcal').src = BASE + '&mode=' + btn.dataset.mode;
       });
     });
+
+    // Past events from data/evenements.json
+    const MOIS_FR = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+    const MOIS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function escHtml(s) { const d = document.createElement('div'); d.appendChild(document.createTextNode(String(s))); return d.innerHTML; }
+
+    function buildEventCard(ev, lang, isPast) {
+      const d = new Date(ev.date + 'T00:00:00');
+      const dd = d.getDate();
+      const mm = (lang === 'en' ? MOIS_EN : MOIS_FR)[d.getMonth()];
+      const isAmber = !isPast && ev.public && ev.public.toLowerCase().includes('libre');
+      const dateClass = isPast ? 'past' : (isAmber ? 'amber' : '');
+      const heures = ev.heure_debut ? (ev.heure_debut.slice(0,5) + (ev.heure_fin ? ' – ' + ev.heure_fin.slice(0,5) : '')) : '';
+      const meta = [ev.jour_semaine, heures, ev.public].filter(Boolean).join(' · ');
+      return `<div class="ecard${isPast ? ' ecard-past' : ''}">
+        <div class="ecard-date${dateClass ? ' ' + dateClass : ''}">
+          <span class="ecard-dd">${dd}</span>
+          <span class="ecard-mm">${mm}</span>
+        </div>
+        <div class="ecard-body">
+          ${ev.categorie ? `<p class="ecard-cat">${escHtml(ev.categorie)}</p>` : ''}
+          <p class="ecard-title">${escHtml(ev.titre)}</p>
+          ${meta ? `<p class="ecard-meta">${escHtml(meta)}</p>` : ''}
+        </div>
+      </div>`;
+    }
+
+    async function loadPastEvents() {
+      const grid = document.getElementById('past-events-grid');
+      try {
+        const res = await fetch('data/evenements.json');
+        if (!res.ok) throw new Error('fetch');
+        const events = await res.json();
+        const today = new Date(new Date().toISOString().slice(0,10) + 'T00:00:00');
+        const past = events
+          .filter(ev => ev.date && new Date(ev.date + 'T00:00:00') < today)
+          .sort((a, b) => b.date.localeCompare(a.date));
+        if (!past.length) {
+          grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;" data-fr="Aucun événement passé pour le moment." data-en="No past events yet.">Aucun événement passé pour le moment.</p>';
+          return;
+        }
+        const lang = localStorage.getItem('village-lang') || 'fr';
+        grid.innerHTML = past.map(ev => buildEventCard(ev, lang, true)).join('');
+      } catch(_e) {
+        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">Impossible de charger les événements passés.</p>';
+      }
+    }
+    loadPastEvents();
   </script>
 </body>
 </html>
