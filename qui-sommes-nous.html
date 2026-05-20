@@ -31,7 +31,9 @@
     .membre-avatar { width:52px; height:52px; border-radius:50%; background:var(--teal-light); display:flex; align-items:center; justify-content:center; margin:0 auto .75rem; }
     .membre-initial { font-family:var(--font-display); font-size:1.4rem; color:var(--teal); line-height:1; }
     .membre-nom  { font-weight:700; color:var(--dark); font-size:.9rem; }
-    .membre-pole { display:inline-block; background:var(--teal); color:var(--white); font-size:.7rem; font-weight:600; border-radius:var(--r-pill); padding:.18rem .65rem; margin-top:.4rem; }
+    .membre-poles { display:flex; flex-wrap:wrap; justify-content:center; gap:.3rem; margin-top:.4rem; }
+    .membre-pole { display:inline-block; background:var(--teal); color:var(--white); font-size:.65rem; font-weight:600; border-radius:var(--r-pill); padding:.15rem .55rem; }
+    .membre-pole.alt { background:var(--amber); }
 
     .reglement-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); padding:1.5rem 1.75rem; box-shadow:var(--shadow-sm); display:flex; align-items:center; gap:1.5rem; }
     .reglement-icon { width:48px; height:48px; background:var(--teal); border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--white); }
@@ -66,6 +68,9 @@
         <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
         <a href="qui-sommes-nous.html" class="active" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
         <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+        <a href="adhesion.html" data-fr="Adhésion" data-en="Membership">Adhésion</a>
+        <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+        <a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
         <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
       </div>
       <div class="nav-right">
@@ -80,11 +85,11 @@
     <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
     <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
     <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
-    <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+    <a href="adhesion.html" data-fr="Adhésion" data-en="Membership">Adhésion</a>
     <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
     <a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
+    <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
     <div class="lang-switch" style="margin:.75rem 0 0 1rem;"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div>
-    <a href="adhesion.html" style="margin-top:.75rem;background:var(--teal);color:white;border-radius:var(--r-pill);text-align:center;font-weight:600;" data-fr="Adhérer →" data-en="Join us →">Adhérer →</a>
   </div>
 
   <div class="page-hd">
@@ -182,19 +187,19 @@
         <h2 class="s-title reveal" style="margin-bottom:.5rem;" data-fr="Conseil d'Administration Collégial" data-en="Collegiate Board of Directors">Conseil d'Administration Collégial</h2>
         <p class="reveal" style="font-size:.875rem;color:rgba(255,255,255,.5);margin-bottom:1.75rem;" data-fr="Membres listés par ordre alphabétique." data-en="Members listed alphabetically.">Membres listés par ordre alphabétique.</p>
         <div class="equipe-grid reveal">
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">A</span></div><p class="membre-nom">Andrès</p><span class="membre-pole">Animations</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">B</span></div><p class="membre-nom">Béatrice</p><span class="membre-pole">Animations</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">B</span></div><p class="membre-nom">Brigitte</p><span class="membre-pole">Administration</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Colette</p><span class="membre-pole">Communication</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Corentin</p><span class="membre-pole">Finances</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Corinne</p><span class="membre-pole">Bénévoles</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">F</span></div><p class="membre-nom">Florent</p><span class="membre-pole">Communication</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">L</span></div><p class="membre-nom">Lionel</p><span class="membre-pole">Finances</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">M</span></div><p class="membre-nom">Myriam</p><span class="membre-pole">Finances</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">N</span></div><p class="membre-nom">Nina</p><span class="membre-pole">Animations</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">R</span></div><p class="membre-nom">Roger</p><span class="membre-pole">Administration</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">S</span></div><p class="membre-nom">Sandrine</p><span class="membre-pole">Administration</span></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">S</span></div><p class="membre-nom">Serge</p><span class="membre-pole">Vie quotidienne</span></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">A</span></div><p class="membre-nom">Andrès</p><div class="membre-poles"><span class="membre-pole">Animations</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">B</span></div><p class="membre-nom">Béatrice</p><div class="membre-poles"><span class="membre-pole">Animations</span><span class="membre-pole alt">Vie quotidienne</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">B</span></div><p class="membre-nom">Brigitte</p><div class="membre-poles"><span class="membre-pole">Administration</span><span class="membre-pole alt">Communication</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Colette</p><div class="membre-poles"><span class="membre-pole">Animations</span><span class="membre-pole alt">Vie quotidienne</span><span class="membre-pole alt">Communication</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Corentin</p><div class="membre-poles"><span class="membre-pole">Finances</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Corinne</p><div class="membre-poles"><span class="membre-pole">Vie quotidienne</span><span class="membre-pole alt">Bénévoles</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">F</span></div><p class="membre-nom">Florent</p><div class="membre-poles"><span class="membre-pole">Communication</span><span class="membre-pole alt">Vie quotidienne</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">L</span></div><p class="membre-nom">Lionel</p><div class="membre-poles"><span class="membre-pole">Finances</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">M</span></div><p class="membre-nom">Myriam</p><div class="membre-poles"><span class="membre-pole">Finances</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">N</span></div><p class="membre-nom">Nina</p><div class="membre-poles"><span class="membre-pole">Animations</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">R</span></div><p class="membre-nom">Roger</p><div class="membre-poles"><span class="membre-pole">Administration</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">S</span></div><p class="membre-nom">Sandrine</p><div class="membre-poles"><span class="membre-pole">Administration</span></div></div>
+          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">S</span></div><p class="membre-nom">Serge</p><div class="membre-poles"><span class="membre-pole">Vie quotidienne</span></div></div>
         </div>
       </div>
     </section>
@@ -301,7 +306,7 @@ graph TD
         <div><p class="fc-title" data-fr="Participer" data-en="Get involved">Participer</p><nav class="fc-links"><a href="adhesion.html" data-fr="Adhérer" data-en="Join us">Adhérer</a><a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a><a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a></nav></div>
         <div><p class="fc-title" data-fr="Horaires" data-en="Opening hours">Horaires</p><div class="fc-hours"><p class="fc-hour"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour"><strong>Dim</strong> 10h00 – 13h00</p></div><p style="font-size:.78rem;color:rgba(255,255,255,.22);margin-top:1rem;line-height:1.5;">8 rue du Chalumeaux<br>Lyon 8e</p></div>
       </div>
-      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="#">Mentions légales</a><a href="benevoles.html">Bénévoles</a><a href="ca.html">Espace CA</a></div></div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="contact.html">Mentions légales</a><a href="benevoles.html">Bénévoles</a><a href="ca.html">Espace CA</a></div></div>
     </div>
   </footer>
 
