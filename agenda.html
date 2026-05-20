@@ -46,6 +46,17 @@
     .events-empty { text-align:center; padding:2rem; color:var(--muted); font-size:.95rem; }
     @media (min-width:640px) { .events-grid { grid-template-columns:1fr 1fr; } }
     @media (min-width:1024px) { .events-grid { grid-template-columns:repeat(3,1fr); } }
+    .social-embed-shell { background:var(--white); border-radius:var(--r-lg); overflow:hidden; }
+    .social-embed-shell iframe { display:block; width:100%; border:none; border-radius:var(--r-lg); }
+    .ig-profile-card { display:flex; flex-direction:column; gap:1rem; }
+    .ig-profile-visual { display:flex; align-items:center; gap:.85rem; }
+    .ig-avatar { width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#f58529,#dd2a7b 55%,#8134af); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .ig-avatar svg { color:white; }
+    .ig-meta strong { display:block; font-size:.95rem; color:var(--dark); font-weight:700; }
+    .ig-meta span { font-size:.82rem; color:var(--muted); }
+    .ig-desc { font-size:.88rem; color:var(--muted); line-height:1.65; }
+    .ig-btn { display:inline-flex; align-items:center; gap:.5rem; padding:.55rem 1.25rem; border-radius:var(--r-pill); background:linear-gradient(135deg,#f58529,#dd2a7b 55%,#8134af); color:var(--white); font-size:.875rem; font-weight:600; text-decoration:none; transition:opacity .2s; }
+    .ig-btn:hover { opacity:.88; }
   </style>
 </head>
 <body>
@@ -139,13 +150,24 @@
             <div class="social-head">
               <div class="social-badge fb" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
               <div>
-                <p class="social-name" data-fr="Café Associatif Le Village" data-en="Café Associatif Le Village">Café Associatif Le Village</p>
-                <p class="social-sub" data-fr="Actualités &amp; événements" data-en="News &amp; events">Actualités &amp; événements</p>
+                <p class="social-name" data-fr="Actualités du café" data-en="Café news">Actualités du café</p>
+                <p class="social-sub" data-fr="Nos dernières publications &amp; événements" data-en="Our latest posts &amp; events">Nos dernières publications &amp; événements</p>
               </div>
             </div>
-            <p class="social-body" data-fr="Toutes nos annonces, photos et moments de vie du café partagés en temps réel." data-en="All our announcements, photos and café life moments shared in real time.">Toutes nos annonces, photos et moments de vie du café partagés en temps réel.</p>
+            <div class="social-embed-shell">
+              <iframe
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2F104008222369933&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false"
+                width="500" height="600"
+                style="border:none;overflow:hidden;max-width:100%"
+                scrolling="no"
+                title="Page Facebook — Café Associatif Le Village"
+                loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
             <div class="social-foot">
-              <a href="https://www.facebook.com/profile.php?id=61574530611496" target="_blank" rel="noopener" class="btn btn-primary" style="background:#1877f2;border-color:#1877f2;" data-fr="Voir la page Facebook →" data-en="View Facebook page →">Voir la page Facebook →</a>
+              <a href="https://www.facebook.com/profile.php?id=61574530611496" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background:#1877f2;border-color:#1877f2;" data-fr="Voir la page Facebook →" data-en="View Facebook page →">Voir la page Facebook →</a>
             </div>
           </div>
 
@@ -157,9 +179,19 @@
                 <p class="social-sub" data-fr="Photos &amp; moments du Village" data-en="Photos &amp; moments from Le Village">Photos &amp; moments du Village</p>
               </div>
             </div>
-            <p class="social-body" data-fr="Photos, annonces et petits moments de vie du Village — suivez-nous pour ne rien manquer." data-en="Photos, news and little moments from Le Village — follow us to stay up to date.">Photos, annonces et petits moments de vie du Village — suivez-nous pour ne rien manquer.</p>
-            <div class="social-foot">
-              <a href="https://www.instagram.com/cafe_associatif_le_village" target="_blank" rel="noopener" class="btn btn-primary" style="background:linear-gradient(135deg,#f58529,#dd2a7b 55%,#8134af);border:none;" data-fr="Voir le compte Instagram →" data-en="View Instagram account →">Voir le compte Instagram →</a>
+            <div class="ig-profile-card">
+              <div class="ig-profile-visual">
+                <div class="ig-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+                <div class="ig-meta">
+                  <strong>cafe_associatif_le_village</strong>
+                  <span data-fr="Café associatif · Lyon 8e" data-en="Associative café · Lyon 8th">Café associatif · Lyon 8e</span>
+                </div>
+              </div>
+              <p class="ig-desc" data-fr="Photos, annonces et petits moments de vie du Village — suivez-nous pour ne rien manquer." data-en="Photos, news and little moments from Le Village — follow us to stay up to date.">Photos, annonces et petits moments de vie du Village — suivez-nous pour ne rien manquer.</p>
+              <a class="ig-btn" href="https://www.instagram.com/cafe_associatif_le_village" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                <span data-fr="Voir le compte Instagram →" data-en="View Instagram account →">Voir le compte Instagram →</span>
+              </a>
             </div>
           </div>
 
@@ -249,5 +281,6 @@
     }
     loadPastEvents();
   </script>
+  <script src="assets/js/lightbox.js" defer></script>
 </body>
 </html>

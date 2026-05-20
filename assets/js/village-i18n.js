@@ -1,45 +1,78 @@
-/* village-i18n.js — simple FR/EN switcher
-   Elements with data-fr / data-en attrs get their textContent swapped.
-   Elements with data-fr-html / data-en-html get innerHTML swapped.
-   Language persists via localStorage. */
-
 (function () {
-  var STORAGE_KEY = 'village-lang';
-  var currentLang = localStorage.getItem(STORAGE_KEY) || 'fr';
+  'use strict';
 
-  function applyLang(lang) {
-    currentLang = lang;
-    localStorage.setItem(STORAGE_KEY, lang);
-    document.documentElement.lang = lang === 'en' ? 'en' : 'fr';
+  const SUPPORTED = ['fr', 'en'];
+  const DEFAULT   = 'fr';
+  const STORAGE_KEY = 'village-lang';
 
-    // Text swaps
-    document.querySelectorAll('[data-fr]').forEach(function (el) {
-      el.textContent = lang === 'en' ? (el.dataset.en || el.dataset.fr) : el.dataset.fr;
-    });
-    // HTML swaps
-    document.querySelectorAll('[data-fr-html]').forEach(function (el) {
-      el.innerHTML = lang === 'en' ? (el.dataset.enHtml || el.dataset.frHtml) : el.dataset.frHtml;
-    });
-    // Placeholder swaps
-    document.querySelectorAll('[data-fr-placeholder]').forEach(function (el) {
-      el.placeholder = lang === 'en' ? (el.dataset.enPlaceholder || el.dataset.frPlaceholder) : el.dataset.frPlaceholder;
-    });
-    // Sync all switcher buttons on this page
-    document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
+  function detectLocale() {
+    try {
+      const params   = new URLSearchParams(window.location.search);
+      const fromUrl  = params.get('lang');
+      if (fromUrl === 'auto') {
+        try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+      } else if (fromUrl && SUPPORTED.includes(fromUrl)) {
+        return fromUrl;
+      }
+    } catch (_) {}
+
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored && SUPPORTED.includes(stored)) return stored;
+    } catch (_) {}
+
+    const candidates = (navigator.languages && navigator.languages.length)
+      ? navigator.languages : [navigator.language || ''];
+    for (const cand of candidates) {
+      const tag = String(cand).toLowerCase().split('-')[0];
+      if (SUPPORTED.includes(tag)) return tag;
+    }
+    return DEFAULT;
   }
 
-  function initSwitchers() {
-    document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () { applyLang(btn.dataset.lang); });
+  let currentLang = detectLocale();
+
+  function applyLang(lang, persist) {
+    currentLang = lang;
+    if (persist !== false) {
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch (_) {}
+    }
+
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-fr]').forEach(el => {
+      const val = lang === 'en' ? el.dataset.en : el.dataset.fr;
+      if (val !== undefined) el.textContent = val;
     });
-    applyLang(currentLang);
+
+    document.querySelectorAll('[data-fr-html]').forEach(el => {
+      const val = lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml;
+      if (val !== undefined) el.innerHTML = val;
+    });
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    document.dispatchEvent(new CustomEvent('i18n:changed', { detail: { locale: lang } }));
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSwitchers);
+    document.addEventListener('DOMContentLoaded', () => applyLang(currentLang, false));
   } else {
-    initSwitchers();
+    applyLang(currentLang, false);
   }
+
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.lang-btn');
+    if (!btn || !btn.dataset.lang) return;
+    const lang = btn.dataset.lang;
+    if (SUPPORTED.includes(lang)) applyLang(lang);
+  });
+
+  window.i18n = {
+    get locale() { return currentLang; },
+    setLocale: applyLang,
+    SUPPORTED,
+  };
 })();
