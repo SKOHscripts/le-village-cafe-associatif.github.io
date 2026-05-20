@@ -41,10 +41,6 @@
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
   <link rel="stylesheet" href="assets/css/village-shared.css">
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
   <style>
     /* ─── HERO ────────────────────────────────────────── */
     .hero { position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding-top:70px; overflow:hidden; }
@@ -403,62 +399,6 @@
   <div data-evenements="popup"></div>
   <script src="assets/js/evenements.js"></script>
 
-  <!-- TWEAKS PANEL -->
-  <script type="text/babel" src="assets/js/tweaks-panel.jsx"></script>
-  <script type="text/babel">
-    const TWEAK_DEFAULTS = { "palette": "teal", "fontStyle": "serif", "heroHeight": "full" };
-
-    const PALETTES = {
-      teal:       { teal: '#005F66', tealMid: '#007A82', tealLight: '#E6F3F4', amber: '#C97A0A', dark: '#1A2B2C' },
-      forest:     { teal: '#2D6A4F', tealMid: '#40916C', tealLight: '#D8F3DC', amber: '#D4A017', dark: '#1B4332' },
-      terracotta: { teal: '#7C3B2C', tealMid: '#A0522D', tealLight: '#FAE8E0', amber: '#C6862A', dark: '#3B1A12' }
-    };
-    const FONTS = {
-      serif:   { display: "'DM Serif Display', Georgia, serif",   body: "'Plus Jakarta Sans', system-ui, sans-serif" },
-      classic: { display: "'Playfair Display', Georgia, serif",   body: "'Plus Jakarta Sans', system-ui, sans-serif" },
-      modern:  { display: "'Raleway', system-ui, sans-serif",     body: "'Plus Jakarta Sans', system-ui, sans-serif" }
-    };
-
-    function applyTweaks(t) {
-      const p = PALETTES[t.palette] || PALETTES.teal;
-      const f = FONTS[t.fontStyle] || FONTS.serif;
-      const root = document.documentElement;
-      root.style.setProperty('--teal',       p.teal);
-      root.style.setProperty('--teal-mid',   p.tealMid);
-      root.style.setProperty('--teal-light', p.tealLight);
-      root.style.setProperty('--amber',      p.amber);
-      root.style.setProperty('--dark',       p.dark);
-      root.style.setProperty('--font-display', f.display);
-      root.style.setProperty('--font-body',    f.body);
-      const hero = document.querySelector('.hero');
-      if (hero) hero.style.minHeight = t.heroHeight === 'compact' ? '70vh' : '100svh';
-    }
-
-    function TweaksApp() {
-      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-      React.useEffect(() => applyTweaks(tweaks), [tweaks]);
-      return (
-        <TweaksPanel>
-          <TweakSection label="Palette de couleurs">
-            <TweakRadio id="palette" value={tweaks.palette} onChange={v => setTweak('palette', v)}
-              options={[{ value: 'teal', label: 'Teal (actuel)' }, { value: 'forest', label: 'Forêt' }, { value: 'terracotta', label: 'Terracotta' }]} />
-          </TweakSection>
-          <TweakSection label="Style typographique">
-            <TweakRadio id="fontStyle" value={tweaks.fontStyle} onChange={v => setTweak('fontStyle', v)}
-              options={[{ value: 'serif', label: 'DM Serif' }, { value: 'classic', label: 'Playfair' }, { value: 'modern', label: 'Raleway' }]} />
-          </TweakSection>
-          <TweakSection label="Hauteur du hero">
-            <TweakRadio id="heroHeight" value={tweaks.heroHeight} onChange={v => setTweak('heroHeight', v)}
-              options={[{ value: 'full', label: 'Plein écran' }, { value: 'compact', label: 'Compact' }]} />
-          </TweakSection>
-        </TweaksPanel>
-      );
-    }
-
-    const tweaksMount = document.createElement('div');
-    document.body.appendChild(tweaksMount);
-    ReactDOM.createRoot(tweaksMount).render(<TweaksApp />);
-  </script>
   <script src="assets/js/lightbox.js" defer></script>
 </body>
 </html>
