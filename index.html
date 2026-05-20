@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html lang="fr" data-i18n-title="meta.home.title">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille." data-i18n-attr="content:meta.home.desc">
   <title>Le Village — Café Associatif · Lyon 8e</title>
+  <meta name="description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille.">
   <link rel="canonical" href="https://cafe-levillage.org/">
-  <link rel="alternate" hreflang="fr" href="https://cafe-levillage.org/">
-  <link rel="alternate" hreflang="en" href="https://cafe-levillage.org/?lang=en">
-  <link rel="alternate" hreflang="x-default" href="https://cafe-levillage.org/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Le Village — Café Associatif">
   <meta property="og:url" content="https://cafe-levillage.org/">
-  <meta property="og:title" content="Le Village — Café Associatif · Lyon 8e" data-i18n-attr="content:meta.home.title">
-  <meta property="og:description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille." data-i18n-attr="content:meta.home.desc">
+  <meta property="og:title" content="Le Village — Café Associatif · Lyon 8e">
+  <meta property="og:description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon.">
   <meta property="og:image" content="https://cafe-levillage.org/assets/images/aquarelle.jpeg">
   <script type="application/ld+json">
   {
@@ -33,392 +30,423 @@
     },
     "email": "contact@cafe-levillage.org",
     "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Tuesday",
-        "opens": "14:30",
-        "closes": "19:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Friday",
-        "opens": "16:00",
-        "closes": "21:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Sunday",
-        "opens": "10:00",
-        "closes": "13:00"
-      }
-    ],
-    "sameAs": [
-      "https://www.facebook.com/profile.php?id=61574530611496",
-      "https://www.instagram.com/cafe_associatif_le_village"
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday",  "opens": "14:30", "closes": "19:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday",   "opens": "16:00", "closes": "21:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday",   "opens": "10:00", "closes": "13:00" }
     ]
   }
   </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
-
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
-  <link rel="stylesheet" href="assets/css/main.css?v=2">
-  <link rel="stylesheet" href="assets/css/nav.css">
+  <link rel="stylesheet" href="assets/css/village-shared.css">
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
   <style>
-    /* ---- HERO ---- */
-    .hero {
-      position: relative;
-      height: 75vh;
-      min-height: 420px;
-      max-height: 640px;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
+    /* ─── HERO ────────────────────────────────────────── */
+    .hero { position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding-top:70px; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 38%; }
+    @keyframes hero-pan { from { object-position:0% 50%; } to { object-position:100% 50%; } }
+    @media (max-width:767px) { .hero-bg { animation:hero-pan 22s ease-in-out infinite alternate; object-position:0% 50%; } }
+    @media (prefers-reduced-motion:reduce) { .hero-bg { animation:none; } }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(26,43,44,.35) 0%, rgba(26,43,44,.42) 30%, rgba(26,43,44,.72) 68%, rgba(26,43,44,.94) 100%); }
+    .hero-body { position:relative; z-index:1; padding:5rem var(--pad) 0; max-width:var(--max-w); margin:0 auto; width:100%; }
+    .hero-chip { display:inline-flex; align-items:center; gap:.5rem; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); border-radius:var(--r-pill); padding:.28rem 1rem; font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.9); margin-bottom:1.5rem; backdrop-filter:blur(8px); }
+    .hero-chip-dot { width:6px; height:6px; background:var(--amber); border-radius:50%; flex-shrink:0; }
+    .hero-title { font-family:'Crimson Text',Georgia,serif; font-size:clamp(3rem,8vw,5.8rem); color:var(--white); line-height:1.04; margin-bottom:1.25rem; text-wrap:balance; max-width:780px; text-shadow:0 2px 24px rgba(0,0,0,.35); }
+    .hero-title em { font-style:italic; color:rgba(255,255,255,.75); }
+    .hero-sub { font-size:1.05rem; color:rgba(255,255,255,.85); max-width:460px; line-height:1.7; margin-bottom:2.5rem; text-shadow:0 1px 12px rgba(0,0,0,.3); }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:.75rem; margin-bottom:4rem; }
+    .hero-strip { position:relative; z-index:1; background:var(--teal); padding:1.4rem 0; margin-top:auto; }
+    .hero-strip-inner { max-width:var(--max-w); margin:0 auto; padding:0 var(--pad); display:flex; flex-wrap:wrap; gap:1.5rem; align-items:center; justify-content:space-between; }
+    .strip-label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.4); }
+    .strip-hours { display:flex; flex-wrap:wrap; gap:1.5rem; }
+    .strip-item  { display:flex; align-items:center; gap:.6rem; }
+    .strip-day   { font-size:.85rem; font-weight:600; color:rgba(255,255,255,.55); }
+    .strip-time  { font-size:.85rem; font-weight:700; color:var(--white); }
+    .strip-sep   { width:1px; height:18px; background:rgba(255,255,255,.18); flex-shrink:0; }
+
+    /* ─── INTRO ───────────────────────────────────────── */
+    .intro { padding:7rem 0; }
+    .intro-grid { display:grid; gap:4rem; align-items:center; }
+    .intro-quote { font-family:var(--font-display); font-size:clamp(1.5rem,3.2vw,2.1rem); line-height:1.42; color:var(--dark); position:relative; padding-left:1.75rem; }
+    .intro-quote::before { content:''; position:absolute; left:0; top:.15em; width:4px; height:82%; background:var(--amber); border-radius:2px; }
+    .values-grid { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; margin-top:1rem; }
+    .vpill { display:flex; align-items:center; gap:.7rem; background:var(--white); border:1px solid var(--border); border-radius:var(--r-md); padding:.8rem 1rem; box-shadow:var(--shadow-sm); transition:box-shadow .2s, transform .2s; }
+    .vpill:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+    .vpill-dot  { width:8px; height:8px; background:var(--teal); border-radius:50%; flex-shrink:0; }
+    .vpill-dot.a { background:var(--amber); }
+    .vpill-label { font-size:.875rem; font-weight:600; color:var(--dark); }
+    .vpill-wide  { grid-column:span 2; }
+
+    /* ─── HORAIRES ────────────────────────────────────── */
+    .hours-sec  { background:var(--dark); padding:5rem 0; }
+    .hours-head { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2.5rem; }
+    .hours-grid { display:grid; gap:1.25rem; }
+    .hcard { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:var(--r-xl); padding:2rem 1.75rem; transition:background .2s; }
+    .hcard:hover { background:rgba(255,255,255,.09); }
+    .hcard-day  { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--amber); margin-bottom:.4rem; }
+    .hcard-time { font-family:var(--font-display); font-size:clamp(1.7rem,4vw,2.3rem); color:var(--white); line-height:1.05; margin-bottom:.45rem; }
+    .hcard-note { font-size:.82rem; color:rgba(255,255,255,.4); line-height:1.45; }
+
+    /* ─── EVENTS ──────────────────────────────────────── */
+    .events-sec  { padding:7rem 0; }
+    .events-head { display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2.5rem; }
+    .events-grid { display:grid; gap:1.1rem; }
+    .ecard { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; display:flex; align-items:stretch; box-shadow:var(--shadow-sm); transition:box-shadow .2s, transform .2s; }
+    .ecard:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
+    .ecard-date  { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.25rem 1.4rem; min-width:76px; background:var(--teal); color:var(--white); text-align:center; flex-shrink:0; }
+    .ecard-date.amber { background:var(--amber); }
+    .ecard-dd    { font-family:var(--font-display); font-size:2rem; line-height:1; }
+    .ecard-mm    { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; opacity:.65; margin-top:.2rem; }
+    .ecard-body  { padding:1.2rem 1.4rem; flex:1; display:flex; flex-direction:column; justify-content:center; }
+    .ecard-cat   { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--amber); margin-bottom:.25rem; }
+    .ecard-title { font-weight:600; color:var(--dark); font-size:1rem; line-height:1.3; margin-bottom:.25rem; }
+    .ecard-meta  { font-size:.8rem; color:var(--muted); }
+    .events-empty { text-align:center; padding:2rem; color:var(--muted); font-size:.95rem; }
+
+    /* ─── ADHÉSION ────────────────────────────────────── */
+    .adh-sec { background:var(--teal); padding:5rem 0; }
+    .adh-inner { display:flex; flex-direction:column; gap:2.5rem; }
+    .adh-text h2 { font-family:var(--font-display); font-size:clamp(2rem,4vw,2.8rem); color:var(--white); margin-bottom:.75rem; }
+    .adh-text p  { font-size:1rem; color:rgba(255,255,255,.68); line-height:1.75; max-width:520px; }
+    .adh-cta { display:flex; flex-direction:column; gap:.75rem; align-items:flex-start; }
+    .adh-note { font-size:.78rem; color:rgba(255,255,255,.35); }
+
+    /* ─── MAP ─────────────────────────────────────────── */
+    .map-sec { padding:7rem 0; }
+    .map-grid { display:grid; gap:3rem; align-items:start; }
+    .map-addr { font-family:var(--font-display); font-size:clamp(1.4rem,3vw,1.9rem); color:var(--dark); line-height:1.3; margin-bottom:1.5rem; }
+    .map-details { display:flex; flex-direction:column; gap:1.1rem; margin-bottom:2rem; }
+    .map-row { display:flex; align-items:flex-start; gap:.75rem; }
+    .map-icon { width:18px; height:18px; color:var(--teal); flex-shrink:0; margin-top:.18rem; }
+    .map-row-text strong { font-size:.875rem; font-weight:600; color:var(--dark); display:block; }
+    .map-row-text span   { font-size:.82rem; color:var(--muted); }
+    .map-frame { border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-lg); border:1px solid var(--border); }
+    .map-frame iframe { display:block; width:100%; height:340px; border:none; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (min-width:640px) { .hours-grid { grid-template-columns:repeat(3,1fr); } .events-grid { grid-template-columns:1fr 1fr; } }
+    @media (min-width:768px) { .intro-grid { grid-template-columns:1fr 1fr; gap:6rem; } .adh-inner { flex-direction:row; align-items:center; justify-content:space-between; } .adh-cta { align-items:flex-end; } .map-grid { grid-template-columns:1fr 1fr; gap:5rem; } .map-frame iframe { height:440px; } }
+    @media (min-width:1024px) { .events-grid { grid-template-columns:repeat(3,1fr); } }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="assets/images/logo-header.png" alt="Le Village Café Associatif"></a>
+      <div class="nav-links" role="navigation" aria-label="Navigation principale">
+        <a href="index.html" class="active" data-fr="Accueil" data-en="Home">Accueil</a>
+        <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+        <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+        <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+        <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+      </div>
+      <div class="nav-right">
+        <div class="lang-switch"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div>
+        <a href="adhesion.html" class="btn btn-primary nav-adhere" style="font-size:.82rem;padding:.45rem 1.2rem;" data-fr="Adhérer" data-en="Join us">Adhérer</a>
+        <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer" id="nav-drawer" role="dialog" aria-label="Menu">
+    <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+    <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+    <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+    <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+    <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+    <a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
+    <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+    <div class="lang-switch" style="margin:.75rem 0 0 1rem;"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div>
+    <a href="adhesion.html" style="margin-top:.75rem;background:var(--teal);color:white;border-radius:var(--r-pill);text-align:center;font-weight:600;" data-fr="Adhérer →" data-en="Join us →">Adhérer →</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero-section">
+    <img src="assets/images/aquarelle.jpeg" alt="Café Associatif Le Village — terrasse animée du quartier" class="hero-bg">
+    <div class="hero-overlay"></div>
+    <div class="container hero-body">
+      <h1 class="hero-title fin fin-1">
+        Un café <em>pour</em><br>et avec le quartier
+      </h1>
+      <p class="hero-sub fin fin-3">
+        Espace ouvert à tous — se rencontrer, partager et tisser du lien entre générations.
+      </p>
+      <div class="hero-actions fin fin-4">
+        <a href="adhesion.html" class="btn btn-amber btn-lg" data-fr="Adhérer en ligne" data-en="Join online">Adhérer en ligne</a>
+        <a href="agenda.html" class="btn btn-ghost btn-lg" data-fr="Voir l'agenda →" data-en="See agenda →">Voir l'agenda →</a>
+      </div>
+    </div>
+    <div class="hero-strip">
+      <div class="hero-strip-inner">
+        <div><p class="strip-label" data-fr="Horaires d'ouverture" data-en="Opening hours">Horaires d'ouverture</p></div>
+        <div class="strip-hours">
+          <div class="strip-item"><span class="strip-day" data-fr="Mardis" data-en="Tuesdays">Mardis</span><span class="strip-time">14h30 – 19h00</span></div>
+          <div class="strip-sep"></div>
+          <div class="strip-item"><span class="strip-day" data-fr="Vendredis" data-en="Fridays">Vendredis</span><span class="strip-time">16h00 – 21h00</span></div>
+          <div class="strip-sep"></div>
+          <div class="strip-item"><span class="strip-day" data-fr="Dimanches" data-en="Sundays">Dimanches</span><span class="strip-time">10h00 – 13h00</span></div>
+        </div>
+        <a href="contact.html" class="btn btn-ghost" style="font-size:.8rem;padding:.4rem 1.1rem;" data-fr="Contact →" data-en="Contact →">Contact →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="container">
+      <div class="intro-grid reveal">
+        <div>
+          <p class="s-label" data-fr="Notre mission" data-en="Our mission">Notre mission</p>
+          <blockquote class="intro-quote" data-fr="Au Village,<br>chacun amène<br>un peu de soi." data-en-html="At Le Village,<br>everyone brings<br>a little of themselves.">
+            Au Village,<br>chacun amène<br>un peu de soi.
+          </blockquote>
+          <p style="margin-top:1.5rem;font-size:1rem;color:var(--muted);line-height:1.78;max-width:430px;" data-fr="Ouvert trois jours par semaine, Le Village rythme la vie des habitants du 8e arrondissement. Ateliers, verres entre voisins, marché, pétanque — un espace de vie sans prise de tête." data-en="Open three days a week, Le Village shapes the lives of residents in the 8th arrondissement. Workshops, drinks with neighbours, market, pétanque — a no-fuss community space.">
+            Ouvert trois jours par semaine, Le Village rythme la vie des habitants du 8e arrondissement. Ateliers, verres entre voisins, marché, pétanque — un espace de vie sans prise de tête.
+          </p>
+          <a href="qui-sommes-nous.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1.6rem;font-size:.9rem;font-weight:600;color:var(--teal);" data-fr="Qui sommes-nous" data-en="About us">
+            Qui sommes-nous
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div>
+          <div class="values-grid">
+            <div class="vpill"><span class="vpill-dot"></span><span class="vpill-label" data-fr="Solidarité" data-en="Solidarity">Solidarité</span></div>
+            <div class="vpill"><span class="vpill-dot a"></span><span class="vpill-label" data-fr="Engagement" data-en="Engagement">Engagement</span></div>
+            <div class="vpill"><span class="vpill-dot"></span><span class="vpill-label" data-fr="Lien social" data-en="Social bonds">Lien social</span></div>
+            <div class="vpill"><span class="vpill-dot a"></span><span class="vpill-label" data-fr="Ancrage local" data-en="Local roots">Ancrage local</span></div>
+            <div class="vpill vpill-wide"><span class="vpill-dot"></span><span class="vpill-label" data-fr="Ouverture à tous, sans exception" data-en="Open to all, without exception">Ouverture à tous, sans exception</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HORAIRES -->
+  <section class="hours-sec">
+    <div class="container">
+      <div class="hours-head reveal">
+        <div>
+          <p class="s-label" style="color:var(--amber);" data-fr="Quand nous retrouver" data-en="When to find us">Quand nous retrouver</p>
+          <h2 style="font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.5rem);color:var(--white);line-height:1.1;" data-fr="Horaires d'ouverture" data-en="Opening hours">Horaires d'ouverture</h2>
+        </div>
+        <p style="font-size:.85rem;color:rgba(255,255,255,.3);max-width:260px;line-height:1.55;text-align:right;">8 rue du Chalumeaux<br>Lyon 8e</p>
+      </div>
+      <div class="hours-grid reveal">
+        <div class="hcard">
+          <p class="hcard-day" data-fr="Mardi" data-en="Tuesday">Mardi</p>
+          <p class="hcard-time">14h30 – 19h</p>
+          <p class="hcard-note" data-fr="Ateliers, goûter, apéritif, jeux de société" data-en="Workshops, snacks, aperitif, board games">Ateliers, goûter, apéritif, jeux de société</p>
+        </div>
+        <div class="hcard">
+          <p class="hcard-day" data-fr="Vendredi" data-en="Friday">Vendredi</p>
+          <p class="hcard-time">16h00 – 21h</p>
+          <p class="hcard-note" data-fr="Break de fin de semaine — jeux, animations, verres partagés" data-en="End-of-week break — games, activities, shared drinks">Break de fin de semaine — jeux, animations, verres partagés</p>
+        </div>
+        <div class="hcard">
+          <p class="hcard-day" data-fr="Dimanche" data-en="Sunday">Dimanche</p>
+          <p class="hcard-time">10h00 – 13h</p>
+          <p class="hcard-note" data-fr="Pendant le marché voisin place Belleville — café, vin blanc, pétanque" data-en="During the nearby market at Place Belleville — coffee, white wine, pétanque">Pendant le marché voisin place Belleville — café, vin blanc, pétanque</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉVÉNEMENTS -->
+  <section class="events-sec">
+    <div class="container">
+      <div class="events-head reveal">
+        <div>
+          <p class="s-label" data-fr="Agenda" data-en="Agenda">Agenda</p>
+          <h2 class="s-title" data-fr="Prochains événements" data-en="Upcoming events">Prochains événements</h2>
+        </div>
+        <a href="agenda.html" class="btn btn-outline" data-fr="Voir tout l'agenda →" data-en="See full agenda →">Voir tout l'agenda →</a>
+      </div>
+      <div class="events-grid reveal" id="events-grid">
+        <p class="events-empty" style="grid-column:1/-1;">Chargement des événements…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADHÉSION -->
+  <section class="adh-sec">
+    <div class="container">
+      <div class="adh-inner reveal">
+        <div class="adh-text">
+          <h2 data-fr="Devenez adhérent·e" data-en="Become a member">Devenez adhérent·e</h2>
+          <p data-fr="Le Village est un café associatif — l'adhésion est obligatoire pour la vente d'alcool. Elle est accessible sur place tous les jours d'ouverture, ou en avance via le formulaire en ligne." data-en="Le Village is an associative café — membership is required for alcohol sales. It's available on-site every opening day, or in advance via the online form.">Le Village est un café associatif — l'adhésion est obligatoire pour la vente d'alcool. Elle est accessible sur place tous les jours d'ouverture, ou en avance via le formulaire en ligne.</p>
+        </div>
+        <div class="adh-cta">
+          <a href="adhesion.html" class="btn btn-amber btn-lg" data-fr="Adhérer en ligne →" data-en="Join online →">Adhérer en ligne →</a>
+          <p class="adh-note" data-fr="Également disponible sur place" data-en="Also available on-site">Également disponible sur place</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARTE -->
+  <section class="map-sec">
+    <div class="container">
+      <div class="map-grid reveal">
+        <div>
+          <p class="s-label" data-fr="Nous trouver" data-en="Find us">Nous trouver</p>
+          <p class="map-addr">8 rue du Chalumeaux,<br>Lyon 8e</p>
+          <div class="map-details">
+            <div class="map-row">
+              <svg class="map-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div class="map-row-text">
+                <strong data-fr="Grand Trou · Moulin à Vent · Petite Guille" data-en="Grand Trou · Moulin à Vent · Petite Guille">Grand Trou · Moulin à Vent · Petite Guille</strong>
+                <span data-fr="Quartiers du 8e arrondissement de Lyon" data-en="Neighbourhoods of Lyon's 8th arrondissement">Quartiers du 8e arrondissement de Lyon</span>
+              </div>
+            </div>
+            <div class="map-row">
+              <svg class="map-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <div class="map-row-text">
+                <strong>contact@cafe-levillage.org</strong>
+                <span data-fr="On vous répond avec plaisir" data-en="We'll be happy to reply">On vous répond avec plaisir</span>
+              </div>
+            </div>
+          </div>
+          <a href="contact.html" class="btn btn-primary" style="padding:.7rem 1.75rem;" data-fr="Voir sur la carte →" data-en="View on map →">Voir sur la carte →</a>
+        </div>
+        <div class="map-frame">
+          <iframe title="Carte — Café Associatif Le Village, Lyon 8e" src="https://cartes.app/?allez=Café Associatif Le Village|n13308296369|4.85406|45.73576#15/45.73655/4.8552" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline" data-fr="Un espace de vie associatif au cœur du 8e arrondissement de Lyon." data-en="An associative space at the heart of Lyon's 8th arrondissement.">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p><div class="footer-social"><a href="https://www.facebook.com/profile.php?id=61574530611496" class="soc-btn" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="https://www.instagram.com/cafe_associatif_le_village" class="soc-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></div></div>
+        <div><p class="fc-title">Navigation</p><nav class="fc-links"><a href="index.html">Accueil</a><a href="agenda.html">Agenda</a><a href="qui-sommes-nous.html">Qui sommes-nous</a><a href="carte.html">La Carte</a><a href="contact.html">Contact</a></nav></div>
+        <div><p class="fc-title">Participer</p><nav class="fc-links"><a href="adhesion.html">Adhérer</a><a href="don.html">Faire un don</a><a href="boite-a-idees.html">Boîte à idées</a></nav></div>
+        <div><p class="fc-title">Horaires</p><div class="fc-hours"><p class="fc-hour"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour"><strong>Dim</strong> 10h00 – 13h00</p></div><p style="font-size:.78rem;color:rgba(255,255,255,.22);margin-top:1rem;line-height:1.5;">8 rue du Chalumeaux<br>Lyon 8e</p></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="#">Mentions légales</a><a href="benevoles.html">Bénévoles</a><a href="ca.html">Espace CA</a></div></div>
+    </div>
+  </footer>
+
+  <script src="assets/js/village-i18n.js"></script>
+  <script>
+    const nav = document.getElementById('site-nav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+
+    const burger = document.getElementById('nav-burger'), drawer = document.getElementById('nav-drawer');
+    burger.addEventListener('click', () => { const open = burger.classList.toggle('open'); drawer.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open'); drawer.classList.remove('open'); burger.setAttribute('aria-expanded', false); document.body.style.overflow = ''; }));
+
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Dynamic events from data/evenements.json
+    const MOIS_FR = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+    const MOIS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function buildEventCard(ev, lang) {
+      const d = new Date(ev.date + 'T00:00:00');
+      const dd = d.getDate();
+      const mm = (lang === 'en' ? MOIS_EN : MOIS_FR)[d.getMonth()];
+      const isAmber = ev.public && ev.public.toLowerCase().includes('libre');
+      const heures = ev.heure_debut ? (ev.heure_debut.slice(0,5) + (ev.heure_fin ? ' – ' + ev.heure_fin.slice(0,5) : '')) : '';
+      const meta = [ev.jour_semaine, heures, ev.public].filter(Boolean).join(' · ');
+      return `<div class="ecard">
+        <div class="ecard-date${isAmber ? ' amber' : ''}">
+          <span class="ecard-dd">${dd}</span>
+          <span class="ecard-mm">${mm}</span>
+        </div>
+        <div class="ecard-body">
+          ${ev.categorie ? `<p class="ecard-cat">${ev.categorie}</p>` : ''}
+          <p class="ecard-title">${ev.titre}</p>
+          ${meta ? `<p class="ecard-meta">${meta}</p>` : ''}
+        </div>
+      </div>`;
     }
 
-    .hero-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: left center;
+    async function loadEvents() {
+      const grid = document.getElementById('events-grid');
+      try {
+        const res = await fetch('data/evenements.json');
+        if (!res.ok) throw new Error('fetch');
+        const events = await res.json();
+        const now = new Date();
+        const upcoming = events
+          .filter(ev => ev.date && new Date(ev.date + 'T00:00:00') >= new Date(now.toISOString().slice(0,10) + 'T00:00:00'))
+          .sort((a, b) => a.date.localeCompare(b.date))
+          .slice(0, 3);
+        if (!upcoming.length) {
+          grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">Aucun événement à venir pour le moment — suivez-nous sur les réseaux !</p>';
+          return;
+        }
+        const lang = localStorage.getItem('village-lang') || 'fr';
+        grid.innerHTML = upcoming.map(ev => buildEventCard(ev, lang)).join('');
+      } catch(e) {
+        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">Consultez l\'<a href="agenda.html" style="color:var(--teal);font-weight:600;">agenda</a> pour les prochains événements.</p>';
+      }
+    }
+    loadEvents();
+  </script>
+
+  <!-- TWEAKS PANEL -->
+  <script type="text/babel" src="assets/js/tweaks-panel.jsx"></script>
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = { "palette": "teal", "fontStyle": "serif", "heroHeight": "full" };
+
+    const PALETTES = {
+      teal:       { teal: '#005F66', tealMid: '#007A82', tealLight: '#E6F3F4', amber: '#C97A0A', dark: '#1A2B2C' },
+      forest:     { teal: '#2D6A4F', tealMid: '#40916C', tealLight: '#D8F3DC', amber: '#D4A017', dark: '#1B4332' },
+      terracotta: { teal: '#7C3B2C', tealMid: '#A0522D', tealLight: '#FAE8E0', amber: '#C6862A', dark: '#3B1A12' }
+    };
+    const FONTS = {
+      serif:   { display: "'DM Serif Display', Georgia, serif",   body: "'Plus Jakarta Sans', system-ui, sans-serif" },
+      classic: { display: "'Playfair Display', Georgia, serif",   body: "'Plus Jakarta Sans', system-ui, sans-serif" },
+      modern:  { display: "'Raleway', system-ui, sans-serif",     body: "'Plus Jakarta Sans', system-ui, sans-serif" }
+    };
+
+    function applyTweaks(t) {
+      const p = PALETTES[t.palette] || PALETTES.teal;
+      const f = FONTS[t.fontStyle] || FONTS.serif;
+      const root = document.documentElement;
+      root.style.setProperty('--teal',       p.teal);
+      root.style.setProperty('--teal-mid',   p.tealMid);
+      root.style.setProperty('--teal-light', p.tealLight);
+      root.style.setProperty('--amber',      p.amber);
+      root.style.setProperty('--dark',       p.dark);
+      root.style.setProperty('--font-display', f.display);
+      root.style.setProperty('--font-body',    f.body);
+      const hero = document.querySelector('.hero');
+      if (hero) hero.style.minHeight = t.heroHeight === 'compact' ? '70vh' : '100svh';
     }
 
-    /* Dégradé bas → opacité pour lisibilité */
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0) 30%,
-        rgba(244,243,242,0.78) 80%,
-        rgba(244,243,242,1) 100%
+    function TweaksApp() {
+      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+      React.useEffect(() => applyTweaks(tweaks), [tweaks]);
+      return (
+        <TweaksPanel>
+          <TweakSection label="Palette de couleurs">
+            <TweakRadio id="palette" value={tweaks.palette} onChange={v => setTweak('palette', v)}
+              options={[{ value: 'teal', label: 'Teal (actuel)' }, { value: 'forest', label: 'Forêt' }, { value: 'terracotta', label: 'Terracotta' }]} />
+          </TweakSection>
+          <TweakSection label="Style typographique">
+            <TweakRadio id="fontStyle" value={tweaks.fontStyle} onChange={v => setTweak('fontStyle', v)}
+              options={[{ value: 'serif', label: 'DM Serif' }, { value: 'classic', label: 'Playfair' }, { value: 'modern', label: 'Raleway' }]} />
+          </TweakSection>
+          <TweakSection label="Hauteur du hero">
+            <TweakRadio id="heroHeight" value={tweaks.heroHeight} onChange={v => setTweak('heroHeight', v)}
+              options={[{ value: 'full', label: 'Plein écran' }, { value: 'compact', label: 'Compact' }]} />
+          </TweakSection>
+        </TweaksPanel>
       );
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      padding: 2rem var(--padding-page) 2.5rem;
-    }
-
-    .hero-logo-wrap {
-      display: inline-block;
-    }
-
-    .hero-logo-img {
-      height: 140px;
-      width: auto;
-      display: block;
-      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.15));
-    }
-
-    @keyframes hero-pan {
-      from { object-position: 0% 50%; }
-      to   { object-position: 100% 50%; }
-    }
-
-    @media (max-width: 767px) {
-      .hero-img {
-        animation: hero-pan 20s ease-in-out infinite alternate;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hero-img {
-        animation: none;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .hero-img {
-        object-position: center center;
-      }
-
-      .hero-logo-img {
-        height: 180px;
-      }
-    }
-
-    /* ---- DESCRIPTION ---- */
-    .section-description {
-      padding: 2.5rem 0 2rem;
-    }
-
-    .description-text {
-      font-size: 1.1rem;
-      line-height: 1.75;
-      color: var(--color-text);
-      text-align: center;
-      max-width: 580px;
-      margin: 0 auto;
-    }
-
-    /* ---- HORAIRES ---- */
-    .section-horaires {
-      padding: 0 0 2.5rem;
-    }
-
-    .horaires-card {
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-    }
-
-    .horaires-header {
-      background: var(--color-teal);
-      padding: 1.1rem 1.5rem;
-    }
-
-    .horaires-header h2 {
-      color: var(--color-white);
-      font-size: 1.15rem;
-      margin: 0;
-    }
-
-    .horaires-header h2::after {
-      display: none;
-    }
-
-    .horaires-list {
-      padding: 0.5rem 0;
-    }
-
-    .horaire-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.9rem 1.5rem;
-      border-bottom: 1px solid var(--color-border);
-      gap: 1rem;
-    }
-
-    .horaire-item:last-child {
-      border-bottom: none;
-    }
-
-    .horaire-jour {
-      font-weight: 600;
-      color: var(--color-teal);
-      font-size: 1.05rem;
-    }
-
-    .horaire-heures {
-      font-family: var(--font-script);
-      font-size: 1.2rem;
-      color: var(--color-text);
-    }
-
-    .horaire-ete {
-      color: #ffa70b;
-      font-size: 0.95rem;
-      white-space: nowrap;
-    }
-
-    /* ---- NOTICE ADHÉSION ---- */
-    .notice-adhesion {
-      background: var(--color-orange-light);
-      border: 2px solid var(--color-orange);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      margin: 0 0 2.5rem;
-    }
-
-    .notice-adhesion p {
-      font-size: 0.95rem;
-      line-height: 1.55;
-      color: var(--color-text);
-    }
-
-    .notice-adhesion strong {
-      color: var(--color-teal);
-    }
-
-    /* ---- CARTE ---- */
-    .section-carte {
-      padding: 0 0 2.5rem;
-    }
-
-    .carte-wrapper {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-    }
-
-    .carte-wrapper iframe {
-      display: block;
-      width: 100%;
-      height: 320px;
-      border: none;
-    }
-
-    @media (min-width: 768px) {
-      .carte-wrapper iframe {
-        height: 400px;
-      }
-    }
-
-    /* ---- CONTACT EMAIL ---- */
-    .section-email {
-      padding: 0 0 1rem;
-      text-align: center;
-    }
-
-    .email-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1rem;
-      color: var(--color-teal);
-      font-weight: 500;
-      padding: 0.6rem 1.2rem;
-      border-radius: var(--radius-pill);
-      border: 2px solid var(--color-border);
-      transition: all 0.2s ease;
-    }
-
-    .email-link:hover {
-      background: var(--color-teal);
-      color: var(--color-white);
-      border-color: var(--color-teal);
-      text-decoration: none;
-    }
-
-    /* ---- CRÉDIT ILLUSTRATION ---- */
-    .hero-credit {
-      position: absolute;
-      bottom: 0.5rem;
-      right: 0.75rem;
-      z-index: 2;
-      font-size: 0.7rem;
-      color: rgba(64, 59, 58, 0.65);
-      font-family: var(--font-main);
-      pointer-events: none;
-    }
-  </style>
-</head>
-
-<body>
-
-
-  <!-- ===== MAIN ===== -->
-  <main id="main-content">
-
-    <!-- HERO -->
-    <section class="hero" data-i18n-attr="aria-label:home.hero.label">
-      <img
-        src="assets/images/aquarelle.jpeg"
-        alt="Illustration du Café Associatif Le Village — terrasse ensoleillée avec arbres et habitants du quartier"
-        data-i18n-attr="alt:home.hero.alt"
-        class="hero-img js-zoomable"
-        loading="eager"
-      >
-      <div class="hero-content">
-        <div class="hero-logo-wrap fade-up fade-up-1">
-          <img src="assets/images/logo-detoure-vert.png" alt="Café Associatif le Village — grand trou · moulin à vent · petite guille" data-i18n-attr="alt:home.hero.logo.alt" class="hero-logo-img">
-        </div>
-      </div>
-      <p class="hero-credit" data-i18n="home.hero.credit">Illustration : Collectif Pourquoi Pas / Lucie Bulot architecte</p>
-    </section>
-
-    <div class="container">
-
-      <!-- DESCRIPTION -->
-      <section class="section-description fade-up fade-up-2" aria-labelledby="desc-title">
-        <p class="description-text" id="description-text" data-i18n="content.description">
-          Le Café Associatif Le Village est un espace ouvert à tous pour se rencontrer, partager et tisser du lien dans le quartier.
-        </p>
-      </section>
-
-      <!-- ÉVÈNEMENTS À VENIR -->
-      <section class="section-evenements fade-up fade-up-2" aria-labelledby="evt-title">
-        <h2 class="section-title" id="evt-title" data-i18n="home.events.title">Évènements à venir</h2>
-        <div class="evenements-list" data-evenements="upcoming"></div>
-      </section>
-
-      <!-- HORAIRES -->
-      <section class="section-horaires fade-up fade-up-3" aria-labelledby="horaires-title">
-        <div class="horaires-card">
-          <div class="horaires-header">
-            <h2 id="horaires-title" data-i18n="home.hours.title">Horaires d'ouverture</h2>
-          </div>
-          <ul class="horaires-list" id="horaires-list">
-            <li class="horaire-item">
-              <span class="horaire-jour" data-i18n="hours.tuesday">Mardis</span>
-              <span class="horaire-heures" data-i18n="hours.tue.value">14h30 – 19h00</span>
-            </li>
-            <li class="horaire-item">
-              <span class="horaire-jour" data-i18n="hours.friday">Vendredis</span>
-              <span class="horaire-heures" data-i18n-html="hours.fri.html">16h00 – <s>21h00</s> <span class="horaire-ete">22h00 en heures d’été</span></span>
-            </li>
-            <li class="horaire-item">
-              <span class="horaire-jour" data-i18n="hours.sunday">Dimanches</span>
-              <span class="horaire-heures" data-i18n="hours.sun.value">10h00 – 13h00</span>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- NOTICE ADHÉSION -->
-      <div class="notice-adhesion fade-up fade-up-3" role="note">
-        <p data-i18n-html="home.notice.html">
-          Le Village est un <strong>café associatif</strong>. L'adhésion est obligatoire pour la vente d'alcool.
-          Adhésions disponibles sur place tous les jours d'ouverture ou en avance via le formulaire en ligne.
-        </p>
-        <p style="margin-top:0.75rem;text-align:center">
-          <a href="adhesion.html" class="btn btn-primary" style="font-size:0.9rem;padding:0.55rem 1.3rem" data-i18n="home.notice.cta">
-            Adhérer en ligne →
-          </a>
-        </p>
-      </div>
-
-      <!-- CARTE -->
-      <section class="section-carte fade-up fade-up-4" aria-labelledby="carte-title">
-        <h2 class="section-title" id="carte-title" data-i18n="home.find.title">Où nous trouver</h2>
-        <p class="text-center mb-3" style="color: var(--color-text-light); font-size: 0.95rem;" data-i18n="home.find.address">
-          8 rue du Chalumeaux, Lyon 8e
-        </p>
-        <div class="carte-wrapper">
-  				<iframe
-  					title="Carte de localisation du Café Associatif Le Village, 8 rue du Chalumeaux, Lyon 8e"
-  					data-i18n-attr="title:home.find.iframe"
-  					src="https://cartes.app/?allez=Café Associatif Le Village|n13308296369|4.85406|45.73576#15/45.73655/4.8552"
-  					style="
-  					width: 95%;
-  					height: 36rem;
-  					max-width: 100%;
-  					margin: 0 auto;
-  					margin-bottom: 5vh;
-  					display: block;
-  					box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
-  						rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-  
-  						background: linear-gradient(white, white) padding-box, linear-gradient(to right, #2988e6, #57bff5) border-box;
-    border: 0.2rem solid transparent;
-    border-radius: 0.5rem;
-  "
-  				></iframe>
-        </div>
-      </section>
-
-    </div><!-- /container -->
-
-    <!-- POP-UP ÉVÈNEMENT (monté dynamiquement par evenements.js) -->
-    <div data-evenements="popup"></div>
-  </main>
-
-
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/components.js"></script>
-  <script src="assets/js/evenements.js"></script>
-  <script src="assets/js/lightbox.js" defer></script>
-
+    const tweaksMount = document.createElement('div');
+    document.body.appendChild(tweaksMount);
+    ReactDOM.createRoot(tweaksMount).render(<TweaksApp />);
+  </script>
 </body>
 </html>

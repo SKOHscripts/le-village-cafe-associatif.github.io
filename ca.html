@@ -1,128 +1,74 @@
 <!DOCTYPE html>
-<html lang="fr" data-i18n-title="meta.board.title">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Espace conseil d'administration du Café Associatif Le Village — accès réservé au CA." data-i18n-attr="content:meta.board.desc">
   <title>Espace CA — Le Village</title>
+  <meta name="description" content="Espace conseil d'administration du Café Associatif Le Village — accès réservé au CA.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/nav.css">
+  <link rel="stylesheet" href="assets/css/village-shared.css">
   <style>
-    .section-outils { padding: 2.5rem 0 2rem; }
-
-    .outils-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .outil-card {
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      border-left: 5px solid var(--color-teal);
-      transition: box-shadow 0.2s;
-    }
-    .outil-card:hover { box-shadow: var(--shadow-lg); }
-
-    .outil-header {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
-    .outil-titre {
-      font-family: var(--font-main);
-      font-weight: 600;
-      font-size: 1.15rem;
-      color: var(--color-teal);
-    }
-    .outil-desc {
-      font-size: 0.9rem;
-      color: var(--color-text-light);
-      line-height: 1.6;
-    }
-
-    .section-liens { padding: 0 0 3rem; }
-
-    .liens-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .lien-card {
-      background: var(--color-white);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      text-align: center;
-      text-decoration: none;
-      transition: all 0.2s;
-      border: 2px solid transparent;
-      color: var(--color-text);
-    }
-    .lien-card:hover {
-      border-color: var(--color-border);
-      box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
-      text-decoration: none;
-    }
-    .lien-card-label {
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--color-teal);
-    }
-    .lien-card-sub {
-      font-size: 0.78rem;
-      color: var(--color-text-light);
-    }
-
-    .section-streamlit { padding: 0 0 2rem; }
-
-    .streamlit-embed-wrapper {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      margin-top: 0.5rem;
-      min-height: 700px;
-    }
-    .streamlit-embed-wrapper iframe {
-      display: block;
-      border: none;
-      width: 100%;
-      height: 700px;
-    }
+    .outils-grid { display:flex; flex-direction:column; gap:1.25rem; margin-bottom:2rem; }
+    .outil-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:1.75rem; display:flex; flex-direction:column; gap:.75rem; border-left:5px solid var(--teal); box-shadow:var(--shadow-sm); transition:box-shadow .2s; }
+    .outil-card:hover { box-shadow:var(--shadow-md); }
+    .outil-card.amber { border-left-color:var(--amber); }
+    .outil-header { display:flex; align-items:center; gap:.85rem; }
+    .outil-titre { font-weight:600; font-size:1.1rem; color:var(--teal); }
+    .outil-desc  { font-size:.9rem; color:var(--muted); line-height:1.65; }
+    .liens-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:2rem; }
+    .lien-card { background:var(--white); border:2px solid var(--border); border-radius:var(--r-lg); padding:1.25rem; display:flex; flex-direction:column; align-items:center; gap:.5rem; text-align:center; text-decoration:none; transition:all .2s; color:var(--text); box-shadow:var(--shadow-sm); }
+    .lien-card:hover { border-color:var(--teal); box-shadow:var(--shadow-md); transform:translateY(-2px); }
+    .lien-card-label { font-weight:600; font-size:.9rem; color:var(--teal); }
+    .lien-card-sub   { font-size:.78rem; color:var(--muted); }
+    .streamlit-wrapper { border-radius:var(--r-lg); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow-sm); }
+    .streamlit-wrapper iframe { display:block; border:none; width:100%; height:700px; }
   </style>
 </head>
 <body>
 
-  <div class="page-header">
-    <div class="container">
-      <h1 data-i18n="board.header.title">Espace CA</h1>
-      <p data-i18n="board.header.sub2">outils de gestion du Café Associatif Le Village</p>
-      <div class="access-badge" data-i18n="board.access.badge">Accès membres CA</div>
+  <nav class="site-nav scrolled" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="assets/images/logo-header.png" alt="Le Village Café Associatif"></a>
+      <div class="nav-links" role="navigation">
+        <a href="index.html">Accueil</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="qui-sommes-nous.html">Qui sommes-nous</a>
+        <a href="carte.html">La Carte</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-right">
+        <a href="adhesion.html" class="btn btn-primary nav-adhere">Adhérer</a>
+        <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="index.html">Accueil</a>
+    <a href="agenda.html">Agenda</a>
+    <a href="qui-sommes-nous.html">Qui sommes-nous</a>
+    <a href="carte.html">La Carte</a>
+    <a href="contact.html">Contact</a>
+    <a href="adhesion.html" style="margin-top:.75rem;background:var(--teal);color:white;border-radius:var(--r-pill);text-align:center;font-weight:600;">Adhérer →</a>
+  </div>
+
+  <div class="page-hd">
+    <div class="page-hd-inner">
+      <span class="page-hd-label fin fin-1">Accès membres CA</span>
+      <h1 class="page-hd-title fin fin-2">Espace CA</h1>
+      <p class="page-hd-sub fin fin-3">Outils de gestion du Café Associatif Le Village</p>
     </div>
   </div>
 
-  <main id="main-content">
-    <div class="container">
+  <main>
+    <section style="padding:4rem 0;">
+      <div class="container-sm">
 
-      <!-- OUTILS PRINCIPAUX -->
-      <section class="section-outils fade-up fade-up-1" aria-labelledby="outils-title">
-        <h2 class="section-title" id="outils-title" data-i18n="board.tools.title">Vos outils</h2>
-        <div class="outils-grid">
+        <!-- OUTILS PRINCIPAUX -->
+        <p class="s-label reveal">Vos outils</p>
+        <div class="outils-grid reveal">
 
           <!-- Paheko -->
           <div class="outil-card">
@@ -132,135 +78,125 @@
               </div>
               <span class="outil-titre">Paheko</span>
             </div>
-            <p class="outil-desc" data-i18n="board.paheko.desc">
-              Gestion de l'association — adhérents, comptabilité, documents administratifs.
-              Connectez-vous avec vos identifiants habituels.
-            </p>
-            <a href="https://cafe-associatif-le-village.paheko.cloud/admin/login.php" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;" data-i18n="board.paheko.cta">
+            <p class="outil-desc">Gestion de l'association — adhérents, comptabilité, documents administratifs. Connectez-vous avec vos identifiants habituels.</p>
+            <a href="https://cafe-associatif-le-village.paheko.cloud/admin/login.php" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;">
               Accéder à Paheko →
             </a>
           </div>
 
           <!-- Script stocks -->
-          <div class="outil-card" style="border-left-color: var(--color-orange);">
+          <div class="outil-card amber">
             <div class="outil-header">
-              <div class="icon-circle orange" aria-hidden="true">
+              <div class="icon-circle amber" aria-hidden="true">
                 <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
               </div>
-              <span class="outil-titre" data-i18n="board.stock.title">Rapport des stocks</span>
+              <span class="outil-titre">Rapport des stocks</span>
             </div>
-            <p class="outil-desc" data-i18n="board.stock.desc">
-              Suite d'outils pour la gestion des stocks, des adhésions, les statistiques sur les finances et les membres.
-            </p>
-            <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="align-self:flex-start;" data-i18n="board.stock.cta">
+            <p class="outil-desc">Suite d'outils pour la gestion des stocks, des adhésions, les statistiques sur les finances et les membres.</p>
+            <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="align-self:flex-start;">
               Lancer les scripts →
             </a>
           </div>
 
           <!-- Base de données Supabase -->
-          <div class="outil-card" style="border-left-color: var(--color-teal-dark);">
+          <div class="outil-card">
             <div class="outil-header">
               <div class="icon-circle teal" aria-hidden="true">
                 <svg viewBox="0 0 20 20" fill="currentColor"><path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z"/><path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z"/><path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z"/></svg>
               </div>
-              <span class="outil-titre" data-i18n="board.db.title">Base de données</span>
+              <span class="outil-titre">Base de données</span>
             </div>
-            <p class="outil-desc" data-i18n-html="board.db.html">
-              Accès direct au table editor Supabase — voir et éditer les données du site.
-              Pensez à cocher la colonne <strong>membre_ajoute</strong> une fois l'adhérent ajouté dans Paheko.
-            </p>
-            <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
-              <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor/17751?schema=public" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;" data-i18n="board.db.adh">
+            <p class="outil-desc">Accès direct au table editor Supabase — voir et éditer les données du site. Pensez à cocher la colonne <strong>membre_ajoute</strong> une fois l'adhérent ajouté dans Paheko.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:.75rem;">
+              <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor/17751?schema=public" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="align-self:flex-start;">
                 Table Adhésions →
               </a>
-              <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor/17545?schema=public" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="align-self:flex-start;" data-i18n="board.db.idea">
+              <a href="https://supabase.com/dashboard/project/evifxtecjhemmaxaiozt/editor/17545?schema=public" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="align-self:flex-start;">
                 Table Boîte à idées →
               </a>
             </div>
           </div>
 
         </div>
-      </section>
 
-      <!-- STREAMLIT EMBED -->
-      <section class="section-streamlit fade-up fade-up-2" aria-labelledby="streamlit-title">
-        <h2 class="section-title" id="streamlit-title" data-i18n="board.embed.title">Suite logicielle — Rapport des stocks</h2>
-        <div class="outil-card" style="border-left-color: var(--color-orange); padding-bottom: 1.25rem;">
+        <!-- STREAMLIT EMBED -->
+        <p class="s-label reveal">Suite logicielle</p>
+        <div class="outil-card amber reveal" style="margin-bottom:2rem;">
           <div class="outil-header">
-            <div class="icon-circle orange" aria-hidden="true">
+            <div class="icon-circle amber" aria-hidden="true">
               <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"/><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
             </div>
-            <span class="outil-titre" data-i18n="board.stock.title">Rapport des stocks</span>
+            <span class="outil-titre">Rapport des stocks</span>
           </div>
-          <div class="streamlit-embed-wrapper">
-            <iframe
-              src="https://sumupautoreport.streamlit.app/?embed=true"
-              title="Suite logicielle — Rapport des stocks"
-              data-i18n-attr="title:board.embed.title"
-              allow="fullscreen"
-              loading="lazy">
-              <p>
-                <span data-i18n="board.embed.fallback">Votre navigateur ne prend pas en charge les iframes.</span>
-                <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer" data-i18n="board.embed.fallback.cta">Ouvrir l'application →</a>
-              </p>
+          <div class="streamlit-wrapper">
+            <iframe src="https://sumupautoreport.streamlit.app/?embed=true" title="Suite logicielle — Rapport des stocks" allow="fullscreen" loading="lazy">
+              <p>Votre navigateur ne prend pas en charge les iframes. <a href="https://sumupautoreport.streamlit.app/" target="_blank" rel="noopener noreferrer">Ouvrir l'application →</a></p>
             </iframe>
           </div>
         </div>
-      </section>
 
-      <!-- LIENS RAPIDES -->
-      <section class="section-liens fade-up fade-up-3" aria-labelledby="liens-title">
-        <h2 class="section-title" id="liens-title" data-i18n="board.links.title">Liens rapides</h2>
-        <div class="liens-grid">
+        <!-- LIENS RAPIDES -->
+        <p class="s-label reveal">Liens rapides</p>
+        <div class="liens-grid reveal">
           <a href="benevoles.html" class="lien-card">
-            <div class="icon-circle teal" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg>
-            </div>
-            <span class="lien-card-label" data-i18n="footer.volunteers">Espace bénévoles</span>
-            <span class="lien-card-sub" data-i18n="board.link.vol.sub">Créneaux & infos pratiques</span>
+            <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg></div>
+            <span class="lien-card-label">Espace bénévoles</span>
+            <span class="lien-card-sub">Créneaux & infos pratiques</span>
           </a>
           <a href="agenda.html" class="lien-card">
-            <div class="icon-circle teal" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h1a2 2 0 012 2v11a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zm-1 6a1 1 0 000 2h8a1 1 0 100-2H5z" clip-rule="evenodd"/></svg>
-            </div>
-            <span class="lien-card-label" data-i18n="nav.agenda">Agenda</span>
-            <span class="lien-card-sub" data-i18n="board.link.agenda.sub">Événements du Village</span>
+            <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 011 1v1h6V3a1 1 0 112 0v1h1a2 2 0 012 2v11a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zm-1 6a1 1 0 000 2h8a1 1 0 100-2H5z" clip-rule="evenodd"/></svg></div>
+            <span class="lien-card-label">Agenda</span>
+            <span class="lien-card-sub">Événements du Village</span>
           </a>
           <a href="boite-a-idees.html" class="lien-card">
-            <div class="icon-circle teal" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.298.025-.597.025-.9C12.025 11.4 11.1 10 10 10S7.975 11.4 7.975 13.1c0 .303.01.602.025.9H12z"/></svg>
-            </div>
-            <span class="lien-card-label" data-i18n="nav.ideas">Boîte à idées</span>
-            <span class="lien-card-sub" data-i18n="board.link.ideas.sub">Idées du quartier</span>
+            <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.298.025-.597.025-.9C12.025 11.4 11.1 10 10 10S7.975 11.4 7.975 13.1c0 .303.01.602.025.9H12z"/></svg></div>
+            <span class="lien-card-label">Boîte à idées</span>
+            <span class="lien-card-sub">Idées du quartier</span>
           </a>
           <a href="carte.html" class="lien-card">
-            <div class="icon-circle teal" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1h8V3a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
-            </div>
-            <span class="lien-card-label" data-i18n="nav.menu">La Carte</span>
-            <span class="lien-card-sub" data-i18n="board.link.menu.sub">Boissons & en-cas</span>
+            <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1h8V3a2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg></div>
+            <span class="lien-card-label">La Carte</span>
+            <span class="lien-card-sub">Boissons & en-cas</span>
           </a>
           <a href="qui-sommes-nous.html" class="lien-card">
-            <div class="icon-circle teal" aria-hidden="true">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
-            </div>
-            <span class="lien-card-label" data-i18n="nav.about">Qui sommes-nous</span>
-            <span class="lien-card-sub" data-i18n="board.link.about.sub">Équipe & galerie</span>
+            <div class="icon-circle teal" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg></div>
+            <span class="lien-card-label">Qui sommes-nous</span>
+            <span class="lien-card-sub">Équipe & organigramme</span>
+          </a>
+          <a href="adhesion.html" class="lien-card">
+            <div class="icon-circle amber" aria-hidden="true"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"/></svg></div>
+            <span class="lien-card-label">Adhésions</span>
+            <span class="lien-card-sub">Formulaire en ligne</span>
           </a>
         </div>
-      </section>
 
-      <button class="logout-btn" onclick="logout()" data-i18n="common.logout">Se déconnecter</button>
+        <button class="logout-btn" onclick="logout()">Se déconnecter</button>
 
-    </div>
+      </div>
+    </section>
   </main>
 
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/components.js"></script>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p></div>
+        <div><p class="fc-title">Navigation</p><nav class="fc-links"><a href="index.html">Accueil</a><a href="agenda.html">Agenda</a><a href="qui-sommes-nous.html">Qui sommes-nous</a><a href="carte.html">La Carte</a><a href="contact.html">Contact</a></nav></div>
+        <div><p class="fc-title">Participer</p><nav class="fc-links"><a href="adhesion.html">Adhérer</a><a href="don.html">Faire un don</a><a href="boite-a-idees.html">Boîte à idées</a></nav></div>
+        <div><p class="fc-title">Horaires</p><div class="fc-hours"><p class="fc-hour"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour"><strong>Dim</strong> 10h00 – 13h00</p></div></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="benevoles.html">Bénévoles</a><a href="ca.html">Espace CA</a></div></div>
+    </div>
+  </footer>
+
   <script src="assets/js/auth.js"></script>
-  <script src="assets/js/lightbox.js" defer></script>
   <script>
     requireAuth(2);
+
+    const burger = document.getElementById('nav-burger'), drawer = document.getElementById('nav-drawer');
+    burger.addEventListener('click', () => { const open = burger.classList.toggle('open'); drawer.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open'); drawer.classList.remove('open'); burger.setAttribute('aria-expanded', false); document.body.style.overflow = ''; }));
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   </script>
 </body>
 </html>

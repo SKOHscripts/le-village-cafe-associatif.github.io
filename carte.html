@@ -1,433 +1,171 @@
 <!DOCTYPE html>
-<html lang="fr" data-i18n-title="meta.menu.title">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="La carte des boissons et en-cas du Café Associatif Le Village — Lyon 8e." data-i18n-attr="content:meta.menu.desc">
   <title>La Carte — Le Village · Café Associatif Lyon 8e</title>
-  <link rel="canonical" href="https://cafe-levillage.org/carte.html">
-  <link rel="alternate" hreflang="fr" href="https://cafe-levillage.org/carte.html">
-  <link rel="alternate" hreflang="en" href="https://cafe-levillage.org/carte.html?lang=en">
-  <link rel="alternate" hreflang="x-default" href="https://cafe-levillage.org/carte.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Le Village — Café Associatif">
-  <meta property="og:url" content="https://cafe-levillage.org/carte.html">
-  <meta property="og:title" content="La Carte — Le Village · Café Associatif Lyon 8e" data-i18n-attr="content:meta.menu.title">
-  <meta property="og:description" content="La carte des boissons et en-cas du Café Associatif Le Village — Lyon 8e." data-i18n-attr="content:meta.menu.desc">
-  <meta property="og:image" content="https://cafe-levillage.org/assets/images/aquarelle.jpeg">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Fredoka:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- CSS du site -->
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/nav.css">
-
+  <link rel="stylesheet" href="assets/css/village-shared.css">
   <style>
-    /* ── Variables carte ── */
-    :root {
-      --teal:      #00818A;
-      --teal-mid:  #00a0aa;
-      --teal-pale: #d6ecee;
-      --orange:    #FFA70B;
-      --orange-lt: #ffcf6b;
-      --yellow:    #FFA70B;
-      --cream:     #fdfcf7;
-      --text:      #403B3A;
-      --text-lt:   #8a8480;
-    }
-
-    /* ── Wrapper page ── */
-    .page-carte {
-      padding: 2rem 0 4rem;
-    }
-
-    /* ── Carte (conservée telle quelle) ── */
-    .carte {
-      max-width: 780px;
-      margin: 0 auto;
-      background: var(--bg);
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 10px 50px rgba(0,129,138,0.14), 0 2px 10px rgba(0,129,138,0.08);
-      border: 3px solid rgba(0,129,138,0.18);
-    }
-
-    /* ── HEADER carte ── */
-    .header {
-      background: var(--teal);
-      padding: 32px 32px 24px;
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-    .header::before {
-      content: '';
-      position: absolute; top: -70px; right: -70px;
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.07);
-    }
-    .header::after {
-      content: '';
-      position: absolute; bottom: -50px; left: -50px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: rgba(255,224,102,0.1);
-    }
-    .header-village {
-      margin: 0.5rem auto;
-      position: relative;
-      z-index: 1;
-    }
-    .header-village img {
-      display: block;
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
-      height: clamp(160px, 30vw, 240px);
-      margin: 0 auto;
-      width: auto;
-    }
-    .header-carte-tag {
-      display: inline-block;
-      margin-top: 16px;
-      background: var(--yellow);
-      color: var(--teal);
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      letter-spacing: 1.5px;
-      padding: 6px 22px;
-      border-radius: 100px;
-      position: relative; z-index: 1;
-    }
-
-    /* ── BANDEAU ADHÉRENTS ── */
-    .adh-band {
-      margin: 16px 20px 0;
-      background: var(--orange-lt);
-      border-radius: 12px;
-      padding: 9px 16px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      border: 2px solid var(--orange);
-    }
-    .adh-text {
-      font-size: 0.83rem;
-      color: var(--text);
-      font-weight: 600;
-      line-height: 1.3;
-      font-family: 'Nunito', sans-serif;
-    }
-    .adh-text em {
-      font-style: normal;
-      color: var(--teal);
-      font-weight: 800;
-    }
-
-    /* ── GRILLE ── */
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      padding: 18px 20px 22px;
-    }
-    .sec {
-      background: var(--cream);
-      border-radius: 18px;
-      overflow: hidden;
-      border: 2px solid rgba(0,129,138,0.12);
-      box-shadow: 0 3px 14px rgba(0,129,138,0.08);
-    }
-    .sec.full { grid-column: 1 / -1; }
-
-    .sec-head {
-      background: var(--teal);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    .sec-title {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--yellow);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-.sec-sub {
-      background: var(--teal-pale);
-      padding: 6px 16px;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.82rem;
-      color: var(--teal);
-      font-weight: 500;
-    }
-
-    .items { padding: 4px 14px 10px; }
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 9px 0;
-      border-bottom: 1.5px dashed rgba(0,129,138,0.13);
-      gap: 10px;
-      animation: fadeIn 0.25s ease;
-    }
-    .item:last-child { border-bottom: none; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .item-name-wrap { flex: 1; }
-    .item-name {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text);
-      font-family: 'Nunito', sans-serif;
-      display: block;
-    }
-.item-desc {
-      font-size: 0.73rem;
-      color: var(--text-lt);
-      display: block;
-      margin-top: 1px;
-      font-weight: 500;
-      font-family: 'Nunito', sans-serif;
-    }
-    .item-right {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .price {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--teal);
-      background: var(--teal-pale);
-      border-radius: 10px;
-      padding: 4px 11px;
-      border: 1.5px solid transparent;
-      transition: all 0.18s;
-      min-width: 60px;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-/* ── FOOTER carte ── */
-    .carte-footer {
-      margin: 0 20px 24px;
-      background: white;
-      border-radius: 20px;
-      border: 2px solid rgba(0,129,138,0.15);
-      padding: 20px 24px;
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-start;
-      box-shadow: 0 3px 14px rgba(0,129,138,0.07);
-    }
-    .footer-brand .brand-name {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--teal);
-    }
-    .footer-brand .brand-sub {
-      font-family: 'Caveat', cursive;
-      font-size: 0.95rem;
-      color: var(--text-lt);
-      display: block;
-      margin-top: 3px;
-    }
-    .footer-divider {
-      width: 2px;
-      background: var(--teal-pale);
-      border-radius: 2px;
-      align-self: stretch;
-      flex-shrink: 0;
-    }
-    .footer-info { flex: 1; min-width: 160px; display: flex; flex-direction: column; gap: 5px; }
-    .fi-label {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.8rem;
-      color: var(--teal);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-    .fi-line {
-      font-size: 0.82rem;
-      color: var(--text);
-      font-weight: 600;
-      font-family: 'Nunito', sans-serif;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .fi-line span { color: var(--text-lt); font-weight: 500; }
-    .footer-dot {
-      width: 6px; height: 6px;
-      background: var(--orange);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 560px) {
-      .grid { grid-template-columns: 1fr; }
-      .sec.full { grid-column: 1; }
-      .carte-footer { flex-direction: column; }
-      .footer-divider { width: auto; height: 2px; align-self: auto; }
-      .adh-text { font-size: 0.78rem; }
-    }
+    .menu-wrap { max-width:820px; margin:0 auto; padding:0 var(--pad); }
+    .menu-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+    .menu-sec  { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-sm); }
+    .menu-sec.full { grid-column:1/-1; }
+    .menu-sec-head { background:var(--teal); padding:.85rem 1.4rem; display:flex; align-items:center; justify-content:space-between; }
+    .menu-sec-title { font-family:var(--font-display); font-size:1rem; color:rgb(255,167,8); font-style:italic; }
+    .menu-sec-sub { background:var(--teal-light); padding:.45rem 1.4rem; font-size:.78rem; font-weight:600; color:var(--teal); }
+    .menu-items { padding:.25rem 1.2rem .75rem; }
+    .menu-item { display:flex; align-items:center; justify-content:space-between; padding:.75rem 0; border-bottom:1px dashed var(--border); gap:.75rem; }
+    .menu-item:last-child { border-bottom:none; }
+    .menu-item-name { font-size:.875rem; font-weight:600; color:var(--dark); display:block; }
+    .menu-item-desc { font-size:.72rem; color:var(--muted); display:block; margin-top:1px; }
+    .menu-price { font-family:var(--font-display); font-size:1rem; color:var(--teal); background:var(--teal-light); border-radius:var(--r-md); padding:.3rem .9rem; white-space:nowrap; flex-shrink:0; min-width:58px; text-align:center; }
+    @media (max-width:560px) { .menu-grid { grid-template-columns:1fr; } .menu-sec.full { grid-column:1; } }
   </style>
 </head>
 <body>
 
-  <!-- ===== HEADER SITE ===== -->
-
-  <!-- ===== MAIN ===== -->
-  <main id="main-content">
-    <div class="page-carte">
-      <div style="max-width:780px; margin:0 auto; padding:0 1rem;">
-
-        <div class="carte" id="carte">
-
-          <!-- HEADER CARTE -->
-          <div class="header">
-            <div class="header-village">
-              <img src="assets/images/logo-detoure-orange.png" alt="Café Associatif le Village — logo" data-i18n-attr="alt:menu.brand.alt">
-            </div>
-            <div class="header-carte-tag" data-i18n="menu.tag">Notre Carte</div>
-          </div>
-
-          <!-- BANDEAU ADHÉRENTS -->
-          <div class="adh-band">
-            <span class="adh-text" data-i18n-html="menu.adh">Tarifs <em>adhérent·es</em> — Adhésions disponibles tous nos jours d'ouverture.</span>
-          </div>
-
-          <!-- GRILLE -->
-          <div class="grid">
-
-            <!-- BOISSONS CHAUDES -->
-            <div class="sec">
-              <div class="sec-head">
-                <div class="sec-title" data-i18n="menu.cat.hot">☕ Boissons chaudes</div>
-              </div>
-              <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.espresso">Espresso / Café allongé</span></div><div class="item-right"><span class="price">1,00 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.double">Double expresso</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.tea">Thé / Tisane</span></div><div class="item-right"><span class="price">1,00 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.hotchoc">Chocolat chaud</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
-              </div>
-            </div>
-
-            <!-- SOFTS -->
-            <div class="sec">
-              <div class="sec-head">
-                <div class="sec-title" data-i18n="menu.cat.soft">🥤 Softs</div>
-              </div>
-              <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.can">Canette 33 cl</span><span class="item-desc" data-i18n="menu.item.can.desc">Coca, Coca Zéro, Orangina, Schweppes Agrumes, Oasis, Fanta, Ice Tea</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.appleArt">Jus de pomme artisanale bio</span><span class="item-desc" data-i18n="menu.item.glass25">Au verre 25 cl</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.multi">Jus Multifruit</span><span class="item-desc" data-i18n="menu.item.glass25">Au verre 25 cl</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.apple20">Brique jus de pomme bio</span><span class="item-desc" data-i18n="menu.item.carton20">20 cl</span></div><div class="item-right"><span class="price">1,00 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.orange20">Brique jus d'orange</span><span class="item-desc" data-i18n="menu.item.carton20">20 cl</span></div><div class="item-right"><span class="price">1,00 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.sparkling">Eau gazeuse</span></div><div class="item-right"><span class="price">1,00 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.syrup">Sirop</span><span class="item-desc" data-i18n="menu.item.syrup.desc">Citron, Grenadine, Menthe</span></div><div class="item-right"><span class="price">0,50 €</span></div></div>
-              </div>
-            </div>
-
-            <!-- VINS & APÉROS -->
-            <div class="sec">
-              <div class="sec-head">
-                <div class="sec-title" data-i18n="menu.cat.wine">🍷 Vins &amp; Apéros</div>
-              </div>
-              <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.wineGlass">Verre rouge / blanc / rosé</span><span class="item-desc" data-i18n="menu.item.wineGlass.d">15 cl</span></div><div class="item-right"><span class="price">2,00 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.pot">Pot lyonnais rouge / blanc / rosé</span><span class="item-desc" data-i18n="menu.item.pot.d">46 cl</span></div><div class="item-right"><span class="price">6,00 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.kir">Kir / Communard</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
-              </div>
-            </div>
-
-            <!-- BIÈRES -->
-            <div class="sec">
-              <div class="sec-head">
-                <div class="sec-title" data-i18n="menu.cat.beer">🍺 Bières</div>
-              </div>
-              <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.draft">Pression artisanale</span><span class="item-desc" data-i18n="menu.item.draft.d">33 cl</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.pitcher">Pichet pression</span><span class="item-desc" data-i18n="menu.item.pitcher.d">1 L</span></div><div class="item-right"><span class="price">7,00 €</span></div></div>
-              </div>
-              <div class="sec-sub" data-i18n="menu.cat.bottle">🍾 Bouteilles du commerce (25 cl)</div>
-              <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.whiteAmber">Blanche / Ambrée</span></div><div class="item-right"><span class="price">2,00 €</span></div></div>
-              </div>
-              <div class="sec-sub" data-i18n="menu.cat.other">🍏 Autres</div>
-              <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.cider">Cidre</span><span class="item-desc" data-i18n="menu.item.cider.d">La bouteille 75 cl</span></div><div class="item-right"><span class="price">6,00 €</span></div></div>
-              </div>
-            </div>
-
-            <!-- À GRIGNOTER (pleine largeur) -->
-            <div class="sec full">
-              <div class="sec-head">
-                <div class="sec-title" data-i18n="menu.cat.snack">🫒 Pour accompagner</div>
-              </div>
-              <div class="items">
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.chips">Chips</span></div><div class="item-right"><span class="price">0,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.minisauc">Mini saucissons</span></div><div class="item-right"><span class="price">2,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.olives">Olives vertes anchois</span></div><div class="item-right"><span class="price">1,00 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.peanuts">Cacahuètes grillées salées</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.biscuit">Biscuit Sucré / Chocolat</span></div><div class="item-right"><span class="price">0,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.tomato">Tomates cerise</span></div><div class="item-right"><span class="price">1,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.cheese">Dés de fromage apéro</span></div><div class="item-right"><span class="price">3,50 €</span></div></div>
-                <div class="item"><div class="item-name-wrap"><span class="item-name" data-i18n="menu.item.popcorn">Pop Corn</span></div><div class="item-right"><span class="price">2,00 €</span></div></div>
-              </div>
-            </div>
-
-          </div><!-- /grid -->
-
-          <!-- FOOTER CARTE -->
-<!--           <div class="carte-footer">
-            <div class="footer-brand">
-              <span class="brand-name">le Village ♥</span>
-              <span class="brand-sub">grand trou – moulin à vent – petite guille</span>
-            </div>
-            <div class="footer-divider"></div>
-            <div class="footer-info">
-              <div class="fi-label">🕐 Horaires</div>
-              <div class="fi-line"><span class="footer-dot"></span> Mar <span>14h30 – 19h00</span></div>
-              <div class="fi-line"><span class="footer-dot"></span> Ven <span>16h00 – 21h00</span></div>
-              <div class="fi-line"><span class="footer-dot"></span> Dim <span>10h00 – 13h00</span></div>
-            </div>
-            <div class="footer-divider"></div>
-            <div class="footer-info">
-              <div class="fi-label">📍 Nous trouver</div>
-              <div class="fi-line">8 rue Chalumeaux</div>
-              <div class="fi-line">Lyon 8e</div>
-              <div class="fi-line" style="margin-top:4px">✉️ <span>contact@cafe-levillage.org</span></div>
-            </div>
-          </div> -->
-
-        </div><!-- /carte -->
+  <nav class="site-nav scrolled" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="assets/images/logo-header.png" alt="Le Village Café Associatif"></a>
+      <div class="nav-links" role="navigation">
+        <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+        <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+        <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+        <a href="carte.html" class="active" data-fr="La Carte" data-en="Menu">La Carte</a>
+        <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+      </div>
+      <div class="nav-right">
+        <div class="lang-switch"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div>
+        <a href="adhesion.html" class="btn btn-primary nav-adhere" data-fr="Adhérer" data-en="Join us">Adhérer</a>
+        <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
-  </main>
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/components.js"></script>
-  <script src="assets/js/lightbox.js" defer></script>
+  </nav>
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+    <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+    <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+    <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+    <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+    <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+    <div class="lang-switch" style="margin:.75rem 0 0 1rem;"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div>
+    <a href="adhesion.html" style="margin-top:.75rem;background:var(--teal);color:white;border-radius:var(--r-pill);text-align:center;font-weight:600;" data-fr="Adhérer →" data-en="Join us →">Adhérer →</a>
+  </div>
 
+  <div class="page-hd">
+    <div class="page-hd-inner">
+      <span class="page-hd-label fin fin-1" data-fr="Tarifs adhérent·es" data-en="Member prices">Tarifs adhérent·es</span>
+      <h1 class="page-hd-title fin fin-2" data-fr="La Carte" data-en="Our Menu">La Carte</h1>
+      <p class="page-hd-sub fin fin-3" data-fr="Boissons &amp; en-cas au Village" data-en="Drinks &amp; snacks at Le Village">Boissons &amp; en-cas au Village</p>
+    </div>
+  </div>
+
+  <main>
+    <!-- Note adhésion -->
+    <section class="band-teal" style="padding:3rem 0;">
+      <div class="menu-wrap">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+          <p style="font-size:1rem;color:rgba(255,255,255,.8);" data-fr-html="Tarifs <strong style='color:white'>adhérent·es</strong> — Adhésions disponibles sur place tous les jours d'ouverture." data-en-html="<strong style='color:white'>Member</strong> prices — Memberships available on-site every opening day.">Tarifs <strong style="color:white">adhérent·es</strong> — Adhésions disponibles sur place tous les jours d'ouverture.</p>
+          <a href="adhesion.html" class="btn btn-ghost" data-fr="Adhérer en ligne →" data-en="Join online →">Adhérer en ligne →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu -->
+    <section style="padding:4rem 0 2rem;">
+      <div class="menu-wrap">
+        <div class="menu-grid reveal">
+
+          <!-- Boissons chaudes -->
+          <div class="menu-sec">
+            <div class="menu-sec-head"><p class="menu-sec-title" data-fr="Boissons chaudes" data-en="Hot drinks">Boissons chaudes</p></div>
+            <div class="menu-items">
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Espresso / Café allongé" data-en="Espresso / Long coffee">Espresso / Café allongé</span></div><span class="menu-price">1,00 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Double expresso" data-en="Double espresso">Double expresso</span></div><span class="menu-price">1,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Thé / Tisane" data-en="Tea / Herbal tea">Thé / Tisane</span></div><span class="menu-price">1,00 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Chocolat chaud" data-en="Hot chocolate">Chocolat chaud</span></div><span class="menu-price">1,50 €</span></div>
+            </div>
+          </div>
+
+          <!-- Softs -->
+          <div class="menu-sec">
+            <div class="menu-sec-head"><p class="menu-sec-title" data-fr="Softs" data-en="Soft drinks">Softs</p></div>
+            <div class="menu-items">
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Canette 33 cl" data-en="Can 33 cl">Canette 33 cl</span><span class="menu-item-desc" data-fr="Coca, Fanta, Oasis, Orangina, Ice Tea…" data-en="Coke, Fanta, Oasis, Orangina, Ice Tea…">Coca, Fanta, Oasis, Orangina, Ice Tea…</span></div><span class="menu-price">1,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Jus de pomme artisanale bio" data-en="Organic artisan apple juice">Jus de pomme artisanale bio</span><span class="menu-item-desc" data-fr="Au verre 25 cl" data-en="25 cl glass">Au verre 25 cl</span></div><span class="menu-price">1,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Jus Multifruit" data-en="Multifruit juice">Jus Multifruit</span><span class="menu-item-desc" data-fr="Au verre 25 cl" data-en="25 cl glass">Au verre 25 cl</span></div><span class="menu-price">1,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Brique jus 20 cl" data-en="Juice carton 20 cl">Brique jus 20 cl</span><span class="menu-item-desc" data-fr="Pomme bio ou Orange" data-en="Organic apple or Orange">Pomme bio ou Orange</span></div><span class="menu-price">1,00 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Eau gazeuse" data-en="Sparkling water">Eau gazeuse</span></div><span class="menu-price">1,00 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Sirop" data-en="Syrup">Sirop</span><span class="menu-item-desc" data-fr="Citron, Grenadine, Menthe" data-en="Lemon, Grenadine, Mint">Citron, Grenadine, Menthe</span></div><span class="menu-price">0,50 €</span></div>
+            </div>
+          </div>
+
+          <!-- Vins & Apéros -->
+          <div class="menu-sec">
+            <div class="menu-sec-head"><p class="menu-sec-title" data-fr="Vins &amp; Apéros" data-en="Wine &amp; Aperitifs">Vins &amp; Apéros</p></div>
+            <div class="menu-items">
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Verre rouge / blanc / rosé" data-en="Glass red / white / rosé">Verre rouge / blanc / rosé</span><span class="menu-item-desc">15 cl</span></div><span class="menu-price">2,00 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Pot lyonnais" data-en="Lyonnais pot">Pot lyonnais</span><span class="menu-item-desc" data-fr="Rouge / blanc / rosé · 46 cl" data-en="Red / white / rosé · 46 cl">Rouge / blanc / rosé · 46 cl</span></div><span class="menu-price">6,00 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Kir / Communard" data-en="Kir / Communard">Kir / Communard</span></div><span class="menu-price">2,50 €</span></div>
+            </div>
+          </div>
+
+          <!-- Bières -->
+          <div class="menu-sec">
+            <div class="menu-sec-head"><p class="menu-sec-title" data-fr="Bières" data-en="Beers">Bières</p></div>
+            <div class="menu-items">
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Pression artisanale" data-en="Craft draught beer">Pression artisanale</span><span class="menu-item-desc">33 cl</span></div><span class="menu-price">2,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Pichet pression" data-en="Draught beer jug">Pichet pression</span><span class="menu-item-desc">1 L</span></div><span class="menu-price">7,00 €</span></div>
+            </div>
+            <div class="menu-sec-sub" data-fr="Bouteilles 25 cl" data-en="Bottles 25 cl">Bouteilles 25 cl</div>
+            <div class="menu-items">
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Blanche / Ambrée" data-en="Wheat / Amber">Blanche / Ambrée</span></div><span class="menu-price">2,00 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Cidre" data-en="Cider">Cidre</span><span class="menu-item-desc" data-fr="Bouteille 75 cl" data-en="75 cl bottle">Bouteille 75 cl</span></div><span class="menu-price">6,00 €</span></div>
+            </div>
+          </div>
+
+          <!-- À grignoter -->
+          <div class="menu-sec full">
+            <div class="menu-sec-head"><p class="menu-sec-title" data-fr="Pour accompagner" data-en="Snacks">Pour accompagner</p></div>
+            <div class="menu-items" style="display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;">
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Chips" data-en="Crisps">Chips</span></div><span class="menu-price">0,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Mini saucissons" data-en="Mini saucissons">Mini saucissons</span></div><span class="menu-price">2,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Olives vertes anchois" data-en="Green olive anchovies">Olives vertes anchois</span></div><span class="menu-price">1,00 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Cacahuètes grillées" data-en="Roasted peanuts">Cacahuètes grillées</span></div><span class="menu-price">1,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Biscuit sucré / Chocolat" data-en="Sweet biscuit / Chocolate">Biscuit sucré / Chocolat</span></div><span class="menu-price">0,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Tomates cerise" data-en="Cherry tomatoes">Tomates cerise</span></div><span class="menu-price">1,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Dés de fromage apéro" data-en="Cheese cubes">Dés de fromage apéro</span></div><span class="menu-price">3,50 €</span></div>
+              <div class="menu-item"><div><span class="menu-item-name" data-fr="Pop Corn" data-en="Pop Corn">Pop Corn</span></div><span class="menu-price">2,00 €</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline" data-fr="Un espace de vie associatif au cœur du 8e arrondissement de Lyon." data-en="An associative space at the heart of Lyon's 8th arrondissement.">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p><div class="footer-social"><a href="https://www.facebook.com/profile.php?id=61574530611496" class="soc-btn" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="https://www.instagram.com/cafe_associatif_le_village" class="soc-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></div></div>
+        <div><p class="fc-title">Navigation</p><nav class="fc-links"><a href="index.html">Accueil</a><a href="agenda.html">Agenda</a><a href="qui-sommes-nous.html">Qui sommes-nous</a><a href="carte.html">La Carte</a><a href="contact.html">Contact</a></nav></div>
+        <div><p class="fc-title">Participer</p><nav class="fc-links"><a href="adhesion.html">Adhérer</a><a href="don.html">Faire un don</a><a href="boite-a-idees.html">Boîte à idées</a></nav></div>
+        <div><p class="fc-title">Horaires</p><div class="fc-hours"><p class="fc-hour"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour"><strong>Dim</strong> 10h00 – 13h00</p></div><p style="font-size:.78rem;color:rgba(255,255,255,.22);margin-top:1rem;line-height:1.5;">8 rue du Chalumeaux<br>Lyon 8e</p></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="#">Mentions légales</a><a href="benevoles.html">Bénévoles</a><a href="ca.html">Espace CA</a></div></div>
+    </div>
+  </footer>
+
+  <script src="assets/js/village-i18n.js"></script>
+  <script>
+    const burger = document.getElementById('nav-burger'), drawer = document.getElementById('nav-drawer');
+    burger.addEventListener('click', () => { const open = burger.classList.toggle('open'); drawer.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open'); drawer.classList.remove('open'); burger.setAttribute('aria-expanded', false); document.body.style.overflow = ''; }));
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
 </body>
 </html>
