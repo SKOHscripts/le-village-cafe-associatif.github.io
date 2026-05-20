@@ -47,10 +47,10 @@
 
   <style>
     /* ─── HERO ────────────────────────────────────────── */
-    .hero { position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding-top:70px; overflow:hidden; background:var(--dark); }
-    .hero-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 38%; mix-blend-mode:multiply; }
+    .hero { position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding-top:70px; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 38%; }
     @keyframes hero-pan { from { object-position:0% 50%; } to { object-position:100% 50%; } }
-    @media (max-width:767px) { .hero-bg { animation:hero-pan 22s ease-in-out infinite alternate; object-position:0% 50%; } }
+    @media (max-width:767px) { .hero-bg { animation:hero-pan 22s ease-in-out infinite alternate; object-position:0% 50%; transform:scale(1.18); transform-origin:center center; } }
     .hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(26,43,44,.35) 0%, rgba(26,43,44,.42) 30%, rgba(26,43,44,.72) 68%, rgba(26,43,44,.94) 100%); }
     .hero-body { position:relative; z-index:1; padding:5rem var(--pad) 0; max-width:var(--max-w); margin:0 auto; width:100%; }
     .hero-chip { display:inline-flex; align-items:center; gap:.5rem; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); border-radius:var(--r-pill); padding:.28rem 1rem; font-size:.75rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.9); margin-bottom:1.5rem; backdrop-filter:blur(8px); }
