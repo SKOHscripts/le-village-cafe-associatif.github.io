@@ -1,5 +1,11 @@
 {
   "esversion": 6,
   "browser": true,
-  "strict": "implied"
+  "strict": "implied",
+  "globals": {
+    "URLSearchParams": false,
+    "MutationObserver": false,
+    "sessionStorage": false,
+    "localStorage": false
+  }
 }
