@@ -150,6 +150,17 @@
       }
     });
 
+    // Attribute translations: data-fr-placeholder / data-en-placeholder,
+    // data-fr-aria-label / data-en-aria-label, data-fr-title / data-en-title, data-fr-alt / data-en-alt
+    ['placeholder', 'aria-label', 'title', 'alt'].forEach(attr => {
+      const camel = attr.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      document.querySelectorAll('[data-fr-' + attr + ']').forEach(el => {
+        const v = lang === 'en' ? el.dataset['en' + camel.charAt(0).toUpperCase() + camel.slice(1)]
+                                : el.dataset['fr' + camel.charAt(0).toUpperCase() + camel.slice(1)];
+        if (v !== undefined) el.setAttribute(attr, v);
+      });
+    });
+
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
