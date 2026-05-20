@@ -105,10 +105,36 @@
 
   let currentLang = detectLocale();
 
+  // On the index page, when no language is stored and no ?lang param is present,
+  // reflect ?lang=auto in the URL so the behaviour is visible and shareable.
+  (function reflectAutoOnIndex() {
+    try {
+      const path = window.location.pathname;
+      if (path !== '/' && path !== '' && !path.endsWith('/index.html')) return;
+      const url = new URL(window.location.href);
+      if (url.searchParams.has('lang')) return;
+      let stored = null;
+      try { stored = localStorage.getItem(LOCALE_PREF); } catch (_) {}
+      if (stored) return;
+      url.searchParams.set('lang', 'auto');
+      history.replaceState(null, '', url.pathname + '?' + url.searchParams.toString() + url.hash);
+    } catch (_) {}
+  }());
+
   function applyLang(lang, persist) {
     currentLang = lang;
     if (persist !== false) {
       try { localStorage.setItem(LOCALE_PREF, lang); } catch (_) {}
+      // If the URL still carries ?lang=auto (from auto-detection), clear it
+      // now that the user has made an explicit choice.
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('lang') === 'auto') {
+          url.searchParams.delete('lang');
+          const qs = url.searchParams.toString();
+          history.replaceState(null, '', url.pathname + (qs ? '?' + qs : '') + url.hash);
+        }
+      } catch (_) {}
     }
 
     document.documentElement.lang = lang;
