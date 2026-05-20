@@ -46,9 +46,14 @@
     });
 
     document.querySelectorAll('[data-fr-html]').forEach(el => {
-      const src = lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml;
-      if (src !== undefined) {
-        el.replaceChildren.apply(el, new DOMParser().parseFromString(src, 'text/html').body.childNodes);
+      if (el.dataset.frHtml !== undefined) {
+        el.replaceChildren.apply(
+          el,
+          new DOMParser().parseFromString(
+            lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml,
+            'text/html'
+          ).body.childNodes
+        );
       }
     });
 
