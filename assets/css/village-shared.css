@@ -183,31 +183,47 @@ button { font-family: inherit; cursor: pointer; }
 .icon-circle svg    { width:20px; height:20px; }
 
 /* ─── EVENT POPUP ────────────────────────── */
-.event-modal-overlay { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:1rem; background:rgba(0,0,0,.25); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); animation:eventOverlayFadeIn .25s ease-out both; }
+.event-modal-overlay { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:1rem; background:rgba(26,43,44,.6); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); animation:eventOverlayFadeIn .25s ease-out both; }
 .event-modal-overlay.is-closing { animation:eventOverlayFadeOut .2s ease-in forwards; }
-.event-modal { position:relative; background:var(--white); border-radius:var(--r-xl); box-shadow:var(--shadow-lg); max-width:480px; width:100%; max-height:90vh; overflow:auto; padding:2rem 1.5rem 1.75rem; animation:eventPopIn .4s cubic-bezier(.16,1,.3,1) both; }
+
+/* Modal card — no padding: each zone handles its own */
+.event-modal { position:relative; background:var(--white); border-radius:var(--r-xl); box-shadow:var(--shadow-lg); max-width:460px; width:100%; max-height:90vh; overflow:auto; padding:0; animation:eventPopIn .4s cubic-bezier(.16,1,.3,1) both; }
 .event-modal.is-closing { animation:eventPopOut .2s ease-in forwards; }
-.event-modal__close { position:absolute; top:.75rem; right:.75rem; width:36px; height:36px; border-radius:50%; border:none; background:var(--teal-light); color:var(--teal); font-size:1.1rem; font-family:var(--font-body); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s, transform .2s; }
-.event-modal__close:hover { background:var(--teal); color:var(--white); transform:rotate(90deg); }
-.event-modal__close:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
-.event-modal__eyebrow { font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--amber); margin-bottom:.35rem; }
-.event-modal__title { font-family:var(--font-display); font-size:1.5rem; color:var(--dark); margin:0 0 .4rem; padding-right:2.5rem; line-height:1.15; }
-.event-modal__date { font-size:.95rem; color:var(--text); font-weight:500; margin-bottom:1rem; }
-.event-modal__photo { width:100%; border-radius:var(--r-md); overflow:hidden; margin-bottom:1rem; padding-top:56.25%; position:relative; background:var(--teal-light); }
+
+/* ── Header zone (eyebrow + title + date) ── dark band, like .hours-sec */
+.event-modal__eyebrow,
+.event-modal__title,
+.event-modal__date { padding-left:1.5rem; padding-right:3.5rem; }
+
+.event-modal__eyebrow { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--amber); padding-top:1.75rem; padding-bottom:0; display:block; background:var(--dark); }
+.event-modal__title { font-family:var(--font-display); font-size:clamp(1.5rem,5vw,1.85rem); color:var(--white); line-height:1.12; margin:0; padding-top:.4rem; background:var(--dark); }
+.event-modal__date { font-size:.88rem; font-weight:600; color:rgba(255,255,255,.55); background:var(--dark); padding-top:.55rem; padding-bottom:1.5rem; display:block; border-bottom:1px solid rgba(255,255,255,.07); }
+
+/* ── Body zone (photo, lieu, desc) ── white */
+.event-modal__photo { width:100%; overflow:hidden; padding-top:52%; position:relative; background:var(--teal-light); }
 .event-modal__photo img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
-.event-modal__lieu { font-size:.9rem; color:var(--muted); margin-bottom:.5rem; }
-.event-modal__desc { font-size:.95rem; line-height:1.65; color:var(--text); margin-bottom:1.25rem; }
-.event-modal__links { display:flex; flex-wrap:wrap; gap:.5rem; }
-.event-modal__link { flex:1 1 auto; text-align:center; padding:.6rem 1rem; border-radius:var(--r-pill); font-size:.875rem; font-weight:600; text-decoration:none; border:2px solid transparent; transition:all .2s; white-space:nowrap; }
-.event-modal__link--fb  { background:var(--teal-light); color:var(--teal); border-color:var(--teal-light); }
-.event-modal__link--fb:hover  { background:var(--teal); color:var(--white); }
-.event-modal__link--ig  { background:var(--teal-light); color:var(--teal); border-color:var(--teal-light); }
-.event-modal__link--ig:hover  { background:var(--teal); color:var(--white); }
-.event-modal__link--agenda { background:var(--amber); color:var(--white); border-color:var(--amber); flex:1 1 100%; }
-.event-modal__link--agenda:hover { background:#b06808; border-color:#b06808; }
+.event-modal__lieu { font-size:.85rem; color:var(--muted); margin:1.1rem 1.5rem .2rem; display:flex; align-items:center; gap:.4rem; }
+.event-modal__lieu::before { content:'📍'; font-size:.8rem; }
+.event-modal__desc { font-size:.925rem; line-height:1.7; color:var(--text); margin:0 1.5rem 1.25rem; padding-top:.6rem; }
+
+/* ── Links zone ── */
+.event-modal__links { display:flex; flex-wrap:wrap; gap:.6rem; padding:.25rem 1.5rem 1.5rem; border-top:1px solid var(--border); margin-top:0; }
+.event-modal__link { flex:1 1 auto; text-align:center; padding:.55rem 1rem; border-radius:var(--r-pill); font-family:var(--font-body); font-size:.82rem; font-weight:600; text-decoration:none; border:2px solid transparent; transition:all .2s; white-space:nowrap; }
+.event-modal__link--fb  { background:transparent; color:var(--teal); border-color:var(--teal); }
+.event-modal__link--fb:hover  { background:var(--teal); color:var(--white); transform:translateY(-1px); }
+.event-modal__link--ig  { background:transparent; color:var(--teal); border-color:var(--teal); }
+.event-modal__link--ig:hover  { background:var(--teal); color:var(--white); transform:translateY(-1px); }
+.event-modal__link--agenda { background:var(--amber); color:var(--white); border-color:var(--amber); flex:1 1 100%; margin-top:.2rem; }
+.event-modal__link--agenda:hover { background:#b06808; border-color:#b06808; transform:translateY(-1px); box-shadow:0 4px 16px rgba(201,122,10,.3); }
+
+/* ── Close button ── floats over dark header */
+.event-modal__close { position:absolute; top:.75rem; right:.75rem; width:34px; height:34px; border-radius:50%; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.1); color:rgba(255,255,255,.75); font-size:1rem; font-family:var(--font-body); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s, color .2s, transform .2s; z-index:1; }
+.event-modal__close:hover { background:rgba(255,255,255,.22); color:var(--white); transform:rotate(90deg); }
+.event-modal__close:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
+
 body.has-event-modal { overflow:hidden; }
 @keyframes eventOverlayFadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes eventOverlayFadeOut { from { opacity:1; } to { opacity:0; } }
-@keyframes eventPopIn  { from { opacity:0; transform:translateY(16px) scale(.92); } to { opacity:1; transform:translateY(0) scale(1); } }
-@keyframes eventPopOut { from { opacity:1; transform:translateY(0) scale(1); } to { opacity:0; transform:translateY(8px) scale(.96); } }
+@keyframes eventPopIn  { from { opacity:0; transform:translateY(20px) scale(.93); } to { opacity:1; transform:translateY(0) scale(1); } }
+@keyframes eventPopOut { from { opacity:1; transform:translateY(0) scale(1); } to { opacity:0; transform:translateY(10px) scale(.96); } }
 @media (prefers-reduced-motion:reduce) { .event-modal-overlay, .event-modal, .event-modal-overlay.is-closing, .event-modal.is-closing { animation:none; } }
