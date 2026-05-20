@@ -3,21 +3,21 @@
 
   const SUPPORTED = ['fr', 'en'];
   const DEFAULT   = 'fr';
-  const STORAGE_KEY = 'village-lang';
+  const LOCALE_PREF = 'village-lang';
 
   function detectLocale() {
     try {
       const params   = new URLSearchParams(window.location.search);
       const fromUrl  = params.get('lang');
       if (fromUrl === 'auto') {
-        try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+        try { localStorage.removeItem(LOCALE_PREF); } catch (_) {}
       } else if (fromUrl && SUPPORTED.includes(fromUrl)) {
         return fromUrl;
       }
     } catch (_) {}
 
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem(LOCALE_PREF);
       if (stored && SUPPORTED.includes(stored)) return stored;
     } catch (_) {}
 
@@ -35,21 +35,21 @@
   function applyLang(lang, persist) {
     currentLang = lang;
     if (persist !== false) {
-      try { localStorage.setItem(STORAGE_KEY, lang); } catch (_) {}
+      try { localStorage.setItem(LOCALE_PREF, lang); } catch (_) {}
     }
 
     document.documentElement.lang = lang;
 
     document.querySelectorAll('[data-fr]').forEach(el => {
-      const val = lang === 'en' ? el.dataset.en : el.dataset.fr;
-      if (val !== undefined) el.textContent = val;
+      const text = lang === 'en' ? el.dataset.en : el.dataset.fr;
+      if (text !== undefined) el.textContent = text;
     });
 
     document.querySelectorAll('[data-fr-html]').forEach(el => {
-      const val = lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml;
-      if (val !== undefined) {
-        const doc = new DOMParser().parseFromString(val, 'text/html');
-        el.replaceChildren.apply(el, doc.body.childNodes);
+      const markup = lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml;
+      if (markup !== undefined) {
+        const parsed = new DOMParser().parseFromString(markup, 'text/html');
+        el.replaceChildren.apply(el, parsed.body.childNodes);
       }
     });
 
