@@ -110,7 +110,7 @@
           </div>
           <div class="cal-wrap">
             <iframe id="gcal"
-              src="https://calendar.google.com/calendar/embed?src=projetcafeassociatif%40gmail.com&src=8afe16c6b5bc918e9a86a1323560173df9a267e9bdea30308a03a2d50d95272e%40group.calendar.google.com&ctz=Europe%2FParis&mode=AGENDA&wkst=2&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff&color=%23005F66"
+              src="https://calendar.google.com/calendar/embed?src=projetcafeassociatif%40gmail.com&src=8afe16c6b5bc918e9a86a1323560173df9a267e9bdea30308a03a2d50d95272e%40group.calendar.google.com&src=6f4152f5ae5f836bdd2d0386c29772163a803580bf5872cfec8cd0081f99fcd7%40group.calendar.google.com&ctz=Europe%2FParis&mode=AGENDA&wkst=2&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff&color=%23005F66&color=%23005F66&color=%23005F66"
               title="Agenda du Café Associatif Le Village"
               loading="lazy" allowfullscreen>
             </iframe>
@@ -220,7 +220,7 @@
     const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    const BASE = 'https://calendar.google.com/calendar/embed?src=projetcafeassociatif%40gmail.com&src=8afe16c6b5bc918e9a86a1323560173df9a267e9bdea30308a03a2d50d95272e%40group.calendar.google.com&ctz=Europe%2FParis&wkst=2&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff&color=%23005F66';
+    const BASE = 'https://calendar.google.com/calendar/embed?src=projetcafeassociatif%40gmail.com&src=8afe16c6b5bc918e9a86a1323560173df9a267e9bdea30308a03a2d50d95272e%40group.calendar.google.com&src=6f4152f5ae5f836bdd2d0386c29772163a803580bf5872cfec8cd0081f99fcd7%40group.calendar.google.com&ctz=Europe%2FParis&wkst=2&showTitle=0&showNav=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&bgcolor=%23ffffff&color=%23005F66&color=%23005F66&color=%23005F66';
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', false); });
