@@ -144,10 +144,9 @@
       if (text !== undefined) el.textContent = text;
     });
 
-    document.querySelectorAll('[data-fr-html]').forEach(el => {
-      if (el.dataset.frHtml !== undefined) {
-        // eslint-disable-next-line no-unsanitized/method -- buildFragment is a custom allowlist sanitizer: no innerHTML/DOMParser, only createElement + allowlisted tags/attrs
-        el.replaceChildren(buildFragment(lang === 'en' ? el.dataset.enHtml : el.dataset.frHtml));
+    document.querySelectorAll('[data-fr-rich]').forEach(el => {
+      if (el.dataset.frRich !== undefined) {
+        el.replaceChildren(buildFragment(lang === 'en' ? el.dataset.enRich : el.dataset.frRich));
       }
     });
 
