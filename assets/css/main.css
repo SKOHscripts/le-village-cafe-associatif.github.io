@@ -508,6 +508,55 @@ h3 { font-size: clamp(1.1rem, 3vw, 1.4rem); }
   margin-bottom: 1.25rem;
 }
 
+.event-modal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-teal-light);
+}
+
+.event-modal__nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-teal-light);
+  color: var(--color-teal);
+  font-size: 1.1rem;
+  font-family: var(--font-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.event-modal__nav-btn:hover:not(:disabled) {
+  background: var(--color-teal);
+  color: var(--color-white);
+}
+
+.event-modal__nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.event-modal__nav-btn:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+}
+
+.event-modal__nav-counter {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  min-width: 3rem;
+  text-align: center;
+}
+
 .event-modal__links {
   display: flex;
   flex-wrap: wrap;
