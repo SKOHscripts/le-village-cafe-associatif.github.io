@@ -91,15 +91,14 @@
     return { upcoming, past };
   }
 
-  function pickPopupCandidate(upcoming, now) {
-    if (!upcoming.length) return null;
+  function pickPopupCandidates(upcoming, now) {
     const today = startOfToday(now);
-    const next = upcoming[0];
-    const d = toLocalMidnight(next.date);
-    if (!d) return null;
-    const diffDays = Math.round((d.getTime() - today.getTime()) / MS_PER_DAY);
-    if (diffDays < 0 || diffDays > POPUP_WINDOW_DAYS) return null;
-    return next;
+    return upcoming.filter(evt => {
+      const d = toLocalMidnight(evt.date);
+      if (!d) return false;
+      const diffDays = Math.round((d.getTime() - today.getTime()) / MS_PER_DAY);
+      return diffDays >= 0 && diffDays <= POPUP_WINDOW_DAYS;
+    });
   }
 
   function altForEvent(evt) {
@@ -232,25 +231,8 @@
     }
   }
 
-  function showEventPopup(evt) {
-    if (!evt || isDismissed(evt)) return;
-
-    const previouslyFocused = document.activeElement;
-
-    const overlay = document.createElement('div');
-    overlay.className = 'event-modal-overlay';
-    overlay.setAttribute('role', 'dialog');
-    overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-labelledby', 'evt-popup-title');
-
-    const modal = document.createElement('div');
-    modal.className = 'event-modal';
-
-    const closeBtn = document.createElement('button');
-    closeBtn.type = 'button';
-    closeBtn.className = 'event-modal__close';
-    closeBtn.setAttribute('aria-label', t('common.close', 'Fermer'));
-    closeBtn.textContent = '✕';
+  function buildModalContent(evt) {
+    const frag = document.createDocumentFragment();
 
     const eyebrow = document.createElement('p');
     eyebrow.className = 'event-modal__eyebrow';
@@ -268,7 +250,7 @@
     if (horaires) dateParts.push(horaires);
     date.textContent = dateParts.join(' · ');
 
-    modal.append(closeBtn, eyebrow, titre, date);
+    frag.append(eyebrow, titre, date);
 
     if (evt.photos && evt.photos.length && isSafeUrl(evt.photos[0])) {
       const photoWrap = document.createElement('div');
@@ -280,7 +262,7 @@
       img.src = evt.photos[0];
       img.addEventListener('error', () => { photoWrap.style.display = 'none'; });
       photoWrap.appendChild(img);
-      modal.appendChild(photoWrap);
+      frag.appendChild(photoWrap);
     }
 
     const lieu = localizedField(evt, 'lieu');
@@ -288,7 +270,7 @@
       const el = document.createElement('p');
       el.className = 'event-modal__lieu';
       el.textContent = lieu;
-      modal.appendChild(el);
+      frag.appendChild(el);
     }
 
     const description = localizedField(evt, 'description');
@@ -296,7 +278,7 @@
       const desc = document.createElement('p');
       desc.className = 'event-modal__desc';
       desc.textContent = description;
-      modal.appendChild(desc);
+      frag.appendChild(desc);
     }
 
     const links = document.createElement('div');
@@ -316,12 +298,82 @@
     agenda.textContent = t('event.popup.agenda', "Voir l'agenda →");
 
     links.append(fb, ig, agenda);
-    modal.appendChild(links);
+    frag.appendChild(links);
+
+    return frag;
+  }
+
+  function showEventPopup(events) {
+    if (!events || !events.length) return;
+    const candidates = events.filter(e => !isDismissed(e));
+    if (!candidates.length) return;
+
+    let currentIndex = 0;
+    const previouslyFocused = document.activeElement;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'event-modal-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'evt-popup-title');
+
+    const modal = document.createElement('div');
+    modal.className = 'event-modal';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'event-modal__close';
+    closeBtn.setAttribute('aria-label', t('common.close', 'Fermer'));
+    closeBtn.textContent = '✕';
+
+    const contentArea = document.createElement('div');
+    contentArea.className = 'event-modal__body';
+
+    modal.append(closeBtn, contentArea);
+
+    let prevBtn = null;
+    let nextBtn = null;
+    let counter = null;
+
+    if (candidates.length > 1) {
+      const navEl = document.createElement('div');
+      navEl.className = 'event-modal__nav';
+
+      prevBtn = document.createElement('button');
+      prevBtn.type = 'button';
+      prevBtn.className = 'event-modal__nav-btn event-modal__nav-btn--prev';
+      prevBtn.setAttribute('aria-label', t('event.popup.prev', 'Évènement précédent'));
+      prevBtn.innerHTML = '&#8592;';
+
+      counter = document.createElement('span');
+      counter.className = 'event-modal__nav-counter';
+      counter.setAttribute('aria-live', 'polite');
+
+      nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'event-modal__nav-btn event-modal__nav-btn--next';
+      nextBtn.setAttribute('aria-label', t('event.popup.next', 'Évènement suivant'));
+      nextBtn.innerHTML = '&#8594;';
+
+      navEl.append(prevBtn, counter, nextBtn);
+      modal.appendChild(navEl);
+    }
 
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
     document.body.classList.add('has-event-modal');
 
+    function updateContent(index) {
+      currentIndex = index;
+      contentArea.replaceChildren(buildModalContent(candidates.at(index)));
+      if (candidates.length > 1) {
+        counter.textContent = (index + 1) + ' / ' + candidates.length;
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === candidates.length - 1;
+      }
+    }
+
+    updateContent(0);
     closeBtn.focus();
 
     function cleanup() {
@@ -337,7 +389,7 @@
       if (modal.classList.contains('is-closing')) return;
       modal.classList.add('is-closing');
       overlay.classList.add('is-closing');
-      markDismissed(evt);
+      markDismissed(candidates.at(currentIndex));
       const fallbackTimer = setTimeout(cleanup, 350);
       modal.addEventListener('animationend', () => {
         clearTimeout(fallbackTimer);
@@ -351,11 +403,17 @@
         close();
       } else if (e.key === 'Tab') {
         trapFocus(modal, e);
+      } else if (e.key === 'ArrowLeft' && prevBtn && !prevBtn.disabled) {
+        updateContent(currentIndex - 1);
+      } else if (e.key === 'ArrowRight' && nextBtn && !nextBtn.disabled) {
+        updateContent(currentIndex + 1);
       }
     }
 
     closeBtn.addEventListener('click', close);
     overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => updateContent(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => updateContent(currentIndex + 1));
     document.addEventListener('keydown', onKeydown);
   }
 
@@ -374,10 +432,10 @@
     if (upcomingEl) renderList(upcomingEl, upcoming, t('event.empty.upcoming', "Pas d'évènement prévu pour l'instant."));
     if (pastEl) renderList(pastEl, past, t('event.empty.past', "Pas d'évènement passé à afficher."));
     if (popupMount && !popupMount.dataset.shown) {
-      const candidate = pickPopupCandidate(upcoming, new Date());
-      if (candidate) {
+      const candidates = pickPopupCandidates(upcoming, new Date());
+      if (candidates.length) {
         popupMount.dataset.shown = '1';
-        showEventPopup(candidate);
+        showEventPopup(candidates);
       }
     }
   }
