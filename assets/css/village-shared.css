@@ -187,8 +187,11 @@ button { font-family: inherit; cursor: pointer; }
 .event-modal-overlay { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:1rem; background:rgba(26,43,44,.6); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); animation:eventOverlayFadeIn .25s ease-out both; }
 .event-modal-overlay.is-closing { animation:eventOverlayFadeOut .2s ease-in forwards; }
 
+/* Shell wraps the card so the side nav buttons can straddle its edges */
+.event-modal-shell { position:relative; width:100%; max-width:460px; display:flex; }
+
 /* Modal card — no padding: each zone handles its own */
-.event-modal { position:relative; background:var(--white); border-radius:var(--r-xl); box-shadow:var(--shadow-lg); max-width:460px; width:100%; max-height:90vh; overflow:auto; padding:0; animation:eventPopIn .4s cubic-bezier(.16,1,.3,1) both; }
+.event-modal { position:relative; flex:1 1 auto; background:var(--white); border-radius:var(--r-xl); box-shadow:var(--shadow-lg); width:100%; max-height:90vh; overflow:auto; padding:0; animation:eventPopIn .4s cubic-bezier(.16,1,.3,1) both; }
 .event-modal.is-closing { animation:eventPopOut .2s ease-in forwards; }
 
 /* ── Header zone (eyebrow + title + date) ── dark band, like .hours-sec */
@@ -222,12 +225,35 @@ button { font-family: inherit; cursor: pointer; }
 .event-modal__close:hover { background:rgba(255,255,255,.22); color:var(--white); transform:rotate(90deg); }
 .event-modal__close:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
 
+/* ── Side navigation buttons ── circular, like the close cross, straddling the card edges */
+.event-modal__nav-btn { position:absolute; top:50%; width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.3); background:var(--teal); color:var(--white); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:3; box-shadow:0 6px 20px rgba(0,95,102,.38); transition:background .2s, transform .2s, box-shadow .2s, opacity .25s; animation:navBreathe 2.6s ease-in-out infinite; }
+.event-modal__nav-btn--prev { left:-23px; }
+.event-modal__nav-btn--next { right:-23px; }
+.event-modal__nav-arrow { width:22px; height:22px; transition:transform .2s; }
+.event-modal__nav-btn:hover:not(:disabled) { background:var(--teal-mid); transform:translateY(-50%) scale(1.12); box-shadow:0 10px 28px rgba(0,95,102,.5); animation:none; }
+.event-modal__nav-btn--prev:hover:not(:disabled) .event-modal__nav-arrow { transform:translateX(-2px); }
+.event-modal__nav-btn--next:hover:not(:disabled) .event-modal__nav-arrow { transform:translateX(2px); }
+.event-modal__nav-btn:focus-visible { outline:2px solid var(--amber); outline-offset:3px; animation:none; }
+.event-modal__nav-btn:disabled { opacity:.28; cursor:default; box-shadow:none; animation:none; }
+
+/* ── Position counter ── small pill centred under the card */
+.event-modal__nav-counter { position:absolute; bottom:-1.7rem; left:50%; transform:translateX(-50%); font-family:var(--font-body); font-size:.78rem; font-weight:600; letter-spacing:.04em; color:rgba(255,255,255,.9); white-space:nowrap; }
+
+@keyframes navBreathe { 0%,100% { transform:translateY(-50%) scale(1); } 50% { transform:translateY(-50%) scale(1.09); } }
+
+@media (max-width:560px) {
+  .event-modal__nav-btn { width:40px; height:40px; }
+  .event-modal__nav-btn--prev { left:4px; }
+  .event-modal__nav-btn--next { right:4px; }
+  .event-modal__nav-arrow { width:19px; height:19px; }
+}
+
 body.has-event-modal { overflow:hidden; }
 @keyframes eventOverlayFadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes eventOverlayFadeOut { from { opacity:1; } to { opacity:0; } }
 @keyframes eventPopIn  { from { opacity:0; transform:translateY(20px) scale(.93); } to { opacity:1; transform:translateY(0) scale(1); } }
 @keyframes eventPopOut { from { opacity:1; transform:translateY(0) scale(1); } to { opacity:0; transform:translateY(10px) scale(.96); } }
-@media (prefers-reduced-motion:reduce) { .event-modal-overlay, .event-modal, .event-modal-overlay.is-closing, .event-modal.is-closing { animation:none; } }
+@media (prefers-reduced-motion:reduce) { .event-modal-overlay, .event-modal, .event-modal-overlay.is-closing, .event-modal.is-closing, .event-modal__nav-btn { animation:none; } }
 
 /* ─── LIGHTBOX ───────────────────────────── */
 .js-zoomable { cursor:zoom-in; transition:opacity .2s; }

@@ -317,6 +317,9 @@
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-labelledby', 'evt-popup-title');
 
+    const shell = document.createElement('div');
+    shell.className = 'event-modal-shell';
+
     const modal = document.createElement('div');
     modal.className = 'event-modal';
 
@@ -330,6 +333,7 @@
     contentArea.className = 'event-modal__body';
 
     modal.append(closeBtn, contentArea);
+    shell.appendChild(modal);
 
     let prevBtn = null;
     let nextBtn = null;
@@ -351,43 +355,27 @@
       return svg;
     }
 
-    function makeNavLabel(text) {
-      const span = document.createElement('span');
-      span.className = 'event-modal__nav-label';
-      span.textContent = text;
-      return span;
-    }
-
     if (candidates.length > 1) {
-      const navEl = document.createElement('div');
-      navEl.className = 'event-modal__nav';
-
       prevBtn = document.createElement('button');
       prevBtn.type = 'button';
       prevBtn.className = 'event-modal__nav-btn event-modal__nav-btn--prev';
       prevBtn.setAttribute('aria-label', t('event.popup.prev', 'Évènement précédent'));
-      prevBtn.append(makeSvgArrow('15 18 9 12 15 6'), makeNavLabel(t('event.popup.prev_label', 'Précédent')));
-
-      counter = document.createElement('span');
-      counter.className = 'event-modal__nav-counter';
-      counter.setAttribute('aria-live', 'polite');
+      prevBtn.appendChild(makeSvgArrow('15 18 9 12 15 6'));
 
       nextBtn = document.createElement('button');
       nextBtn.type = 'button';
       nextBtn.className = 'event-modal__nav-btn event-modal__nav-btn--next';
       nextBtn.setAttribute('aria-label', t('event.popup.next', 'Évènement suivant'));
-      nextBtn.append(makeNavLabel(t('event.popup.next_label', 'Suivant')), makeSvgArrow('9 18 15 12 9 6'));
+      nextBtn.appendChild(makeSvgArrow('9 18 15 12 9 6'));
 
-      navEl.append(prevBtn, counter, nextBtn);
-      modal.appendChild(navEl);
+      counter = document.createElement('span');
+      counter.className = 'event-modal__nav-counter';
+      counter.setAttribute('aria-live', 'polite');
 
-      setTimeout(() => {
-        if (prevBtn && !prevBtn.disabled) prevBtn.classList.add('is-hinting');
-        if (nextBtn && !nextBtn.disabled) nextBtn.classList.add('is-hinting');
-      }, 700);
+      shell.append(prevBtn, nextBtn, counter);
     }
 
-    overlay.appendChild(modal);
+    overlay.appendChild(shell);
     document.body.appendChild(overlay);
     document.body.classList.add('has-event-modal');
 
@@ -430,7 +418,7 @@
         e.preventDefault();
         close();
       } else if (e.key === 'Tab') {
-        trapFocus(modal, e);
+        trapFocus(shell, e);
       } else if (e.key === 'ArrowLeft' && prevBtn && !prevBtn.disabled) {
         updateContent(currentIndex - 1);
       } else if (e.key === 'ArrowRight' && nextBtn && !nextBtn.disabled) {
@@ -439,7 +427,7 @@
     }
 
     closeBtn.addEventListener('click', close);
-    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+    overlay.addEventListener('click', e => { if (e.target === overlay || e.target === shell) close(); });
     if (prevBtn) prevBtn.addEventListener('click', () => updateContent(currentIndex - 1));
     if (nextBtn) nextBtn.addEventListener('click', () => updateContent(currentIndex + 1));
     document.addEventListener('keydown', onKeydown);
