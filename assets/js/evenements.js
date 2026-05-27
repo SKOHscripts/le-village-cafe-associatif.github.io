@@ -335,32 +335,32 @@
     let nextBtn = null;
     let counter = null;
 
+    function makeSvgArrow(points) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'event-modal__nav-arrow');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor');
+      svg.setAttribute('stroke-width', '2.5');
+      svg.setAttribute('stroke-linecap', 'round');
+      svg.setAttribute('stroke-linejoin', 'round');
+      svg.setAttribute('aria-hidden', 'true');
+      const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      poly.setAttribute('points', points);
+      svg.appendChild(poly);
+      return svg;
+    }
+
+    function makeNavLabel(text) {
+      const span = document.createElement('span');
+      span.className = 'event-modal__nav-label';
+      span.textContent = text;
+      return span;
+    }
+
     if (candidates.length > 1) {
       const navEl = document.createElement('div');
       navEl.className = 'event-modal__nav';
-
-      function makeSvgArrow(points) {
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('class', 'event-modal__nav-arrow');
-        svg.setAttribute('viewBox', '0 0 24 24');
-        svg.setAttribute('fill', 'none');
-        svg.setAttribute('stroke', 'currentColor');
-        svg.setAttribute('stroke-width', '2.5');
-        svg.setAttribute('stroke-linecap', 'round');
-        svg.setAttribute('stroke-linejoin', 'round');
-        svg.setAttribute('aria-hidden', 'true');
-        const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-        poly.setAttribute('points', points);
-        svg.appendChild(poly);
-        return svg;
-      }
-
-      function makeNavLabel(text) {
-        const span = document.createElement('span');
-        span.className = 'event-modal__nav-label';
-        span.textContent = text;
-        return span;
-      }
 
       prevBtn = document.createElement('button');
       prevBtn.type = 'button';
