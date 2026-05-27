@@ -1,5 +1,56 @@
 [
   {
+    "id": "gouter-familles-2026-06-06",
+    "titre": "Goûter des familles",
+    "titre_en": "Family tea time",
+    "date": "2026-06-06",
+    "heureDebut": "16:00",
+    "heureFin": "19:00",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
+    "description": "Un temps convivial entre les familles du quartier autour d'un goûter partagé.",
+    "description_en": "A friendly gathering for families of the neighbourhood over a shared tea time.",
+    "photos": []
+  },
+  {
+    "id": "guinguette-2026-06-20",
+    "titre": "La Guinguette du village",
+    "titre_en": "Village Guinguette",
+    "date": "2026-06-20",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
+    "description": "Une journée en plein air au son de la musique pour guincher, chanter, s'amuser ! avec le groupe \"La sonora del martes\"\nPetite restauration sur place\nRéservation par mail",
+    "description_en": "An outdoor day of music, dance and fun! with the band \"La sonora del martes\"\nLight catering on site\nBooking by email",
+    "photos": ["assets/images/guinguette-2026.png"],
+    "photo_alt": "Le groupe La sonora del martes en concert"
+  },
+  {
+    "id": "gouter-familles-2026-07-04",
+    "titre": "Goûter des familles",
+    "titre_en": "Family tea time",
+    "date": "2026-07-04",
+    "heureDebut": "16:00",
+    "heureFin": "19:00",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
+    "description": "Un temps convivial entre les familles du quartier autour d'un goûter partagé.",
+    "description_en": "A friendly gathering for families of the neighbourhood over a shared tea time.",
+    "photos": []
+  },
+  {
+    "id": "gouter-familles-2026-08-01",
+    "titre": "Goûter des familles",
+    "titre_en": "Family tea time",
+    "date": "2026-08-01",
+    "heureDebut": "16:00",
+    "heureFin": "19:00",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
+    "description": "Un temps convivial entre les familles du quartier autour d'un goûter partagé.",
+    "description_en": "A friendly gathering for families of the neighbourhood over a shared tea time.",
+    "photos": []
+  },
+  {
     "id": "cafe-familles-2026-05-16",
     "titre": "Café des familles",
     "titre_en": "Family café",

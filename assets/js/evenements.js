@@ -200,7 +200,9 @@
 
   function isSafeUrl(url) {
     if (typeof url !== 'string') return false;
-    return /^https?:\/\//i.test(url) || /^[^:]+\.html(\?|#|$)/i.test(url);
+    return /^https?:\/\//i.test(url)
+      || /^[^:]+\.html(\?|#|$)/i.test(url)
+      || /^assets\/images\/[^/]+\.(jpe?g|png|gif|webp|svg)$/i.test(url);
   }
 
   function buildExternalLink(href, label, className) {
