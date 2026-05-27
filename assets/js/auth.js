@@ -251,8 +251,8 @@ function showAuthModal(levelRequired, onSuccess) {
 
   submitBtn.addEventListener('click', tryLogin);
   input.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
-  cancelBtn.addEventListener('click', () => { modal.remove(); });
-  overlay.addEventListener('click', () => { modal.remove(); });
+  cancelBtn.addEventListener('click', () => { modal.remove(); window.location.assign('index.html'); });
+  overlay.addEventListener('click', () => { modal.remove(); window.location.assign('index.html'); });
 }
 
 // ── Protéger une page (à appeler en haut de chaque page protégée) ──
@@ -264,7 +264,7 @@ function requireAuth(levelRequired, redirectOnFail = false) {
   if (redirectOnFail) {
     // Stocker la page cible pour rediriger après login
     sessionStorage.setItem('auth_redirect', window.location.href);
-    window.location.href = 'index.html';
+    window.location.assign('index.html');
     return;
   }
 
@@ -278,7 +278,7 @@ function requireAuth(levelRequired, redirectOnFail = false) {
       // Recharger pour initialiser les éléments qui dépendent du niveau
       window.location.reload();
     } else {
-      window.location.href = 'index.html';
+      window.location.assign('index.html');
     }
   });
 }
@@ -286,5 +286,5 @@ function requireAuth(levelRequired, redirectOnFail = false) {
 // ── Déconnexion ──
 function logout() {
   sessionStorage.removeItem('auth_level');
-  window.location.href = 'index.html';
+  window.location.assign('index.html');
 }

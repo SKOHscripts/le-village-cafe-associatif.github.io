@@ -1,480 +1,250 @@
 <!DOCTYPE html>
-<html lang="fr" data-i18n-title="meta.membership.title">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Adhérez au Café Associatif Le Village en ligne — formulaire d'adhésion en quelques clics." data-i18n-attr="content:meta.membership.desc">
   <title>Adhésion — Le Village · Café Associatif Lyon 8e</title>
-  <link rel="canonical" href="https://cafe-levillage.org/adhesion.html">
-  <link rel="alternate" hreflang="fr" href="https://cafe-levillage.org/adhesion.html">
-  <link rel="alternate" hreflang="en" href="https://cafe-levillage.org/adhesion.html?lang=en">
-  <link rel="alternate" hreflang="x-default" href="https://cafe-levillage.org/adhesion.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Le Village — Café Associatif">
-  <meta property="og:url" content="https://cafe-levillage.org/adhesion.html">
-  <meta property="og:title" content="Adhésion — Le Village · Café Associatif Lyon 8e" data-i18n-attr="content:meta.membership.title">
-  <meta property="og:description" content="Adhérez au Café Associatif Le Village en ligne — formulaire d'adhésion en quelques clics." data-i18n-attr="content:meta.membership.desc">
-  <meta property="og:image" content="https://cafe-levillage.org/assets/images/aquarelle.jpeg">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/nav.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
+  <link rel="stylesheet" href="assets/css/village-shared.css">
   <style>
-    .section-stats { padding: 2rem 0 1rem; }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .stat-card {
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      padding: 1.5rem 1rem;
-      text-align: center;
-    }
-
-    .stat-number {
-      font-family: var(--font-script);
-      font-size: 3rem;
-      color: var(--color-teal);
-      line-height: 1;
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 0.88rem;
-      color: var(--color-text-light);
-      margin-top: 0.35rem;
-    }
-
-    .section-formulaire { padding: 1.5rem 0 3rem; }
-
-    .form-card {
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      padding: 1.75rem;
-    }
-
-    .form-card h2 {
-      margin-bottom: 1.25rem;
-      font-size: 1.2rem;
-    }
-    .form-card h2::after { display: none; }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    @media (max-width: 500px) {
-      .form-row { grid-template-columns: 1fr; }
-    }
-
-    .form-group { margin-bottom: 1.1rem; }
-
-    .form-label {
-      display: block;
-      font-weight: 500;
-      font-size: 0.9rem;
-      color: var(--color-teal);
-      margin-bottom: 0.4rem;
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 2px solid var(--color-border);
-      border-radius: var(--radius-md);
-      font-family: var(--font-main);
-      font-size: 1rem;
-      color: var(--color-text);
-      background: var(--color-bg);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-
-    .form-input:focus {
-      border-color: var(--color-teal);
-      box-shadow: 0 0 0 3px rgba(26,138,122,0.12);
-      background: white;
-    }
-
-    .form-hint {
-      font-size: 0.8rem;
-      color: var(--color-text-light);
-      margin-top: 0.3rem;
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 0.9rem;
-      font-size: 1.05rem;
-      justify-content: center;
-      margin-top: 0.5rem;
-    }
-
-    .form-success {
-      display: none;
-      background: rgba(0,129,138,0.08);
-      border: 2px solid var(--color-teal);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      text-align: center;
-      color: var(--color-teal);
-      font-weight: 500;
-      margin-top: 1rem;
-    }
-
-    .form-error {
-      display: none;
-      background: #fef2f2;
-      border: 2px solid #f87171;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      text-align: center;
-      color: #dc2626;
-      font-size: 0.9rem;
-      margin-top: 1rem;
-    }
-
-    .form-trap {
-      position: absolute;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .form-rgpd { margin-top: 1.25rem; }
-    .form-checkbox-label {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      font-size: 0.875rem;
-      color: var(--color-text-muted, #555);
-      cursor: pointer;
-      line-height: 1.4;
-    }
-    .form-checkbox-label input[type="checkbox"] {
-      margin-top: 0.15rem;
-      flex-shrink: 0;
-      accent-color: var(--color-orange, #e07b39);
-      width: 1rem;
-      height: 1rem;
-    }
-
-    /* --- Dashboard membres --- */
-    .section-dashboard { padding: 2rem 0 0; }
-
-    .dashboard-figure {
-      margin: 0;
-      border: 3px solid var(--color-teal);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      background: var(--color-white);
-    }
-
-    .dashboard-figure figcaption {
-      padding: 0.6rem 1rem;
-      font-size: 0.82rem;
-      color: var(--color-text-light);
-      text-align: center;
-      border-top: 1px solid var(--color-border);
-    }
-
-    .dashboard-thumb {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    /* --- Notices --- */
-    .notice-info {
-      background: var(--color-orange-light);
-      border: 2px solid var(--color-orange);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      margin: 2rem 0 0;
-    }
-
-    .notice-info p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: var(--color-text);
-    }
-
-    .notice-info strong { color: var(--color-teal); }
+    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; margin-bottom:2rem; }
+    .stat-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:1.75rem 1.25rem; text-align:center; box-shadow:var(--shadow-sm); }
+    .stat-num  { font-family:var(--font-display); font-size:3.2rem; color:var(--teal); line-height:1; display:block; margin-bottom:.3rem; }
+    .stat-lbl  { font-size:.82rem; color:var(--muted); }
+    .form-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:2rem; box-shadow:var(--shadow-sm); }
+    .form-card h2 { font-family:var(--font-display); font-size:1.5rem; color:var(--dark); margin-bottom:1.5rem; }
+    .form-submit { width:100%; padding:.9rem; font-size:1rem; justify-content:center; margin-top:.5rem; }
+    .form-success { display:none; background:var(--teal-light); border:2px solid var(--teal); border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:var(--teal); font-weight:600; margin-top:1rem; }
+    .form-error   { display:none; background:#fef2f2; border:2px solid #f87171; border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:#dc2626; font-size:.9rem; margin-top:1rem; }
+    .form-trap { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
+    .checkbox-label { display:flex; align-items:flex-start; gap:.65rem; font-size:.875rem; color:var(--muted); cursor:pointer; line-height:1.5; }
+    .checkbox-label input { margin-top:.15rem; flex-shrink:0; accent-color:var(--amber); width:1rem; height:1rem; }
+    .rgpd-card { background:var(--teal-light); border:1.5px solid var(--teal); border-radius:var(--r-xl); padding:1.75rem; margin-top:1.25rem; }
+    .rgpd-card h3 { font-size:.875rem; font-weight:700; color:var(--teal); margin-bottom:.75rem; text-transform:uppercase; letter-spacing:.06em; }
+    .rgpd-card p  { font-size:.875rem; color:var(--text); line-height:1.7; margin-bottom:.6rem; }
+    .rgpd-card p:last-child { margin-bottom:0; }
+    .rgpd-card a  { color:var(--teal); font-weight:600; }
+    .dashboard-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-sm); margin-bottom:2rem; }
+    .dashboard-card figcaption { font-size:.78rem; color:var(--muted); padding:.6rem 1.2rem; border-top:1px solid var(--border); }
+    .dashboard-card .zoom-hint { justify-content:flex-start; padding:.5rem 1.2rem; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 </head>
 <body>
 
-  <div class="page-header">
-    <div class="container">
-      <h1 data-i18n="members.header.title">Adhésion</h1>
-      <p data-i18n="members.header.sub">rejoindre la communauté du Village</p>
+  <nav class="site-nav scrolled" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="assets/images/logo-header.png" alt="Le Village Café Associatif"></a>
+      <div class="nav-links" role="navigation">
+        <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+        <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+        <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+        <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+        <a href="adhesion.html" class="active" data-fr="Adhésion" data-en="Membership">Adhésion</a>
+        <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+        <a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
+        <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+      </div>
+      <div class="nav-right">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="fr">FR</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <a href="adhesion.html" class="btn btn-primary nav-adhere" data-fr="Adhérer" data-en="Join us">Adhérer</a>
+        <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+    <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+    <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+    <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+    <a href="adhesion.html" data-fr="Adhésion" data-en="Membership">Adhésion</a>
+    <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+    <a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
+    <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+  </div>
+
+  <div class="page-hd">
+    <div class="page-hd-inner">
+      <span class="page-hd-label fin fin-1" data-fr="Rejoindre la communauté" data-en="Join the community">Rejoindre la communauté</span>
+      <h1 class="page-hd-title fin fin-2" data-fr="Adhésion" data-en="Membership">Adhésion</h1>
+      <p class="page-hd-sub fin fin-3" data-fr="5 € par an — obligatoire pour la vente d'alcool" data-en="€5 per year — required for alcohol sales">5 € par an — obligatoire pour la vente d'alcool</p>
     </div>
   </div>
 
-  <main id="main-content">
-    <div class="container">
-
-      <!-- NOTICE -->
-      <div class="notice-info fade-up fade-up-1" role="note">
-        <p data-i18n-html="members.notice.html">
-          Le Village est un <strong>café associatif</strong> : l'adhésion permet de participer à la vie de l'association
-          et est obligatoire pour la vente d'alcool. La cotisation est de <strong>5 € par an</strong>,
-          à régler sur place lors de votre première visite.
-          Ce formulaire nous permet de préparer votre adhésion à l'avance — rapide et sans déplacement immédiat.
-        </p>
-      </div>
-
-      <!-- DASHBOARD MEMBRES -->
-      <section class="section-dashboard fade-up fade-up-2" aria-labelledby="dashboard-title">
-        <h2 id="dashboard-title" class="section-title" data-i18n="members.dashboard.title">Tableau de bord des membres</h2>
-        <figure class="dashboard-figure">
-          <img
-            src="assets/images/dashboard-membres.png"
-            class="dashboard-thumb js-zoomable"
-            alt="Tableau de bord des membres du café associatif Le Village au 14 mai 2026 : 487 membres au total dont 343 membres actifs, 144 anciens membres, 94 % abonnés à la newsletter. Âge moyen 51 ans. Répartition géographique sur 20 codes postaux et 16 villes (Lyon en tête avec 431 membres). Graphiques : répartition par catégorie (camembert), distribution des âges (histogramme centré sur 40-60 ans) et évolution mensuelle des inscriptions avec un pic à 100 en 2024."
-            data-i18n-attr="alt:members.dashboard.alt"
-            width="1200"
-            height="675"
-          >
+  <main>
+    <!-- Tableau de bord membres -->
+    <section style="padding:3rem 0 0;">
+      <div class="container">
+        <p class="s-label reveal" data-fr="Transparence" data-en="Transparency">Transparence</p>
+        <h2 class="s-title reveal" style="margin-bottom:1.5rem;" data-fr="Tableau de bord des membres" data-en="Member dashboard">Tableau de bord des membres</h2>
+        <figure class="dashboard-card reveal">
+          <img src="assets/images/dashboard-membres.png" class="js-zoomable" alt="Tableau de bord anonymisé des membres du Village" style="width:100%;display:block;">
           <div class="zoom-hint" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-            <span data-i18n="common.zoom">Cliquer pour agrandir</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            <span data-fr="Cliquer pour agrandir" data-en="Click to enlarge">Cliquer pour agrandir</span>
           </div>
-          <figcaption data-i18n="members.dashboard.cap">Analyse au 14/05/2026 — données issues du registre des membres.</figcaption>
+          <figcaption data-fr="Analyse au 14/05/2026 — données issues du registre des membres." data-en="Analysis as of 14/05/2026 — data from the member register.">Analyse au 14/05/2026 — données issues du registre des membres.</figcaption>
         </figure>
-      </section>
+      </div>
+    </section>
 
-      <!-- STATS -->
-      <section class="section-stats fade-up fade-up-3" aria-labelledby="stats-title">
-        <h2 id="stats-title" class="section-title" data-i18n="members.stats.title">En chiffres</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-number" id="stat-mois">—</span>
-            <p class="stat-label" data-i18n="members.stats.month">adhésion(s) ce mois-ci</p>
+    <!-- Notice + stats -->
+    <section class="band-teal">
+      <div class="container">
+        <div class="banner reveal" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:white;">
+          <p>Le Village est un <strong style="color:white">café associatif</strong> : l'adhésion permet de participer à la vie de l'association et est obligatoire pour la vente d'alcool. La cotisation est de <strong style="color:white">5 € par an</strong>, à régler sur place lors de votre première visite. Ce formulaire permet de préparer votre adhésion à l'avance.</p>
+        </div>
+        <div class="stats-grid reveal" style="margin-top:1.5rem;">
+          <div class="stat-card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);">
+            <span class="stat-num" id="stat-mois" style="color:white;">—</span>
+            <p class="stat-lbl" style="color:rgba(255,255,255,.55);" data-fr="adhésion(s) ce mois-ci" data-en="membership(s) this month">adhésion(s) ce mois-ci</p>
           </div>
-          <div class="stat-card">
-            <span class="stat-number" id="stat-annee">—</span>
-            <p class="stat-label" data-i18n="members.stats.year">adhésion(s) cette année</p>
+          <div class="stat-card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);">
+            <span class="stat-num" id="stat-annee" style="color:white;">—</span>
+            <p class="stat-lbl" style="color:rgba(255,255,255,.55);" data-fr="adhésion(s) cette année" data-en="membership(s) this year">adhésion(s) cette année</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- FORMULAIRE -->
-      <section class="section-formulaire fade-up fade-up-4" aria-labelledby="form-title">
-        <div class="form-card">
-          <h2 id="form-title" data-i18n="members.form.title">Formulaire d'adhésion</h2>
-
-          <form id="adhesion-form">
-
+    <!-- Formulaire -->
+    <section style="padding:5rem 0;">
+      <div class="container">
+        <div class="form-card reveal">
+          <h2 data-fr="Formulaire d'adhésion" data-en="Membership form">Formulaire d'adhésion</h2>
+          <form id="adhesion-form" novalidate>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="prenom" data-i18n="members.form.first">Prénom *</label>
-                <input class="form-input" type="text" id="prenom" name="prenom"
-                  placeholder="Marie" data-i18n-attr="placeholder:members.form.first.ph" required pattern=".*\S.*" maxlength="50" autocomplete="given-name">
+                <label class="form-label" for="prenom" data-fr="Prénom *" data-en="First name *">Prénom *</label>
+                <input class="form-input" type="text" id="prenom" name="prenom" required maxlength="50" autocomplete="given-name"
+                  data-fr-placeholder="Marie" data-en-placeholder="Marie" placeholder="Marie">
               </div>
               <div class="form-group">
-                <label class="form-label" for="nom" data-i18n="members.form.last">Nom *</label>
-                <input class="form-input" type="text" id="nom" name="nom"
-                  placeholder="Dupont" data-i18n-attr="placeholder:members.form.last.ph" required pattern=".*\S.*" maxlength="50" autocomplete="family-name">
+                <label class="form-label" for="nom" data-fr="Nom *" data-en="Last name *">Nom *</label>
+                <input class="form-input" type="text" id="nom" name="nom" required maxlength="50" autocomplete="family-name"
+                  data-fr-placeholder="Dupont" data-en-placeholder="Dupont" placeholder="Dupont">
               </div>
             </div>
-
             <div class="form-group">
-              <label class="form-label" for="email" data-i18n="members.form.email">Email *</label>
-              <input class="form-input" type="email" id="email" name="email"
-                placeholder="marie@exemple.fr" data-i18n-attr="placeholder:members.form.email.ph" required maxlength="100" autocomplete="email">
-              <p class="form-hint" data-i18n="members.form.email.hint">Requis — vous recevrez un email de confirmation à présenter au café pour le paiement.</p>
+              <label class="form-label" for="email" data-fr="Email *" data-en="Email *">Email *</label>
+              <input class="form-input" type="email" id="email" name="email" required maxlength="100" autocomplete="email"
+                data-fr-placeholder="marie@exemple.fr" data-en-placeholder="marie@example.com" placeholder="marie@exemple.fr">
+              <p class="form-hint" data-fr="Vous recevrez un email de confirmation à présenter au café." data-en="You'll receive a confirmation email to present at the café.">Vous recevrez un email de confirmation à présenter au café.</p>
             </div>
-
             <div class="form-group">
-              <label class="form-label" for="telephone" data-i18n="members.form.phone">Téléphone</label>
-              <input class="form-input" type="tel" id="telephone" name="telephone"
-                placeholder="06 12 34 56 78" data-i18n-attr="placeholder:members.form.phone.ph" maxlength="20" autocomplete="tel">
-              <p class="form-hint" data-i18n="members.form.opt">Optionnel.</p>
+              <label class="form-label" for="telephone" data-fr="Téléphone (optionnel)" data-en="Phone (optional)">Téléphone (optionnel)</label>
+              <input class="form-input" type="tel" id="telephone" name="telephone" maxlength="20" autocomplete="tel" data-fr-placeholder="06 12 34 56 78" data-en-placeholder="06 12 34 56 78" placeholder="06 12 34 56 78">
             </div>
-
             <div class="form-group">
-              <label class="form-label" for="adresse" data-i18n="members.form.addr">Adresse</label>
-              <input class="form-input" type="text" id="adresse" name="adresse"
-                placeholder="8 rue du Chalumeaux, Lyon 8e" data-i18n-attr="placeholder:members.form.addr.ph" maxlength="150" autocomplete="street-address">
-              <p class="form-hint" data-i18n="members.form.opt">Optionnel.</p>
+              <label class="form-label" for="adresse" data-fr="Adresse (optionnel)" data-en="Address (optional)">Adresse (optionnel)</label>
+              <input class="form-input" type="text" id="adresse" name="adresse" maxlength="150" autocomplete="street-address"
+                data-fr-placeholder="8 rue du Chalumeaux, Lyon 8e" data-en-placeholder="8 rue du Chalumeaux, Lyon 8e" placeholder="8 rue du Chalumeaux, Lyon 8e">
             </div>
-
-            <!-- Honeypot anti-spam -->
             <div class="form-trap" aria-hidden="true">
-              <label for="website" data-i18n="members.form.honey">Ne pas remplir ce champ</label>
               <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
             </div>
-
-            <div class="form-group form-rgpd">
-              <label class="form-checkbox-label">
+            <div class="form-group" style="margin-top:1.25rem;">
+              <label class="checkbox-label">
                 <input type="checkbox" id="rgpd-consent" name="rgpd" required>
-                <span data-i18n="members.form.gdpr">J'accepte que mes données personnelles soient collectées uniquement dans le cadre de la gestion des adhésions par le conseil d'administration de l'association. *</span>
+                <span data-fr="J'accepte que mes données personnelles soient collectées uniquement dans le cadre de la gestion des adhésions par le conseil d'administration. *"
+                      data-en="I agree that my personal data is collected solely for membership management by the board of directors. *">J'accepte que mes données personnelles soient collectées uniquement dans le cadre de la gestion des adhésions par le conseil d'administration. *</span>
               </label>
             </div>
-
-            <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
-              <span id="submit-text" data-i18n="members.form.submit">Envoyer mon adhésion</span>
+            <button type="submit" class="btn btn-amber form-submit" id="submit-btn">
+              <span id="submit-text" data-fr="Envoyer mon adhésion" data-en="Send my membership">Envoyer mon adhésion</span>
             </button>
-
-            <div class="form-success" id="form-success" role="alert" data-i18n="members.form.success">
+            <div class="form-success" id="form-success" role="alert" data-fr="Merci ! Votre demande d'adhésion a bien été enregistrée. À bientôt au Village !" data-en="Thank you! Your membership request has been recorded. See you at Le Village!">
               Merci ! Votre demande d'adhésion a bien été enregistrée. À bientôt au Village !
             </div>
-            <div class="form-error" id="form-error" role="alert" data-i18n="members.form.error">
+            <div class="form-error" id="form-error" role="alert" data-fr="Une erreur est survenue. Veuillez réessayer ou contacter le café directement." data-en="An error occurred. Please try again or contact the café directly.">
               Une erreur est survenue. Veuillez réessayer ou contacter le café directement.
             </div>
-
           </form>
         </div>
-      </section>
 
-      <!-- RGPD -->
-      <section class="section-rgpd fade-up fade-up-5" aria-labelledby="rgpd-title">
-        <div class="notice-info">
-          <h2 id="rgpd-title" style="font-size:1rem;margin-bottom:0.75rem;color:var(--color-teal)" data-i18n="members.rgpd.title">
-            Gestion de vos données personnelles
-          </h2>
-          <p data-i18n-html="members.rgpd.p1">
-            Dans le cadre de votre adhésion, l'association <strong>Le Village — Café Associatif</strong>
-            (responsable du traitement) collecte les informations suivantes : prénom, nom, adresse email,
-            et, si vous les fournissez, numéro de téléphone et adresse postale.
-          </p>
-          <p style="margin-top:0.6rem" data-i18n-html="members.rgpd.p2">
-            Ces données sont utilisées exclusivement pour <strong>gérer les adhésions</strong>,
-            vous envoyer un email de confirmation et vous informer ponctuellement de la vie de l'association.
-            Elles ne sont transmises à aucun tiers et sont accessibles uniquement aux membres du
-            conseil d'administration.
-          </p>
-          <p style="margin-top:0.6rem" data-i18n-html="members.rgpd.p3">
-            Vos données sont conservées pendant la durée de votre adhésion, puis supprimées dans un délai
-            de <strong>3 ans</strong> suivant la fin de celle-ci, conformément aux recommandations de la CNIL.
-          </p>
-          <p style="margin-top:0.6rem" data-i18n-html="members.rgpd.p4.html">
-            Conformément au Règlement général sur la protection des données (RGPD), vous disposez d'un
-            droit d'accès, de rectification, d'effacement et d'opposition à vos données. Pour exercer ces
-            droits ou pour toute question, contactez-nous à
-            <a href="mailto:contact@cafe-levillage.org">contact@cafe-levillage.org</a>.
-            Vous pouvez également introduire une réclamation auprès de la
-            <a href="https://www.cnil.fr" target="_blank" rel="noopener">CNIL</a>.
-          </p>
+        <!-- RGPD -->
+        <div class="rgpd-card reveal">
+          <h3 data-fr="Gestion de vos données personnelles" data-en="Personal data management">Gestion de vos données personnelles</h3>
+          <p>L'association <strong>Le Village — Café Associatif</strong> collecte : prénom, nom, email, et optionnellement téléphone et adresse postale.</p>
+          <p data-fr="Ces données sont utilisées exclusivement pour gérer les adhésions et vous informer ponctuellement de la vie de l'association. Elles ne sont transmises à aucun tiers." data-en="This data is used exclusively to manage memberships and occasionally inform you about association activities. It is not shared with third parties.">Ces données sont utilisées exclusivement pour gérer les adhésions et vous informer ponctuellement de la vie de l'association. Elles ne sont transmises à aucun tiers.</p>
+          <p>Pour exercer vos droits (accès, rectification, suppression), contactez-nous à <a href="mailto:contact@cafe-levillage.org">contact@cafe-levillage.org</a>.</p>
         </div>
-      </section>
-
-    </div>
+      </div>
+    </section>
   </main>
 
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/components.js"></script>
-  <script src="assets/js/lightbox.js" defer></script>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline" data-fr="Un espace de vie associatif au cœur du 8e arrondissement de Lyon." data-en="An associative space at the heart of Lyon's 8th arrondissement.">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p><div class="footer-social"><a href="https://www.facebook.com/profile.php?id=61574530611496" class="soc-btn" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="https://www.instagram.com/cafe_associatif_le_village" class="soc-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></div></div>
+        <div><p class="fc-title" data-fr="Navigation" data-en="Navigation">Navigation</p><nav class="fc-links"><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a><a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a><a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a><a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a><a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a></nav></div>
+        <div><p class="fc-title" data-fr="Participer" data-en="Get involved">Participer</p><nav class="fc-links"><a href="adhesion.html" data-fr="Adhérer" data-en="Join">Adhérer</a><a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a><a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Idea box">Boîte à idées</a></nav></div>
+        <div><p class="fc-title" data-fr="Horaires" data-en="Hours">Horaires</p><div class="fc-hours"><p class="fc-hour" data-fr-rich="<strong>Mar</strong> 14h30 – 19h00" data-en-rich="<strong>Tue</strong> 2:30pm – 7:00pm"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour" data-fr-rich="<strong>Ven</strong> 16h00 – 21h00" data-en-rich="<strong>Fri</strong> 4:00pm – 9:00pm"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour" data-fr-rich="<strong>Dim</strong> 10h00 – 13h00" data-en-rich="<strong>Sun</strong> 10:00am – 1:00pm"><strong>Dim</strong> 10h00 – 13h00</p></div><p style="font-size:.78rem;color:rgba(255,255,255,.22);margin-top:1rem;line-height:1.5;">8 rue du Chalumeaux<br>Lyon 8e</p></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="contact.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a><a href="benevoles.html" data-fr="Bénévoles" data-en="Volunteers">Bénévoles</a><a href="ca.html" data-fr="Espace CA" data-en="Board area">Espace CA</a></div></div>
+    </div>
+  </footer>
+
+  <script src="assets/js/village-i18n.js"></script>
   <script>
-    const SUPABASE_URL      = 'https://evifxtecjhemmaxaiozt.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
-    const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const burger = document.getElementById('nav-burger'), drawer = document.getElementById('nav-drawer');
+    burger.addEventListener('click', () => { const open = burger.classList.toggle('open'); drawer.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open'); drawer.classList.remove('open'); burger.setAttribute('aria-expanded', false); document.body.style.overflow = ''; }));
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // EmailJS — à remplir après création du compte sur https://www.emailjs.com
-    const EMAILJS_PUBLIC_KEY  = 'p_RGCZSSSSeb2UBzu';
-    const EMAILJS_SERVICE_ID  = 'service_446bi4r';
-    const EMAILJS_TEMPLATE_ID = 'template_usqzf09';
-    emailjs.init(EMAILJS_PUBLIC_KEY);
+    const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
 
-    async function chargerStats() {
-      try {
-        const { data, error } = await sbClient.rpc('get_adhesion_stats');
-        if (error) throw error;
-        const statMois  = document.getElementById('stat-mois');
-        const statAnnee = document.getElementById('stat-annee');
-        if (statMois)  statMois.textContent  = data?.total_mois  ?? '0';
-        if (statAnnee) statAnnee.textContent = data?.total_annee ?? '0';
-      } catch (err) {
-        console.error('Erreur stats adhésions:', err);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      chargerStats();
-
-      const form = document.getElementById('adhesion-form');
-      if (!form) return;
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const honeypot = document.getElementById('website');
-        if (honeypot && honeypot.value.trim() !== '') return;
-
-        const prenom    = document.getElementById('prenom').value.trim();
-        const nom       = document.getElementById('nom').value.trim();
-        const email     = document.getElementById('email').value.trim();
-        const telephone = document.getElementById('telephone').value.trim();
-        const adresse   = document.getElementById('adresse').value.trim();
-
-        if (!form.reportValidity()) return;
-
-        const btn     = document.getElementById('submit-btn');
-        const txtBtn  = document.getElementById('submit-text');
-        const success = document.getElementById('form-success');
-        const erreur  = document.getElementById('form-error');
-
-        const i18nT = (k, fb) => (window.i18n && window.i18n.dict) ? window.i18n.t(k) : fb;
-        const dateTag = (window.i18n && window.i18n.locale === 'en') ? 'en-GB' : 'fr-FR';
-
-        btn.disabled = true;
-        txtBtn.textContent = i18nT('members.form.sending', 'Envoi en cours…');
-        success.style.display = 'none';
-        erreur.style.display  = 'none';
-
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.supabase) {
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         try {
-          const payload = { prenom, nom };
-          if (email)     payload.email     = email;
-          if (telephone) payload.telephone = telephone;
-          if (adresse)   payload.adresse   = adresse;
+          const { data } = await sb.rpc('get_adhesion_stats');
+          if (data) {
+            document.getElementById('stat-mois').textContent  = data.total_mois  ?? '0';
+            document.getElementById('stat-annee').textContent = data.total_annee ?? '0';
+          }
+        } catch(e) { console.warn('Stats unavailable:', e); }
 
-          const { error } = await sbClient.from('adhesions').insert([payload]);
-          if (error) throw error;
+        document.getElementById('adhesion-form').addEventListener('submit', async ev => {
+          ev.preventDefault();
+          if (document.getElementById('website').value.trim()) { document.getElementById('form-success').style.display = 'block'; ev.target.reset(); return; }
+          if (!document.getElementById('rgpd-consent').checked) return;
+
+          const prenom    = document.getElementById('prenom').value.trim();
+          const nom       = document.getElementById('nom').value.trim();
+          const email     = document.getElementById('email').value.trim();
+          const telephone = document.getElementById('telephone').value.trim();
+          const adresse   = document.getElementById('adresse').value.trim();
+          const btn = document.getElementById('submit-btn');
+          const txt = document.getElementById('submit-text');
+          const suc = document.getElementById('form-success');
+          const err = document.getElementById('form-error');
+          if (!prenom || !nom || !email) return;
+
+          btn.disabled = true; txt.textContent = 'Envoi en cours…';
+          suc.style.display = 'none'; err.style.display = 'none';
 
           try {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-              to_name:       `${prenom} ${nom}`,
-              to_email:      email,
-              adhesion_date: new Date().toLocaleDateString(dateTag, { day: 'numeric', month: 'long', year: 'numeric' }),
-            });
-          } catch (mailErr) {
-            console.error('Erreur envoi email de confirmation:', mailErr);
+            const { error } = await sb.from('adhesions').insert([{ prenom, nom, email, telephone: telephone || null, adresse: adresse || null }]);
+            if (error) throw error;
+            suc.style.display = 'block';
+            ev.target.reset();
+          } catch(ex) {
+            console.error(ex); err.style.display = 'block';
+          } finally {
+            btn.disabled = false; txt.textContent = 'Envoyer mon adhésion';
           }
-
-          success.style.display = 'block';
-          form.reset();
-          chargerStats();
-
-        } catch (err) {
-          console.error('Erreur soumission adhésion:', err);
-          erreur.style.display = 'block';
-        } finally {
-          btn.disabled = false;
-          txtBtn.textContent = i18nT('members.form.submit', 'Envoyer mon adhésion');
-        }
-      });
+        });
+      }
     });
   </script>
-
+  <script src="assets/js/lightbox.js" defer></script>
 </body>
 </html>

@@ -1,199 +1,157 @@
 <!DOCTYPE html>
-<html lang="fr" data-i18n-title="meta.donate.title">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Soutenir le Café Associatif Le Village par un don défiscalisé — dispositif en cours de mise en place." data-i18n-attr="content:meta.donate.desc">
+  <meta name="description" content="Faire un don au Café Associatif Le Village à Lyon 8e — soutenir un espace de vie associatif de quartier.">
   <title>Faire un don — Le Village · Café Associatif Lyon 8e</title>
   <link rel="canonical" href="https://cafe-levillage.org/don.html">
-  <link rel="alternate" hreflang="fr" href="https://cafe-levillage.org/don.html">
-  <link rel="alternate" hreflang="en" href="https://cafe-levillage.org/don.html?lang=en">
-  <link rel="alternate" hreflang="x-default" href="https://cafe-levillage.org/don.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Le Village — Café Associatif">
-  <meta property="og:url" content="https://cafe-levillage.org/don.html">
-  <meta property="og:title" content="Faire un don — Le Village · Café Associatif Lyon 8e" data-i18n-attr="content:meta.donate.title">
-  <meta property="og:description" content="Soutenir le Café Associatif Le Village par un don défiscalisé — dispositif en cours de mise en place." data-i18n-attr="content:meta.donate.desc">
-  <meta property="og:image" content="https://cafe-levillage.org/assets/images/aquarelle.jpeg">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/nav.css">
-
+  <link rel="stylesheet" href="assets/css/village-shared.css">
   <style>
-    .wip-banner {
-      background: var(--color-orange-light);
-      border: 2px solid var(--color-orange);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      margin: 2rem 0;
-    }
-
-    .wip-icon {
-      font-size: 1.8rem;
-      flex-shrink: 0;
-      line-height: 1;
-    }
-
-    .wip-banner p {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: var(--color-text);
-      margin: 0;
-    }
-
-    .wip-banner strong { color: var(--color-teal); }
-
-    .section-content { padding: 0 0 2rem; }
-
-    .content-card {
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      padding: 1.75rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .content-card h2 {
-      font-size: 1.15rem;
-      margin-bottom: 0.85rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .content-card h2::after { display: none; }
-
-    .content-card p {
-      font-size: 0.97rem;
-      line-height: 1.7;
-      color: var(--color-text);
-      margin-bottom: 0.75rem;
-    }
-
-    .content-card p:last-child { margin-bottom: 0; }
-
-    .highlight-box {
-      background: var(--color-teal-light);
-      border-radius: var(--radius-md);
-      padding: 0.9rem 1.1rem;
-      margin-top: 0.75rem;
-      font-size: 0.92rem;
-      color: var(--color-teal-dark);
-      line-height: 1.6;
-    }
-
-    .highlight-box strong { font-weight: 600; }
-
-    .cta-adhesion {
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      padding: 1.75rem;
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .cta-adhesion h2 {
-      font-size: 1.15rem;
-      margin-bottom: 0.6rem;
-    }
-    .cta-adhesion h2::after { display: none; }
-
-    .cta-adhesion p {
-      font-size: 0.93rem;
-      color: var(--color-text-light);
-      margin-bottom: 1.1rem;
-      line-height: 1.6;
-    }
+    .don-cards { display:flex; flex-direction:column; gap:1.25rem; }
+    .don-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:2rem; box-shadow:var(--shadow-sm); }
+    .don-card-head { display:flex; align-items:center; gap:1rem; margin-bottom:1.1rem; }
+    .don-card-icon { width:42px; height:42px; background:var(--teal-light); border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--teal); }
+    .don-card-icon svg { width:22px; height:22px; }
+    .don-card-title { font-family:var(--font-display); font-size:1.2rem; color:var(--dark); }
+    .don-card p { font-size:.95rem; color:var(--muted); line-height:1.75; margin-bottom:.75rem; }
+    .don-card p:last-child { margin-bottom:0; }
+    .highlight-box { background:var(--teal-light); border-radius:var(--r-md); padding:1rem 1.25rem; margin-top:.75rem; font-size:.9rem; color:var(--teal); line-height:1.65; }
   </style>
 </head>
 <body>
 
-  <div class="page-header">
-    <div class="container">
-      <h1 data-i18n="donate.header.title">Soutenir Le Village</h1>
-      <p data-i18n="donate.header.sub">un geste fort pour un lieu qui vous ressemble</p>
+  <nav class="site-nav scrolled" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="assets/images/logo-header.png" alt="Le Village Café Associatif"></a>
+      <div class="nav-links" role="navigation" aria-label="Navigation principale">
+        <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+        <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+        <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+        <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+        <a href="adhesion.html" data-fr="Adhésion" data-en="Membership">Adhésion</a>
+        <a href="don.html" class="active" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+        <a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
+        <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+      </div>
+      <div class="nav-right">
+        <div class="lang-switch"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div>
+        <a href="adhesion.html" class="btn btn-primary nav-adhere" data-fr="Adhérer" data-en="Join us">Adhérer</a>
+        <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer" id="nav-drawer" role="dialog" aria-label="Menu">
+    <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+    <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+    <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+    <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+    <a href="adhesion.html" data-fr="Adhésion" data-en="Membership">Adhésion</a>
+    <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+    <a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
+    <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+  </div>
+
+  <div class="page-hd">
+    <div class="page-hd-inner">
+      <span class="page-hd-label fin fin-1" data-fr="Soutenir Le Village" data-en="Support Le Village">Soutenir Le Village</span>
+      <h1 class="page-hd-title fin fin-2" data-fr="Faire un don" data-en="Donate">Faire un don</h1>
+      <p class="page-hd-sub fin fin-3" data-fr="Un geste fort pour un lieu qui vous ressemble" data-en="A meaningful gesture for a space that reflects you">Un geste fort pour un lieu qui vous ressemble</p>
     </div>
   </div>
 
-  <main id="main-content">
-    <div class="container">
-
-      <!-- BANNIÈRE WIP -->
-      <div class="wip-banner fade-up fade-up-1" role="note" data-i18n-attr="aria-label:donate.wip.aria">
-        <div class="wip-icon" aria-hidden="true">🔧</div>
-        <p data-i18n-html="donate.wip.html">
-          <strong>Work in progress</strong> — Le dispositif de dons défiscalisés est en cours de mise en place.
-          Les démarches administratives nécessaires sont en cours.
-          Cette page sera complétée dès que les dons seront ouverts. Merci pour votre patience !
-        </p>
+  <main>
+    <section class="band-dark" style="padding:4rem 0;">
+      <div class="container">
+        <div class="banner reveal" style="background:rgba(255,167,11,.12);border:1.5px solid rgba(201,122,10,.5);color:rgba(255,255,255,.85);">
+          <p data-fr-rich="<strong style='color:var(--amber);'>Work in progress</strong> — Le dispositif de dons défiscalisés est en cours de mise en place. Les démarches administratives sont en cours. Cette page sera complétée dès que les dons seront ouverts. Merci pour votre patience !"
+             data-en-rich="<strong style='color:var(--amber);'>Work in progress</strong> — The tax-deductible donation system is being set up. Administrative procedures are ongoing. This page will be updated as soon as donations open. Thank you for your patience!">
+            <strong style="color:var(--amber);">Work in progress</strong> — Le dispositif de dons défiscalisés est en cours de mise en place. Les démarches administratives sont en cours. Cette page sera complétée dès que les dons seront ouverts. Merci pour votre patience !
+          </p>
+        </div>
       </div>
+    </section>
 
-      <!-- SECTION CONTENU -->
-      <section class="section-content">
-
-        <div class="content-card fade-up fade-up-2">
-          <h2>
-            <svg viewBox="0 0 20 20" fill="currentColor" width="22" height="22" aria-hidden="true" style="color:var(--color-teal);flex-shrink:0"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
-            <span data-i18n="donate.why.title">Pourquoi faire un don au Village ?</span>
-          </h2>
-          <p data-i18n="donate.why.p1">
-            Le Café Associatif Le Village est un espace autogéré, ouvert à toutes et tous dans le quartier.
-            Son fonctionnement repose entièrement sur l'engagement bénévole de ses membres et les cotisations annuelles.
-          </p>
-          <p data-i18n="donate.why.p2">
-            Un don nous permet de financer des projets concrets : améliorer l'accessibilité du lieu,
-            acquérir du matériel pour les animations culturelles, entretenir l'espace et soutenir
-            les initiatives de solidarité portées par la communauté.
-          </p>
-        </div>
-
-        <div class="content-card fade-up fade-up-3">
-          <h2>
-            <svg viewBox="0 0 20 20" fill="currentColor" width="22" height="22" aria-hidden="true" style="color:var(--color-teal);flex-shrink:0"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/></svg>
-            <span data-i18n="donate.tax.title">Qu'est-ce qu'un don défiscalisé ?</span>
-          </h2>
-          <p data-i18n="donate.tax.p1">
-            En France, les dons effectués à une association reconnue d'intérêt général
-            ouvrent droit à une réduction d'impôt sur le revenu.
-          </p>
-          <div class="highlight-box" data-i18n-html="donate.tax.highlight">
-            Réduction de <strong>66 % du montant du don</strong> sur votre impôt sur le revenu,
-            dans la limite de <strong>20 % de votre revenu imposable</strong>.
-            Exemple : un don de 100 € vous revient réellement à 34 € après réduction fiscale.
+    <section style="padding:5rem 0 2rem;">
+      <div class="container">
+        <div class="don-cards reveal">
+          <div class="don-card">
+            <div class="don-card-head">
+              <div class="don-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+              <h2 class="don-card-title" data-fr="Pourquoi faire un don ?" data-en="Why donate?">Pourquoi faire un don ?</h2>
+            </div>
+            <p data-fr="Le Café Associatif Le Village est un espace autogéré, ouvert à toutes et tous dans le quartier. Son fonctionnement repose entièrement sur l'engagement bénévole de ses membres et les cotisations annuelles."
+               data-en="Le Village Associative Café is a self-managed space, open to everyone in the neighbourhood. Its operation relies entirely on the voluntary commitment of its members and annual membership fees.">
+              Le Café Associatif Le Village est un espace autogéré, ouvert à toutes et tous dans le quartier. Son fonctionnement repose entièrement sur l'engagement bénévole de ses membres et les cotisations annuelles.
+            </p>
+            <p data-fr="Un don nous permet de financer des projets concrets : améliorer l'accessibilité du lieu, acquérir du matériel pour les animations, entretenir l'espace et soutenir les initiatives de solidarité portées par la communauté."
+               data-en="A donation helps us fund concrete projects: improving accessibility, acquiring equipment for activities, maintaining the space and supporting solidarity initiatives led by the community.">
+              Un don nous permet de financer des projets concrets : améliorer l'accessibilité du lieu, acquérir du matériel pour les animations, entretenir l'espace et soutenir les initiatives de solidarité portées par la communauté.
+            </p>
           </div>
-          <p style="margin-top:0.75rem" data-i18n="donate.tax.p2">
-            Pour bénéficier de cet avantage, l'association doit obtenir une reconnaissance d'intérêt général
-            auprès de l'administration fiscale — c'est précisément cette démarche que nous menons actuellement.
-          </p>
+
+          <div class="don-card">
+            <div class="don-card-head">
+              <div class="don-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+              <h2 class="don-card-title" data-fr="Qu'est-ce qu'un don défiscalisé ?" data-en="What is a tax-deductible donation?">Qu'est-ce qu'un don défiscalisé ?</h2>
+            </div>
+            <p data-fr="En France, les dons effectués à une association reconnue d'intérêt général ouvrent droit à une réduction d'impôt sur le revenu."
+               data-en="In France, donations to an association recognised as being in the general interest entitle the donor to a reduction in income tax.">
+              En France, les dons effectués à une association reconnue d'intérêt général ouvrent droit à une réduction d'impôt sur le revenu.
+            </p>
+            <div class="highlight-box"
+                 data-fr-rich="Réduction de <strong>66 % du montant du don</strong> sur votre impôt sur le revenu, dans la limite de <strong>20 % de votre revenu imposable</strong>.<br><br>Exemple : un don de 100 € vous revient réellement à 34 € après réduction fiscale."
+                 data-en-rich="Reduction of <strong>66% of the donation amount</strong> on your income tax, up to <strong>20% of your taxable income</strong>.<br><br>Example: a €100 donation actually costs you €34 after tax relief.">
+              Réduction de <strong>66 % du montant du don</strong> sur votre impôt sur le revenu, dans la limite de <strong>20 % de votre revenu imposable</strong>.<br><br>
+              Exemple : un don de 100 € vous revient réellement à 34 € après réduction fiscale.
+            </div>
+            <p style="margin-top:.85rem;" data-fr="Pour bénéficier de cet avantage, l'association doit obtenir une reconnaissance d'intérêt général auprès de l'administration fiscale — c'est précisément la démarche que nous menons actuellement."
+               data-en="To benefit from this advantage, the association must obtain recognition as being in the general interest from the tax authorities — which is precisely the process we are currently undertaking.">
+              Pour bénéficier de cet avantage, l'association doit obtenir une reconnaissance d'intérêt général auprès de l'administration fiscale — c'est précisément la démarche que nous menons actuellement.
+            </p>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <!-- CTA ADHÉSION -->
-        <div class="cta-adhesion fade-up fade-up-4">
-          <h2 data-i18n="donate.cta.title">Vous souhaitez agir dès maintenant ?</h2>
-          <p data-i18n="donate.cta.text">
-            L'adhésion est disponible immédiatement — c'est la première façon concrète de soutenir le café
-            et de rejoindre la communauté du Village.
+    <section class="band-teal">
+      <div class="container">
+        <div class="reveal" style="text-align:center;">
+          <h2 style="font-family:'Crimson Text',Georgia,serif;font-size:clamp(1.8rem,4vw,2.6rem);color:white;margin-bottom:.75rem;" data-fr="Vous souhaitez agir dès maintenant ?" data-en="Want to act now?">Vous souhaitez agir dès maintenant ?</h2>
+          <p style="font-size:1rem;color:rgba(255,255,255,.65);margin-bottom:1.5rem;max-width:420px;margin-left:auto;margin-right:auto;line-height:1.7;"
+             data-fr="L'adhésion est disponible immédiatement — c'est la première façon concrète de soutenir le café et de rejoindre la communauté du Village."
+             data-en="Membership is available immediately — it's the first concrete way to support the café and join the Le Village community.">
+            L'adhésion est disponible immédiatement — c'est la première façon concrète de soutenir le café et de rejoindre la communauté du Village.
           </p>
-          <a href="adhesion.html" class="btn btn-primary" data-i18n="donate.cta.btn">
-            Adhérer au Village →
-          </a>
+          <a href="adhesion.html" class="btn btn-amber btn-lg" data-fr="Adhérer au Village →" data-en="Join Le Village →">Adhérer au Village →</a>
         </div>
-
-      </section>
-
-    </div>
+      </div>
+    </section>
   </main>
 
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/components.js"></script>
-  <script src="assets/js/lightbox.js" defer></script>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline" data-fr="Un espace de vie associatif au cœur du 8e arrondissement de Lyon." data-en="An associative space at the heart of Lyon's 8th arrondissement.">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p><div class="footer-social"><a href="https://www.facebook.com/profile.php?id=61574530611496" class="soc-btn" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="https://www.instagram.com/cafe_associatif_le_village" class="soc-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></div></div>
+        <div><p class="fc-title" data-fr="Navigation" data-en="Navigation">Navigation</p><nav class="fc-links"><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a><a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a><a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a><a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a><a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a></nav></div>
+        <div><p class="fc-title" data-fr="Participer" data-en="Get involved">Participer</p><nav class="fc-links"><a href="adhesion.html" data-fr="Adhérer" data-en="Join us">Adhérer</a><a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a><a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a></nav></div>
+        <div><p class="fc-title" data-fr="Horaires" data-en="Opening hours">Horaires</p><div class="fc-hours"><p class="fc-hour" data-fr-rich="<strong>Mar</strong> 14h30 – 19h00" data-en-rich="<strong>Tue</strong> 2:30pm – 7:00pm"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour" data-fr-rich="<strong>Ven</strong> 16h00 – 21h00" data-en-rich="<strong>Fri</strong> 4:00pm – 9:00pm"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour" data-fr-rich="<strong>Dim</strong> 10h00 – 13h00" data-en-rich="<strong>Sun</strong> 10:00am – 1:00pm"><strong>Dim</strong> 10h00 – 13h00</p></div><p style="font-size:.78rem;color:rgba(255,255,255,.22);margin-top:1rem;line-height:1.5;">8 rue du Chalumeaux<br>Lyon 8e</p></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="contact.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a><a href="benevoles.html" data-fr="Bénévoles" data-en="Volunteers">Bénévoles</a><a href="ca.html" data-fr="Espace CA" data-en="Board area">Espace CA</a></div></div>
+    </div>
+  </footer>
 
+  <script src="assets/js/village-i18n.js"></script>
+  <script>
+    const burger = document.getElementById('nav-burger'), drawer = document.getElementById('nav-drawer');
+    burger.addEventListener('click', () => { const open = burger.classList.toggle('open'); drawer.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open'); drawer.classList.remove('open'); burger.setAttribute('aria-expanded', false); document.body.style.overflow = ''; }));
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+  <script src="assets/js/lightbox.js" defer></script>
 </body>
 </html>

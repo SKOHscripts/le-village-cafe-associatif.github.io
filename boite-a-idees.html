@@ -1,574 +1,274 @@
 <!DOCTYPE html>
-<html lang="fr" data-i18n-title="meta.ideas.title">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Boîte à idées du Café Associatif Le Village — soumettez vos idées pour faire évoluer le café." data-i18n-attr="content:meta.ideas.desc">
   <title>Boîte à idées — Le Village · Café Associatif Lyon 8e</title>
-  <link rel="canonical" href="https://cafe-levillage.org/boite-a-idees.html">
-  <link rel="alternate" hreflang="fr" href="https://cafe-levillage.org/boite-a-idees.html">
-  <link rel="alternate" hreflang="en" href="https://cafe-levillage.org/boite-a-idees.html?lang=en">
-  <link rel="alternate" hreflang="x-default" href="https://cafe-levillage.org/boite-a-idees.html">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Le Village — Café Associatif">
-  <meta property="og:url" content="https://cafe-levillage.org/boite-a-idees.html">
-  <meta property="og:title" content="Boîte à idées — Le Village · Café Associatif Lyon 8e" data-i18n-attr="content:meta.ideas.title">
-  <meta property="og:description" content="Boîte à idées du Café Associatif Le Village — soumettez vos idées pour faire évoluer le café." data-i18n-attr="content:meta.ideas.desc">
-  <meta property="og:image" content="https://cafe-levillage.org/assets/images/aquarelle.jpeg">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Caveat:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="assets/css/nav.css">
-
-  <!-- Supabase client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+  <link rel="stylesheet" href="assets/css/village-shared.css">
   <style>
-    /* Formulaire */
-    .section-formulaire { padding: 2.5rem 0 2rem; }
+    .form-card  { background:var(--white); border:1px solid rgba(255,255,255,.15); border-radius:var(--r-xl); padding:2rem; box-shadow:var(--shadow-md); }
+    .form-card h2 { font-family:'Crimson Text',Georgia,serif; font-size:1.6rem; color:var(--dark); margin-bottom:1.5rem; }
+    .form-textarea { width:100%; padding:.75rem 1rem; border:1.5px solid var(--border); border-radius:var(--r-md); font-family:var(--font-body); font-size:.95rem; color:var(--text); background:var(--white); transition:border-color .2s, box-shadow .2s; outline:none; resize:vertical; min-height:110px; }
+    .form-textarea:focus { border-color:var(--teal); box-shadow:0 0 0 3px rgba(0,95,102,.1); }
+    .form-submit { width:100%; padding:.9rem; font-size:1rem; justify-content:center; margin-top:.5rem; }
+    .form-success { display:none; background:var(--teal-light); border:2px solid var(--teal); border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:var(--teal); font-weight:600; margin-top:1rem; }
+    .form-error   { display:none; background:#fef2f2; border:2px solid #f87171; border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:#dc2626; font-size:.9rem; margin-top:1rem; }
+    .form-cooldown { display:none; background:var(--amber-light); border:2px solid var(--amber); border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:var(--text); font-size:.9rem; line-height:1.65; margin-top:1rem; }
+    .form-cooldown strong { color:var(--teal); }
+    .form-trap { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
 
-    .form-card {
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      padding: 1.75rem;
-    }
+    .postits-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem; flex-wrap:wrap; gap:.75rem; }
+    .postits-count  { font-size:.875rem; color:var(--muted); }
+    .postits-grid   { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+    @media (min-width:600px) { .postits-grid { grid-template-columns:repeat(3,1fr); } }
 
-    .form-card h2 {
-      margin-bottom: 1.25rem;
-      font-size: 1.2rem;
-    }
-    .form-card h2::after { display: none; }
+    .postit { background:#fff9c4; border-radius:4px 16px 16px 4px; padding:1.25rem 1.1rem; box-shadow:3px 4px 14px rgba(0,0,0,.10), 0 1px 3px rgba(0,0,0,.06); position:relative; transition:transform .2s, box-shadow .2s; }
+    .postit:nth-child(3n+1) { transform:rotate(-1.2deg); background:#fff9c4; }
+    .postit:nth-child(3n+2) { transform:rotate(.8deg);  background:#fde8d8; }
+    .postit:nth-child(3n+3) { transform:rotate(-.5deg); background:#e8f5e9; }
+    .postit:hover { transform:rotate(0) translateY(-4px) scale(1.02); box-shadow:4px 10px 24px rgba(0,0,0,.14); z-index:1; }
+    .postit::before { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:13px; height:13px; background:var(--teal); border-radius:50%; box-shadow:0 2px 5px rgba(0,0,0,.2); }
+    .postit-pseudo { font-family:var(--font-display); font-size:1rem; color:var(--teal); margin-bottom:.5rem; font-style:italic; }
+    .postit-texte  { font-size:.9rem; line-height:1.55; color:#3d3d3d; }
+    .postit-date   { font-size:.7rem; color:#999; margin-top:.6rem; text-align:right; }
+    .postits-empty   { grid-column:1/-1; text-align:center; padding:3rem 1rem; color:var(--muted); font-size:1.1rem; }
+    .postits-loading { grid-column:1/-1; text-align:center; padding:2rem; color:var(--muted); }
 
-    .form-group {
-      margin-bottom: 1.1rem;
-    }
-
-    .form-label {
-      display: block;
-      font-weight: 500;
-      font-size: 0.9rem;
-      color: var(--color-teal);
-      margin-bottom: 0.4rem;
-    }
-
-    .form-input, .form-textarea {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 2px solid var(--color-border);
-      border-radius: var(--radius-md);
-      font-family: var(--font-main);
-      font-size: 1rem;
-      color: var(--color-text);
-      background: var(--color-bg);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-
-    .form-input:focus, .form-textarea:focus {
-      border-color: var(--color-teal);
-      box-shadow: 0 0 0 3px rgba(26,138,122,0.12);
-      background: white;
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .form-hint {
-      font-size: 0.8rem;
-      color: var(--color-text-light);
-      margin-top: 0.3rem;
-    }
-
-    .form-submit {
-      width: 100%;
-      padding: 0.9rem;
-      font-size: 1.05rem;
-      justify-content: center;
-    }
-
-    .form-success {
-      display: none;
-      background: rgba(0,129,138,0.08);
-      border: 2px solid var(--color-teal);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      text-align: center;
-      color: var(--color-teal);
-      font-weight: 500;
-      margin-top: 1rem;
-    }
-
-    .form-error {
-      display: none;
-      background: #fef2f2;
-      border: 2px solid #f87171;
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      text-align: center;
-      color: #dc2626;
-      font-size: 0.9rem;
-      margin-top: 1rem;
-    }
-
-    /* Post-its */
-    .section-postits { padding: 0 0 3rem; }
-
-    .postits-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .postits-count {
-      font-family: var(--font-script);
-      font-size: 1.1rem;
-      color: var(--color-text-light);
-    }
-
-    .postits-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    @media (min-width: 600px) {
-      .postits-grid { grid-template-columns: 1fr 1fr 1fr; }
-    }
-
-    .postit {
-      background: #fff9c4;
-      border-radius: 4px 16px 16px 4px;
-      padding: 1.1rem 1rem;
-      box-shadow: 3px 4px 12px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.06);
-      position: relative;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .postit:nth-child(3n+1) { transform: rotate(-1.2deg); background: #fff9c4; }
-    .postit:nth-child(3n+2) { transform: rotate(0.8deg);  background: #fce4d6; }
-    .postit:nth-child(3n+3) { transform: rotate(-0.5deg); background: #e8f5e9; }
-
-    .postit:hover {
-      transform: rotate(0deg) translateY(-3px) scale(1.02);
-      box-shadow: 4px 8px 20px rgba(0,0,0,0.15);
-      z-index: 1;
-    }
-
-    /* Épingle décorative */
-    .postit::before {
-      content: '';
-      position: absolute;
-      top: -6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
-      height: 12px;
-      background: var(--color-teal);
-      border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-
-    .postit-pseudo {
-      font-family: var(--font-script);
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--color-teal);
-      margin-bottom: 0.5rem;
-    }
-
-    .postit-texte {
-      font-family: var(--font-script);
-      font-size: 1.05rem;
-      line-height: 1.5;
-      color: #3d3d3d;
-    }
-
-    .postit-date {
-      font-size: 0.72rem;
-      color: #999;
-      margin-top: 0.6rem;
-      text-align: right;
-    }
-
-.postits-empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--color-text-light);
-      font-family: var(--font-script);
-      font-size: 1.3rem;
-    }
-
-    .postits-loading {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 2rem;
-      color: var(--color-text-light);
-    }
-
-    /* ── Section suggestions site ── */
-    .section-site { padding: 0 0 3rem; }
-
-    .site-card {
-      background: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      padding: 1.75rem;
-      border-left: 5px solid var(--color-blue-light);
-    }
-
-    .site-card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .site-card h2 {
-      font-size: 1.15rem;
-      color: var(--color-teal);
-      margin: 0;
-    }
-    .site-card h2::after { display: none; }
-
-    .site-card-desc {
-      font-size: 0.92rem;
-      color: var(--color-text-light);
-      line-height: 1.65;
-      margin-bottom: 1.25rem;
-    }
-
-    .site-form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-bottom: 1rem;
-    }
-
-    .site-preview {
-      display: none;
-      background: var(--color-bg);
-      border: 1.5px dashed var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 0.9rem 1rem;
-      font-size: 0.85rem;
-      color: var(--color-text-light);
-      margin-bottom: 1rem;
-      line-height: 1.6;
-    }
-    .site-preview strong { color: var(--color-teal); }
-
-    .site-note {
-      font-size: 0.8rem;
-      color: var(--color-text-light);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.4rem;
-      margin-top: 0.75rem;
-      line-height: 1.5;
-    }
-
-    /* Honeypot — invisible pour les humains */
-    .form-trap {
-      position: absolute;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-      tab-index: -1;
-    }
-
-    /* Cooldown */
-    .form-cooldown {
-      display: none;
-      background: #fff3d6;
-      border: 2px solid var(--color-orange);
-      border-radius: var(--radius-md);
-      padding: 1rem 1.25rem;
-      text-align: center;
-      color: var(--color-text);
-      font-size: 0.92rem;
-      line-height: 1.6;
-      margin-top: 1rem;
-    }
-    .form-cooldown strong { color: var(--color-teal); }
-
-    .github-direct-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.65rem;
-      margin-top: 0.9rem;
-      padding: 0.72rem 1rem;
-      border-radius: 999px;
-      background: rgba(36, 41, 46, 0.08);
-      border: 1px solid rgba(36, 41, 46, 0.12);
-      color: #24292e;
-      text-decoration: none;
-      font-weight: 600;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-
-    .github-direct-link:hover {
-      transform: translateY(-1px);
-      background: rgba(36, 41, 46, 0.12);
-      box-shadow: 0 10px 18px rgba(36, 41, 46, 0.10);
-    }
-
-    .github-direct-link svg {
-      width: 1.1rem;
-      height: 1.1rem;
-      flex-shrink: 0;
-    }
-
+    .site-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:2rem; box-shadow:var(--shadow-sm); }
+    .site-card-top { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1rem; }
+    .site-card h2 { font-family:'Crimson Text',Georgia,serif; font-size:1.5rem; color:var(--dark); }
+    .site-card-desc { font-size:.9rem; color:var(--muted); line-height:1.7; margin-bottom:1.5rem; }
+    .site-preview { display:none; background:var(--cream); border:1.5px dashed var(--border); border-radius:var(--r-md); padding:.9rem 1rem; font-size:.85rem; color:var(--muted); margin-bottom:1rem; line-height:1.6; }
+    .site-preview strong { color:var(--teal); }
+    .site-note { font-size:.78rem; color:var(--muted); margin-top:.75rem; line-height:1.6; }
+    .github-btn { display:inline-flex; align-items:center; gap:.6rem; padding:.65rem 1.2rem; border-radius:var(--r-pill); background:rgba(36,41,46,.08); border:1px solid rgba(36,41,46,.15); color:#24292e; font-family:var(--font-body); font-size:.85rem; font-weight:600; cursor:pointer; transition:background .2s, transform .2s, box-shadow .2s; text-decoration:none; }
+    .github-btn:hover { background:rgba(36,41,46,.13); transform:translateY(-1px); box-shadow:0 6px 16px rgba(36,41,46,.1); }
+    .github-btn svg { width:16px; height:16px; flex-shrink:0; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <div class="page-header">
-    <div class="container">
-      <h1 data-i18n="ideas.header.title">Boîte à idées</h1>
-      <p data-i18n="ideas.header.sub">votre avis compte pour faire vivre le Village</p>
+  <nav class="site-nav scrolled" id="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="assets/images/logo-header.png" alt="Le Village Café Associatif"></a>
+      <div class="nav-links" role="navigation">
+        <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+        <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+        <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+        <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+        <a href="adhesion.html" data-fr="Adhésion" data-en="Membership">Adhésion</a>
+        <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+        <a href="boite-a-idees.html" class="active" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
+        <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+      </div>
+      <div class="nav-right">
+        <div class="lang-switch"><button class="lang-btn active" data-lang="fr">FR</button><button class="lang-btn" data-lang="en">EN</button></div>
+        <a href="adhesion.html" class="btn btn-primary nav-adhere" data-fr="Adhérer" data-en="Join us">Adhérer</a>
+        <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a>
+    <a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a>
+    <a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a>
+    <a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a>
+    <a href="adhesion.html" data-fr="Adhésion" data-en="Membership">Adhésion</a>
+    <a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a>
+    <a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</a>
+    <a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a>
+  </div>
+
+  <div class="page-hd">
+    <div class="page-hd-inner">
+      <span class="page-hd-label fin fin-1" data-fr="Votre avis compte" data-en="Your voice matters">Votre avis compte</span>
+      <h1 class="page-hd-title fin fin-2" data-fr="Boîte à idées" data-en="Ideas box">Boîte à idées</h1>
+      <p class="page-hd-sub fin fin-3" data-fr="Partagez vos idées pour faire évoluer Le Village" data-en="Share your ideas to help Le Village grow">Partagez vos idées pour faire évoluer Le Village</p>
     </div>
   </div>
 
-  <main id="main-content">
-    <div class="container">
-
-      <!-- FORMULAIRE -->
-      <section class="section-formulaire fade-up fade-up-1" aria-labelledby="form-title">
-        <div class="form-card">
-          <h2 id="form-title" data-i18n="ideas.form.title">Partager une idée</h2>
+  <main>
+    <!-- Formulaire -->
+    <section class="band-teal">
+      <div class="container">
+        <p class="s-label reveal" data-fr="Soumettre une idée" data-en="Submit an idea">Soumettre une idée</p>
+        <h2 class="s-title reveal" style="color:var(--white);margin-bottom:2rem;" data-fr="Partagez votre idée avec le CA" data-en="Share your idea with the board">Partagez votre idée avec le CA</h2>
+        <div class="form-card reveal">
           <form id="idee-form" novalidate>
-
             <div class="form-group">
-              <label class="form-label" for="pseudo" data-i18n="ideas.form.pseudo">Votre prénom ou pseudo *</label>
-              <input class="form-input" type="text" id="pseudo" name="pseudo" placeholder="Marie, Le voisin du 3e…" data-i18n-attr="placeholder:ideas.form.pseudo.ph" required maxlength="50" autocomplete="off">
+              <label class="form-label" for="pseudo" data-fr="Votre prénom ou pseudo *" data-en="Your first name or nickname *">Votre prénom ou pseudo *</label>
+              <input class="form-input" type="text" id="pseudo" name="pseudo" placeholder="Marie, Le voisin du 3e…" data-fr-placeholder="Marie, Le voisin du 3e…" data-en-placeholder="Marie, the 3rd floor neighbour…" required maxlength="50" autocomplete="off">
             </div>
-
             <div class="form-group">
-              <label class="form-label" for="idee" data-i18n="ideas.form.idea">Votre idée *</label>
-              <textarea class="form-textarea" id="idee" name="idee" placeholder="Et si on organisait… On pourrait aussi…" data-i18n-attr="placeholder:ideas.form.idea.ph" required maxlength="500"></textarea>
-              <p class="form-hint" data-i18n="ideas.form.idea.hint">Toutes les idées sont les bienvenues !</p>
+              <label class="form-label" for="idee" data-fr="Votre idée *" data-en="Your idea *">Votre idée *</label>
+              <textarea class="form-textarea" id="idee" name="idee" placeholder="Et si on organisait… On pourrait aussi…" data-fr-placeholder="Et si on organisait… On pourrait aussi…" data-en-placeholder="What if we organised… We could also…" required maxlength="500"></textarea>
+              <p class="form-hint" data-fr="Toutes les idées sont les bienvenues !" data-en="All ideas are welcome!">Toutes les idées sont les bienvenues !</p>
             </div>
-
             <div class="form-group">
-              <label class="form-label" for="contact" data-i18n="ideas.form.contact">Votre téléphone ou email *</label>
-              <input class="form-input" type="text" id="contact" name="contact" placeholder="Pour que le CA puisse vous recontacter si besoin" data-i18n-attr="placeholder:ideas.form.contact.ph" required maxlength="100" autocomplete="off">
-              <p class="form-hint" data-i18n="ideas.form.contact.hint">Ces coordonnées ne sont jamais affichées publiquement — visibles uniquement par le CA.</p>
+              <label class="form-label" for="contact" data-fr="Votre téléphone ou email *" data-en="Your phone or email *">Votre téléphone ou email *</label>
+              <input class="form-input" type="text" id="contact" name="contact" placeholder="Pour que le CA puisse vous recontacter si besoin" data-fr-placeholder="Pour que le CA puisse vous recontacter si besoin" data-en-placeholder="So the board can reach you if needed" required maxlength="100" autocomplete="off">
+              <p class="form-hint" data-fr="Visible uniquement par le CA — jamais affiché publiquement." data-en="Visible only to the board — never displayed publicly.">Visible uniquement par le CA — jamais affiché publiquement.</p>
             </div>
-
-
-            <!-- Honeypot anti-spam — invisible pour les humains, rempli automatiquement par les bots -->
             <div class="form-trap" aria-hidden="true">
-              <label for="website" data-i18n="ideas.honey">Ne pas remplir ce champ</label>
               <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
             </div>
-            <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
-              <span id="submit-text" data-i18n="ideas.form.submit">Envoyer mon idée</span>
+            <button type="submit" class="btn btn-amber form-submit" id="submit-btn">
+              <span id="submit-text" data-fr="Envoyer mon idée" data-en="Send my idea">Envoyer mon idée</span>
             </button>
-
-            <div class="form-success" id="form-success" role="alert" data-i18n="ideas.form.success">
-              Merci ! Votre idée a bien été ajoutée au tableau.
-            </div>
-
-            <div class="form-cooldown" id="form-cooldown" role="alert" data-i18n-html="ideas.form.cooldown.html">
+            <div class="form-success" id="form-success" role="alert" data-fr="Merci ! Votre idée a bien été ajoutée au tableau." data-en="Thank you! Your idea has been added to the board.">Merci ! Votre idée a bien été ajoutée au tableau.</div>
+            <div class="form-cooldown" id="form-cooldown" role="alert">
               Vous avez déjà soumis <strong id="cooldown-count"></strong> idée(s) aujourd'hui.<br>
               Revenez dans <strong id="cooldown-remaining"></strong> pour en soumettre une nouvelle.
             </div>
-            <div class="form-error" id="form-error" role="alert" data-i18n="ideas.form.error">
-              Une erreur est survenue. Veuillez réessayer.
-            </div>
+            <div class="form-error" id="form-error" role="alert" data-fr="Une erreur est survenue. Veuillez réessayer." data-en="An error occurred. Please try again.">Une erreur est survenue. Veuillez réessayer.</div>
           </form>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- POST-ITS -->
-      <section class="section-postits fade-up fade-up-2" aria-labelledby="postits-title">
-
-        <div class="postits-header">
-          <h2 id="postits-title" style="margin:0;" data-i18n="ideas.list.title">Les idées du Village</h2>
+    <!-- Post-its -->
+    <section style="padding:5rem 0;">
+      <div class="container">
+        <div class="postits-header reveal">
+          <div>
+            <p class="s-label" data-fr="Idées partagées" data-en="Shared ideas">Idées partagées</p>
+            <h2 class="s-title" data-fr="Les idées du Village" data-en="Village ideas">Les idées du Village</h2>
+          </div>
           <span class="postits-count" id="postits-count"></span>
         </div>
-
-        <div class="postits-grid" id="postits-grid" aria-live="polite">
-          <p class="postits-loading" data-i18n="ideas.list.loading">Chargement des idées…</p>
+        <div class="postits-grid reveal" id="postits-grid" aria-live="polite">
+          <p class="postits-loading" data-fr="Chargement des idées…" data-en="Loading ideas…">Chargement des idées…</p>
         </div>
+      </div>
+    </section>
 
-      </section>
-
-      <!-- SUGGESTIONS SITE WEB -->
-      <section class="section-site fade-up fade-up-3" aria-labelledby="site-title">
-        <div class="site-card">
-          <div class="site-card-header">
-            <div class="site-card-header" style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center;">
-              <h2 id="site-title" style="margin-bottom: 0;" data-i18n="ideas.site.title">Améliorer le site web</h2>
-              <a href="https://github.com/SKOHscripts" target="_blank" rel="noopener noreferrer" aria-label="Voir le GitHub de SKOHscripts" data-i18n-attr="aria-label:ideas.site.profile.aria" class="github-direct-link" style="font-size: 0.9rem; margin-top: 0;">
-                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.24 3.32.95.1-.74.4-1.24.73-1.53-2.56-.29-5.25-1.28-5.25-5.71 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.97.13 2.88.39 2.19-1.5 3.16-1.19 3.16-1.19.63 1.58.24 2.75.12 3.04.73.81 1.18 1.85 1.18 3.11 0 4.44-2.69 5.41-5.26 5.7.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.13 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
-                <span data-i18n="ideas.site.profile">Voir le profil</span>
-              </a>
-            </div>
+    <!-- GitHub section -->
+    <section class="band-dark">
+      <div class="container">
+        <p class="s-label reveal" data-fr="Pour les technophiles" data-en="For tech enthusiasts">Pour les technophiles</p>
+        <h2 class="s-title reveal" style="margin-bottom:1.75rem;" data-fr="Améliorer le site web" data-en="Improve the website">Améliorer le site web</h2>
+        <div class="site-card reveal">
+          <div class="site-card-top">
+            <h2 data-fr="Ouvrir une suggestion GitHub" data-en="Open a GitHub suggestion">Ouvrir une suggestion GitHub</h2>
+            <a href="https://github.com/SKOHscripts" target="_blank" rel="noopener noreferrer" class="github-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.24 3.32.95.1-.74.4-1.24.73-1.53-2.56-.29-5.25-1.28-5.25-5.71 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.97.13 2.88.39 2.19-1.5 3.16-1.19 3.16-1.19.63 1.58.24 2.75.12 3.04.73.81 1.18 1.85 1.18 3.11 0 4.44-2.69 5.41-5.26 5.7.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.13 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+              <span data-fr="Voir le profil" data-en="View profile">Voir le profil</span>
+            </a>
           </div>
-          <p class="site-card-desc" data-i18n="ideas.site.desc">
-            Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ?
-            Votre proposition sera directement transmise au responsable technique sous forme d'issue GitHub.
-          </p>
-
-          <div class="site-form-row">
-            <div class="form-group" style="margin-bottom:0">
-              <label class="form-label" for="site-titre" data-i18n="ideas.site.titleLbl">Titre de la suggestion *</label>
-              <input class="form-input" type="text" id="site-titre"
-                placeholder="ex : Le menu ne se ferme pas sur mobile" data-i18n-attr="placeholder:ideas.site.titlePh"
-                maxlength="100" autocomplete="off"
-                oninput="updateSitePreview()">
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-              <label class="form-label" for="site-desc" data-i18n="ideas.site.descLbl">Description (optionnel)</label>
-              <textarea class="form-textarea" id="site-desc"
-                placeholder="Décrivez le problème ou l'amélioration souhaitée…" data-i18n-attr="placeholder:ideas.site.descPh"
-                maxlength="1000" style="min-height:80px"
-                oninput="updateSitePreview()"></textarea>
-            </div>
+          <p class="site-card-desc" data-fr="Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ? Votre proposition sera transmise au responsable technique sous forme d'issue GitHub." data-en="A suggestion for the site — bug, usability, new feature? Your proposal will be sent to the technical lead as a GitHub issue.">Une suggestion pour le site — bug, ergonomie, nouvelle fonctionnalité ? Votre proposition sera transmise au responsable technique sous forme d'issue GitHub.</p>
+          <div class="form-group">
+            <label class="form-label" for="site-titre" data-fr="Titre de la suggestion *" data-en="Suggestion title *">Titre de la suggestion *</label>
+            <input class="form-input" type="text" id="site-titre" placeholder="ex : Le menu ne se ferme pas sur mobile" data-fr-placeholder="ex : Le menu ne se ferme pas sur mobile" data-en-placeholder="e.g. The menu doesn't close on mobile" maxlength="100" autocomplete="off">
           </div>
-
-          <!-- Aperçu de l'issue -->
+          <div class="form-group">
+            <label class="form-label" for="site-desc" data-fr="Description (optionnel)" data-en="Description (optional)">Description (optionnel)</label>
+            <textarea class="form-textarea" id="site-desc" placeholder="Décrivez le problème ou l'amélioration souhaitée…" data-fr-placeholder="Décrivez le problème ou l'amélioration souhaitée…" data-en-placeholder="Describe the issue or improvement…" maxlength="1000"></textarea>
+          </div>
           <div class="site-preview" id="site-preview">
-            <strong data-i18n="ideas.site.preview.t">Titre :</strong> <span id="preview-titre"></span><br>
-            <strong data-i18n="ideas.site.preview.d">Description :</strong> <span id="preview-desc">—</span>
+            <strong data-fr="Titre :" data-en="Title:">Titre :</strong> <span id="preview-titre"></span><br>
+            <strong data-fr="Description :" data-en="Description:">Description :</strong> <span id="preview-desc">—</span>
           </div>
-
-          <button class="btn btn-secondary" id="site-submit" onclick="ouvrirIssueGitHub()" style="width:100%; justify-content:center;" data-i18n="ideas.site.cta">
+          <button class="btn btn-primary form-submit" id="site-submit" type="button" style="margin-top:0;" data-fr="Ouvrir une suggestion sur GitHub →" data-en="Open a suggestion on GitHub →">
             Ouvrir une suggestion sur GitHub →
           </button>
-
-          <p class="site-note" data-i18n="ideas.site.note">
-            Un compte GitHub est nécessaire pour soumettre. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur "Submit new issue".
-          </p>
+          <p class="site-note" data-fr="Un compte GitHub est nécessaire. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur &quot;Submit new issue&quot;." data-en="A GitHub account is required. A new tab will open with the suggestion pre-filled — just click 'Submit new issue'.">Un compte GitHub est nécessaire. Un nouvel onglet s'ouvrira avec la suggestion pré-remplie — il suffira de cliquer sur "Submit new issue".</p>
         </div>
-      </section>
-
-    </div>
+      </div>
+    </section>
   </main>
 
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/components.js"></script>
-  <script src="assets/js/lightbox.js" defer></script>
-  <script>
-    // ── Config Supabase ──────────────────────────────────────
-    const SUPABASE_URL     = 'https://evifxtecjhemmaxaiozt.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
-    const sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><img src="assets/images/logo-detoure-orange.png" alt="Le Village" class="footer-logo"><p class="footer-tagline" data-fr="Un espace de vie associatif au cœur du 8e arrondissement de Lyon." data-en="An associative space at the heart of Lyon's 8th arrondissement.">Un espace de vie associatif au cœur du 8e arrondissement de Lyon.</p><div class="footer-social"><a href="https://www.facebook.com/profile.php?id=61574530611496" class="soc-btn" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="https://www.instagram.com/cafe_associatif_le_village" class="soc-btn" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a></div></div>
+        <div><p class="fc-title" data-fr="Navigation" data-en="Navigation">Navigation</p><nav class="fc-links"><a href="index.html" data-fr="Accueil" data-en="Home">Accueil</a><a href="agenda.html" data-fr="Agenda" data-en="Agenda">Agenda</a><a href="qui-sommes-nous.html" data-fr="Qui sommes-nous" data-en="About us">Qui sommes-nous</a><a href="carte.html" data-fr="La Carte" data-en="Menu">La Carte</a><a href="contact.html" data-fr="Contact" data-en="Contact">Contact</a></nav></div>
+        <div><p class="fc-title" data-fr="Participer" data-en="Get involved">Participer</p><nav class="fc-links"><a href="adhesion.html" data-fr="Adhérer" data-en="Join">Adhérer</a><a href="don.html" data-fr="Faire un don" data-en="Donate">Faire un don</a><a href="boite-a-idees.html" data-fr="Boîte à idées" data-en="Idea box">Boîte à idées</a></nav></div>
+        <div><p class="fc-title" data-fr="Horaires" data-en="Hours">Horaires</p><div class="fc-hours"><p class="fc-hour" data-fr-rich="<strong>Mar</strong> 14h30 – 19h00" data-en-rich="<strong>Tue</strong> 2:30pm – 7:00pm"><strong>Mar</strong> 14h30 – 19h00</p><p class="fc-hour" data-fr-rich="<strong>Ven</strong> 16h00 – 21h00" data-en-rich="<strong>Fri</strong> 4:00pm – 9:00pm"><strong>Ven</strong> 16h00 – 21h00</p><p class="fc-hour" data-fr-rich="<strong>Dim</strong> 10h00 – 13h00" data-en-rich="<strong>Sun</strong> 10:00am – 1:00pm"><strong>Dim</strong> 10h00 – 13h00</p></div><p style="font-size:.78rem;color:rgba(255,255,255,.22);margin-top:1rem;line-height:1.5;">8 rue du Chalumeaux<br>Lyon 8e</p></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 Café Associatif Le Village — Association loi 1901</span><div class="footer-bottom-links"><a href="contact.html" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a><a href="benevoles.html" data-fr="Bénévoles" data-en="Volunteers">Bénévoles</a><a href="ca.html" data-fr="Espace CA" data-en="Board area">Espace CA</a></div></div>
+    </div>
+  </footer>
 
-    // ── GitHub ───────────────────────────────────────────────
+  <script src="assets/js/village-i18n.js"></script>
+  <script>
+    const burger = document.getElementById('nav-burger'), drawer = document.getElementById('nav-drawer');
+    burger.addEventListener('click', () => { const open = burger.classList.toggle('open'); drawer.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('open'); drawer.classList.remove('open'); burger.setAttribute('aria-expanded', false); document.body.style.overflow = ''; }));
+    const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     const GITHUB_OWNER = 'SKOHscripts';
     const GITHUB_REPO  = 'le-village-cafe-associatif.github.io';
 
-    // ── Fonctions utilitaires ────────────────────────────────
-    function escapeHtml(str) {
-      const div = document.createElement('div');
-      div.appendChild(document.createTextNode(str));
-      return div.innerHTML;
-    }
+    function escHtml(s) { const d = document.createElement('div'); d.appendChild(document.createTextNode(String(s))); return d.innerHTML; }
+    function fmtDate(iso) { return new Date(iso).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' }); }
 
-    function i18nT(key, fallback) {
-      return (window.i18n && window.i18n.dict) ? window.i18n.t(key) : fallback;
-    }
-
-    function dateTag() {
-      return (window.i18n && window.i18n.locale === 'en') ? 'en-GB' : 'fr-FR';
-    }
-
-    function formatDate(isoString) {
-      const d = new Date(isoString);
-      return d.toLocaleDateString(dateTag(), { day: 'numeric', month: 'long', year: 'numeric' });
-    }
-
-    // ── Charger les idées ────────────────────────────────────
     let cachedIdees = null;
 
     function renderIdees() {
-      const grid  = document.getElementById('postits-grid');
+      const grid = document.getElementById('postits-grid');
       const count = document.getElementById('postits-count');
       if (!grid || !cachedIdees) return;
-
       if (!cachedIdees.length) {
-        grid.innerHTML = `<p class="postits-empty">${escapeHtml(i18nT('ideas.list.empty', 'Soyez le premier à partager une idée !'))}</p>`;
+        grid.innerHTML = '<p class="postits-empty">Soyez le premier à partager une idée !</p>';
         if (count) count.textContent = '';
         return;
       }
-
-      if (count) {
-        const key = cachedIdees.length > 1 ? 'ideas.list.count.many' : 'ideas.list.count';
-        const tpl = i18nT(key, `${cachedIdees.length} idée${cachedIdees.length > 1 ? 's' : ''}`);
-        count.textContent = tpl.replace('{count}', cachedIdees.length);
-      }
-
-      grid.innerHTML = cachedIdees.map(idee => `
-        <div class="postit" data-id="${idee.id}">
-          <p class="postit-pseudo">${escapeHtml(idee.pseudo)}</p>
-          <p class="postit-texte">${escapeHtml(idee.idee)}</p>
-          <p class="postit-date">${formatDate(idee.created_at)}</p>
+      if (count) count.textContent = cachedIdees.length + ' idée' + (cachedIdees.length > 1 ? 's' : '');
+      grid.innerHTML = cachedIdees.map(i => `
+        <div class="postit">
+          <p class="postit-pseudo">${escHtml(i.pseudo)}</p>
+          <p class="postit-texte">${escHtml(i.idee)}</p>
+          <p class="postit-date">${fmtDate(i.created_at)}</p>
         </div>
       `).join('');
     }
 
     async function chargerIdees() {
-      const grid = document.getElementById('postits-grid');
-      if (!grid) return;
       try {
-        const { data, error } = await sbClient
-          .from('idees')
-          .select('id, pseudo, idee, created_at')
-          .eq('visible', true)
-          .order('created_at', { ascending: false });
+        const { data, error } = await sb.from('idees').select('id,pseudo,idee,created_at').eq('visible', true).order('created_at', { ascending: false });
         if (error) throw error;
         cachedIdees = data || [];
         renderIdees();
-      } catch (err) {
-        console.error('Erreur chargement idées:', err);
-        grid.innerHTML = `<p class="postits-empty">${escapeHtml(i18nT('ideas.list.unavailable', 'Impossible de charger les idées pour le moment.'))}</p>`;
+      } catch(e) {
+        document.getElementById('postits-grid').innerHTML = '<p class="postits-empty">Impossible de charger les idées pour le moment.</p>';
       }
     }
 
-    document.addEventListener('i18n:changed', renderIdees);
-    document.addEventListener('i18n:ready', renderIdees);
-
-    // ── Suggestions site → GitHub ────────────────────────────
     function updateSitePreview() {
-      const titre   = document.getElementById('site-titre').value.trim();
-      const desc    = document.getElementById('site-desc').value.trim();
-      const preview = document.getElementById('site-preview');
-      const btn     = document.getElementById('site-submit');
+      const titre = document.getElementById('site-titre').value.trim();
+      const desc  = document.getElementById('site-desc').value.trim();
+      const prev  = document.getElementById('site-preview');
+      const btn   = document.getElementById('site-submit');
       if (titre) {
-        preview.style.display = 'block';
+        prev.style.display = 'block';
         document.getElementById('preview-titre').textContent = titre;
         document.getElementById('preview-desc').textContent  = desc || '—';
         btn.disabled = false;
       } else {
-        preview.style.display = 'none';
+        prev.style.display = 'none';
         btn.disabled = true;
       }
     }
+
+    document.getElementById('site-titre').addEventListener('input', updateSitePreview);
+    document.getElementById('site-desc').addEventListener('input', updateSitePreview);
+    document.getElementById('site-submit').addEventListener('click', function() { ouvrirIssueGitHub(); });
 
     function ouvrirIssueGitHub() {
       const titre = document.getElementById('site-titre').value.trim();
       const desc  = document.getElementById('site-desc').value.trim();
       if (!titre) { document.getElementById('site-titre').focus(); return; }
-      const body = [
-        desc ? `### Description\n${desc}` : '',
-        '\n---\n*Suggestion soumise via la boîte à idées du site Le Village*',
-      ].filter(Boolean).join('\n');
-      const url = new URL(`https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/issues/new`);
+      const body = [desc ? `### Description\n${desc}` : '', '\n---\n*Suggestion soumise via la boîte à idées du site Le Village*'].filter(Boolean).join('\n');
+      const url  = new URL(`https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/issues/new`);
       url.searchParams.set('title', `[Site] ${titre}`);
       url.searchParams.set('body', body);
       url.searchParams.set('labels', 'amélioration');
@@ -578,130 +278,62 @@
       document.getElementById('site-preview').style.display = 'none';
     }
 
-    // ── Init — dans DOMContentLoaded car components.js est async ─
     document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('site-submit').disabled = true;
 
-      // Désactiver bouton GitHub tant que le titre est vide
-      const btnSite = document.getElementById('site-submit');
-      if (btnSite) btnSite.disabled = true;
+      const COOLDOWN_MAX = 5, COOLDOWN_MS = 86400000, COOLDOWN_KEY = 'village_idees_log';
 
-      // Écouter le formulaire idées
-      const form = document.getElementById('idee-form');
-      if (form) {
-        // ── Constantes cooldown ──
-        const COOLDOWN_MAX      = 5;    // Nombre max d'idées par jour
-        const COOLDOWN_MS       = 24 * 60 * 60 * 1000; // 24h en ms
-        const COOLDOWN_KEY      = 'village_idees_log'; // Clé localStorage
-
-        // Lire l'historique des soumissions du navigateur
-        function lireHistorique() {
-          try {
-            const raw = localStorage.getItem(COOLDOWN_KEY);
-            if (!raw) return [];
-            const log = JSON.parse(raw);
-            const now = Date.now();
-            // Ne garder que les soumissions des dernières 24h
-            return log.filter(ts => now - ts < COOLDOWN_MS);
-          } catch { return []; }
-        }
-
-        // Enregistrer une nouvelle soumission
-        function enregistrerSoumission() {
-          const log = lireHistorique();
-          log.push(Date.now());
-          localStorage.setItem(COOLDOWN_KEY, JSON.stringify(log));
-        }
-
-        // Vérifier et afficher l'état du cooldown au chargement
-        function verifierCooldown() {
-          const log   = lireHistorique();
-          const btn   = document.getElementById('submit-btn');
-          const msg   = document.getElementById('form-cooldown');
-          if (!btn || !msg) return;
-
-          if (log.length >= COOLDOWN_MAX) {
-            // Calculer le temps restant avant que la plus ancienne soumission expire
-            const plusAncienne  = Math.min(...log);
-            const expireDs      = plusAncienne + COOLDOWN_MS - Date.now();
-            const heures        = Math.ceil(expireDs / (1000 * 60 * 60));
-
-            btn.disabled = true;
-            msg.style.display = 'block';
-            document.getElementById('cooldown-count').textContent     = log.length;
-            document.getElementById('cooldown-remaining').textContent = `${heures}h`;
-          } else {
-            btn.disabled = false;
-            msg.style.display = 'none';
-          }
-        }
-
-        // Appeler au chargement
-        verifierCooldown();
-
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-
-          // ── Vérification honeypot ──
-          const honeypot = document.getElementById('website');
-          if (honeypot && honeypot.value.trim() !== '') {
-            // Bot détecté — on simule un succès sans rien envoyer
-            console.log('Honeypot déclenché');
-            document.getElementById('form-success').style.display = 'block';
-            form.reset();
-            return;
-          }
-
-          // ── Vérification cooldown ──
-          const log = lireHistorique();
-          if (log.length >= COOLDOWN_MAX) {
-            verifierCooldown();
-            return;
-          }
-
-          const pseudo  = document.getElementById('pseudo').value.trim();
-          const idee    = document.getElementById('idee').value.trim();
-          const contact = document.getElementById('contact').value.trim();
-          const btn     = document.getElementById('submit-btn');
-          const txtBtn  = document.getElementById('submit-text');
-          const success = document.getElementById('form-success');
-          const erreur  = document.getElementById('form-error');
-
-          if (!pseudo || !idee || !contact) return;
-
-          btn.disabled = true;
-          txtBtn.textContent = i18nT('ideas.form.sending', 'Envoi en cours…');
-          success.style.display = 'none';
-          erreur.style.display  = 'none';
-
-          try {
-            const { error } = await sbClient
-              .from('idees')
-              .insert([{ pseudo, idee, contact, visible: true }]);
-            if (error) throw error;
-
-            // Enregistrer la soumission dans localStorage
-            enregistrerSoumission();
-
-            success.style.display = 'block';
-            form.reset();
-            await chargerIdees();
-
-            // Revérifier le cooldown après soumission
-            verifierCooldown();
-
-          } catch (err) {
-            console.error('Erreur soumission:', err);
-            erreur.style.display = 'block';
-          } finally {
-            btn.disabled = false;
-            txtBtn.textContent = i18nT('ideas.form.submit', 'Envoyer mon idée');
-          }
-        });
+      function lireHisto() {
+        try { const r = localStorage.getItem(COOLDOWN_KEY); if (!r) return []; return JSON.parse(r).filter(ts => Date.now() - ts < COOLDOWN_MS); }
+        catch(_e) { return []; }
       }
+      function saveSoumission() { const l = lireHisto(); l.push(Date.now()); localStorage.setItem(COOLDOWN_KEY, JSON.stringify(l)); }
+      function checkCooldown() {
+        const l = lireHisto(), btn = document.getElementById('submit-btn'), msg = document.getElementById('form-cooldown');
+        if (l.length >= COOLDOWN_MAX) {
+          const h = Math.ceil((Math.min(...l) + COOLDOWN_MS - Date.now()) / 3600000);
+          btn.disabled = true; msg.style.display = 'block';
+          document.getElementById('cooldown-count').textContent = l.length;
+          document.getElementById('cooldown-remaining').textContent = h + 'h';
+        } else { btn.disabled = false; msg.style.display = 'none'; }
+      }
+      checkCooldown();
 
-      // Charger les idées
+      document.getElementById('idee-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        if (document.getElementById('website').value.trim()) { document.getElementById('form-success').style.display = 'block'; e.target.reset(); return; }
+        if (lireHisto().length >= COOLDOWN_MAX) { checkCooldown(); return; }
+
+        const pseudo  = document.getElementById('pseudo').value.trim();
+        const idee    = document.getElementById('idee').value.trim();
+        const contact = document.getElementById('contact').value.trim();
+        const btn     = document.getElementById('submit-btn');
+        const txt     = document.getElementById('submit-text');
+        const suc     = document.getElementById('form-success');
+        const err     = document.getElementById('form-error');
+        if (!pseudo || !idee || !contact) return;
+
+        btn.disabled = true; txt.textContent = 'Envoi en cours…';
+        suc.style.display = 'none'; err.style.display = 'none';
+
+        try {
+          const { error } = await sb.from('idees').insert([{ pseudo, idee, contact, visible: true }]);
+          if (error) throw error;
+          saveSoumission();
+          suc.style.display = 'block';
+          e.target.reset();
+          await chargerIdees();
+          checkCooldown();
+        } catch(ex) {
+          console.error(ex); err.style.display = 'block';
+        } finally {
+          btn.disabled = false; txt.textContent = 'Envoyer mon idée';
+        }
+      });
+
       chargerIdees();
     });
-
   </script>
+  <script src="assets/js/lightbox.js" defer></script>
 </body>
+</html>
