@@ -365,9 +365,9 @@
 
     function updateContent(index) {
       currentIndex = index;
-      contentArea.replaceChildren(buildModalContent(candidates[index]));
+      contentArea.replaceChildren(buildModalContent(candidates.at(index)));
       if (candidates.length > 1) {
-        counter.textContent = `${index + 1} / ${candidates.length}`;
+        counter.textContent = (index + 1) + ' / ' + candidates.length;
         prevBtn.disabled = index === 0;
         nextBtn.disabled = index === candidates.length - 1;
       }
@@ -389,7 +389,7 @@
       if (modal.classList.contains('is-closing')) return;
       modal.classList.add('is-closing');
       overlay.classList.add('is-closing');
-      markDismissed(candidates[currentIndex]);
+      markDismissed(candidates.at(currentIndex));
       const fallbackTimer = setTimeout(cleanup, 350);
       modal.addEventListener('animationend', () => {
         clearTimeout(fallbackTimer);
