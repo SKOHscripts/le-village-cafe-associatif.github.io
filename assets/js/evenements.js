@@ -335,6 +335,29 @@
     let nextBtn = null;
     let counter = null;
 
+    function makeSvgArrow(points) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'event-modal__nav-arrow');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor');
+      svg.setAttribute('stroke-width', '2.5');
+      svg.setAttribute('stroke-linecap', 'round');
+      svg.setAttribute('stroke-linejoin', 'round');
+      svg.setAttribute('aria-hidden', 'true');
+      const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      poly.setAttribute('points', points);
+      svg.appendChild(poly);
+      return svg;
+    }
+
+    function makeNavLabel(text) {
+      const span = document.createElement('span');
+      span.className = 'event-modal__nav-label';
+      span.textContent = text;
+      return span;
+    }
+
     if (candidates.length > 1) {
       const navEl = document.createElement('div');
       navEl.className = 'event-modal__nav';
@@ -343,7 +366,7 @@
       prevBtn.type = 'button';
       prevBtn.className = 'event-modal__nav-btn event-modal__nav-btn--prev';
       prevBtn.setAttribute('aria-label', t('event.popup.prev', 'Évènement précédent'));
-      prevBtn.innerHTML = '&#8592;';
+      prevBtn.append(makeSvgArrow('15 18 9 12 15 6'), makeNavLabel(t('event.popup.prev_label', 'Précédent')));
 
       counter = document.createElement('span');
       counter.className = 'event-modal__nav-counter';
@@ -353,10 +376,15 @@
       nextBtn.type = 'button';
       nextBtn.className = 'event-modal__nav-btn event-modal__nav-btn--next';
       nextBtn.setAttribute('aria-label', t('event.popup.next', 'Évènement suivant'));
-      nextBtn.innerHTML = '&#8594;';
+      nextBtn.append(makeNavLabel(t('event.popup.next_label', 'Suivant')), makeSvgArrow('9 18 15 12 9 6'));
 
       navEl.append(prevBtn, counter, nextBtn);
       modal.appendChild(navEl);
+
+      setTimeout(() => {
+        if (prevBtn && !prevBtn.disabled) prevBtn.classList.add('is-hinting');
+        if (nextBtn && !nextBtn.disabled) nextBtn.classList.add('is-hinting');
+      }, 700);
     }
 
     overlay.appendChild(modal);
