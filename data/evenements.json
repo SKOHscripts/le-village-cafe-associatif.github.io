@@ -1,5 +1,31 @@
 [
   {
+    "id": "afterwork-2026-05-22",
+    "titre": "Afterwork du Village",
+    "titre_en": "Village afterwork",
+    "date": "2026-05-22",
+    "heureDebut": "16:00",
+    "heureFin": "21:00",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
+    "description": "Fin de semaine en douceur : venez boire un verre, jouer, discuter avec les voisins. Entrée libre, adhésion au tarif solidaire.",
+    "description_en": "Ease into the weekend: come for a drink, play games, chat with neighbours. Free entry, solidarity membership rate.",
+    "photos": []
+  },
+  {
+    "id": "afterwork-2026-05-29",
+    "titre": "Afterwork du Village",
+    "titre_en": "Village afterwork",
+    "date": "2026-05-29",
+    "heureDebut": "16:00",
+    "heureFin": "21:00",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
+    "description": "Fin de semaine en douceur : venez boire un verre, jouer, discuter avec les voisins. Entrée libre, adhésion au tarif solidaire.",
+    "description_en": "Ease into the weekend: come for a drink, play games, chat with neighbours. Free entry, solidarity membership rate.",
+    "photos": []
+  },
+  {
     "id": "gouter-familles-2026-06-06",
     "titre": "Goûter des familles",
     "titre_en": "Family tea time",
