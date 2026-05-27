@@ -343,7 +343,7 @@
       prevBtn.type = 'button';
       prevBtn.className = 'event-modal__nav-btn event-modal__nav-btn--prev';
       prevBtn.setAttribute('aria-label', t('event.popup.prev', 'Évènement précédent'));
-      prevBtn.innerHTML = '&#8592;';
+      prevBtn.innerHTML = '<svg class="event-modal__nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg><span class="event-modal__nav-label">' + t('event.popup.prev_label', 'Précédent') + '</span>';
 
       counter = document.createElement('span');
       counter.className = 'event-modal__nav-counter';
@@ -353,10 +353,15 @@
       nextBtn.type = 'button';
       nextBtn.className = 'event-modal__nav-btn event-modal__nav-btn--next';
       nextBtn.setAttribute('aria-label', t('event.popup.next', 'Évènement suivant'));
-      nextBtn.innerHTML = '&#8594;';
+      nextBtn.innerHTML = '<span class="event-modal__nav-label">' + t('event.popup.next_label', 'Suivant') + '</span><svg class="event-modal__nav-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>';
 
       navEl.append(prevBtn, counter, nextBtn);
       modal.appendChild(navEl);
+
+      setTimeout(() => {
+        if (prevBtn && !prevBtn.disabled) prevBtn.classList.add('is-hinting');
+        if (nextBtn && !nextBtn.disabled) nextBtn.classList.add('is-hinting');
+      }, 700);
     }
 
     overlay.appendChild(modal);
