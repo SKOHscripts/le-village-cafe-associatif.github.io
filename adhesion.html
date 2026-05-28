@@ -145,6 +145,11 @@
               <input class="form-input" type="text" id="adresse" name="adresse" maxlength="150" autocomplete="street-address"
                 data-fr-placeholder="8 rue du Chalumeaux, Lyon 8e" data-en-placeholder="8 rue du Chalumeaux, Lyon 8e" placeholder="8 rue du Chalumeaux, Lyon 8e">
             </div>
+            <div class="form-group">
+              <label class="form-label" for="annee_naissance" data-fr="Année de naissance (optionnel)" data-en="Birth year (optional)">Année de naissance (optionnel)</label>
+              <input class="form-input" type="number" id="annee_naissance" name="annee_naissance" min="1900" max="2015" autocomplete="bday-year"
+                data-fr-placeholder="1985" data-en-placeholder="1985" placeholder="1985" style="max-width:14rem;">
+            </div>
             <div class="form-trap" aria-hidden="true">
               <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
             </div>
@@ -170,7 +175,7 @@
         <!-- RGPD -->
         <div class="rgpd-card reveal">
           <h3 data-fr="Gestion de vos données personnelles" data-en="Personal data management">Gestion de vos données personnelles</h3>
-          <p>L'association <strong>Le Village — Café Associatif</strong> collecte : prénom, nom, email, et optionnellement téléphone et adresse postale.</p>
+          <p>L'association <strong>Le Village — Café Associatif</strong> collecte : prénom, nom, email, et optionnellement téléphone, adresse postale et année de naissance.</p>
           <p data-fr="Ces données sont utilisées exclusivement pour gérer les adhésions et vous informer ponctuellement de la vie de l'association. Elles ne sont transmises à aucun tiers." data-en="This data is used exclusively to manage memberships and occasionally inform you about association activities. It is not shared with third parties.">Ces données sont utilisées exclusivement pour gérer les adhésions et vous informer ponctuellement de la vie de l'association. Elles ne sont transmises à aucun tiers.</p>
           <p>Pour exercer vos droits (accès, rectification, suppression), contactez-nous à <a href="mailto:contact@cafe-levillage.org">contact@cafe-levillage.org</a>.</p>
         </div>
@@ -217,11 +222,13 @@
           if (document.getElementById('website').value.trim()) { document.getElementById('form-success').style.display = 'block'; ev.target.reset(); return; }
           if (!document.getElementById('rgpd-consent').checked) return;
 
-          const prenom    = document.getElementById('prenom').value.trim();
-          const nom       = document.getElementById('nom').value.trim();
-          const email     = document.getElementById('email').value.trim();
-          const telephone = document.getElementById('telephone').value.trim();
-          const adresse   = document.getElementById('adresse').value.trim();
+          const prenom          = document.getElementById('prenom').value.trim();
+          const nom             = document.getElementById('nom').value.trim();
+          const email           = document.getElementById('email').value.trim();
+          const telephone       = document.getElementById('telephone').value.trim();
+          const adresse         = document.getElementById('adresse').value.trim();
+          const anneeRaw        = document.getElementById('annee_naissance').value.trim();
+          const annee_naissance = anneeRaw ? parseInt(anneeRaw, 10) : null;
           const btn = document.getElementById('submit-btn');
           const txt = document.getElementById('submit-text');
           const suc = document.getElementById('form-success');
@@ -232,7 +239,7 @@
           suc.style.display = 'none'; err.style.display = 'none';
 
           try {
-            const { error } = await sb.from('adhesions').insert([{ prenom, nom, email, telephone: telephone || null, adresse: adresse || null }]);
+            const { error } = await sb.from('adhesions').insert([{ prenom, nom, email, telephone: telephone || null, adresse: adresse || null, annee_naissance }]);
             if (error) throw error;
             suc.style.display = 'block';
             ev.target.reset();
