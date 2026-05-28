@@ -19,13 +19,28 @@
     .form-success { display:none; background:var(--teal-light); border:2px solid var(--teal); border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:var(--teal); font-weight:600; margin-top:1rem; }
     .form-error   { display:none; background:#fef2f2; border:2px solid #f87171; border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:#dc2626; font-size:.9rem; margin-top:1rem; }
     .form-trap { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
     .checkbox-label { display:flex; align-items:flex-start; gap:.65rem; font-size:.875rem; color:var(--muted); cursor:pointer; line-height:1.5; }
-    .checkbox-label input { -webkit-appearance:none; appearance:none; flex:0 0 auto; width:1.25rem; height:1.25rem; margin:.1rem 0 0; padding:0; border:2px solid var(--teal); border-radius:5px; background:var(--white); position:relative; cursor:pointer; transition:background .15s, border-color .15s; }
-    .checkbox-label input:checked { background:var(--amber); border-color:var(--amber); }
-    .checkbox-label input:checked::after { content:''; position:absolute; left:6px; top:2px; width:5px; height:10px; border:solid var(--white); border-width:0 2px 2px 0; transform:rotate(45deg); }
-    .checkbox-label input:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
-    .checkbox-label.invalid input { border-color:#dc2626; }
+    .checkbox-box { display:block; flex:0 0 1.25rem; width:1.25rem; height:1.25rem; margin-top:.1rem; border:2px solid var(--teal); border-radius:5px; background:var(--white); position:relative; transition:background .15s, border-color .15s; }
+    #rgpd-consent:checked + .checkbox-label .checkbox-box { background:var(--amber); border-color:var(--amber); }
+    #rgpd-consent:checked + .checkbox-label .checkbox-box::after { content:''; position:absolute; left:4px; top:1px; width:6px; height:10px; border:solid var(--white); border-width:0 2px 2px 0; transform:rotate(45deg); }
+    #rgpd-consent:focus-visible + .checkbox-label .checkbox-box { outline:2px solid var(--teal); outline-offset:2px; }
+    .checkbox-group.invalid .checkbox-box { border-color:#dc2626; }
     .consent-error { display:none; color:#dc2626; font-size:.82rem; font-weight:600; margin-top:.55rem; }
+    .field-error { display:none; color:#dc2626; font-size:.78rem; font-weight:600; margin-top:.35rem; }
+    .form-input.invalid { border-color:#dc2626; }
+    .form-input.invalid:focus { border-color:#dc2626; box-shadow:0 0 0 3px rgba(220,38,38,.12); }
+    .success-screen { display:none; text-align:center; padding:3rem 1rem 2rem; }
+    .success-icon { width:5rem; height:5rem; background:var(--teal); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; }
+    .success-screen.show .success-icon { animation:successPop .5s cubic-bezier(.16,1,.3,1) both; }
+    .success-icon svg { width:2.5rem; height:2.5rem; }
+    .success-screen.show .success-icon svg { animation:fadeUp .3s .4s ease both; }
+    .success-title { font-family:var(--font-display); font-size:1.85rem; color:var(--dark); margin-bottom:.5rem; opacity:0; }
+    .success-screen.show .success-title { animation:fadeUp .4s .5s ease both; }
+    .success-sub { font-size:.95rem; color:var(--muted); line-height:1.7; opacity:0; }
+    .success-screen.show .success-sub { animation:fadeUp .4s .65s ease both; }
+    @keyframes successPop { from { transform:scale(0) rotate(-15deg); opacity:0; } to { transform:scale(1) rotate(0); opacity:1; } }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
     .rgpd-card { background:var(--teal-light); border:1.5px solid var(--teal); border-radius:var(--r-xl); padding:1.75rem; margin-top:1.25rem; }
     .rgpd-card h3 { font-size:.875rem; font-weight:700; color:var(--teal); margin-bottom:.75rem; text-transform:uppercase; letter-spacing:.06em; }
     .rgpd-card p  { font-size:.875rem; color:var(--text); line-height:1.7; margin-bottom:.6rem; }
@@ -107,11 +122,11 @@
         <div class="stats-grid reveal" style="margin-top:1.5rem;">
           <div class="stat-card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);">
             <span class="stat-num" id="stat-mois" style="color:white;">—</span>
-            <p class="stat-lbl" style="color:rgba(255,255,255,.55);" data-fr="adhésion(s) ce mois-ci" data-en="membership(s) this month">adhésion(s) ce mois-ci</p>
+            <p class="stat-lbl" style="color:rgba(255,255,255,.55);" data-fr="adhésion(s) en ligne ce mois-ci" data-en="online membership(s) this month">adhésion(s) en ligne ce mois-ci</p>
           </div>
           <div class="stat-card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);">
             <span class="stat-num" id="stat-annee" style="color:white;">—</span>
-            <p class="stat-lbl" style="color:rgba(255,255,255,.55);" data-fr="adhésion(s) cette année" data-en="membership(s) this year">adhésion(s) cette année</p>
+            <p class="stat-lbl" style="color:rgba(255,255,255,.55);" data-fr="adhésion(s) en ligne cette année" data-en="online membership(s) this year">adhésion(s) en ligne cette année</p>
           </div>
         </div>
       </div>
@@ -128,11 +143,13 @@
                 <label class="form-label" for="prenom" data-fr="Prénom *" data-en="First name *">Prénom *</label>
                 <input class="form-input" type="text" id="prenom" name="prenom" required maxlength="50" autocomplete="given-name"
                   data-fr-placeholder="Marie" data-en-placeholder="Marie" placeholder="Marie">
+                <p class="field-error" id="prenom-error" data-fr="Ce champ est obligatoire." data-en="This field is required.">Ce champ est obligatoire.</p>
               </div>
               <div class="form-group">
                 <label class="form-label" for="nom" data-fr="Nom *" data-en="Last name *">Nom *</label>
                 <input class="form-input" type="text" id="nom" name="nom" required maxlength="50" autocomplete="family-name"
                   data-fr-placeholder="Dupont" data-en-placeholder="Dupont" placeholder="Dupont">
+                <p class="field-error" id="nom-error" data-fr="Ce champ est obligatoire." data-en="This field is required.">Ce champ est obligatoire.</p>
               </div>
             </div>
             <div class="form-group">
@@ -140,6 +157,7 @@
               <input class="form-input" type="email" id="email" name="email" required maxlength="100" autocomplete="email"
                 data-fr-placeholder="marie@exemple.fr" data-en-placeholder="marie@example.com" placeholder="marie@exemple.fr">
               <p class="form-hint" data-fr="Vous recevrez un email de confirmation à présenter au café." data-en="You'll receive a confirmation email to present at the café.">Vous recevrez un email de confirmation à présenter au café.</p>
+              <p class="field-error" id="email-error" data-fr="Veuillez saisir une adresse email valide." data-en="Please enter a valid email address.">Veuillez saisir une adresse email valide.</p>
             </div>
             <div class="form-group">
               <label class="form-label" for="telephone" data-fr="Téléphone (optionnel)" data-en="Phone (optional)">Téléphone (optionnel)</label>
@@ -158,9 +176,10 @@
             <div class="form-trap" aria-hidden="true">
               <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
             </div>
-            <div class="form-group" style="margin-top:1.25rem;">
-              <label class="checkbox-label">
-                <input type="checkbox" id="rgpd-consent" name="rgpd" required>
+            <div class="form-group checkbox-group" style="margin-top:1.25rem;">
+              <input type="checkbox" id="rgpd-consent" name="rgpd" required class="sr-only">
+              <label for="rgpd-consent" class="checkbox-label">
+                <span class="checkbox-box" aria-hidden="true"></span>
                 <span data-fr="J'ai lu la politique de gestion des données ci-dessous et j'autorise Le Village — Café Associatif à collecter mes données personnelles dans le cadre de la gestion de mon adhésion. *"
                       data-en="I have read the data policy below and I authorise Le Village — Café Associatif to collect my personal data for membership management purposes. *">J'ai lu la politique de gestion des données ci-dessous et j'autorise Le Village — Café Associatif à collecter mes données personnelles dans le cadre de la gestion de mon adhésion. *</span>
               </label>
@@ -169,13 +188,17 @@
             <button type="submit" class="btn btn-amber form-submit" id="submit-btn">
               <span id="submit-text" data-fr="Envoyer mon adhésion" data-en="Send my membership">Envoyer mon adhésion</span>
             </button>
-            <div class="form-success" id="form-success" role="alert" data-fr="Merci ! Votre demande d'adhésion a bien été enregistrée. À bientôt au Village !" data-en="Thank you! Your membership request has been recorded. See you at Le Village!">
-              Merci ! Votre demande d'adhésion a bien été enregistrée. À bientôt au Village !
-            </div>
-            <div class="form-error" id="form-error" role="alert" data-fr="Une erreur est survenue. Veuillez réessayer ou contacter le café directement." data-en="An error occurred. Please try again or contact the café directly.">
-              Une erreur est survenue. Veuillez réessayer ou contacter le café directement.
-            </div>
           </form>
+          <div class="success-screen" id="success-screen" role="alert">
+            <div class="success-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p class="success-title" data-fr="Merci !" data-en="Thank you!">Merci !</p>
+            <p class="success-sub" data-fr="Votre adhésion a bien été enregistrée. Présentez-vous au Village lors de votre prochaine visite pour régler la cotisation de 5 €. À bientôt !" data-en="Your membership has been recorded. Come by Le Village on your next visit to pay the €5 fee. See you soon!">Votre adhésion a bien été enregistrée. Présentez-vous au Village lors de votre prochaine visite pour régler la cotisation de 5 €. À bientôt !</p>
+          </div>
+          <div class="form-error" id="form-error" role="alert" style="margin-top:1rem;" data-fr="Une erreur est survenue. Veuillez réessayer ou contacter le café directement." data-en="An error occurred. Please try again or contact the café directly.">
+            Une erreur est survenue. Veuillez réessayer ou contacter le café directement.
+          </div>
         </div>
 
         <!-- RGPD -->
@@ -238,49 +261,75 @@
           }
         } catch(e) { console.warn('Stats unavailable:', e); }
 
-        const consent    = document.getElementById('rgpd-consent');
-        const consentErr = document.getElementById('rgpd-error');
-        consent.addEventListener('change', () => {
-          if (consent.checked) { consentErr.style.display = 'none'; consent.closest('.checkbox-label').classList.remove('invalid'); }
+        // ── Champs obligatoires ──────────────────────────────────────────
+        const prenomEl = document.getElementById('prenom');
+        const nomEl    = document.getElementById('nom');
+        const emailEl  = document.getElementById('email');
+        const prenomErr = document.getElementById('prenom-error');
+        const nomErr    = document.getElementById('nom-error');
+        const emailErr  = document.getElementById('email-error');
+
+        function showErr(el, errEl) { el.classList.add('invalid'); errEl.style.display = 'block'; }
+        function clearErr(el, errEl) { el.classList.remove('invalid'); errEl.style.display = 'none'; }
+
+        [prenomEl, nomEl].forEach(el => {
+          const err = document.getElementById(el.id + '-error');
+          el.addEventListener('input', () => { if (el.value.trim()) clearErr(el, err); });
         });
+        emailEl.addEventListener('input', () => { if (emailEl.value.trim()) clearErr(emailEl, emailErr); });
+
+        // ── Consentement RGPD ────────────────────────────────────────────
+        const consent      = document.getElementById('rgpd-consent');
+        const consentErr   = document.getElementById('rgpd-error');
+        const consentGroup = consent.closest('.checkbox-group');
+        consent.addEventListener('change', () => {
+          if (consent.checked) { consentErr.style.display = 'none'; consentGroup.classList.remove('invalid'); }
+        });
+
+        // ── Soumission ───────────────────────────────────────────────────
+        const form          = document.getElementById('adhesion-form');
+        const successScreen = document.getElementById('success-screen');
+        const globalErr     = document.getElementById('form-error');
 
         document.getElementById('adhesion-form').addEventListener('submit', async ev => {
           ev.preventDefault();
-          if (document.getElementById('website').value.trim()) { document.getElementById('form-success').style.display = 'block'; ev.target.reset(); return; }
-          if (!consent.checked) {
-            consentErr.style.display = 'block';
-            consent.closest('.checkbox-label').classList.add('invalid');
-            consent.focus();
-            consentErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (document.getElementById('website').value.trim()) { successScreen.classList.add('show'); form.style.display = 'none'; return; }
+
+          // Validation champs
+          let hasError = false;
+          const prenom = prenomEl.value.trim();
+          const nom    = nomEl.value.trim();
+          const email  = emailEl.value.trim();
+
+          if (!prenom) { showErr(prenomEl, prenomErr); hasError = true; } else clearErr(prenomEl, prenomErr);
+          if (!nom)    { showErr(nomEl, nomErr);    hasError = true; } else clearErr(nomEl, nomErr);
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr(emailEl, emailErr); hasError = true; } else clearErr(emailEl, emailErr);
+          if (!consent.checked) { consentErr.style.display = 'block'; consentGroup.classList.add('invalid'); hasError = true; }
+
+          if (hasError) {
+            const firstInvalid = form.querySelector('.form-input.invalid, .sr-only.invalid');
+            if (firstInvalid) firstInvalid.closest('.form-group, .checkbox-group').scrollIntoView({ behavior:'smooth', block:'center' });
             return;
           }
-          consentErr.style.display = 'none';
-          consent.closest('.checkbox-label').classList.remove('invalid');
+          consentErr.style.display = 'none'; consentGroup.classList.remove('invalid');
 
-          const prenom          = document.getElementById('prenom').value.trim();
-          const nom             = document.getElementById('nom').value.trim();
-          const email           = document.getElementById('email').value.trim();
           const telephone       = document.getElementById('telephone').value.trim();
           const adresse         = document.getElementById('adresse').value.trim();
           const anneeRaw        = document.getElementById('annee_naissance').value.trim();
           const annee_naissance = anneeRaw ? parseInt(anneeRaw, 10) : null;
           const btn = document.getElementById('submit-btn');
           const txt = document.getElementById('submit-text');
-          const suc = document.getElementById('form-success');
-          const err = document.getElementById('form-error');
-          if (!prenom || !nom || !email) return;
-
           btn.disabled = true; txt.textContent = 'Envoi en cours…';
-          suc.style.display = 'none'; err.style.display = 'none';
+          globalErr.style.display = 'none';
 
           try {
             const { error } = await sb.from('adhesions').insert([{ prenom, nom, email, telephone: telephone || null, adresse: adresse || null, annee_naissance }]);
             if (error) throw error;
-            suc.style.display = 'block';
-            ev.target.reset();
+            form.style.opacity = '0';
+            form.style.transition = 'opacity .25s ease';
+            setTimeout(() => { form.style.display = 'none'; successScreen.classList.add('show'); }, 250);
           } catch(ex) {
-            console.error(ex); err.style.display = 'block';
-          } finally {
+            console.error(ex); globalErr.style.display = 'block';
             btn.disabled = false; txt.textContent = 'Envoyer mon adhésion';
           }
         });
