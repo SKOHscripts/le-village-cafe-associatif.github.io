@@ -51,6 +51,7 @@
     .dashboard-card .zoom-hint { justify-content:flex-start; padding:.5rem 1.2rem; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
 <body>
 
@@ -250,7 +251,13 @@
     const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
 
+    const EMAILJS_PUBLIC_KEY  = 'p_RGCZSSSSeb2UBzu';
+    const EMAILJS_SERVICE_ID  = 'service_446bi4r';
+    const EMAILJS_TEMPLATE_ID = 'template_usqzf09';
+
     document.addEventListener('DOMContentLoaded', async () => {
+      if (window.emailjs) emailjs.init(EMAILJS_PUBLIC_KEY);
+
       if (window.supabase) {
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         try {
@@ -325,6 +332,19 @@
           try {
             const { error } = await sb.from('adhesions').insert([{ prenom, nom, email, telephone: telephone || null, adresse: adresse || null, annee_naissance }]);
             if (error) throw error;
+
+            if (window.emailjs) {
+              try {
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                  to_name:       `${prenom} ${nom}`,
+                  to_email:      email,
+                  adhesion_date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
+                });
+              } catch (mailErr) {
+                console.error('Erreur envoi email de confirmation:', mailErr);
+              }
+            }
+
             form.style.opacity = '0';
             form.style.transition = 'opacity .25s ease';
             setTimeout(() => { form.style.display = 'none'; successScreen.classList.add('show'); }, 250);
