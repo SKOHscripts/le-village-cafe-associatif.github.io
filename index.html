@@ -348,6 +348,16 @@
 
     function escHtml(s) { const d = document.createElement('div'); d.appendChild(document.createTextNode(String(s))); return d.innerHTML; }
 
+    function confirmNotice(ev, lang) {
+      if (!ev.confirmationMail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ev.confirmationMail)) return '';
+      const titre = lang === 'en' && ev.titre_en ? ev.titre_en : ev.titre;
+      const subjectBase = lang === 'en' ? 'Attendance confirmation' : 'Confirmation de présence';
+      const href = 'mailto:' + ev.confirmationMail + '?subject=' + encodeURIComponent(titre ? subjectBase + ' — ' + titre : subjectBase);
+      const before = lang === 'en' ? 'Please confirm your attendance by ' : 'Merci de confirmer votre présence par ';
+      const linkLabel = lang === 'en' ? 'email' : 'mail';
+      return `<p class="ecard-confirm"><span class="ecard-confirm-mark" aria-hidden="true">✨</span><span>${escHtml(before)}<a href="${escHtml(href)}">${escHtml(linkLabel)}</a></span></p>`;
+    }
+
     function buildEventCard(ev, lang) {
       const d = new Date(ev.date + 'T00:00:00');
       const dd = d.getDate();
@@ -367,6 +377,7 @@
           <p class="ecard-title">${escHtml(titre)}</p>
           ${meta ? `<p class="ecard-meta">${escHtml(meta)}</p>` : ''}
           ${desc ? `<p class="ecard-desc">${escHtml(desc)}</p>` : ''}
+          ${confirmNotice(ev, lang)}
         </div>
       </div>`;
     }

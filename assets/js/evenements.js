@@ -204,6 +204,39 @@
       || /^assets\/images\/[^/]+\.(jpe?g|png|gif|webp|svg)$/i.test(url);
   }
 
+  function isSafeEmail(email) {
+    return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function buildConfirmationNotice(evt, className) {
+    if (!isSafeEmail(evt.confirmationMail)) return null;
+    const en = currentLocale() === 'en';
+    const p = document.createElement('p');
+    p.className = className;
+
+    const mark = document.createElement('span');
+    mark.className = className + '-mark';
+    mark.setAttribute('aria-hidden', 'true');
+    mark.textContent = '✨';
+    p.appendChild(mark);
+
+    const text = document.createElement('span');
+    text.appendChild(document.createTextNode(
+      en ? 'Please confirm your attendance by ' : 'Merci de confirmer votre présence par '
+    ));
+
+    const a = document.createElement('a');
+    const titre = localizedField(evt, 'titre');
+    const subjectBase = en ? 'Attendance confirmation' : 'Confirmation de présence';
+    const subject = titre ? subjectBase + ' — ' + titre : subjectBase;
+    a.href = 'mailto:' + evt.confirmationMail + '?subject=' + encodeURIComponent(subject);
+    a.textContent = en ? 'email' : 'mail';
+    text.appendChild(a);
+
+    p.appendChild(text);
+    return p;
+  }
+
   function buildExternalLink(href, label, className) {
     const a = document.createElement('a');
     a.setAttribute('rel', 'noopener noreferrer');
@@ -280,6 +313,9 @@
       desc.textContent = description;
       frag.appendChild(desc);
     }
+
+    const confirmNotice = buildConfirmationNotice(evt, 'event-modal__confirm');
+    if (confirmNotice) frag.appendChild(confirmNotice);
 
     const links = document.createElement('div');
     links.className = 'event-modal__links';

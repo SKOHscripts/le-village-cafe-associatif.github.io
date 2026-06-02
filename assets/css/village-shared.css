@@ -3,7 +3,7 @@
    Tokens · Reset · Nav · Footer · Utilities
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,600;0,700;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,600;0,700;1,400;1,600&display=swap');
 
 /* ─── TOKENS ──────────────────────────────── */
 :root {
@@ -22,6 +22,7 @@
 
   --font-display: 'DM Serif Display', Georgia, serif;
   --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-hand:    'Caveat', cursive;
 
   --r-sm: 6px; --r-md: 12px; --r-lg: 20px; --r-xl: 28px; --r-pill: 100px;
 
@@ -247,6 +248,18 @@ button { font-family: inherit; cursor: pointer; }
   .event-modal__nav-btn--next { right:4px; }
   .event-modal__nav-arrow { width:19px; height:19px; }
 }
+
+/* ── Confirmation note ── handwritten, stands out from the rest ── */
+.event-modal__confirm,
+.ecard-confirm { font-family:var(--font-hand); font-weight:700; line-height:1.2; color:var(--amber); background:var(--amber-light); border:1px dashed var(--amber); border-radius:var(--r-md); display:flex; align-items:center; gap:.5rem; }
+.event-modal__confirm { font-size:1.4rem; margin:0 1.5rem 1.25rem; padding:.7rem 1rem; }
+.ecard-confirm { font-size:1.2rem; margin-top:.55rem; padding:.45rem .75rem; }
+.event-modal__confirm a,
+.ecard-confirm a { color:var(--amber); text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; transition:color .2s; }
+.event-modal__confirm a:hover,
+.ecard-confirm a:hover { color:#9a5d08; }
+.event-modal__confirm-mark,
+.ecard-confirm-mark { flex-shrink:0; font-size:1.1em; line-height:1; }
 
 body.has-event-modal { overflow:hidden; }
 @keyframes eventOverlayFadeIn { from { opacity:0; } to { opacity:1; } }
