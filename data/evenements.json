@@ -47,8 +47,9 @@
     "heureFin": "22:00",
     "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
     "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
-    "description": "Une journée en plein air au son de la musique pour guincher, chanter, s'amuser ! avec le groupe \"La sonora del martes\"\nPetite restauration sur place\nRéservation par mail",
-    "description_en": "An outdoor day of music, dance and fun! with the band \"La sonora del martes\"\nLight catering on site\nBooking by email",
+    "description": "Une journée en plein air au son de la musique pour guincher, chanter, s'amuser ! avec le groupe \"La sonora del martes\"\nPetite restauration sur place",
+    "description_en": "An outdoor day of music, dance and fun! with the band \"La sonora del martes\"\nLight catering on site",
+    "confirmationMail": "contact@cafe-levillage.org",
     "photos": ["assets/images/guinguette-2026.png"],
     "photo_alt": "Le groupe La sonora del martes en concert"
   },
