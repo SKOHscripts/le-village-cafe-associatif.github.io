@@ -93,6 +93,10 @@
     .events-grid { display:grid; gap:1.1rem; }
     .ecard { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; display:flex; align-items:stretch; box-shadow:var(--shadow-sm); transition:box-shadow .2s, transform .2s; }
     .ecard:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
+    .ecard--has-photo { flex-direction:column; }
+    .ecard-banner { height:150px; overflow:hidden; flex-shrink:0; }
+    .ecard-banner img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+    .ecard--has-photo .ecard-row { display:flex; align-items:stretch; flex:1; }
     .ecard-date  { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.25rem 1.4rem; min-width:76px; background:var(--teal); color:var(--white); text-align:center; flex-shrink:0; }
     .ecard-date.amber { background:var(--amber); }
     .ecard-dd    { font-family:var(--font-display); font-size:2rem; line-height:1; }
@@ -102,8 +106,6 @@
     .ecard-title { font-weight:600; color:var(--dark); font-size:1rem; line-height:1.3; margin-bottom:.25rem; }
     .ecard-meta  { font-size:.8rem; color:var(--muted); }
     .ecard-desc  { font-size:.82rem; color:var(--muted); line-height:1.55; margin-top:.45rem; }
-    .ecard-thumb { width:96px; flex-shrink:0; overflow:hidden; border-left:1px solid var(--border); }
-    .ecard-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
     .events-empty { text-align:center; padding:2rem; color:var(--muted); font-size:.95rem; }
 
     /* ─── ADHÉSION ────────────────────────────────────── */
@@ -375,7 +377,7 @@
       const desc = lang === 'en' && ev.description_en ? ev.description_en : (ev.description || '');
       const photoUrl = ev.photos && ev.photos.length && isSafeImageUrl(ev.photos[0]) ? ev.photos[0] : null;
       const photoAlt = escHtml(ev.photo_alt || titre || '');
-      return `<div class="ecard">
+      const inner = `
         <div class="ecard-date${isAmber ? ' amber' : ''}">
           <span class="ecard-dd">${dd}</span>
           <span class="ecard-mm">${mm}</span>
@@ -386,9 +388,14 @@
           ${meta ? `<p class="ecard-meta">${escHtml(meta)}</p>` : ''}
           ${desc ? `<p class="ecard-desc">${escHtml(desc)}</p>` : ''}
           ${confirmNotice(ev, lang)}
-        </div>
-        ${photoUrl ? `<div class="ecard-thumb"><img src="${escHtml(photoUrl)}" alt="${photoAlt}" loading="lazy"></div>` : ''}
-      </div>`;
+        </div>`;
+      if (photoUrl) {
+        return `<div class="ecard ecard--has-photo">
+          <div class="ecard-banner"><img src="${escHtml(photoUrl)}" alt="${photoAlt}" loading="lazy"></div>
+          <div class="ecard-row">${inner}</div>
+        </div>`;
+      }
+      return `<div class="ecard">${inner}</div>`;
     }
 
     async function loadEvents() {
