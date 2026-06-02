@@ -31,6 +31,7 @@
     .form-input.invalid { border-color:#dc2626; }
     .form-input.invalid:focus { border-color:#dc2626; box-shadow:0 0 0 3px rgba(220,38,38,.12); }
     .success-screen { display:none; text-align:center; padding:3rem 1rem 2rem; }
+    .success-screen.show { display:block; }
     .success-icon { width:5rem; height:5rem; background:var(--teal); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; }
     .success-screen.show .success-icon { animation:successPop .5s cubic-bezier(.16,1,.3,1) both; }
     .success-icon svg { width:2.5rem; height:2.5rem; }
@@ -39,6 +40,8 @@
     .success-screen.show .success-title { animation:fadeUp .4s .5s ease both; }
     .success-sub { font-size:.95rem; color:var(--muted); line-height:1.7; opacity:0; }
     .success-screen.show .success-sub { animation:fadeUp .4s .65s ease both; }
+    .success-screen .btn { margin-top:1.75rem; opacity:0; }
+    .success-screen.show .btn { animation:fadeUp .4s .85s ease both; }
     @keyframes successPop { from { transform:scale(0) rotate(-15deg); opacity:0; } to { transform:scale(1) rotate(0); opacity:1; } }
     @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
     .rgpd-card { background:var(--teal-light); border:1.5px solid var(--teal); border-radius:var(--r-xl); padding:1.75rem; margin-top:1.25rem; }
@@ -51,6 +54,7 @@
     .dashboard-card .zoom-hint { justify-content:flex-start; padding:.5rem 1.2rem; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
 <body>
 
@@ -195,6 +199,7 @@
             </div>
             <p class="success-title" data-fr="Merci !" data-en="Thank you!">Merci !</p>
             <p class="success-sub" data-fr="Votre adhésion a bien été enregistrée. Présentez-vous au Village lors de votre prochaine visite pour régler la cotisation de 5 €. À bientôt !" data-en="Your membership has been recorded. Come by Le Village on your next visit to pay the €5 fee. See you soon!">Votre adhésion a bien été enregistrée. Présentez-vous au Village lors de votre prochaine visite pour régler la cotisation de 5 €. À bientôt !</p>
+            <button type="button" class="btn btn-outline" id="reset-btn" data-fr="Faire une nouvelle adhésion" data-en="Submit another membership">Faire une nouvelle adhésion</button>
           </div>
           <div class="form-error" id="form-error" role="alert" style="margin-top:1rem;" data-fr="Une erreur est survenue. Veuillez réessayer ou contacter le café directement." data-en="An error occurred. Please try again or contact the café directly.">
             Une erreur est survenue. Veuillez réessayer ou contacter le café directement.
@@ -250,7 +255,13 @@
     const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
 
+    const EMAILJS_PUBLIC_KEY  = 'p_RGCZSSSSeb2UBzu';
+    const EMAILJS_SERVICE_ID  = 'service_446bi4r';
+    const EMAILJS_TEMPLATE_ID = 'template_usqzf09';
+
     document.addEventListener('DOMContentLoaded', async () => {
+      if (window.emailjs) emailjs.init(EMAILJS_PUBLIC_KEY);
+
       if (window.supabase) {
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         try {
@@ -291,6 +302,22 @@
         const successScreen = document.getElementById('success-screen');
         const globalErr     = document.getElementById('form-error');
 
+        // ── Retour au formulaire après succès ────────────────────────────
+        document.getElementById('reset-btn').addEventListener('click', () => {
+          successScreen.classList.remove('show');
+          form.reset();
+          clearErr(prenomEl, prenomErr); clearErr(nomEl, nomErr); clearErr(emailEl, emailErr);
+          consentErr.style.display = 'none'; consentGroup.classList.remove('invalid');
+          globalErr.style.display = 'none';
+          const sBtn = document.getElementById('submit-btn');
+          const sTxt = document.getElementById('submit-text');
+          sBtn.disabled = false; sTxt.textContent = 'Envoyer mon adhésion';
+          form.style.display = '';
+          form.style.opacity = '';
+          form.style.transition = '';
+          form.closest('.form-card').scrollIntoView({ behavior:'smooth', block:'start' });
+        });
+
         document.getElementById('adhesion-form').addEventListener('submit', async ev => {
           ev.preventDefault();
           if (document.getElementById('website').value.trim()) { successScreen.classList.add('show'); form.style.display = 'none'; return; }
@@ -325,6 +352,19 @@
           try {
             const { error } = await sb.from('adhesions').insert([{ prenom, nom, email, telephone: telephone || null, adresse: adresse || null, annee_naissance }]);
             if (error) throw error;
+
+            if (window.emailjs) {
+              try {
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                  to_name:       `${prenom} ${nom}`,
+                  to_email:      email,
+                  adhesion_date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
+                });
+              } catch (mailErr) {
+                console.error('Erreur envoi email de confirmation:', mailErr);
+              }
+            }
+
             form.style.opacity = '0';
             form.style.transition = 'opacity .25s ease';
             setTimeout(() => { form.style.display = 'none'; successScreen.classList.add('show'); }, 250);
