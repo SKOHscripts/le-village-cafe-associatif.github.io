@@ -209,7 +209,8 @@ button { font-family: inherit; cursor: pointer; }
   overflow: hidden;
   width: 100%;
 }
-.event-modal__photo img {
+
+.event-modal .event-modal__photo img {
   display: block;
   height: auto;
   width: 100%;
