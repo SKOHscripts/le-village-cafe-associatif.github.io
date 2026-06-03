@@ -94,8 +94,8 @@
     .ecard { background:var(--white); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; display:flex; align-items:stretch; box-shadow:var(--shadow-sm); transition:box-shadow .2s, transform .2s; }
     .ecard:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
     .ecard--has-photo { flex-direction:column; }
-    .ecard-banner { height:150px; overflow:hidden; flex-shrink:0; }
-    .ecard-banner img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+    .ecard-banner { overflow:hidden; flex-shrink:0; }
+    .ecard-banner img { width:100%; height:auto; display:block; }
     .ecard--has-photo .ecard-row { display:flex; align-items:stretch; flex:1; }
     .ecard-date  { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.25rem 1.4rem; min-width:76px; background:var(--teal); color:var(--white); text-align:center; flex-shrink:0; }
     .ecard-date.amber { background:var(--amber); }
