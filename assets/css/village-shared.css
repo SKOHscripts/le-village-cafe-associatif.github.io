@@ -205,8 +205,16 @@ button { font-family: inherit; cursor: pointer; }
 .event-modal__date { font-size:.88rem; font-weight:600; color:rgba(255,255,255,.55); background:var(--dark); padding-top:.55rem; padding-bottom:1.5rem; display:block; border-bottom:1px solid rgba(255,255,255,.07); }
 
 /* ── Body zone (photo, lieu, desc) ── white */
-.event-modal__photo { width:100%; overflow:hidden; }
-.event-modal__photo img { width:100%; height:auto; display:block; }
+.event-modal__photo {
+  overflow: hidden;
+  width: 100%;
+}
+
+.event-modal .event-modal__photo img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
 .event-modal__lieu { font-size:.85rem; color:var(--muted); margin:1.1rem 1.5rem .2rem; display:flex; align-items:center; gap:.4rem; }
 .event-modal__lieu::before { content:'📍'; font-size:.8rem; }
 .event-modal__desc { font-size:.925rem; line-height:1.7; color:var(--text); margin:0 1.5rem 1.25rem; padding-top:.6rem; }
