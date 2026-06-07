@@ -259,27 +259,41 @@
       </div>`;
     }
 
+    function currentLang() { return (window.i18n && window.i18n.locale) || localStorage.getItem('village-lang') || 'fr'; }
+
+    let cachedEvents = null;
+
+    function renderPastEvents() {
+      const grid = document.getElementById('past-events-grid');
+      if (!grid || !cachedEvents) return;
+      const lang = currentLang();
+      const today = new Date(new Date().toISOString().slice(0,10) + 'T00:00:00');
+      const past = cachedEvents
+        .filter(ev => ev.date && new Date(ev.date + 'T00:00:00') < today)
+        .sort((a, b) => b.date.localeCompare(a.date));
+      if (!past.length) {
+        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">' +
+          (lang === 'en' ? 'No past events yet.' : 'Aucun événement passé pour le moment.') + '</p>';
+        return;
+      }
+      grid.innerHTML = past.map(ev => buildEventCard(ev, lang, true)).join('');
+    }
+
     async function loadPastEvents() {
       const grid = document.getElementById('past-events-grid');
       try {
         const res = await fetch('data/evenements.json');
         if (!res.ok) throw new Error('fetch');
-        const events = await res.json();
-        const today = new Date(new Date().toISOString().slice(0,10) + 'T00:00:00');
-        const past = events
-          .filter(ev => ev.date && new Date(ev.date + 'T00:00:00') < today)
-          .sort((a, b) => b.date.localeCompare(a.date));
-        if (!past.length) {
-          grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;" data-fr="Aucun événement passé pour le moment." data-en="No past events yet.">Aucun événement passé pour le moment.</p>';
-          return;
-        }
-        const lang = localStorage.getItem('village-lang') || 'fr';
-        grid.innerHTML = past.map(ev => buildEventCard(ev, lang, true)).join('');
+        cachedEvents = await res.json();
+        renderPastEvents();
       } catch(_e) {
-        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">Impossible de charger les événements passés.</p>';
+        const lang = currentLang();
+        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">' +
+          (lang === 'en' ? 'Unable to load past events.' : 'Impossible de charger les événements passés.') + '</p>';
       }
     }
     loadPastEvents();
+    document.addEventListener('i18n:changed', renderPastEvents);
   </script>
   <script src="assets/js/lightbox.js" defer></script>
 </body>

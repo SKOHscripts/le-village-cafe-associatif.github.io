@@ -398,28 +398,46 @@
       return `<div class="ecard">${inner}</div>`;
     }
 
+    function currentLang() { return (window.i18n && window.i18n.locale) || localStorage.getItem('village-lang') || 'fr'; }
+
+    let cachedEvents = null;
+
+    function renderEvents() {
+      const grid = document.getElementById('events-grid');
+      if (!grid || !cachedEvents) return;
+      const lang = currentLang();
+      const now = new Date();
+      const upcoming = cachedEvents
+        .filter(ev => ev.date && new Date(ev.date + 'T00:00:00') >= new Date(now.toISOString().slice(0,10) + 'T00:00:00'))
+        .sort((a, b) => a.date.localeCompare(b.date))
+        .slice(0, 3);
+      if (!upcoming.length) {
+        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">' +
+          (lang === 'en'
+            ? 'No upcoming events for now — follow us on social media!'
+            : 'Aucun événement à venir pour le moment — suivez-nous sur les réseaux !') + '</p>';
+        return;
+      }
+      grid.innerHTML = upcoming.map(ev => buildEventCard(ev, lang)).join('');
+    }
+
     async function loadEvents() {
       const grid = document.getElementById('events-grid');
       try {
         const res = await fetch('data/evenements.json');
         if (!res.ok) throw new Error('fetch');
-        const events = await res.json();
-        const now = new Date();
-        const upcoming = events
-          .filter(ev => ev.date && new Date(ev.date + 'T00:00:00') >= new Date(now.toISOString().slice(0,10) + 'T00:00:00'))
-          .sort((a, b) => a.date.localeCompare(b.date))
-          .slice(0, 3);
-        if (!upcoming.length) {
-          grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">Aucun événement à venir pour le moment — suivez-nous sur les réseaux !</p>';
-          return;
-        }
-        const lang = localStorage.getItem('village-lang') || 'fr';
-        grid.innerHTML = upcoming.map(ev => buildEventCard(ev, lang)).join('');
+        cachedEvents = await res.json();
+        renderEvents();
       } catch(e) {
-        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">Consultez l\'<a href="agenda.html" style="color:var(--teal);font-weight:600;">agenda</a> pour les prochains événements.</p>';
+        const lang = currentLang();
+        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">' +
+          (lang === 'en'
+            ? 'Check the <a href="agenda.html" style="color:var(--teal);font-weight:600;">agenda</a> for upcoming events.'
+            : 'Consultez l\'<a href="agenda.html" style="color:var(--teal);font-weight:600;">agenda</a> pour les prochains événements.') + '</p>';
       }
     }
     loadEvents();
+    document.addEventListener('i18n:changed', renderEvents);
   </script>
 
   <!-- POPUP événement (evenements.js) -->
