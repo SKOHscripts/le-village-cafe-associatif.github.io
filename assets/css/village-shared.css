@@ -124,6 +124,9 @@ button { font-family: inherit; cursor: pointer; }
 .fc-hours { display:flex; flex-direction:column; gap:.5rem; }
 .fc-hour { font-size:.83rem; color:rgba(255,255,255,.48); }
 .fc-hour strong { color:var(--amber); font-weight:600; }
+
+/* Mention « heures d'été » — couleur jaune/ambre de la charte */
+.summer-note { color:var(--amber); font-weight:600; font-size:.82em; white-space:nowrap; }
 .footer-bottom { border-top:1px solid rgba(255,255,255,.07); padding-top:1.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.75rem; color:rgba(255,255,255,.22); }
 .footer-bottom a { color:rgba(255,255,255,.22); transition:color .15s; }
 .footer-bottom a:hover { color:rgba(255,255,255,.6); }
