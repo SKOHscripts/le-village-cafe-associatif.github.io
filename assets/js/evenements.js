@@ -17,9 +17,24 @@
     return (window.i18n && window.i18n.locale) || 'fr';
   }
 
+  // Map-based lookup avoids dynamic object property access (object-injection sink).
+  const I18N_STRINGS = new Map([
+    ['event.from',          { fr: 'dès',                              en: 'from' }],
+    ['event.alt.prefix',    { fr: 'Photo de l’événement',            en: 'Event photo' }],
+    ['event.popup.eyebrow', { fr: 'Prochainement au Village',        en: 'Coming up at Le Village' }],
+    ['event.popup.fallback',{ fr: 'Évènement',                       en: 'Event' }],
+    ['event.popup.agenda',  { fr: "Voir l'agenda →",                 en: 'See agenda →' }],
+    ['event.popup.prev',    { fr: 'Évènement précédent',             en: 'Previous event' }],
+    ['event.popup.next',    { fr: 'Évènement suivant',               en: 'Next event' }],
+    ['event.empty.upcoming',{ fr: "Pas d'évènement prévu pour l'instant.", en: 'No upcoming events for now.' }],
+    ['event.empty.past',    { fr: "Pas d'évènement passé à afficher.",     en: 'No past events to show.' }],
+    ['common.close',        { fr: 'Fermer',                          en: 'Close' }],
+  ]);
+
   function t(key, fallback) {
-    if (window.i18n && window.i18n.dict) return window.i18n.t(key);
-    return fallback;
+    const entry = I18N_STRINGS.get(key);
+    if (!entry) return fallback;
+    return (currentLocale() === 'en' ? entry.en : entry.fr) || entry.fr || fallback;
   }
 
   // ── Utilitaires date ─────────────────────────────────────────
