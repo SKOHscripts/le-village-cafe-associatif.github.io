@@ -1,68 +1,26 @@
-[
-  {
-    "nom": "Andrès",
-    "poles": ["pole.animation"],
-    "photo": ""
+{
+  "labels": {
+    "pole.animation":  { "fr": "Animations",          "en": "Events & activities" },
+    "pole.daily":      { "fr": "Vie quotidienne",      "en": "Daily operations"    },
+    "pole.finance":    { "fr": "Finances",             "en": "Finance"             },
+    "pole.admin":      { "fr": "Administration",       "en": "Administration"      },
+    "pole.comm":       { "fr": "Communication",        "en": "Communication"       },
+    "pole.volunteers": { "fr": "Bénévoles",            "en": "Volunteers"          },
+    "title.geek":      { "fr": "Service informatique", "en": "IT services"         }
   },
-  {
-    "nom": "Béatrice",
-    "poles": ["pole.animation", "pole.daily"],
-    "photo": ""
-  },
-  {
-    "nom": "Brigitte",
-    "poles": ["pole.admin", "pole.comm"],
-    "photo": ""
-  },
-  {
-    "nom": "Colette",
-    "poles": ["pole.animation", "pole.daily", "pole.comm"],
-    "photo": ""
-  },
-  {
-    "nom": "Corentin",
-    "poles": ["pole.finance"],
-    "titre": "title.geek",
-    "photo": ""
-  },
-  {
-    "nom": "Corinne",
-    "poles": ["pole.daily", "pole.volunteers"],
-    "photo": ""
-  },
-  {
-    "nom": "Florent",
-    "poles": ["pole.comm", "pole.daily"],
-    "photo": ""
-  },
-  {
-    "nom": "Lionel",
-    "poles": ["pole.finance"],
-    "photo": ""
-  },
-  {
-    "nom": "Myriam",
-    "poles": ["pole.finance"],
-    "photo": ""
-  },
-  {
-    "nom": "Nina",
-    "poles": ["pole.animation"],
-    "photo": ""
-  },
-  {
-    "nom": "Roger",
-    "poles": ["pole.admin"],
-    "photo": ""
-  },
-  {
-    "nom": "Sandrine",
-    "poles": ["pole.admin"],
-    "photo": ""
-  },
-  {
-    "nom": "Serge",
-    "poles": ["pole.daily"],
-    "photo": ""
-  }
-]
+  "membres": [
+    { "nom": "Andrès",  "poles": ["pole.animation"],                              "photo": "" },
+    { "nom": "Béatrice","poles": ["pole.animation", "pole.daily"],                "photo": "" },
+    { "nom": "Brigitte","poles": ["pole.admin", "pole.comm"],                     "photo": "" },
+    { "nom": "Colette", "poles": ["pole.animation", "pole.daily", "pole.comm"],   "photo": "" },
+    { "nom": "Corentin","poles": ["pole.finance"], "titre": "title.geek",         "photo": "" },
+    { "nom": "Corinne", "poles": ["pole.daily", "pole.volunteers"],               "photo": "" },
+    { "nom": "Florent", "poles": ["pole.comm", "pole.daily"],                     "photo": "" },
+    { "nom": "Lionel",  "poles": ["pole.finance"],                                "photo": "" },
+    { "nom": "Myriam",  "poles": ["pole.finance"],                                "photo": "" },
+    { "nom": "Nina",    "poles": ["pole.animation"],                              "photo": "" },
+    { "nom": "Roger",   "poles": ["pole.admin"],                                  "photo": "" },
+    { "nom": "Sandrine","poles": ["pole.admin"],                                  "photo": "" },
+    { "nom": "Serge",   "poles": ["pole.daily"],                                  "photo": "" }
+  ]
+}

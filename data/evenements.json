@@ -49,6 +49,8 @@
     "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
     "description": "Une journée en plein air au son de la musique pour guincher, chanter, s'amuser ! avec le groupe \"La sonora del martes\"\nPetite restauration sur place",
     "description_en": "An outdoor day of music, dance and fun! with the band \"La sonora del martes\"\nLight catering on site",
+    "notice": "⚠️ Le café sera exceptionnellement fermé le vendredi 19 et le dimanche 21 juin autour de cet évènement.",
+    "notice_en": "⚠️ The café will be exceptionally closed on Friday 19 and Sunday 21 June around this event.",
     "confirmationMail": "contact@cafe-levillage.org",
     "photos": ["assets/images/guinguette-2026.jpg"],
     "photo_alt": "Le groupe La sonora del martes en concert"

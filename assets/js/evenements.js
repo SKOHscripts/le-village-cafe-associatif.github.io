@@ -332,6 +332,15 @@
     const confirmNotice = buildConfirmationNotice(evt, 'event-modal__confirm');
     if (confirmNotice) frag.appendChild(confirmNotice);
 
+    if (evt.notice) {
+      const en = currentLocale() === 'en';
+      const noticeText = (en && evt.notice_en) ? evt.notice_en : evt.notice;
+      const notice = document.createElement('p');
+      notice.className = 'event-modal__notice';
+      notice.textContent = noticeText;
+      frag.appendChild(notice);
+    }
+
     const links = document.createElement('div');
     links.className = 'event-modal__links';
 

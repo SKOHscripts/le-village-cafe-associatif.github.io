@@ -352,6 +352,12 @@
 
     function escHtml(s) { const d = document.createElement('div'); d.appendChild(document.createTextNode(String(s))); return d.innerHTML; }
 
+    function eventNotice(ev, lang) {
+      if (!ev.notice) return '';
+      const text = lang === 'en' && ev.notice_en ? ev.notice_en : ev.notice;
+      return `<p class="ecard-notice">${escHtml(text)}</p>`;
+    }
+
     function confirmNotice(ev, lang) {
       if (!ev.confirmationMail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ev.confirmationMail)) return '';
       const titre = lang === 'en' && ev.titre_en ? ev.titre_en : ev.titre;
@@ -387,6 +393,7 @@
           <p class="ecard-title">${escHtml(titre)}</p>
           ${meta ? `<p class="ecard-meta">${escHtml(meta)}</p>` : ''}
           ${desc ? `<p class="ecard-desc">${escHtml(desc)}</p>` : ''}
+          ${eventNotice(ev, lang)}
           ${confirmNotice(ev, lang)}
         </div>`;
       if (photoUrl) {

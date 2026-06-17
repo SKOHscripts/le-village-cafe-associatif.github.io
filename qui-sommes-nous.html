@@ -185,21 +185,7 @@
         <p class="s-label reveal" data-fr="Gouvernance" data-en="Governance">Gouvernance</p>
         <h2 class="s-title reveal" style="margin-bottom:.5rem;" data-fr="Conseil d'Administration Collégial" data-en="Collegiate Board of Directors">Conseil d'Administration Collégial</h2>
         <p class="reveal" style="font-size:.875rem;color:rgba(255,255,255,.5);margin-bottom:1.75rem;" data-fr="Membres listés par ordre alphabétique." data-en="Members listed alphabetically.">Membres listés par ordre alphabétique.</p>
-        <div class="equipe-grid reveal">
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">A</span></div><p class="membre-nom">Andrès</p><div class="membre-poles"><span class="membre-pole">Animations</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">B</span></div><p class="membre-nom">Béatrice</p><div class="membre-poles"><span class="membre-pole">Animations</span><span class="membre-pole alt">Vie quotidienne</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">B</span></div><p class="membre-nom">Brigitte</p><div class="membre-poles"><span class="membre-pole">Administration</span><span class="membre-pole alt">Communication</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Colette</p><div class="membre-poles"><span class="membre-pole">Animations</span><span class="membre-pole alt">Vie quotidienne</span><span class="membre-pole alt">Communication</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Corentin</p><div class="membre-poles"><span class="membre-pole">Finances</span><span class="membre-pole alt">Service informatique</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">C</span></div><p class="membre-nom">Corinne</p><div class="membre-poles"><span class="membre-pole">Vie quotidienne</span><span class="membre-pole alt">Bénévoles</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">F</span></div><p class="membre-nom">Florent</p><div class="membre-poles"><span class="membre-pole">Communication</span><span class="membre-pole alt">Vie quotidienne</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">L</span></div><p class="membre-nom">Lionel</p><div class="membre-poles"><span class="membre-pole">Finances</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">M</span></div><p class="membre-nom">Myriam</p><div class="membre-poles"><span class="membre-pole">Finances</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">N</span></div><p class="membre-nom">Nina</p><div class="membre-poles"><span class="membre-pole">Animations</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">R</span></div><p class="membre-nom">Roger</p><div class="membre-poles"><span class="membre-pole">Administration</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">S</span></div><p class="membre-nom">Sandrine</p><div class="membre-poles"><span class="membre-pole">Administration</span></div></div>
-          <div class="membre-card"><div class="membre-avatar"><span class="membre-initial">S</span></div><p class="membre-nom">Serge</p><div class="membre-poles"><span class="membre-pole">Vie quotidienne</span></div></div>
-        </div>
+        <div class="equipe-grid reveal" id="equipe-grid"></div>
       </div>
     </section>
 
@@ -341,5 +327,69 @@ graph TD
     })();
   </script>
   <script src="assets/js/lightbox.js" defer></script>
+  <script>
+    (function () {
+      'use strict';
+
+      function locale() { return (window.i18n && window.i18n.locale) || 'fr'; }
+
+      function label(key, labels) {
+        const entry = labels[key];
+        if (!entry) return key;
+        return (locale() === 'en' && entry.en) ? entry.en : entry.fr;
+      }
+
+      function renderEquipe(data) {
+        const grid = document.getElementById('equipe-grid');
+        if (!grid || !data) return;
+        const labels = data.labels || {};
+        const membres = data.membres || [];
+        grid.replaceChildren();
+        for (const m of membres) {
+          const card = document.createElement('div');
+          card.className = 'membre-card';
+
+          const avatar = document.createElement('div');
+          avatar.className = 'membre-avatar';
+          const initial = document.createElement('span');
+          initial.className = 'membre-initial';
+          initial.textContent = (m.nom || '').charAt(0);
+          avatar.appendChild(initial);
+
+          const nom = document.createElement('p');
+          nom.className = 'membre-nom';
+          nom.textContent = m.nom;
+
+          const polesDiv = document.createElement('div');
+          polesDiv.className = 'membre-poles';
+
+          const poles = m.poles || [];
+          for (let i = 0; i < poles.length; i++) {
+            const span = document.createElement('span');
+            span.className = i === 0 ? 'membre-pole' : 'membre-pole alt';
+            span.textContent = label(poles[i], labels);
+            polesDiv.appendChild(span);
+          }
+          if (m.titre && labels[m.titre]) {
+            const span = document.createElement('span');
+            span.className = 'membre-pole alt';
+            span.textContent = label(m.titre, labels);
+            polesDiv.appendChild(span);
+          }
+
+          card.append(avatar, nom, polesDiv);
+          grid.appendChild(card);
+        }
+      }
+
+      let cachedEquipe = null;
+      fetch('data/equipe.json')
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => { cachedEquipe = data; renderEquipe(data); })
+        .catch(() => {});
+
+      document.addEventListener('i18n:changed', () => { if (cachedEquipe) renderEquipe(cachedEquipe); });
+    })();
+  </script>
 </body>
 </html>
