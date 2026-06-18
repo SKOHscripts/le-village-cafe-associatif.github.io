@@ -4,6 +4,7 @@
    + pop-up automatique sur la page d'accueil
    ============================================= */
 
+/* jshint browser: true, devel: true */
 (function () {
   'use strict';
 
@@ -78,16 +79,18 @@
   }
 
   // ── Chargement ───────────────────────────────────────────────
+  // Source : table Supabase `evenements` via le client partagé (window.VillageSupabase).
+  // En cas d'erreur, retourne [] : la popup est simplement omise.
+  // Les sections de liste (index.html, agenda.html) gèrent leur propre message d'erreur.
   function loadEvents() {
-    return fetch('data/evenements.json')
-      .then(r => {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
-      })
-      .catch(err => {
-        console.warn('[evenements] chargement impossible :', err);
-        return [];
-      });
+    if (window.VillageSupabase && typeof window.VillageSupabase.fetchEvenements === 'function') {
+      return window.VillageSupabase.fetchEvenements()
+        .catch(err => {
+          console.warn('[evenements] chargement impossible :', err);
+          return [];
+        });
+    }
+    return Promise.resolve([]);
   }
 
   // ── Tri & sélection ──────────────────────────────────────────
@@ -329,9 +332,6 @@
       frag.appendChild(desc);
     }
 
-    const confirmNotice = buildConfirmationNotice(evt, 'event-modal__confirm');
-    if (confirmNotice) frag.appendChild(confirmNotice);
-
     if (evt.notice) {
       const en = currentLocale() === 'en';
       const noticeText = (en && evt.notice_en) ? evt.notice_en : evt.notice;
@@ -340,6 +340,9 @@
       notice.textContent = noticeText;
       frag.appendChild(notice);
     }
+
+    const confirmNotice = buildConfirmationNotice(evt, 'event-modal__confirm');
+    if (confirmNotice) frag.appendChild(confirmNotice);
 
     const links = document.createElement('div');
     links.className = 'event-modal__links';

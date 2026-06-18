@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Le Village — Café Associatif · Lyon 8e</title>
   <meta name="description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille.">
+  <meta name="supabase-url" content="https://evifxtecjhemmaxaiozt.supabase.co">
+  <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U">
   <link rel="canonical" href="https://cafe-levillage.org/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Le Village — Café Associatif">
@@ -335,6 +337,8 @@
   </footer>
 
   <script src="assets/js/village-i18n.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-client.js"></script>
   <script>
     const nav = document.getElementById('site-nav');
     window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
@@ -346,7 +350,7 @@
     const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Dynamic events from data/evenements.json
+    // Dynamic events from Supabase (via window.VillageSupabase)
     const MOIS_FR = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
     const MOIS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -377,7 +381,7 @@
       const dd = d.getDate();
       const mm = (lang === 'en' ? MOIS_EN : MOIS_FR)[d.getMonth()];
       const isAmber = ev.public && ev.public.toLowerCase().includes('libre');
-      const heures = ev.heure_debut ? (ev.heure_debut.slice(0,5) + (ev.heure_fin ? ' – ' + ev.heure_fin.slice(0,5) : '')) : '';
+      const heures = ev.heureDebut ? (ev.heureDebut.slice(0,5) + (ev.heureFin ? ' – ' + ev.heureFin.slice(0,5) : '')) : '';
       const meta = [ev.jour_semaine, heures, ev.public].filter(Boolean).join(' · ');
       const titre = lang === 'en' && ev.titre_en ? ev.titre_en : ev.titre;
       const desc = lang === 'en' && ev.description_en ? ev.description_en : (ev.description || '');
@@ -431,16 +435,14 @@
     async function loadEvents() {
       const grid = document.getElementById('events-grid');
       try {
-        const res = await fetch('data/evenements.json');
-        if (!res.ok) throw new Error('fetch');
-        cachedEvents = await res.json();
+        cachedEvents = await window.VillageSupabase.fetchEvenements();
         renderEvents();
       } catch(e) {
         const lang = currentLang();
-        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">' +
+        grid.innerHTML = '<p class="events-error">' +
           (lang === 'en'
-            ? 'Check the <a href="agenda.html" style="color:var(--teal);font-weight:600;">agenda</a> for upcoming events.'
-            : 'Consultez l\'<a href="agenda.html" style="color:var(--teal);font-weight:600;">agenda</a> pour les prochains événements.') + '</p>';
+            ? 'The events database is temporarily unavailable. Please try again later or <a href="boite-a-idees.html#ameliorer-le-site" style="color:#c97a0a;font-weight:600;text-decoration:underline;">contact the site maintainer</a>.'
+            : 'La base de données des évènements est momentanément indisponible. Veuillez patienter ou <a href="boite-a-idees.html#ameliorer-le-site" style="color:#c97a0a;font-weight:600;text-decoration:underline;">contacter le mainteneur du site</a>.') + '</p>';
       }
     }
     loadEvents();
