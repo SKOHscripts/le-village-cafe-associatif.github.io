@@ -339,9 +339,6 @@
       frag.appendChild(desc);
     }
 
-    const confirmNotice = buildConfirmationNotice(evt, 'event-modal__confirm');
-    if (confirmNotice) frag.appendChild(confirmNotice);
-
     if (evt.notice) {
       const en = currentLocale() === 'en';
       const noticeText = (en && evt.notice_en) ? evt.notice_en : evt.notice;
@@ -350,6 +347,9 @@
       notice.textContent = noticeText;
       frag.appendChild(notice);
     }
+
+    const confirmNotice = buildConfirmationNotice(evt, 'event-modal__confirm');
+    if (confirmNotice) frag.appendChild(confirmNotice);
 
     const links = document.createElement('div');
     links.className = 'event-modal__links';
