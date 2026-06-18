@@ -4,6 +4,7 @@
    + pop-up automatique sur la page d'accueil
    ============================================= */
 
+/* jshint browser: true, devel: true */
 (function () {
   'use strict';
 

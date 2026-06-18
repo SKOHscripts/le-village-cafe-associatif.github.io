@@ -8,6 +8,7 @@
    évènements visibles). Voir supabase/evenements.sql.
    ============================================= */
 
+/* jshint browser: true, devel: true */
 (function () {
   'use strict';
 
