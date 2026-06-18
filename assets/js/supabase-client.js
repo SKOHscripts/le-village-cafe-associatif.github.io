@@ -5,7 +5,7 @@
    Source unique de l'URL et de la clé publique (anon) du projet.
    La clé "anon" est publique par conception : elle n'autorise que ce que
    les policies Row Level Security permettent (ici, lecture seule des
-   évènements visibles). Voir supabase/evenements.sql.
+   évènements visibles).
    ============================================= */
 
 /* jshint browser: true, devel: true */
@@ -14,7 +14,6 @@
 
   const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
-  const FALLBACK_JSON = 'data/evenements.json';
 
   let client = null;
 
@@ -71,34 +70,18 @@
     };
   }
 
-  async function fetchFromJson() {
-    const res = await fetch(FALLBACK_JSON);
-    if (!res.ok) return [];
-    return res.json();
-  }
-
-  // Charge les évènements depuis Supabase. En cas d'indisponibilité (lib absente,
-  // table inexistante, erreur réseau), retombe sur le JSON statique de secours.
+  // Charge les évènements depuis Supabase. Lance une erreur en cas d'échec ;
+  // c'est aux appelants d'afficher un message adapté à l'utilisateur.
   async function fetchEvenements() {
-    try {
-      const sb = getClient();
-      if (!sb) throw new Error('client Supabase indisponible');
-      const { data, error } = await sb
-        .from('evenements')
-        .select('*')
-        .eq('visible', true)
-        .order('date', { ascending: true });
-      if (error) throw error;
-      return (data || []).map(normalize);
-    } catch (err) {
-      console.warn('[evenements] Supabase indisponible, fallback JSON :', err);
-      try {
-        return await fetchFromJson();
-      } catch (e) {
-        console.warn('[evenements] fallback JSON impossible :', e);
-        return [];
-      }
-    }
+    const sb = getClient();
+    if (!sb) throw new Error('client Supabase indisponible');
+    const { data, error } = await sb
+      .from('evenements')
+      .select('*')
+      .eq('visible', true)
+      .order('date', { ascending: true });
+    if (error) throw error;
+    return (data || []).map(normalize);
   }
 
   window.VillageSupabase = {

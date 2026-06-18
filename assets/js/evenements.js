@@ -79,8 +79,9 @@
   }
 
   // ── Chargement ───────────────────────────────────────────────
-  // Source : table Supabase `evenements` via le client partagé
-  // (window.VillageSupabase), avec repli sur data/evenements.json.
+  // Source : table Supabase `evenements` via le client partagé (window.VillageSupabase).
+  // En cas d'erreur, retourne [] : la popup est simplement omise.
+  // Les sections de liste (index.html, agenda.html) gèrent leur propre message d'erreur.
   function loadEvents() {
     if (window.VillageSupabase && typeof window.VillageSupabase.fetchEvenements === 'function') {
       return window.VillageSupabase.fetchEvenements()
@@ -89,15 +90,7 @@
           return [];
         });
     }
-    return fetch('data/evenements.json')
-      .then(r => {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
-      })
-      .catch(err => {
-        console.warn('[evenements] chargement impossible :', err);
-        return [];
-      });
+    return Promise.resolve([]);
   }
 
   // ── Tri & sélection ──────────────────────────────────────────

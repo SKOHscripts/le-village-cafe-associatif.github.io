@@ -288,8 +288,10 @@
         renderPastEvents();
       } catch(_e) {
         const lang = currentLang();
-        grid.innerHTML = '<p class="events-empty" style="grid-column:1/-1;">' +
-          (lang === 'en' ? 'Unable to load past events.' : 'Impossible de charger les événements passés.') + '</p>';
+        grid.innerHTML = '<p class="events-error">' +
+          (lang === 'en'
+            ? 'The events database is temporarily unavailable. Please try again later or <a href="boite-a-idees.html#ameliorer-le-site">contact the site maintainer</a>.'
+            : 'La base de données des évènements est momentanément indisponible. Veuillez patienter ou <a href="boite-a-idees.html#ameliorer-le-site">contacter le mainteneur du site</a>.') + '</p>';
       }
     }
     loadPastEvents();
