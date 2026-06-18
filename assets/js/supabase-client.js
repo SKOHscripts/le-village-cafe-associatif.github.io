@@ -2,14 +2,10 @@
    LE VILLAGE — supabase-client.js
    Client Supabase partagé + chargement des évènements.
 
-   Source unique de l'URL + clé "anon" (publique par design Supabase,
-   protégée par les policies Row Level Security côté serveur).
-
-   Expose window.VillageSupabase :
-     - .client()           → client supabase-js (singleton, lazy)
-     - .fetchEvenements()  → liste d'évènements visibles, normalisée au
-                             format attendu par les moteurs de rendu, avec
-                             repli automatique sur data/evenements.json.
+   Source unique de l'URL et de la clé publique (anon) du projet.
+   La clé "anon" est publique par conception : elle n'autorise que ce que
+   les policies Row Level Security permettent (ici, lecture seule des
+   évènements visibles). Voir supabase/evenements.sql.
    ============================================= */
 
 (function () {
@@ -19,33 +15,36 @@
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
   const FALLBACK_JSON = 'data/evenements.json';
 
-  let _client = null;
+  let client = null;
 
-  function client() {
-    if (_client) return _client;
-    if (!window.supabase || typeof window.supabase.createClient !== 'function') return null;
-    _client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    return _client;
+  // Création paresseuse : window.supabase est fourni par le CDN @supabase/supabase-js.
+  function getClient() {
+    if (client) return client;
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+      client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      return client;
+    }
+    return null;
   }
 
-  // Une heure "HH:MM:SS" (Postgres time) → "HH:MM" ; null/'' → undefined.
-  function hhmm(value) {
-    if (!value) return undefined;
-    return String(value).slice(0, 5);
-  }
-
-  // Le champ `photo` stocke un nom de fichier déposé dans assets/images/.
-  // On accepte aussi une URL complète ou un chemin assets/ déjà formé.
+  // Construit un chemin d'image utilisable depuis la valeur stockée en base.
+  // La base ne contient que le nom du fichier (ex. "guinguette-2026.jpg"),
+  // les fichiers vivant dans assets/images/. On accepte aussi une URL complète
+  // ou un chemin déjà préfixé, par souplesse.
   function toImagePath(photo) {
-    if (!photo) return null;
-    const p = String(photo).trim();
-    if (!p) return null;
-    if (/^https?:\/\//i.test(p) || /^assets\//i.test(p)) return p;
+    if (typeof photo !== 'string' || !photo.trim()) return null;
+    const p = photo.trim();
+    if (/^https?:\/\//i.test(p)) return p;
+    if (/^assets\//i.test(p)) return p;
     return 'assets/images/' + p;
   }
 
-  // Ligne Supabase (colonnes snake_case) → objet au format historique du
-  // JSON, pour que evenements.js et les cartes inline restent inchangés.
+  function hhmm(t) {
+    return typeof t === 'string' && t ? t.slice(0, 5) : undefined;
+  }
+
+  // Convertit une ligne de la table `evenements` (colonnes snake_case) vers
+  // la forme attendue par les moteurs de rendu (identique à data/evenements.json).
   function normalize(row) {
     const photoPath = toImagePath(row.photo);
     const liens = (row.lien_facebook || row.lien_instagram)
@@ -77,17 +76,12 @@
     return res.json();
   }
 
-  // Charge les évènements visibles depuis Supabase. En cas d'erreur
-  // (lib absente, réseau, table inexistante…), repli sur le JSON local.
-  // Un résultat vide mais valide est respecté (pas de repli) une fois la
-  // table en place — c'est le cas "aucun évènement publié".
+  // Charge les évènements depuis Supabase. En cas d'indisponibilité (lib absente,
+  // table inexistante, erreur réseau), retombe sur le JSON statique de secours.
   async function fetchEvenements() {
-    const sb = client();
-    if (!sb) {
-      console.warn('[evenements] supabase-js indisponible, repli JSON.');
-      return fetchFromJson();
-    }
     try {
+      const sb = getClient();
+      if (!sb) throw new Error('client Supabase indisponible');
       const { data, error } = await sb
         .from('evenements')
         .select('*')
@@ -96,15 +90,18 @@
       if (error) throw error;
       return (data || []).map(normalize);
     } catch (err) {
-      console.warn('[evenements] Supabase indisponible, repli JSON :', err);
-      return fetchFromJson();
+      console.warn('[evenements] Supabase indisponible, fallback JSON :', err);
+      try {
+        return await fetchFromJson();
+      } catch (e) {
+        console.warn('[evenements] fallback JSON impossible :', e);
+        return [];
+      }
     }
   }
 
   window.VillageSupabase = {
-    URL: SUPABASE_URL,
-    KEY: SUPABASE_KEY,
-    client: client,
+    getClient: getClient,
     fetchEvenements: fetchEvenements,
   };
 })();
