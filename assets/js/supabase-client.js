@@ -2,24 +2,28 @@
    LE VILLAGE — supabase-client.js
    Client Supabase partagé + chargement des évènements.
 
-   Source unique de l'URL et de la clé publique (anon) du projet.
-   La clé "anon" est publique par conception : elle n'autorise que ce que
-   les policies Row Level Security permettent (ici, lecture seule des
-   évènements visibles).
+   L'URL et la clé anon sont lues depuis les balises <meta> de la page
+   (supabase-url / supabase-anon-key). La clé anon est publique par
+   conception : elle n'autorise que ce que les policies Row Level Security
+   permettent (ici, lecture seule des évènements visibles).
    ============================================= */
 
 /* jshint browser: true, devel: true */
 (function () {
   'use strict';
 
-  const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
+  // Lues depuis les <meta> de la page ; null si absentes (fetchEvenements lancera une erreur).
+  var metaUrl = document.querySelector('meta[name="supabase-url"]');
+  var metaKey = document.querySelector('meta[name="supabase-anon-key"]');
+  var SUPABASE_URL = metaUrl ? metaUrl.getAttribute('content') : null;
+  var SUPABASE_KEY = metaKey ? metaKey.getAttribute('content') : null;
 
   let client = null;
 
   // Création paresseuse : window.supabase est fourni par le CDN @supabase/supabase-js.
   function getClient() {
     if (client) return client;
+    if (!SUPABASE_URL || !SUPABASE_KEY) return null;
     if (window.supabase && typeof window.supabase.createClient === 'function') {
       client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       return client;

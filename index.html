@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Le Village — Café Associatif · Lyon 8e</title>
   <meta name="description" content="Le Café Associatif Le Village — un espace ouvert à tous au cœur du 8e arrondissement de Lyon. Grand Trou · Moulin à Vent · Petite Guille.">
+  <meta name="supabase-url" content="https://evifxtecjhemmaxaiozt.supabase.co">
+  <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U">
   <link rel="canonical" href="https://cafe-levillage.org/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Le Village — Café Associatif">
@@ -439,8 +441,8 @@
         const lang = currentLang();
         grid.innerHTML = '<p class="events-error">' +
           (lang === 'en'
-            ? 'The events database is temporarily unavailable. Please try again later or <a href="boite-a-idees.html#ameliorer-le-site">contact the site maintainer</a>.'
-            : 'La base de données des évènements est momentanément indisponible. Veuillez patienter ou <a href="boite-a-idees.html#ameliorer-le-site">contacter le mainteneur du site</a>.') + '</p>';
+            ? 'The events database is temporarily unavailable. Please try again later or <a href="boite-a-idees.html#ameliorer-le-site" style="color:#c97a0a;font-weight:600;text-decoration:underline;">contact the site maintainer</a>.'
+            : 'La base de données des évènements est momentanément indisponible. Veuillez patienter ou <a href="boite-a-idees.html#ameliorer-le-site" style="color:#c97a0a;font-weight:600;text-decoration:underline;">contacter le mainteneur du site</a>.') + '</p>';
       }
     }
     loadEvents();

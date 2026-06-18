@@ -284,9 +284,7 @@ button { font-family: inherit; cursor: pointer; }
 .ecard-notice { margin-top:.5rem; padding:.35rem .6rem; }
 
 /* ── Indisponibilité base de données évènements ── */
-.events-error { grid-column:1/-1; background:var(--amber-light); border:1px solid rgba(201,122,10,.35); border-left:3px solid var(--amber); border-radius:var(--r-md); color:#7c4a00; font-size:.88rem; line-height:1.6; padding:1.25rem 1.5rem; text-align:center; }
-.events-error a { color:var(--amber); font-weight:600; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
-.events-error a:hover { color:#9a5d08; }
+.events-error { background:var(--amber-light); border:1px solid #c97a0a; border:1px solid rgba(201,122,10,.35); border-left:3px solid var(--amber); border-radius:var(--r-md); color:#7c4a00; font-size:.88rem; grid-column:1/-1; line-height:1.6; padding:1.25rem 1.5rem; text-align:center; }
 
 body.has-event-modal { overflow:hidden; }
 @keyframes eventOverlayFadeIn { from { opacity:0; } to { opacity:1; } }
