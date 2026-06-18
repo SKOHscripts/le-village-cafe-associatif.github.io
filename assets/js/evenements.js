@@ -78,7 +78,16 @@
   }
 
   // ── Chargement ───────────────────────────────────────────────
+  // Source : table Supabase `evenements` via le client partagé
+  // (window.VillageSupabase), avec repli sur data/evenements.json.
   function loadEvents() {
+    if (window.VillageSupabase && typeof window.VillageSupabase.fetchEvenements === 'function') {
+      return window.VillageSupabase.fetchEvenements()
+        .catch(err => {
+          console.warn('[evenements] chargement impossible :', err);
+          return [];
+        });
+    }
     return fetch('data/evenements.json')
       .then(r => {
         if (!r.ok) throw new Error('HTTP ' + r.status);

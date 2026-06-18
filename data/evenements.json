@@ -56,6 +56,19 @@
     "photo_alt": "Le groupe La sonora del martes en concert"
   },
   {
+    "id": "reouverture-2026-06-23",
+    "titre": "Réouverture du café",
+    "titre_en": "The café reopens",
+    "date": "2026-06-23",
+    "heureDebut": "16:00",
+    "heureFin": "19:00",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
+    "description": "Après la Guinguette de samedi, le café rouvre ses portes ce mardi ! Venez décompresser autour d'un verre et nous raconter votre week-end. (Évènement de test)",
+    "description_en": "After Saturday's Guinguette, the café reopens this Tuesday! Come unwind over a drink and tell us about your weekend. (Test event)",
+    "photos": []
+  },
+  {
     "id": "gouter-familles-2026-07-04",
     "titre": "Goûter des familles",
     "titre_en": "Family tea time",

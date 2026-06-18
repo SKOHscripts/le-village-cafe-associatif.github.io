@@ -213,6 +213,8 @@
   </footer>
 
   <script src="assets/js/village-i18n.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-client.js"></script>
   <script>
     const burger = document.getElementById('nav-burger'), drawer = document.getElementById('nav-drawer');
     burger.addEventListener('click', () => { const open = burger.classList.toggle('open'); drawer.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; });
@@ -241,7 +243,7 @@
       const mm = (lang === 'en' ? MOIS_EN : MOIS_FR)[d.getMonth()];
       const isAmber = !isPast && ev.public && ev.public.toLowerCase().includes('libre');
       const dateClass = isPast ? 'past' : (isAmber ? 'amber' : '');
-      const heures = ev.heure_debut ? (ev.heure_debut.slice(0,5) + (ev.heure_fin ? ' – ' + ev.heure_fin.slice(0,5) : '')) : '';
+      const heures = ev.heureDebut ? (ev.heureDebut.slice(0,5) + (ev.heureFin ? ' – ' + ev.heureFin.slice(0,5) : '')) : '';
       const meta = [ev.jour_semaine, heures, ev.public].filter(Boolean).join(' · ');
       const titre = lang === 'en' && ev.titre_en ? ev.titre_en : ev.titre;
       const desc = lang === 'en' && ev.description_en ? ev.description_en : (ev.description || '');
@@ -282,9 +284,7 @@
     async function loadPastEvents() {
       const grid = document.getElementById('past-events-grid');
       try {
-        const res = await fetch('data/evenements.json');
-        if (!res.ok) throw new Error('fetch');
-        cachedEvents = await res.json();
+        cachedEvents = await window.VillageSupabase.fetchEvenements();
         renderPastEvents();
       } catch(_e) {
         const lang = currentLang();
