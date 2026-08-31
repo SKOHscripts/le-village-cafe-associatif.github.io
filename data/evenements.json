@@ -1,5 +1,18 @@
 [
   {
+    "id": "reouverture-2026-09-04",
+    "titre": "Réouverture du café",
+    "titre_en": "The café reopens",
+    "date": "2026-09-04",
+    "heureDebut": "16:00",
+    "heureFin": "22:00",
+    "lieu": "Le Village, 8 rue Chalumeaux, Lyon 8e",
+    "lieu_en": "Le Village, 8 rue Chalumeaux, Lyon 8th district",
+    "description": "Le café rouvre ses portes ce vendredi pour la rentrée ! Venez nous retrouver autour d'un verre.",
+    "description_en": "The café reopens this Friday for the new season! Come and join us for a drink.",
+    "photos": []
+  },
+  {
     "id": "afterwork-2026-05-22",
     "titre": "Afterwork du Village",
     "titre_en": "Village afterwork",
