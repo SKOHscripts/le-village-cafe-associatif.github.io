@@ -101,6 +101,18 @@
   </div>
 
   <main>
+    <!-- Bannière en cours de développement -->
+    <section class="band-dark" style="padding:2.5rem 0;">
+      <div class="container">
+        <div class="banner reveal" style="background:rgba(255,167,11,.12);border:1.5px solid rgba(201,122,10,.5);color:rgba(255,255,255,.85);">
+          <p data-fr-rich="🚧 <strong style='color:var(--amber);'>Fonctionnalité en cours de développement</strong> — Le formulaire d'adhésion en ligne n'est pas encore activé. Vous pouvez adhérer directement sur place, au Village, lors de votre prochaine visite. Cette page sera bientôt complétée."
+             data-en-rich="🚧 <strong style='color:var(--amber);'>Feature in development</strong> — The online membership form is not yet active. You can join directly on site at Le Village during your next visit. This page will be completed soon.">
+            🚧 <strong style="color:var(--amber);">Fonctionnalité en cours de développement</strong> — Le formulaire d'adhésion en ligne n'est pas encore activé. Vous pouvez adhérer directement sur place, au Village, lors de votre prochaine visite. Cette page sera bientôt complétée.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Tableau de bord membres -->
     <section style="padding:3rem 0 0;">
       <div class="container">
@@ -112,7 +124,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
             <span data-fr="Cliquer pour agrandir" data-en="Click to enlarge">Cliquer pour agrandir</span>
           </div>
-          <figcaption data-fr="Analyse au 14/05/2026 — données issues du registre des membres." data-en="Analysis as of 14/05/2026 — data from the member register.">Analyse au 14/05/2026 — données issues du registre des membres.</figcaption>
+          <figcaption data-fr="Analyse au 31/08/2026 — données issues du registre des membres." data-en="Analysis as of 31/08/2026 — data from the member register.">Analyse au 31/08/2026 — données issues du registre des membres.</figcaption>
         </figure>
       </div>
     </section>
@@ -189,8 +201,8 @@
               </label>
               <p class="consent-error" id="rgpd-error" role="alert" data-fr="Vous devez cocher cette case pour valider votre adhésion." data-en="You must tick this box to submit your membership.">Vous devez cocher cette case pour valider votre adhésion.</p>
             </div>
-            <button type="submit" class="btn btn-amber form-submit" id="submit-btn">
-              <span id="submit-text" data-fr="Envoyer mon adhésion" data-en="Send my membership">Envoyer mon adhésion</span>
+            <button type="submit" class="btn btn-amber form-submit" id="submit-btn" disabled aria-disabled="true">
+              <span id="submit-text" data-fr="Bientôt disponible" data-en="Coming soon">Bientôt disponible</span>
             </button>
           </form>
           <div class="success-screen" id="success-screen" role="alert">
@@ -309,9 +321,6 @@
           clearErr(prenomEl, prenomErr); clearErr(nomEl, nomErr); clearErr(emailEl, emailErr);
           consentErr.style.display = 'none'; consentGroup.classList.remove('invalid');
           globalErr.style.display = 'none';
-          const sBtn = document.getElementById('submit-btn');
-          const sTxt = document.getElementById('submit-text');
-          sBtn.disabled = false; sTxt.textContent = 'Envoyer mon adhésion';
           form.style.display = '';
           form.style.opacity = '';
           form.style.transition = '';
