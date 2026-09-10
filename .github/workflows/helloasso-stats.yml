@@ -1,0 +1,61 @@
+# Met à jour le décompte des adhésions en ligne affiché sur adhesion.html.
+#
+# L'API HelloAsso demande un client_id / client_secret qui ne peut pas vivre
+# dans une page statique : le job les lit depuis les secrets du dépôt, appelle
+# l'API, et committe data/adhesions-stats.json que la page charge ensuite.
+#
+# Secrets à créer (Settings → Secrets and variables → Actions) :
+#   HELLOASSO_CLIENT_ID      — identifiant d'API (espace association HelloAsso)
+#   HELLOASSO_CLIENT_SECRET  — secret d'API associé
+#
+# Variables optionnelles (Settings → Variables) si la campagne change d'année :
+#   HELLOASSO_ORGANIZATION_SLUG, HELLOASSO_FORM_SLUG, HELLOASSO_FORM_TYPE
+
+name: Décompte des adhésions HelloAsso
+
+on:
+  schedule:
+    # Toutes les 6 heures (minute décalée pour éviter les pics de charge GitHub).
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: helloasso-stats
+  cancel-in-progress: false
+
+jobs:
+  update-stats:
+    name: Mettre à jour data/adhesions-stats.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Interroger l'API HelloAsso
+        env:
+          HELLOASSO_CLIENT_ID: ${{ secrets.HELLOASSO_CLIENT_ID }}
+          HELLOASSO_CLIENT_SECRET: ${{ secrets.HELLOASSO_CLIENT_SECRET }}
+          HELLOASSO_ORGANIZATION_SLUG: ${{ vars.HELLOASSO_ORGANIZATION_SLUG }}
+          HELLOASSO_FORM_SLUG: ${{ vars.HELLOASSO_FORM_SLUG }}
+          HELLOASSO_FORM_TYPE: ${{ vars.HELLOASSO_FORM_TYPE }}
+        run: node scripts/fetch-helloasso-stats.mjs
+
+      - name: Committer le décompte s'il a changé
+        run: |
+          if git diff --quiet -- data/adhesions-stats.json; then
+            echo "Décompte inchangé — rien à committer."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/adhesions-stats.json
+          git commit -m "chore: mise a jour du decompte des adhesions HelloAsso"
+          git push
