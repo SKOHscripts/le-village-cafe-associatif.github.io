@@ -15,8 +15,8 @@ name: Décompte des adhésions HelloAsso
 
 on:
   schedule:
-    # Toutes les 6 heures (minute décalée pour éviter les pics de charge GitHub).
-    - cron: '17 */6 * * *'
+    # Tous les 2 jours  (minute décalée pour éviter les pics de charge GitHub).
+    - cron: '17 12 */2 * *'
   workflow_dispatch:
 
 permissions:
@@ -51,7 +51,7 @@ jobs:
       - name: Committer le décompte s'il a changé
         run: |
           if git diff --quiet -- data/adhesions-stats.json; then
-            echo "Décompte inchangé — rien à committer."
+            echo "Décompte inchangé - rien à committer."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
