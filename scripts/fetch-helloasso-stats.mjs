@@ -20,6 +20,8 @@
      HELLOASSO_API_BASE            (option)  base de l'API
    ============================================= */
 
+/* jshint esversion: 11, node: true */
+
 import { writeFile } from 'node:fs/promises';
 
 const CLIENT_ID     = process.env.HELLOASSO_CLIENT_ID;
