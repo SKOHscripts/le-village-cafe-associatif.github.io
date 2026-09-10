@@ -9,42 +9,30 @@
   <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
   <link rel="stylesheet" href="assets/css/village-shared.css">
   <style>
-    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; margin-bottom:2rem; }
+    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
     .stat-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:1.75rem 1.25rem; text-align:center; box-shadow:var(--shadow-sm); }
     .stat-num  { font-family:var(--font-display); font-size:3.2rem; color:var(--teal); line-height:1; display:block; margin-bottom:.3rem; }
     .stat-lbl  { font-size:.82rem; color:var(--muted); }
-    .form-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:2rem; box-shadow:var(--shadow-sm); }
-    .form-card h2 { font-family:var(--font-display); font-size:1.5rem; color:var(--dark); margin-bottom:1.5rem; }
-    .form-submit { width:100%; padding:.9rem; font-size:1rem; justify-content:center; margin-top:.5rem; }
-    .form-success { display:none; background:var(--teal-light); border:2px solid var(--teal); border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:var(--teal); font-weight:600; margin-top:1rem; }
-    .form-error   { display:none; background:#fef2f2; border:2px solid #f87171; border-radius:var(--r-md); padding:1rem 1.25rem; text-align:center; color:#dc2626; font-size:.9rem; margin-top:1rem; }
-    .form-trap { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
+    .banner .banner-hl { color:var(--white); }
+    .stats-source { text-align:center; font-size:.76rem; color:rgba(255,255,255,.5); margin-top:1.1rem; margin-bottom:0; }
+    .adhesion-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:2rem; box-shadow:var(--shadow-sm); margin-top:1.25rem; }
+    .adhesion-card h2 { font-family:var(--font-display); font-size:1.5rem; color:var(--dark); margin-bottom:1rem; }
+    .adhesion-card > p { font-size:.95rem; color:var(--muted); line-height:1.75; margin-bottom:1.5rem; }
     .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
     .checkbox-label { display:flex; align-items:flex-start; gap:.65rem; font-size:.875rem; color:var(--muted); cursor:pointer; line-height:1.5; }
     .checkbox-box { display:block; flex:0 0 1.25rem; width:1.25rem; height:1.25rem; margin-top:.1rem; border:2px solid var(--teal); border-radius:5px; background:var(--white); position:relative; transition:background .15s, border-color .15s; }
     #rgpd-consent:checked + .checkbox-label .checkbox-box { background:var(--amber); border-color:var(--amber); }
     #rgpd-consent:checked + .checkbox-label .checkbox-box::after { content:''; position:absolute; left:4px; top:1px; width:6px; height:10px; border:solid var(--white); border-width:0 2px 2px 0; transform:rotate(45deg); }
     #rgpd-consent:focus-visible + .checkbox-label .checkbox-box { outline:2px solid var(--teal); outline-offset:2px; }
-    .checkbox-group.invalid .checkbox-box { border-color:#dc2626; }
-    .consent-error { display:none; color:#dc2626; font-size:.82rem; font-weight:600; margin-top:.55rem; }
-    .field-error { display:none; color:#dc2626; font-size:.78rem; font-weight:600; margin-top:.35rem; }
-    .form-input.invalid { border-color:#dc2626; }
-    .form-input.invalid:focus { border-color:#dc2626; box-shadow:0 0 0 3px rgba(220,38,38,.12); }
-    .success-screen { display:none; text-align:center; padding:3rem 1rem 2rem; }
-    .success-screen.show { display:block; }
-    .success-icon { width:5rem; height:5rem; background:var(--teal); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; }
-    .success-screen.show .success-icon { animation:successPop .5s cubic-bezier(.16,1,.3,1) both; }
-    .success-icon svg { width:2.5rem; height:2.5rem; }
-    .success-screen.show .success-icon svg { animation:fadeUp .3s .4s ease both; }
-    .success-title { font-family:var(--font-display); font-size:1.85rem; color:var(--dark); margin-bottom:.5rem; opacity:0; }
-    .success-screen.show .success-title { animation:fadeUp .4s .5s ease both; }
-    .success-sub { font-size:.95rem; color:var(--muted); line-height:1.7; opacity:0; }
-    .success-screen.show .success-sub { animation:fadeUp .4s .65s ease both; }
-    .success-screen .btn { margin-top:1.75rem; opacity:0; }
-    .success-screen.show .btn { animation:fadeUp .4s .85s ease both; }
-    @keyframes successPop { from { transform:scale(0) rotate(-15deg); opacity:0; } to { transform:scale(1) rotate(0); opacity:1; } }
+    .ha-gate { border:1.5px dashed var(--border); border-radius:var(--r-md); padding:2.75rem 1.5rem; text-align:center; margin-top:1.5rem; background:var(--bg, transparent); }
+    .ha-gate svg { width:2rem; height:2rem; color:var(--muted); opacity:.5; margin-bottom:.85rem; }
+    .ha-gate p { font-size:.9rem; color:var(--muted); line-height:1.6; margin:0; }
+    .ha-widget { margin-top:1.5rem; animation:fadeUp .45s ease both; }
+    .ha-widget iframe { width:100%; height:750px; border:none; border-radius:var(--r-md); display:block; }
+    .ha-fallback { font-size:.82rem; color:var(--muted); text-align:center; line-height:1.6; margin:1rem 0 0; }
+    .ha-fallback a { color:var(--teal); font-weight:600; }
     @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
-    .rgpd-card { background:var(--teal-light); border:1.5px solid var(--teal); border-radius:var(--r-xl); padding:1.75rem; margin-top:1.25rem; }
+    .rgpd-card { background:var(--teal-light); border:1.5px solid var(--teal); border-radius:var(--r-xl); padding:1.75rem; }
     .rgpd-card h3 { font-size:.875rem; font-weight:700; color:var(--teal); margin-bottom:.75rem; text-transform:uppercase; letter-spacing:.06em; }
     .rgpd-card p  { font-size:.875rem; color:var(--text); line-height:1.7; margin-bottom:.6rem; }
     .rgpd-card p:last-child { margin-bottom:0; }
@@ -52,9 +40,8 @@
     .dashboard-card { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); overflow:hidden; box-shadow:var(--shadow-sm); margin-bottom:2rem; }
     .dashboard-card figcaption { font-size:.78rem; color:var(--muted); padding:.6rem 1.2rem; border-top:1px solid var(--border); }
     .dashboard-card .zoom-hint { justify-content:flex-start; padding:.5rem 1.2rem; }
+    @media (max-width:600px) { .stats-grid { grid-template-columns:1fr; } .adhesion-card { padding:1.5rem 1.15rem; } }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
 <body>
 
@@ -101,18 +88,6 @@
   </div>
 
   <main>
-    <!-- Bannière en cours de développement -->
-    <section class="band-dark" style="padding:2.5rem 0;">
-      <div class="container">
-        <div class="banner reveal" style="background:rgba(255,167,11,.12);border:1.5px solid rgba(201,122,10,.5);color:rgba(255,255,255,.85);">
-          <p data-fr-rich="🚧 <strong style='color:var(--amber);'>Fonctionnalité en cours de développement</strong> — Le formulaire d'adhésion en ligne n'est pas encore activé. Vous pouvez adhérer directement sur place, au Village, lors de votre prochaine visite. Cette page sera bientôt complétée."
-             data-en-rich="🚧 <strong style='color:var(--amber);'>Feature in development</strong> — The online membership form is not yet active. You can join directly on site at Le Village during your next visit. This page will be completed soon.">
-            🚧 <strong style="color:var(--amber);">Fonctionnalité en cours de développement</strong> — Le formulaire d'adhésion en ligne n'est pas encore activé. Vous pouvez adhérer directement sur place, au Village, lors de votre prochaine visite. Cette page sera bientôt complétée.
-          </p>
-        </div>
-      </div>
-    </section>
-
     <!-- Tableau de bord membres -->
     <section style="padding:3rem 0 0;">
       <div class="container">
@@ -133,7 +108,8 @@
     <section class="band-teal">
       <div class="container">
         <div class="banner reveal" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:white;">
-          <p>Le Village est un <strong style="color:white">café associatif</strong> : l'adhésion permet de participer à la vie de l'association et est obligatoire pour la vente d'alcool. La cotisation est de <strong style="color:white">5 € par an</strong>, à régler sur place lors de votre première visite. Ce formulaire permet de préparer votre adhésion à l'avance.</p>
+          <p data-fr-rich="Le Village est un <strong class=&quot;banner-hl&quot;>café associatif</strong> : l'adhésion permet de participer à la vie de l'association et est obligatoire pour la vente d'alcool. La cotisation est de <strong class=&quot;banner-hl&quot;>5 € par an</strong>. Elle se règle en ligne, en quelques minutes, via notre page HelloAsso ci-dessous — ou directement sur place lors de votre prochaine visite."
+             data-en-rich="Le Village is a <strong class=&quot;banner-hl&quot;>community café</strong>: membership lets you take part in the life of the association and is required for alcohol sales. The fee is <strong class=&quot;banner-hl&quot;>€5 per year</strong>. You can pay online in a few minutes through our HelloAsso page below — or on site during your next visit.">Le Village est un <strong class="banner-hl">café associatif</strong> : l'adhésion permet de participer à la vie de l'association et est obligatoire pour la vente d'alcool. La cotisation est de <strong class="banner-hl">5 € par an</strong>. Elle se règle en ligne, en quelques minutes, via notre page HelloAsso ci-dessous — ou directement sur place lors de votre prochaine visite.</p>
         </div>
         <div class="stats-grid reveal" style="margin-top:1.5rem;">
           <div class="stat-card" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);">
@@ -145,100 +121,81 @@
             <p class="stat-lbl" style="color:rgba(255,255,255,.55);" data-fr="adhésion(s) en ligne cette année" data-en="online membership(s) this year">adhésion(s) en ligne cette année</p>
           </div>
         </div>
+        <p class="stats-source reveal" id="stats-source" hidden>
+          <span data-fr="Source : adhésions enregistrées sur HelloAsso — mis à jour le" data-en="Source: memberships recorded on HelloAsso — updated on">Source : adhésions enregistrées sur HelloAsso — mis à jour le</span>
+          <span id="stats-updated">—</span>
+        </p>
       </div>
     </section>
 
-    <!-- Formulaire -->
+    <!-- RGPD (à lire) puis adhésion en ligne HelloAsso -->
     <section style="padding:5rem 0;">
       <div class="container">
-        <div class="form-card reveal">
-          <h2 data-fr="Formulaire d'adhésion" data-en="Membership form">Formulaire d'adhésion</h2>
-          <form id="adhesion-form" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="prenom" data-fr="Prénom *" data-en="First name *">Prénom *</label>
-                <input class="form-input" type="text" id="prenom" name="prenom" required maxlength="50" autocomplete="given-name"
-                  data-fr-placeholder="Marie" data-en-placeholder="Marie" placeholder="Marie">
-                <p class="field-error" id="prenom-error" data-fr="Ce champ est obligatoire." data-en="This field is required.">Ce champ est obligatoire.</p>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="nom" data-fr="Nom *" data-en="Last name *">Nom *</label>
-                <input class="form-input" type="text" id="nom" name="nom" required maxlength="50" autocomplete="family-name"
-                  data-fr-placeholder="Dupont" data-en-placeholder="Dupont" placeholder="Dupont">
-                <p class="field-error" id="nom-error" data-fr="Ce champ est obligatoire." data-en="This field is required.">Ce champ est obligatoire.</p>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="email" data-fr="Email *" data-en="Email *">Email *</label>
-              <input class="form-input" type="email" id="email" name="email" required maxlength="100" autocomplete="email"
-                data-fr-placeholder="marie@exemple.fr" data-en-placeholder="marie@example.com" placeholder="marie@exemple.fr">
-              <p class="form-hint" data-fr="Vous recevrez un email de confirmation à présenter au café." data-en="You'll receive a confirmation email to present at the café.">Vous recevrez un email de confirmation à présenter au café.</p>
-              <p class="field-error" id="email-error" data-fr="Veuillez saisir une adresse email valide." data-en="Please enter a valid email address.">Veuillez saisir une adresse email valide.</p>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="telephone" data-fr="Téléphone (optionnel)" data-en="Phone (optional)">Téléphone (optionnel)</label>
-              <input class="form-input" type="tel" id="telephone" name="telephone" maxlength="20" autocomplete="tel" data-fr-placeholder="06 12 34 56 78" data-en-placeholder="06 12 34 56 78" placeholder="06 12 34 56 78">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="adresse" data-fr="Adresse (optionnel)" data-en="Address (optional)">Adresse (optionnel)</label>
-              <input class="form-input" type="text" id="adresse" name="adresse" maxlength="150" autocomplete="street-address"
-                data-fr-placeholder="8 rue du Chalumeaux, Lyon 8e" data-en-placeholder="8 rue du Chalumeaux, Lyon 8e" placeholder="8 rue du Chalumeaux, Lyon 8e">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="annee_naissance" data-fr="Année de naissance (optionnel)" data-en="Birth year (optional)">Année de naissance (optionnel)</label>
-              <input class="form-input" type="number" id="annee_naissance" name="annee_naissance" min="1900" max="2015" autocomplete="bday-year"
-                data-fr-placeholder="1985" data-en-placeholder="1985" placeholder="1985" style="max-width:14rem;">
-            </div>
-            <div class="form-trap" aria-hidden="true">
-              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-            </div>
-            <div class="form-group checkbox-group" style="margin-top:1.25rem;">
-              <input type="checkbox" id="rgpd-consent" name="rgpd" required class="sr-only">
-              <label for="rgpd-consent" class="checkbox-label">
-                <span class="checkbox-box" aria-hidden="true"></span>
-                <span data-fr="J'ai lu la politique de gestion des données ci-dessous et j'autorise Le Village — Café Associatif à collecter mes données personnelles dans le cadre de la gestion de mon adhésion. *"
-                      data-en="I have read the data policy below and I authorise Le Village — Café Associatif to collect my personal data for membership management purposes. *">J'ai lu la politique de gestion des données ci-dessous et j'autorise Le Village — Café Associatif à collecter mes données personnelles dans le cadre de la gestion de mon adhésion. *</span>
-              </label>
-              <p class="consent-error" id="rgpd-error" role="alert" data-fr="Vous devez cocher cette case pour valider votre adhésion." data-en="You must tick this box to submit your membership.">Vous devez cocher cette case pour valider votre adhésion.</p>
-            </div>
-            <button type="submit" class="btn btn-amber form-submit" id="submit-btn" disabled aria-disabled="true">
-              <span id="submit-text" data-fr="Bientôt disponible" data-en="Coming soon">Bientôt disponible</span>
-            </button>
-          </form>
-          <div class="success-screen" id="success-screen" role="alert">
-            <div class="success-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <p class="success-title" data-fr="Merci !" data-en="Thank you!">Merci !</p>
-            <p class="success-sub" data-fr="Votre adhésion a bien été enregistrée. Présentez-vous au Village lors de votre prochaine visite pour régler la cotisation de 5 €. À bientôt !" data-en="Your membership has been recorded. Come by Le Village on your next visit to pay the €5 fee. See you soon!">Votre adhésion a bien été enregistrée. Présentez-vous au Village lors de votre prochaine visite pour régler la cotisation de 5 €. À bientôt !</p>
-            <button type="button" class="btn btn-outline" id="reset-btn" data-fr="Faire une nouvelle adhésion" data-en="Submit another membership">Faire une nouvelle adhésion</button>
-          </div>
-          <div class="form-error" id="form-error" role="alert" style="margin-top:1rem;" data-fr="Une erreur est survenue. Veuillez réessayer ou contacter le café directement." data-en="An error occurred. Please try again or contact the café directly.">
-            Une erreur est survenue. Veuillez réessayer ou contacter le café directement.
-          </div>
-        </div>
 
-        <!-- RGPD -->
+        <!-- RGPD : affiché avant le formulaire, la case de consentement en bas
+             conditionne l'affichage du widget HelloAsso. -->
         <div class="rgpd-card reveal" id="rgpd-info">
           <h3 data-fr="Politique de gestion des données personnelles (RGPD)" data-en="Personal data policy (GDPR)">Politique de gestion des données personnelles (RGPD)</h3>
 
-          <p><strong>Pourquoi collectons-nous vos données ?</strong></p>
-          <p>Le Village — Café Associatif est une association loi 1901. La tenue d'un registre des membres à jour est une obligation légale pour toute association. Vos données personnelles nous permettent de gérer votre adhésion, de vous délivrer une confirmation de membre, de vous informer ponctuellement de la vie de l'association (événements, assemblée générale), et de respecter nos obligations liées à la vente d'alcool (obligation de vérifier la qualité de membre).</p>
+          <p><strong data-fr="Pourquoi collectons-nous vos données ?" data-en="Why do we collect your data?">Pourquoi collectons-nous vos données ?</strong></p>
+          <p data-fr="Le Village — Café Associatif est une association loi 1901. La tenue d'un registre des membres à jour est une obligation légale pour toute association. Vos données personnelles nous permettent de gérer votre adhésion, de vous délivrer une confirmation de membre, de vous informer ponctuellement de la vie de l'association (événements, assemblée générale), et de respecter nos obligations liées à la vente d'alcool (obligation de vérifier la qualité de membre)."
+             data-en="Le Village — Café Associatif is a French non-profit association (loi 1901). Keeping an up-to-date member register is a legal obligation for any association. Your personal data allows us to manage your membership, issue your membership confirmation, occasionally inform you about the life of the association (events, general assembly), and comply with our obligations regarding alcohol sales (checking membership status).">Le Village — Café Associatif est une association loi 1901. La tenue d'un registre des membres à jour est une obligation légale pour toute association. Vos données personnelles nous permettent de gérer votre adhésion, de vous délivrer une confirmation de membre, de vous informer ponctuellement de la vie de l'association (événements, assemblée générale), et de respecter nos obligations liées à la vente d'alcool (obligation de vérifier la qualité de membre).</p>
 
-          <p><strong>Base légale du traitement</strong></p>
-          <p>Le traitement de vos données repose sur l'exécution du contrat d'adhésion (art. 6.1.b du RGPD) et sur l'intérêt légitime de l'association pour la gestion interne de ses membres (art. 6.1.f du RGPD). Vos données optionnelles (téléphone, adresse, année de naissance) sont traitées sur la base de votre consentement.</p>
+          <p><strong data-fr="Vos données sont collectées et stockées par HelloAsso" data-en="Your data is collected and stored by HelloAsso">Vos données sont collectées et stockées par HelloAsso</strong></p>
+          <p data-fr-rich="L'adhésion en ligne est gérée par <strong>HelloAsso</strong>, la plateforme de paiement dédiée aux associations. Le formulaire ci-dessous est fourni par HelloAsso et affiché dans un cadre intégré : les informations que vous y saisissez (identité, coordonnées, informations de paiement) sont <strong>collectées, traitées et stockées par HelloAsso sur ses propres serveurs</strong>, et non par le site du Village. Le Village n'a jamais accès à vos informations bancaires : nous ne recevons de HelloAsso que les données nécessaires à la tenue du registre des membres (nom, prénom, email et, le cas échéant, les informations que vous avez choisi de renseigner). Le traitement réalisé par HelloAsso est décrit dans sa <a href=&quot;https://www.helloasso.com/confidentialite&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>politique de confidentialité</a>, que nous vous invitons à consulter."
+             data-en-rich="Online membership is handled by <strong>HelloAsso</strong>, the payment platform dedicated to non-profit associations. The form below is provided by HelloAsso and displayed in an embedded frame: the information you enter (identity, contact details, payment information) is <strong>collected, processed and stored by HelloAsso on its own servers</strong>, not by Le Village's website. Le Village never has access to your banking information: HelloAsso only passes on the data needed to maintain the member register (last name, first name, email and, where applicable, the details you chose to provide). HelloAsso's processing is described in its <a href=&quot;https://www.helloasso.com/confidentialite&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>privacy policy</a>, which we encourage you to read.">L'adhésion en ligne est gérée par <strong>HelloAsso</strong>, la plateforme de paiement dédiée aux associations. Le formulaire ci-dessous est fourni par HelloAsso et affiché dans un cadre intégré : les informations que vous y saisissez (identité, coordonnées, informations de paiement) sont <strong>collectées, traitées et stockées par HelloAsso sur ses propres serveurs</strong>, et non par le site du Village. Le Village n'a jamais accès à vos informations bancaires : nous ne recevons de HelloAsso que les données nécessaires à la tenue du registre des membres (nom, prénom, email et, le cas échéant, les informations que vous avez choisi de renseigner). Le traitement réalisé par HelloAsso est décrit dans sa <a href="https://www.helloasso.com/confidentialite" target="_blank" rel="noopener">politique de confidentialité</a>, que nous vous invitons à consulter.</p>
+          <p data-fr="Tant que vous n'avez pas coché la case de consentement ci-dessous, aucun élément HelloAsso n'est chargé sur cette page et aucune donnée n'est transmise."
+             data-en="Until you tick the consent box below, no HelloAsso content is loaded on this page and no data is transmitted.">Tant que vous n'avez pas coché la case de consentement ci-dessous, aucun élément HelloAsso n'est chargé sur cette page et aucune donnée n'est transmise.</p>
 
-          <p><strong>Données collectées</strong></p>
-          <p>Données obligatoires : prénom, nom, adresse email. Données optionnelles : numéro de téléphone, adresse postale, année de naissance.</p>
+          <p><strong data-fr="Base légale du traitement" data-en="Legal basis for processing">Base légale du traitement</strong></p>
+          <p data-fr="Le traitement de vos données repose sur l'exécution du contrat d'adhésion (art. 6.1.b du RGPD) et sur l'intérêt légitime de l'association pour la gestion interne de ses membres (art. 6.1.f du RGPD). Les données facultatives que vous choisissez de renseigner sont traitées sur la base de votre consentement."
+             data-en="The processing of your data is based on the performance of the membership contract (art. 6.1.b GDPR) and on the association's legitimate interest in managing its members internally (art. 6.1.f GDPR). Optional data you choose to provide is processed on the basis of your consent.">Le traitement de vos données repose sur l'exécution du contrat d'adhésion (art. 6.1.b du RGPD) et sur l'intérêt légitime de l'association pour la gestion interne de ses membres (art. 6.1.f du RGPD). Les données facultatives que vous choisissez de renseigner sont traitées sur la base de votre consentement.</p>
 
-          <p><strong>Durée de conservation</strong></p>
-          <p>Vos données sont conservées pendant la durée de votre adhésion, puis archivées pendant 3 ans après votre départ de l'association, conformément aux recommandations de la CNIL pour les associations.</p>
+          <p><strong data-fr="Durée de conservation" data-en="Retention period">Durée de conservation</strong></p>
+          <p data-fr="Vos données sont conservées pendant la durée de votre adhésion, puis archivées pendant 3 ans après votre départ de l'association, conformément aux recommandations de la CNIL pour les associations. Les données conservées par HelloAsso suivent les durées indiquées dans sa propre politique de confidentialité, notamment les obligations comptables applicables aux paiements."
+             data-en="Your data is kept for the duration of your membership, then archived for 3 years after you leave the association, in line with the CNIL's recommendations for associations. Data held by HelloAsso follows the retention periods set out in its own privacy policy, in particular the accounting obligations applicable to payments.">Vos données sont conservées pendant la durée de votre adhésion, puis archivées pendant 3 ans après votre départ de l'association, conformément aux recommandations de la CNIL pour les associations. Les données conservées par HelloAsso suivent les durées indiquées dans sa propre politique de confidentialité, notamment les obligations comptables applicables aux paiements.</p>
 
-          <p><strong>Qui a accès à vos données ?</strong></p>
-          <p>Uniquement les membres du conseil d'administration du Village — Café Associatif. Vos données ne sont jamais revendues, louées ni transmises à des tiers à des fins commerciales.</p>
+          <p><strong data-fr="Qui a accès à vos données ?" data-en="Who has access to your data?">Qui a accès à vos données ?</strong></p>
+          <p data-fr="Côté association, uniquement les membres du conseil d'administration du Village — Café Associatif. Côté plateforme, HelloAsso et ses prestataires techniques de paiement. Vos données ne sont jamais revendues, louées ni transmises à des tiers à des fins commerciales."
+             data-en="Within the association, only the board members of Le Village — Café Associatif. On the platform side, HelloAsso and its technical payment providers. Your data is never sold, rented or passed on to third parties for commercial purposes.">Côté association, uniquement les membres du conseil d'administration du Village — Café Associatif. Côté plateforme, HelloAsso et ses prestataires techniques de paiement. Vos données ne sont jamais revendues, louées ni transmises à des tiers à des fins commerciales.</p>
 
-          <p><strong>Vos droits</strong></p>
-          <p>Conformément au Règlement Général sur la Protection des Données (RGPD — UE 2016/679), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition au traitement de vos données personnelles. Pour exercer ces droits, contactez-nous à <a href="mailto:contact@cafe-levillage.org">contact@cafe-levillage.org</a>. En cas de réclamation non résolue, vous pouvez saisir la <a href="https://www.cnil.fr" target="_blank" rel="noopener">Commission Nationale de l'Informatique et des Libertés (CNIL)</a>.</p>
+          <p><strong data-fr="Vos droits" data-en="Your rights">Vos droits</strong></p>
+          <p data-fr-rich="Conformément au Règlement Général sur la Protection des Données (RGPD — UE 2016/679), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition au traitement de vos données personnelles. Pour exercer ces droits auprès de l'association, contactez-nous à <a href=&quot;mailto:contact@cafe-levillage.org&quot;>contact@cafe-levillage.org</a> ; pour les données détenues par la plateforme, adressez-vous à <a href=&quot;https://www.helloasso.com/confidentialite&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>HelloAsso</a>. En cas de réclamation non résolue, vous pouvez saisir la <a href=&quot;https://www.cnil.fr&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>Commission Nationale de l'Informatique et des Libertés (CNIL)</a>."
+             data-en-rich="Under the General Data Protection Regulation (GDPR — EU 2016/679), you have the right to access, rectify, erase, restrict and object to the processing of your personal data. To exercise these rights with the association, contact us at <a href=&quot;mailto:contact@cafe-levillage.org&quot;>contact@cafe-levillage.org</a>; for data held by the platform, contact <a href=&quot;https://www.helloasso.com/confidentialite&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>HelloAsso</a>. If a complaint remains unresolved, you may refer the matter to the French data protection authority, the <a href=&quot;https://www.cnil.fr&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>CNIL</a>.">Conformément au Règlement Général sur la Protection des Données (RGPD — UE 2016/679), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et d'opposition au traitement de vos données personnelles. Pour exercer ces droits auprès de l'association, contactez-nous à <a href="mailto:contact@cafe-levillage.org">contact@cafe-levillage.org</a> ; pour les données détenues par la plateforme, adressez-vous à <a href="https://www.helloasso.com/confidentialite" target="_blank" rel="noopener">HelloAsso</a>. En cas de réclamation non résolue, vous pouvez saisir la <a href="https://www.cnil.fr" target="_blank" rel="noopener">Commission Nationale de l'Informatique et des Libertés (CNIL)</a>.</p>
+        </div>
+
+        <!-- Adhésion en ligne : le widget n'est chargé qu'après consentement -->
+        <div class="adhesion-card reveal" id="adhesion-card">
+          <h2 data-fr="Adhérer en ligne" data-en="Join online">Adhérer en ligne</h2>
+          <p data-fr="L'adhésion 2026 se règle en ligne via HelloAsso, notre plateforme de paiement. Pour accéder au formulaire, merci de lire la politique de gestion des données ci-dessus et de confirmer votre accord."
+             data-en="The 2026 membership is paid online through HelloAsso, our payment platform. To access the form, please read the data policy above and confirm your agreement.">L'adhésion 2026 se règle en ligne via HelloAsso, notre plateforme de paiement. Pour accéder au formulaire, merci de lire la politique de gestion des données ci-dessus et de confirmer votre accord.</p>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="rgpd-consent" name="rgpd" class="sr-only" aria-controls="ha-widget">
+            <label for="rgpd-consent" class="checkbox-label">
+              <span class="checkbox-box" aria-hidden="true"></span>
+              <span data-fr="J'ai lu la politique de gestion des données ci-dessus et j'accepte que mes données soient collectées et stockées par HelloAsso, ainsi que transmises au Village — Café Associatif pour la gestion de mon adhésion."
+                    data-en="I have read the data policy above and I agree that my data will be collected and stored by HelloAsso, and passed on to Le Village — Café Associatif for the management of my membership.">J'ai lu la politique de gestion des données ci-dessus et j'accepte que mes données soient collectées et stockées par HelloAsso, ainsi que transmises au Village — Café Associatif pour la gestion de mon adhésion.</span>
+            </label>
+          </div>
+
+          <div class="ha-gate" id="ha-gate">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <p data-fr="Cochez la case ci-dessus pour afficher le formulaire d'adhésion HelloAsso."
+               data-en="Tick the box above to display the HelloAsso membership form.">Cochez la case ci-dessus pour afficher le formulaire d'adhésion HelloAsso.</p>
+          </div>
+
+          <div class="ha-widget" id="ha-widget" hidden>
+            <iframe id="haWidget"
+                    title="Formulaire d'adhésion HelloAsso"
+                    data-fr-title="Formulaire d'adhésion HelloAsso"
+                    data-en-title="HelloAsso membership form"
+                    allow="payment 'self' https://paymenthub.helloassopay.com https://helloasso.com"
+                    scrolling="auto"
+                    loading="lazy"></iframe>
+            <p class="ha-fallback" data-fr-rich="Le formulaire ne s'affiche pas ? <a href=&quot;https://www.helloasso.com/associations/cafe-associatif-le-village/adhesions/adhesion-au-village-cafe-associatif-2026&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>Ouvrir la page d'adhésion sur HelloAsso</a>."
+                                    data-en-rich="Form not showing? <a href=&quot;https://www.helloasso.com/associations/cafe-associatif-le-village/adhesions/adhesion-au-village-cafe-associatif-2026&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;>Open the membership page on HelloAsso</a>.">Le formulaire ne s'affiche pas ? <a href="https://www.helloasso.com/associations/cafe-associatif-le-village/adhesions/adhesion-au-village-cafe-associatif-2026" target="_blank" rel="noopener">Ouvrir la page d'adhésion sur HelloAsso</a>.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -264,125 +221,81 @@
     const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    const SUPABASE_URL = 'https://evifxtecjhemmaxaiozt.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2aWZ4dGVjamhlbW1heGFpb3p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NzIzNzIsImV4cCI6MjA5MjU0ODM3Mn0.0Z4AL42b8cR0iKOZtfdiRQTcMbqZZi36RvYYEcFA48U';
+    // Page d'adhésion HelloAsso : campagne courante.
+    const HA_ORIGIN     = 'https://www.helloasso.com';
+    const HA_CAMPAIGN   = HA_ORIGIN + '/associations/cafe-associatif-le-village/adhesions/adhesion-au-village-cafe-associatif-2026';
+    const HA_WIDGET_URL = HA_CAMPAIGN + '/widget';
+    const HA_MAX_HEIGHT = 4000; // borne haute de sécurité pour les messages reçus
 
-    const EMAILJS_PUBLIC_KEY  = 'p_RGCZSSSSeb2UBzu';
-    const EMAILJS_SERVICE_ID  = 'service_446bi4r';
-    const EMAILJS_TEMPLATE_ID = 'template_usqzf09';
+    document.addEventListener('DOMContentLoaded', () => {
 
-    document.addEventListener('DOMContentLoaded', async () => {
-      if (window.emailjs) emailjs.init(EMAILJS_PUBLIC_KEY);
+      // ── Décompte des adhésions en ligne ────────────────────────────────
+      // Le fichier est régénéré depuis l'API HelloAsso par le workflow
+      // .github/workflows/helloasso-stats.yml (le secret d'API ne peut pas
+      // vivre dans une page statique).
+      const statMois    = document.getElementById('stat-mois');
+      const statAnnee   = document.getElementById('stat-annee');
+      const statUpdated = document.getElementById('stats-updated');
+      let generatedAt = null;
 
-      if (window.supabase) {
-        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        try {
-          const { data } = await sb.rpc('get_adhesion_stats');
-          if (data) {
-            document.getElementById('stat-mois').textContent  = data.total_mois  ?? '0';
-            document.getElementById('stat-annee').textContent = data.total_annee ?? '0';
-          }
-        } catch(e) { console.warn('Stats unavailable:', e); }
-
-        // ── Champs obligatoires ──────────────────────────────────────────
-        const prenomEl = document.getElementById('prenom');
-        const nomEl    = document.getElementById('nom');
-        const emailEl  = document.getElementById('email');
-        const prenomErr = document.getElementById('prenom-error');
-        const nomErr    = document.getElementById('nom-error');
-        const emailErr  = document.getElementById('email-error');
-
-        function showErr(el, errEl) { el.classList.add('invalid'); errEl.style.display = 'block'; }
-        function clearErr(el, errEl) { el.classList.remove('invalid'); errEl.style.display = 'none'; }
-
-        [prenomEl, nomEl].forEach(el => {
-          const err = document.getElementById(el.id + '-error');
-          el.addEventListener('input', () => { if (el.value.trim()) clearErr(el, err); });
-        });
-        emailEl.addEventListener('input', () => { if (emailEl.value.trim()) clearErr(emailEl, emailErr); });
-
-        // ── Consentement RGPD ────────────────────────────────────────────
-        const consent      = document.getElementById('rgpd-consent');
-        const consentErr   = document.getElementById('rgpd-error');
-        const consentGroup = consent.closest('.checkbox-group');
-        consent.addEventListener('change', () => {
-          if (consent.checked) { consentErr.style.display = 'none'; consentGroup.classList.remove('invalid'); }
-        });
-
-        // ── Soumission ───────────────────────────────────────────────────
-        const form          = document.getElementById('adhesion-form');
-        const successScreen = document.getElementById('success-screen');
-        const globalErr     = document.getElementById('form-error');
-
-        // ── Retour au formulaire après succès ────────────────────────────
-        document.getElementById('reset-btn').addEventListener('click', () => {
-          successScreen.classList.remove('show');
-          form.reset();
-          clearErr(prenomEl, prenomErr); clearErr(nomEl, nomErr); clearErr(emailEl, emailErr);
-          consentErr.style.display = 'none'; consentGroup.classList.remove('invalid');
-          globalErr.style.display = 'none';
-          form.style.display = '';
-          form.style.opacity = '';
-          form.style.transition = '';
-          form.closest('.form-card').scrollIntoView({ behavior:'smooth', block:'start' });
-        });
-
-        document.getElementById('adhesion-form').addEventListener('submit', async ev => {
-          ev.preventDefault();
-          if (document.getElementById('website').value.trim()) { successScreen.classList.add('show'); form.style.display = 'none'; return; }
-
-          // Validation champs
-          let hasError = false;
-          const prenom = prenomEl.value.trim();
-          const nom    = nomEl.value.trim();
-          const email  = emailEl.value.trim();
-
-          if (!prenom) { showErr(prenomEl, prenomErr); hasError = true; } else clearErr(prenomEl, prenomErr);
-          if (!nom)    { showErr(nomEl, nomErr);    hasError = true; } else clearErr(nomEl, nomErr);
-          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr(emailEl, emailErr); hasError = true; } else clearErr(emailEl, emailErr);
-          if (!consent.checked) { consentErr.style.display = 'block'; consentGroup.classList.add('invalid'); hasError = true; }
-
-          if (hasError) {
-            const firstInvalid = form.querySelector('.form-input.invalid, .sr-only.invalid');
-            if (firstInvalid) firstInvalid.closest('.form-group, .checkbox-group').scrollIntoView({ behavior:'smooth', block:'center' });
-            return;
-          }
-          consentErr.style.display = 'none'; consentGroup.classList.remove('invalid');
-
-          const telephone       = document.getElementById('telephone').value.trim();
-          const adresse         = document.getElementById('adresse').value.trim();
-          const anneeRaw        = document.getElementById('annee_naissance').value.trim();
-          const annee_naissance = anneeRaw ? parseInt(anneeRaw, 10) : null;
-          const btn = document.getElementById('submit-btn');
-          const txt = document.getElementById('submit-text');
-          btn.disabled = true; txt.textContent = 'Envoi en cours…';
-          globalErr.style.display = 'none';
-
-          try {
-            const { error } = await sb.from('adhesions').insert([{ prenom, nom, email, telephone: telephone || null, adresse: adresse || null, annee_naissance }]);
-            if (error) throw error;
-
-            if (window.emailjs) {
-              try {
-                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                  to_name:       `${prenom} ${nom}`,
-                  to_email:      email,
-                  adhesion_date: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
-                });
-              } catch (mailErr) {
-                console.error('Erreur envoi email de confirmation:', mailErr);
-              }
-            }
-
-            form.style.opacity = '0';
-            form.style.transition = 'opacity .25s ease';
-            setTimeout(() => { form.style.display = 'none'; successScreen.classList.add('show'); }, 250);
-          } catch(ex) {
-            console.error(ex); globalErr.style.display = 'block';
-            btn.disabled = false; txt.textContent = 'Envoyer mon adhésion';
-          }
-        });
+      function renderUpdatedAt() {
+        if (!generatedAt) return;
+        const locale = (window.i18n && window.i18n.locale === 'en') ? 'en-GB' : 'fr-FR';
+        statUpdated.textContent = generatedAt.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' });
       }
+
+      fetch('data/adhesions-stats.json', { cache: 'no-cache' })
+        .then(res => res.ok ? res.json() : Promise.reject(new Error('HTTP ' + res.status)))
+        .then(data => {
+          if (typeof data.total_mois  === 'number') statMois.textContent  = data.total_mois;
+          if (typeof data.total_annee === 'number') statAnnee.textContent = data.total_annee;
+          if (data.generated_at) {
+            const d = new Date(data.generated_at);
+            if (!isNaN(d.getTime())) {
+              generatedAt = d;
+              renderUpdatedAt();
+              document.getElementById('stats-source').hidden = false;
+            }
+          }
+        })
+        .catch(err => console.warn('Décompte des adhésions indisponible :', err));
+
+      document.addEventListener('i18n:changed', renderUpdatedAt);
+
+      // ── Consentement RGPD → chargement du widget HelloAsso ─────────────
+      // Aucune requête vers HelloAsso n'est émise tant que la case n'est pas
+      // cochée : l'iframe reste sans src.
+      const consent    = document.getElementById('rgpd-consent');
+      const gate       = document.getElementById('ha-gate');
+      const widgetWrap = document.getElementById('ha-widget');
+      const iframe     = document.getElementById('haWidget');
+
+      function applyConsent() {
+        if (consent.checked) {
+          gate.hidden = true;
+          widgetWrap.hidden = false;
+          if (iframe.getAttribute('src') !== HA_WIDGET_URL) iframe.setAttribute('src', HA_WIDGET_URL);
+        } else {
+          widgetWrap.hidden = true;
+          gate.hidden = false;
+          iframe.removeAttribute('src');
+          iframe.style.height = '';
+        }
+      }
+
+      // Certains navigateurs restaurent l'état des cases au retour arrière.
+      consent.checked = false;
+      consent.addEventListener('change', applyConsent);
+      applyConsent();
+
+      // ── Redimensionnement de l'iframe piloté par HelloAsso ─────────────
+      window.addEventListener('message', event => {
+        if (event.origin !== HA_ORIGIN) return;
+        if (!event.data || typeof event.data !== 'object') return;
+        const height = parseFloat(event.data.height);
+        if (!isFinite(height) || height <= 0 || height > HA_MAX_HEIGHT) return;
+        if (height > parseFloat(iframe.style.height || 0)) iframe.style.height = Math.ceil(height) + 'px';
+      });
     });
   </script>
   <script src="assets/js/lightbox.js" defer></script>
