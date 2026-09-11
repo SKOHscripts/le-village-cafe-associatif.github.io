@@ -27,6 +27,7 @@
     ['event.popup.agenda',  { fr: "Voir l'agenda →",                 en: 'See agenda →' }],
     ['event.popup.prev',    { fr: 'Évènement précédent',             en: 'Previous event' }],
     ['event.popup.next',    { fr: 'Évènement suivant',               en: 'Next event' }],
+    ['event.cta',           { fr: 'Réserver ma place',               en: 'Book my place' }],
     ['event.empty.upcoming',{ fr: "Pas d'évènement prévu pour l'instant.", en: 'No upcoming events for now.' }],
     ['event.empty.past',    { fr: "Pas d'évènement passé à afficher.",     en: 'No past events to show.' }],
     ['common.close',        { fr: 'Fermer',                          en: 'Close' }],
@@ -255,6 +256,17 @@
     return p;
   }
 
+  // Bouton de billetterie. Le lien part chez un tiers (HelloAsso) : on exige
+  // https, et rien n'est rendu si la colonne est vide.
+  function buildInscriptionButton(evt, className) {
+    const href = evt.lienInscription;
+    if (typeof href !== 'string' || !/^https:\/\//i.test(href)) return null;
+    const en = currentLocale() === 'en';
+    const custom = en ? evt.lienInscriptionLabel_en : evt.lienInscriptionLabel;
+    const label = (custom && String(custom).trim()) || t('event.cta', 'Réserver ma place');
+    return buildExternalLink(href, label, className);
+  }
+
   function buildExternalLink(href, label, className) {
     const a = document.createElement('a');
     a.setAttribute('rel', 'noopener noreferrer');
@@ -343,6 +355,9 @@
 
     const confirmNotice = buildConfirmationNotice(evt, 'event-modal__confirm');
     if (confirmNotice) frag.appendChild(confirmNotice);
+
+    const cta = buildInscriptionButton(evt, 'btn btn-amber event-modal__cta');
+    if (cta) frag.appendChild(cta);
 
     const links = document.createElement('div');
     links.className = 'event-modal__links';

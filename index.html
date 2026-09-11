@@ -372,6 +372,14 @@
       return `<p class="ecard-confirm"><span class="ecard-confirm-mark" aria-hidden="true">✨</span><span>${escHtml(before)}<a href="${escHtml(href)}">${escHtml(linkLabel)}</a></span></p>`;
     }
 
+    function inscriptionButton(ev, lang) {
+      const href = ev.lienInscription;
+      if (typeof href !== 'string' || !/^https:\/\//i.test(href)) return '';
+      const custom = lang === 'en' ? ev.lienInscriptionLabel_en : ev.lienInscriptionLabel;
+      const label = (custom && String(custom).trim()) || (lang === 'en' ? 'Book my place' : 'Réserver ma place');
+      return `<a class="btn btn-amber ecard-cta" href="${escHtml(href)}" target="_blank" rel="noopener noreferrer">${escHtml(label)}</a>`;
+    }
+
     function isSafeImageUrl(url) {
       return typeof url === 'string' && /^assets\/images\/[^/]+\.(jpe?g|png|gif|webp|svg)$/i.test(url);
     }
@@ -399,6 +407,7 @@
           ${desc ? `<p class="ecard-desc">${escHtml(desc)}</p>` : ''}
           ${eventNotice(ev, lang)}
           ${confirmNotice(ev, lang)}
+          ${inscriptionButton(ev, lang)}
         </div>`;
       if (photoUrl) {
         return `<div class="ecard ecard--has-photo">

@@ -286,6 +286,25 @@ button { font-family: inherit; cursor: pointer; }
 .event-modal__confirm-mark,
 .ecard-confirm-mark { flex-shrink:0; font-size:1.1em; line-height:1; }
 
+/* Les descriptions gardent les retours à la ligne saisis en base. */
+.event-modal__desc,
+.ecard-desc {
+  white-space: pre-line;
+}
+
+/* ── Bouton de billetterie ── placement seul, l'apparence vient de .btn-amber */
+.event-modal__cta {
+  margin: 0 1.5rem 1.25rem;
+}
+
+.ecard-cta {
+  align-self: flex-start;
+  font-size: 0.82rem;
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.95rem;
+  white-space: normal;
+}
+
 /* ── Fermeture exceptionnelle ── */
 .event-modal__notice,
 .ecard-notice { font-size:.82rem; color:#7c4a00; background:var(--amber-light); border:1px solid rgba(201,122,10,.35); border-left:3px solid var(--amber); border-radius:var(--r-sm); line-height:1.55; }
