@@ -1,3 +1,7 @@
+/* tsqllint-disable */
+-- Ce script est du PostgreSQL. Codacy analyse les .sql avec tsqllint, qui
+-- attend du T-SQL et réclame des directives SQL Server invalides ici.
+
 -- Le Village — table `evenements`
 -- Ajoute un lien de billetterie/inscription (HelloAsso) affichable en bouton
 -- sur la carte d'un évènement et dans la pop-up d'accueil.
