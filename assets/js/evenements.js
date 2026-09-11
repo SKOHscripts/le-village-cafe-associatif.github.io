@@ -356,7 +356,7 @@
     const confirmNotice = buildConfirmationNotice(evt, 'event-modal__confirm');
     if (confirmNotice) frag.appendChild(confirmNotice);
 
-    const cta = buildInscriptionButton(evt, 'event-modal__cta');
+    const cta = buildInscriptionButton(evt, 'btn btn-amber event-modal__cta');
     if (cta) frag.appendChild(cta);
 
     const links = document.createElement('div');
