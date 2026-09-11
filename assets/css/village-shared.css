@@ -234,7 +234,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .event-modal__lieu { font-size:.85rem; color:var(--muted); margin:1.1rem 1.5rem .2rem; display:flex; align-items:center; gap:.4rem; }
 .event-modal__lieu::before { content:'📍'; font-size:.8rem; }
-.event-modal__desc { font-size:.925rem; line-height:1.7; color:var(--text); margin:0 1.5rem 1.25rem; padding-top:.6rem; }
+.event-modal__desc { font-size:.925rem; line-height:1.7; color:var(--text); margin:0 1.5rem 1.25rem; padding-top:.6rem; white-space:pre-line; }
 
 /* ── Links zone ── */
 .event-modal__links { display:flex; flex-wrap:wrap; gap:.6rem; padding:.25rem 1.5rem 1.5rem; border-top:1px solid var(--border); margin-top:0; }
@@ -285,6 +285,16 @@ button { font-family: inherit; cursor: pointer; }
 .ecard-confirm a:hover { color:#9a5d08; }
 .event-modal__confirm-mark,
 .ecard-confirm-mark { flex-shrink:0; font-size:1.1em; line-height:1; }
+
+/* ── Bouton de billetterie ── */
+.event-modal__cta,
+.ecard-cta { display:inline-flex; align-items:center; background:var(--amber); color:var(--white); border:2px solid var(--amber); border-radius:var(--r-pill); font-family:var(--font-body); font-weight:700; text-decoration:none; transition:background .2s, border-color .2s, transform .2s, box-shadow .2s; }
+.event-modal__cta:hover,
+.ecard-cta:hover { background:#b06808; border-color:#b06808; color:var(--white); transform:translateY(-1px); box-shadow:0 4px 16px rgba(201,122,10,.3); }
+.event-modal__cta:focus-visible,
+.ecard-cta:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
+.event-modal__cta { font-size:.9rem; margin:0 1.5rem 1.25rem; padding:.6rem 1.15rem; }
+.ecard-cta { font-size:.82rem; margin-top:.6rem; padding:.5rem .95rem; align-self:flex-start; }
 
 /* ── Fermeture exceptionnelle ── */
 .event-modal__notice,

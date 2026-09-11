@@ -107,7 +107,7 @@
     .ecard-cat   { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--amber); margin-bottom:.25rem; }
     .ecard-title { font-weight:600; color:var(--dark); font-size:1rem; line-height:1.3; margin-bottom:.25rem; }
     .ecard-meta  { font-size:.8rem; color:var(--muted); }
-    .ecard-desc  { font-size:.82rem; color:var(--muted); line-height:1.55; margin-top:.45rem; }
+    .ecard-desc  { font-size:.82rem; color:var(--muted); line-height:1.55; margin-top:.45rem; white-space:pre-line; }
     .events-empty { text-align:center; padding:2rem; color:var(--muted); font-size:.95rem; }
 
     /* ─── ADHÉSION ────────────────────────────────────── */
@@ -372,6 +372,14 @@
       return `<p class="ecard-confirm"><span class="ecard-confirm-mark" aria-hidden="true">✨</span><span>${escHtml(before)}<a href="${escHtml(href)}">${escHtml(linkLabel)}</a></span></p>`;
     }
 
+    function inscriptionButton(ev, lang) {
+      const href = ev.lienInscription;
+      if (typeof href !== 'string' || !/^https:\/\//i.test(href)) return '';
+      const custom = lang === 'en' ? ev.lienInscriptionLabel_en : ev.lienInscriptionLabel;
+      const label = (custom && String(custom).trim()) || (lang === 'en' ? 'Book my place' : 'Réserver ma place');
+      return `<a class="ecard-cta" href="${escHtml(href)}" target="_blank" rel="noopener noreferrer">${escHtml(label)}</a>`;
+    }
+
     function isSafeImageUrl(url) {
       return typeof url === 'string' && /^assets\/images\/[^/]+\.(jpe?g|png|gif|webp|svg)$/i.test(url);
     }
@@ -399,6 +407,7 @@
           ${desc ? `<p class="ecard-desc">${escHtml(desc)}</p>` : ''}
           ${eventNotice(ev, lang)}
           ${confirmNotice(ev, lang)}
+          ${inscriptionButton(ev, lang)}
         </div>`;
       if (photoUrl) {
         return `<div class="ecard ecard--has-photo">
