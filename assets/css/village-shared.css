@@ -288,11 +288,22 @@ button { font-family: inherit; cursor: pointer; }
 
 /* Les descriptions gardent les retours à la ligne saisis en base. */
 .event-modal__desc,
-.ecard-desc { white-space:pre-line; }
+.ecard-desc {
+  white-space: pre-line;
+}
 
 /* ── Bouton de billetterie ── placement seul, l'apparence vient de .btn-amber */
-.event-modal__cta { margin:0 1.5rem 1.25rem; }
-.ecard-cta { align-self:flex-start; font-size:.82rem; margin-top:.6rem; padding:.5rem .95rem; white-space:normal; }
+.event-modal__cta {
+  margin: 0 1.5rem 1.25rem;
+}
+
+.ecard-cta {
+  align-self: flex-start;
+  font-size: 0.82rem;
+  margin-top: 0.6rem;
+  padding: 0.5rem 0.95rem;
+  white-space: normal;
+}
 
 /* ── Fermeture exceptionnelle ── */
 .event-modal__notice,
