@@ -99,7 +99,7 @@
     // par propriété, que les analyseurs signalent comme sink d'injection.
     shapes.forEach(([tag, attrs]) => {
       const node = document.createElementNS(SVG_NS, tag);
-      attrs.forEach(([name, value]) => node.setAttribute(name, value));
+      attrs.forEach(([name, value]) => { node.setAttribute(name, value); });
       svg.appendChild(node);
     });
     return svg;
