@@ -112,20 +112,48 @@ alter view public.notifications_actives set (security_invoker = on);
 
 grant select on public.notifications_actives to anon, authenticated;
 
--- ── Exemple ─────────────────────────────────────────────────────────────────
--- Décommenter pour publier une information (pas un évènement : pas de date,
--- elle n'ira donc pas dans l'agenda) visible pendant six mois.
+-- ── Première notification ───────────────────────────────────────────────────
+-- Retour à la fermeture de 21h le vendredi, les heures d'été étant passées.
+-- Visible 90 jours, le temps que les habitués prennent le pli. Pas de `date` :
+-- c'est une info, elle n'ira donc pas dans l'agenda.
 --
--- insert into public.evenements (type, titre, titre_en, resume, resume_en, description, description_en, icone, notif_jours, visible)
+-- Le `where not exists` rend l'insertion rejouable : relancer le script ne
+-- crée pas de doublon.
+insert into public.evenements
+  (type, titre, titre_en, resume, resume_en, description, description_en, icone, notif_jours, visible)
+select
+  'info',
+  'Le vendredi, retour à 21h',
+  'Fridays back to 9pm',
+  'Les heures d''été sont finies : le café referme à 21h le vendredi.',
+  'Summer hours are over: the café closes at 9pm on Fridays again.',
+  'Le Village retrouve son horaire classique du vendredi : 16h – 21h.
+
+Les heures d''été, qui nous faisaient fermer à 22h, sont derrière nous jusqu''à l''an prochain. Les mardis (14h30 – 19h) et les dimanches (10h – 13h) ne changent pas.',
+  'Le Village is back to its usual Friday hours: 4pm – 9pm.
+
+The summer hours that kept us open until 10pm are behind us until next year. Tuesdays (2:30pm – 7pm) and Sundays (10am – 1pm) are unchanged.',
+  'horaire',
+  90,
+  true
+where not exists (
+  select 1 from public.evenements
+  where type = 'info' and titre = 'Le vendredi, retour à 21h'
+);
+
+-- ── Exemple ─────────────────────────────────────────────────────────────────
+-- Autre forme d'info, avec un bouton : `lien_inscription` sert de lien
+-- « En savoir plus » et `notif_jours` la laisse un an dans la cloche.
+--
+-- insert into public.evenements (type, titre, resume, description, icone, lien_inscription, lien_inscription_label, notif_jours, visible)
 -- values (
 --   'info',
---   'Nouvel horaire le vendredi',
---   'New Friday hours',
---   'Le Village ferme désormais à 22h les vendredis d''été.',
---   'Le Village now closes at 10pm on summer Fridays.',
---   'À partir de ce mois-ci, le café reste ouvert jusqu''à 22h le vendredi pendant les heures d''été. Les mardis et dimanches ne changent pas.',
---   'From this month, the café stays open until 10pm on Fridays during summer hours. Tuesdays and Sundays are unchanged.',
---   'horaire',
---   180,
+--   'La carte des boissons a changé',
+--   'Nouveaux jus locaux et deux bières de plus à la pression.',
+--   'On a revu la carte avec les producteurs du quartier. À découvrir sur place, ou en ligne.',
+--   'site',
+--   'https://cafe-levillage.org/carte.html',
+--   'Voir la carte',
+--   365,
 --   true
 -- );

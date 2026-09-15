@@ -27,6 +27,9 @@ fonctionne comme avant.
 > Les évènements déjà en base prennent comme date de parution le jour où vous
 > lancez le script : ils apparaissent donc tous dans la cloche ce jour-là.
 
+Le script publie aussi la **première notification** du site — le retour à 21h
+le vendredi — visible 90 jours. La relancer ne la crée pas en double.
+
 ## Publier une information (pas un évènement)
 
 Supabase → **Table Editor** → table `evenements` → **Insert row** :
@@ -60,8 +63,8 @@ l'apparition de la notification.
 | Champ         | Pour qui    | Exemple                                        |
 |---------------|-------------|------------------------------------------------|
 | `type`        | tous        | `evenement` (défaut) ou `info`                 |
-| `resume`      | tous        | `Le Village ferme à 22h les vendredis d'été.`  |
-| `resume_en`   | tous        | `We now close at 10pm on summer Fridays.`      |
+| `resume`      | tous        | `Les heures d'été sont finies : retour à 21h.` |
+| `resume_en`   | tous        | `Summer hours are over: back to 9pm.`          |
 | `icone`       | tous        | `horaire` — vide = calendrier pour un évènement |
 | `notif_jours` | tous        | `180`                                          |
 | `notif_debut` | tous        | `now()` par défaut                             |
