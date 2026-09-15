@@ -1,12 +1,15 @@
 /* =============================================
    LE VILLAGE — notifications.js
-   Cloche de la barre haute : informations du café qui ne sont pas des
-   évènements (mise à jour du site, changement d'horaire…).
+   Cloche de la barre haute.
 
-   Les notifications viennent de la table Supabase `notifications`, lue en
-   REST (pas de SDK : la cloche vit sur toutes les pages, dont celles qui
-   n'ont pas besoin de @supabase/supabase-js). La rétention de 3 mois est
-   portée par la policy RLS ; le filtre ci-dessous n'est qu'une ceinture.
+   Les notifications viennent de la vue Supabase `notifications_actives`,
+   posée au-dessus de la table `evenements` : un évènement est déjà une
+   information à signaler, et la table accueille en plus les lignes de
+   type « info » (changement d'horaire, nouveauté du site…) qui ne vont
+   pas dans l'agenda. La vue applique la fenêtre d'affichage côté base.
+
+   Lecture en REST plutôt qu'avec le SDK : la cloche vit sur toutes les
+   pages, dont celles qui n'ont pas besoin de @supabase/supabase-js.
 
    Le bouton est injecté dans la barre haute par ce script : la nav est
    recopiée dans les 10 pages du site, mieux vaut un seul point de vérité.
@@ -17,9 +20,10 @@
 (function () {
   'use strict';
 
+  const SOURCE = 'notifications_actives';
   const READ_KEY = 'village-notifs-read';
   const MAX_ITEMS = 30;
-  const RETENTION_DAYS = 92;
+  const RESUME_MAX = 110;
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
   const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -29,15 +33,15 @@
 
   // Lookup par Map plutôt que par propriété d'objet dynamique (sink d'injection).
   const I18N_STRINGS = new Map([
-    ['notif.bell',      { fr: 'Notifications',                        en: 'Notifications' }],
-    ['notif.bell.new',  { fr: 'Notifications — nouveautés à lire',    en: 'Notifications — unread items' }],
-    ['notif.title',     { fr: 'Notifications',                        en: 'Notifications' }],
-    ['notif.unread',    { fr: 'Non lue',                              en: 'Unread' }],
-    ['notif.link',      { fr: 'En savoir plus',                       en: 'Learn more' }],
-    ['notif.today',     { fr: "Aujourd'hui",                          en: 'Today' }],
-    ['notif.yesterday', { fr: 'Hier',                                 en: 'Yesterday' }],
-    ['notif.daysAgo',   { fr: 'Il y a {n} jours',                     en: '{n} days ago' }],
-    ['common.close',    { fr: 'Fermer',                               en: 'Close' }],
+    ['notif.bell',      { fr: 'Notifications',                      en: 'Notifications' }],
+    ['notif.bell.new',  { fr: 'Notifications — nouveautés à lire',  en: 'Notifications — unread items' }],
+    ['notif.title',     { fr: 'Notifications',                      en: 'Notifications' }],
+    ['notif.unread',    { fr: 'Non lue',                            en: 'Unread' }],
+    ['notif.link',      { fr: 'En savoir plus',                     en: 'Learn more' }],
+    ['notif.today',     { fr: "Aujourd'hui",                        en: 'Today' }],
+    ['notif.yesterday', { fr: 'Hier',                               en: 'Yesterday' }],
+    ['notif.daysAgo',   { fr: 'Il y a {n} jours',                   en: '{n} days ago' }],
+    ['common.close',    { fr: 'Fermer',                             en: 'Close' }],
   ]);
 
   function t(key, fallback) {
@@ -127,28 +131,25 @@
   }
 
   function normalize(row) {
+    const type = row.type === 'info' ? 'info' : 'evenement';
     return {
       id: String(row.id),
+      type: type,
+      // Ligne brute conservée : la pop-up des évènements la reprend telle quelle.
+      row: row,
       titre: row.titre,
       titre_en: row.titre_en,
       resume: row.resume,
       resume_en: row.resume_en,
-      texte: row.texte,
-      texte_en: row.texte_en,
-      icone: typeof row.icone === 'string' ? row.icone : 'info',
-      lien: row.lien,
-      lienLabel: row.lien_label,
-      lienLabel_en: row.lien_label_en,
-      epingle: row.epingle === true,
-      datePublication: row.date_publication,
+      texte: row.description,
+      texte_en: row.description_en,
+      icone: row.icone || (type === 'evenement' ? 'evenement' : 'info'),
+      lien: row.lien_inscription,
+      lienLabel: row.lien_inscription_label,
+      lienLabel_en: row.lien_inscription_label_en,
+      date: row.date,
+      notifDebut: row.notif_debut,
     };
-  }
-
-  function isFresh(notif, now) {
-    const published = Date.parse(notif.datePublication);
-    if (isNaN(published)) return false;
-    if (published > now.getTime()) return false;
-    return now.getTime() - published <= RETENTION_DAYS * MS_PER_DAY;
   }
 
   function fetchNotifications() {
@@ -157,22 +158,19 @@
     if (!base || !key) return Promise.resolve([]);
 
     const url = base.replace(/\/+$/, '')
-      + '/rest/v1/notifications'
-      + '?select=id,titre,titre_en,resume,resume_en,texte,texte_en,icone,lien,lien_label,lien_label_en,epingle,date_publication'
-      + '&visible=eq.true'
-      + '&order=epingle.desc,date_publication.desc'
+      + '/rest/v1/' + SOURCE
+      + '?select=*'
+      + '&order=notif_debut.desc'
       + '&limit=' + MAX_ITEMS;
 
     return fetch(url, {
       headers: { apikey: key, Authorization: 'Bearer ' + key, Accept: 'application/json' },
     })
       .then(res => (res.ok ? res.json() : []))
-      .then(rows => {
-        const now = new Date();
-        return (Array.isArray(rows) ? rows : []).map(normalize).filter(n => isFresh(n, now));
-      })
+      .then(rows => (Array.isArray(rows) ? rows : []).map(normalize))
       .catch(() => []);
-    // Base injoignable : pas de cloche du tout, plutôt qu'une erreur dans la barre.
+    // Vue absente ou base injoignable : pas de cloche du tout, plutôt qu'une
+    // erreur dans la barre.
   }
 
   // ── Champs traduits ──────────────────────────────────────────
@@ -191,24 +189,46 @@
     return fr == null ? '' : String(fr);
   }
 
+  // Le résumé de la cloche : la phrase saisie, sinon le début du texte.
+  function summaryOf(notif) {
+    const resume = localizedField(notif, 'resume').trim();
+    if (resume) return resume;
+    const texte = localizedField(notif, 'texte').trim().replace(/\s+/g, ' ');
+    if (texte.length <= RESUME_MAX) return texte;
+    const cut = texte.slice(0, RESUME_MAX);
+    const space = cut.lastIndexOf(' ');
+    return (space > 40 ? cut.slice(0, space) : cut) + '…';
+  }
+
   function localMidnight(date) {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
   }
 
-  function formatDate(iso) {
-    const published = Date.parse(iso);
+  function dateTag() {
+    return currentLocale() === 'en' ? 'en-GB' : 'fr-FR';
+  }
+
+  // Un évènement affiche sa date ; une info, son ancienneté.
+  function displayDate(notif) {
+    if (notif.type === 'evenement' && typeof notif.date === 'string') {
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(notif.date);
+      if (m) {
+        const d = new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10));
+        return d.toLocaleDateString(dateTag(), { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+    }
+    const published = Date.parse(notif.notifDebut);
     if (isNaN(published)) return '';
-    // De minuit à minuit : sinon une publication d'avant-hier 17h passerait
-    // pour « hier » dès qu'on la consulte le matin.
+    // De minuit à minuit : sinon une parution d'avant-hier 17h passerait pour
+    // « hier » dès qu'on la consulte le matin.
     const days = Math.round((localMidnight(new Date()) - localMidnight(new Date(published))) / MS_PER_DAY);
     if (days <= 0) return t('notif.today', "Aujourd'hui");
     if (days === 1) return t('notif.yesterday', 'Hier');
     if (days < 7) return t('notif.daysAgo', 'Il y a {n} jours').replace('{n}', String(days));
-    const tag = currentLocale() === 'en' ? 'en-GB' : 'fr-FR';
-    return new Date(published).toLocaleDateString(tag, { day: 'numeric', month: 'short', year: 'numeric' });
+    return new Date(published).toLocaleDateString(dateTag(), { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
-  // ── Pop-up « article » ───────────────────────────────────────
+  // ── Pop-up « article » (lignes de type info) ─────────────────
   function trapFocus(container, event) {
     if (event.key !== 'Tab') return;
     const focusables = container.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
@@ -253,7 +273,7 @@
 
     const date = document.createElement('p');
     date.className = 'notif-modal__date';
-    date.textContent = formatDate(notif.datePublication);
+    date.textContent = displayDate(notif);
 
     const titre = document.createElement('h2');
     titre.className = 'notif-modal__title';
@@ -262,16 +282,23 @@
 
     heading.append(date, titre);
     head.append(badge, heading);
+    modal.append(closeBtn, head);
 
-    const resume = document.createElement('p');
-    resume.className = 'notif-modal__resume';
-    resume.textContent = localizedField(notif, 'resume');
+    const resumeText = localizedField(notif, 'resume').trim();
+    if (resumeText) {
+      const resume = document.createElement('p');
+      resume.className = 'notif-modal__resume';
+      resume.textContent = resumeText;
+      modal.appendChild(resume);
+    }
 
-    const texte = document.createElement('p');
-    texte.className = 'notif-modal__text';
-    texte.textContent = localizedField(notif, 'texte');
-
-    modal.append(closeBtn, head, resume, texte);
+    const texteText = localizedField(notif, 'texte').trim();
+    if (texteText) {
+      const texte = document.createElement('p');
+      texte.className = 'notif-modal__text';
+      texte.textContent = texteText;
+      modal.appendChild(texte);
+    }
 
     if (typeof notif.lien === 'string' && /^https:\/\//i.test(notif.lien)) {
       const link = document.createElement('a');
@@ -327,6 +354,26 @@
     document.addEventListener('keydown', onKeydown);
   }
 
+  // Un évènement rouvre la pop-up que le visiteur connaît déjà (photo, lieu,
+  // billetterie). Si evenements.js n'est pas chargé, on retombe sur la pop-up
+  // sobre : le visiteur garde l'information, sans la photo.
+  function openNotification(notif, onOpened) {
+    const evenements = window.VillageEvenements;
+    const supabase = window.VillageSupabase;
+    const reusable = notif.type === 'evenement'
+      && evenements && typeof evenements.showEventPopup === 'function'
+      && supabase && typeof supabase.normalizeEvenement === 'function';
+
+    if (reusable) {
+      evenements.showEventPopup([supabase.normalizeEvenement(notif.row)], { respectDismissal: false });
+      // Cette pop-up ne prévient pas de sa fermeture : la notification est
+      // marquée lue dès l'ouverture, ce qui est bien ce qu'on veut dire.
+      if (typeof onOpened === 'function') onOpened();
+      return;
+    }
+    openArticle(notif, onOpened);
+  }
+
   // ── Cloche + panneau ─────────────────────────────────────────
   function mountPoint() {
     return document.querySelector('.site-nav .nav-right');
@@ -337,7 +384,7 @@
     if (!host || !notifications.length) return null;
 
     let read = readIds();
-    // Les notifications expirées sortent du stockage en même temps que de la base.
+    // Les notifications sorties de la fenêtre sortent aussi du stockage.
     const liveIds = notifications.map(n => n.id);
     const pruned = read.filter(id => liveIds.indexOf(id) !== -1);
     if (pruned.length !== read.length) {
@@ -415,11 +462,11 @@
 
       const resume = document.createElement('span');
       resume.className = 'notif-item__resume';
-      resume.textContent = localizedField(notif, 'resume');
+      resume.textContent = summaryOf(notif);
 
       const date = document.createElement('span');
       date.className = 'notif-item__date';
-      date.textContent = formatDate(notif.datePublication);
+      date.textContent = displayDate(notif);
 
       body.append(titre, resume, date);
       btn.append(icon, body);
@@ -433,7 +480,7 @@
 
       btn.addEventListener('click', () => {
         closePanel(false);
-        openArticle(notif, () => markRead(notif));
+        openNotification(notif, () => markRead(notif));
       });
 
       item.appendChild(btn);

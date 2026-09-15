@@ -14,6 +14,7 @@ scripts sont idempotents, on peut les relancer.
 | Script | Effet |
 |--------|-------|
 | [`2026-09-11_lien-inscription.sql`](../supabase/2026-09-11_lien-inscription.sql) | Ajoute `lien_inscription`, `lien_inscription_label`, `lien_inscription_label_en` |
+| [`2026-09-15_notifications.sql`](../supabase/2026-09-15_notifications.sql) | Ajoute `type`, `resume`, `resume_en`, `icone`, `notif_jours`, `notif_debut` et la vue `notifications_actives` |
 
 ## Au quotidien (sans toucher au code)
 
@@ -52,6 +53,22 @@ Aller dans Supabase → **Table Editor** → table `evenements`.
 | `lien_inscription_label`    |     | `Réserver un emplacement`                 |
 | `lien_inscription_label_en` |     | `Book a pitch`                            |
 | `visible`           | ✅          | coché = affiché, décoché = masqué         |
+| `type`              | ✅          | `evenement` (défaut) — voir ci-dessous    |
+| `resume`            |             | phrase affichée dans la cloche            |
+| `resume_en`         |             | version anglaise du résumé                |
+| `icone`             |             | icône dans la cloche (vide = calendrier)  |
+| `notif_jours`       |             | durée d'affichage dans la cloche, en jours |
+| `notif_debut`       | ✅          | `now()` par défaut                        |
+
+## La table héberge aussi les notifications
+
+Depuis la mise en place de la cloche, `evenements` accueille deux sortes de
+lignes. Une ligne `type = 'info'` (changement d'horaire, nouveauté du site…)
+n'a pas de date et n'apparaît **que** dans la cloche, jamais dans l'agenda ni
+sur l'accueil. Un évènement, lui, s'affiche aux deux endroits sans rien avoir
+à saisir de plus.
+
+Le mode d'emploi complet est dans [`NOTIFICATIONS.md`](NOTIFICATIONS.md).
 
 ## Ajouter un bouton d'inscription
 

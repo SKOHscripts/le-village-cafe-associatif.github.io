@@ -381,9 +381,14 @@
     return frag;
   }
 
-  function showEventPopup(events) {
+  // `options.respectDismissal` à false : on ouvre l'évènement même s'il a déjà
+  // été écarté dans cette session, et le refermer ne l'écarte pas. C'est ce
+  // qu'attend la cloche, où l'ouverture est un geste volontaire du visiteur,
+  // contrairement à la pop-up automatique de l'accueil.
+  function showEventPopup(events, options) {
     if (!events || !events.length) return;
-    const candidates = events.filter(e => !isDismissed(e));
+    const respectDismissal = !options || options.respectDismissal !== false;
+    const candidates = respectDismissal ? events.filter(e => !isDismissed(e)) : events.slice();
     if (!candidates.length) return;
 
     let currentIndex = 0;
@@ -483,7 +488,7 @@
       if (modal.classList.contains('is-closing')) return;
       modal.classList.add('is-closing');
       overlay.classList.add('is-closing');
-      markDismissed(candidates.at(currentIndex));
+      if (respectDismissal) markDismissed(candidates.at(currentIndex));
       const fallbackTimer = setTimeout(cleanup, 350);
       modal.addEventListener('animationend', () => {
         clearTimeout(fallbackTimer);
@@ -561,4 +566,11 @@
   } else {
     init();
   }
+
+  // La cloche (notifications.js) réutilise cette pop-up pour les lignes de
+  // type « évènement ». Le fichier est inerte sur les pages sans agenda :
+  // init() sort tout de suite faute de point de montage.
+  window.VillageEvenements = {
+    showEventPopup: showEventPopup,
+  };
 })();

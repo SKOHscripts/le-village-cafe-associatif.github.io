@@ -1,82 +1,98 @@
 # Gérer les notifications (la cloche de la barre haute)
 
-La cloche 🔔 en haut du site affiche des informations qui ne sont **pas des
-évènements** : mise à jour du site, changement d'horaire, message du CA…
-Elles sont lues **dynamiquement** depuis une base **Supabase**
-(table `notifications`), donc elles s'écrivent sans toucher au code.
+La cloche 🔔 en haut du site signale ce qu'il y a de neuf au Village. Elle ne
+lit pas une table à part : **tout vit dans la table `evenements`**, avec deux
+sortes de lignes.
 
-Une notification reste consultable **3 mois**, puis disparaît toute seule.
+| `type`      | Va dans l'agenda et sur l'accueil | Va dans la cloche |
+|-------------|:---------------------------------:|:-----------------:|
+| `evenement` | ✅                                | ✅                |
+| `info`      | ❌                                | ✅                |
 
-## Mettre la table en place (une seule fois)
+Autrement dit : **chaque évènement est déjà une notification**, sans rien
+saisir de plus. Les lignes `info` servent à tout le reste — changement
+d'horaire, nouveauté sur le site, message du CA.
+
+## Mettre les colonnes en place (une seule fois)
 
 Supabase → projet du Village → **SQL Editor**, coller le contenu de
 [`supabase/2026-09-15_notifications.sql`](../supabase/2026-09-15_notifications.sql),
-**Run**. Le script est idempotent, on peut le relancer sans risque.
+**Run**. Le script est idempotent, on peut le relancer.
 
-Tant que la table n'existe pas — ou s'il n'y a aucune notification en cours —
-la cloche ne s'affiche pas du tout. Rien ne casse.
+Il ajoute les colonnes ci-dessous à `evenements` et crée la vue
+`notifications_actives`, que le site interroge pour la cloche. Tant que ce
+script n'est pas passé, la cloche ne s'affiche pas et le reste du site
+fonctionne comme avant.
 
-## Au quotidien (sans toucher au code)
+> Les évènements déjà en base prennent comme date de parution le jour où vous
+> lancez le script : ils apparaissent donc tous dans la cloche ce jour-là.
 
-Aller dans Supabase → **Table Editor** → table `notifications`.
+## Publier une information (pas un évènement)
 
-- **Publier** : **Insert → Insert row**, remplir `titre`, `resume`, `texte`,
-  choisir une `icone`, laisser `visible` coché. C'est en ligne tout de suite.
-- **Programmer** : mettre une `date_publication` dans le futur, la
-  notification apparaîtra d'elle-même à cette date.
-- **Masquer** (sans supprimer) : décocher **`visible`**.
-- **Garder en tête de liste** : cocher **`epingle`**.
-- **Modifier** : double-cliquer sur une cellule.
+Supabase → **Table Editor** → table `evenements` → **Insert row** :
 
-## Les champs
+- `type` : **`info`**
+- `titre` (+ `titre_en`), `resume` (+ `resume_en`), `description` (+ `description_en`)
+- `icone` : `info`, `horaire`, `site`, `evenement` ou `alerte`
+- `notif_jours` : combien de jours elle reste dans la cloche
+- laisser `date` **vide** — c'est ce qui la tient hors de l'agenda
+- laisser `visible` coché
 
-| Champ              | Obligatoire | Exemple                                            |
-|--------------------|:-----------:|----------------------------------------------------|
-| `titre`            | ✅          | `Nouvel horaire le vendredi`                       |
-| `titre_en`         |             | `New Friday hours`                                 |
-| `resume`           | ✅          | `Le Village ferme à 22h les vendredis d'été.`      |
-| `resume_en`        |             | `Le Village now closes at 10pm on summer Fridays.` |
-| `texte`            | ✅          | Le texte complet affiché dans la pop-up            |
-| `texte_en`         |             | Sa traduction anglaise                             |
-| `icone`            | ✅          | `horaire` (voir la liste ci-dessous)               |
-| `lien`             |             | `https://www.helloasso.com/...` (bouton en bas)    |
-| `lien_label`       |             | `Voir la billetterie` — vide = « En savoir plus »  |
-| `lien_label_en`    |             | `See tickets` — vide = « Learn more »              |
-| `epingle`          |             | `false` par défaut                                 |
-| `visible`          | ✅          | `true` par défaut                                  |
-| `date_publication` | ✅          | `now()` par défaut                                 |
+## Combien de temps une notification reste-t-elle ?
+
+| Cas | Fin de la notification |
+|-----|------------------------|
+| `notif_jours` rempli | `notif_debut` + ce nombre de jours |
+| Évènement sans `notif_jours` | le lendemain de l'évènement, à minuit |
+| Info sans `notif_jours` | 30 jours après la parution |
+
+Un évènement disparaît donc tout seul de la cloche une fois passé, sans rien
+faire. Une info sur les horaires détaillés, elle, gagne à être laissée
+longtemps : mettez-lui `notif_jours` à 180 ou 365. À l'inverse, `notif_jours`
+sur un évènement permet de raccourcir ou de prolonger son passage dans la
+cloche.
+
+`notif_debut` vaut la date de création. La mettre **dans le futur** programme
+l'apparition de la notification.
+
+## Les colonnes ajoutées
+
+| Champ         | Pour qui    | Exemple                                        |
+|---------------|-------------|------------------------------------------------|
+| `type`        | tous        | `evenement` (défaut) ou `info`                 |
+| `resume`      | tous        | `Le Village ferme à 22h les vendredis d'été.`  |
+| `resume_en`   | tous        | `We now close at 10pm on summer Fridays.`      |
+| `icone`       | tous        | `horaire` — vide = calendrier pour un évènement |
+| `notif_jours` | tous        | `180`                                          |
+| `notif_debut` | tous        | `now()` par défaut                             |
+
+Le **texte complet** de la pop-up, c'est la colonne `description` que vous
+connaissez déjà ; le `resume` n'est que la phrase affichée dans la liste.
+Laissé vide, le site prend le début de la description. Pour une info, le champ
+`lien_inscription` (et ses libellés) sert de bouton « En savoir plus ».
 
 Sans traduction anglaise, le site affiche le texte français aux visiteurs
 anglophones : mieux vaut un texte compréhensible que rien du tout.
 
-Les retours à la ligne saisis dans `texte` sont conservés à l'affichage.
-
-### Icônes disponibles
-
-| Valeur      | Dessin           | Pour…                                  |
-|-------------|------------------|----------------------------------------|
-| `info`      | Cercle « i »     | Information générale (valeur par défaut)|
-| `horaire`   | Horloge          | Changement d'horaire, fermeture         |
-| `site`      | Écran            | Nouveauté sur le site                   |
-| `evenement` | Calendrier       | Renvoi vers un évènement                |
-| `alerte`    | Triangle         | Message important, urgent               |
-
-La base refuse toute autre valeur : ce sont les seuls dessins que le site sait
-afficher.
-
 ## Ce que voient les visiteurs
 
-- Une **pastille rouge** sur la cloche tant qu'il reste une notification qu'ils
-  n'ont pas ouverte. L'état « lu » est gardé **dans leur navigateur** (le site
-  public n'a pas de comptes) : il est donc propre à chaque appareil.
-- Au clic : un **panneau** sous la cloche, avec titre, résumé, date et icône.
-- Au clic sur une ligne : l'**article complet** en pop-up, le reste du site
-  flouté derrière.
+- Une **pastille rouge** sur la cloche tant qu'il reste quelque chose qu'ils
+  n'ont pas ouvert. L'état « lu » est gardé **dans leur navigateur** (le site
+  public n'a pas de comptes) : il est propre à chaque appareil.
+- Au clic : un **panneau** sous la cloche. Un évènement y affiche sa date, une
+  info son ancienneté.
+- Au clic sur un évènement : la **pop-up habituelle** de l'évènement, avec sa
+  photo, son lieu et son bouton de billetterie.
+- Au clic sur une info : une pop-up sobre — titre, résumé, texte complet — le
+  reste du site flouté derrière.
 
 ## Bon à savoir
 
-- La limite de 3 mois est appliquée **par la base** (policy RLS), pas par le
-  site : passé ce délai, la notification n'est plus servie du tout.
-- Au-delà de 30 notifications en cours, seules les 30 plus récentes
-  (épinglées d'abord) sont affichées.
-- Le `lien` doit commencer par `https://`, sinon la base le refuse.
+- La fenêtre d'affichage est appliquée par la **vue** `notifications_actives`,
+  pas par le site : une ligne hors fenêtre n'est pas servie du tout. Elle ne
+  pouvait pas l'être par une policy RLS, sinon l'agenda perdrait ses
+  évènements passés.
+- Une ligne `info` n'a pas de date, donc rien à craindre côté agenda ; le site
+  écarte de toute façon les `type = 'info'` de l'agenda et de l'accueil.
+- Au-delà de 30 notifications en cours, seules les 30 plus récemment parues
+  sont affichées.

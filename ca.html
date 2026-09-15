@@ -205,6 +205,8 @@
     const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   </script>
+  <script src="assets/js/supabase-client.js" defer></script>
+  <script src="assets/js/evenements.js" defer></script>
   <script src="assets/js/notifications.js" defer></script>
 </body>
 </html>
