@@ -330,3 +330,390 @@ body.has-event-modal { overflow:hidden; }
 .lb-overlay img { max-width:100%; max-height:90vh; border-radius:var(--r-md); box-shadow:0 8px 48px rgba(0,0,0,.6); object-fit:contain; }
 .lb-close { position:absolute; top:1rem; right:1.25rem; background:none; border:none; color:var(--white); font-size:2rem; line-height:1; cursor:pointer; opacity:.85; }
 .lb-close:hover, .lb-close:focus-visible { opacity:1; outline:none; }
+
+/* ─── NOTIFICATIONS (cloche de la barre haute) ───── */
+.notif {
+  position: relative;
+}
+
+.notif-bell {
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  color: var(--amber);
+  cursor: pointer;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  transition: background .2s, color .2s;
+  width: 40px;
+}
+
+.notif-bell:hover {
+  background: var(--amber-light);
+}
+
+.notif-bell:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.notif-bell__icon {
+  height: 21px;
+  width: 21px;
+}
+
+.notif-bell.is-ringing .notif-bell__icon {
+  animation: notifRing .7s ease-in-out;
+  transform-origin: top center;
+}
+
+/* Sur le hero sombre (barre non défilée), l'ambre de la charte manque de
+   contraste : on l'éclaircit, comme le sélecteur de langue. */
+.site-nav:not(.scrolled) .notif-bell {
+  color: #f0ae3c;
+}
+
+.site-nav:not(.scrolled) .notif-bell:hover {
+  background: rgba(255, 255, 255, .14);
+}
+
+.notif-dot {
+  background: #d64545;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(247, 245, 241, .9);
+  display: none;
+  height: 9px;
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  width: 9px;
+}
+
+.notif.has-unread .notif-dot {
+  animation: notifDotPulse 2.4s ease-in-out infinite;
+  display: block;
+}
+
+/* ── Panneau ancré sous la cloche ── */
+.notif-panel {
+  animation: notifPanelIn .22s ease-out both;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: calc(100% + .6rem);
+  width: min(380px, calc(100vw - 2rem));
+  z-index: 210;
+}
+
+.notif-panel[hidden] {
+  display: none;
+}
+
+.notif-panel__title {
+  background: var(--dark);
+  color: var(--amber);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  padding: .85rem 1.1rem;
+  text-transform: uppercase;
+}
+
+.notif-list {
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+}
+
+.notif-item {
+  align-items: flex-start;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  gap: .75rem;
+  padding: .9rem 1.1rem;
+  text-align: left;
+  transition: background .15s;
+  width: 100%;
+}
+
+.notif-item:hover,
+.notif-item:focus-visible {
+  background: var(--teal-light);
+  outline: none;
+}
+
+.notif-list li:last-child .notif-item {
+  border-bottom: none;
+}
+
+.notif-item.is-unread {
+  border-left: 3px solid var(--amber);
+  padding-left: calc(1.1rem - 3px);
+}
+
+.notif-item__icon {
+  align-items: center;
+  background: var(--teal-light);
+  border-radius: 50%;
+  color: var(--teal);
+  display: flex;
+  flex-shrink: 0;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.notif-item__icon svg {
+  height: 17px;
+  width: 17px;
+}
+
+.notif-item.is-unread .notif-item__icon {
+  background: var(--amber-light);
+  color: var(--amber);
+}
+
+.notif-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  min-width: 0;
+}
+
+.notif-item__title {
+  color: var(--dark);
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.notif-item__resume {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--muted);
+  display: -webkit-box;
+  font-size: .82rem;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.notif-item__date {
+  color: var(--muted);
+  font-size: .72rem;
+  letter-spacing: .03em;
+  margin-top: .2rem;
+}
+
+.notif-item__dot {
+  background: #d64545;
+  border-radius: 50%;
+  flex-shrink: 0;
+  height: 8px;
+  margin-top: .45rem;
+  width: 8px;
+}
+
+/* ── Pop-up « article » ── */
+.notif-modal-overlay {
+  align-items: center;
+  animation: notifOverlayIn .25s ease-out both;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(26, 43, 44, .6);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 1rem;
+  position: fixed;
+  z-index: 1000;
+}
+
+.notif-modal-overlay.is-closing {
+  animation: notifOverlayOut .2s ease-in forwards;
+}
+
+.notif-modal {
+  animation: notifPopIn .4s cubic-bezier(.16, 1, .3, 1) both;
+  background: var(--white);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg);
+  max-height: 90vh;
+  max-width: 480px;
+  overflow: auto;
+  padding-bottom: 1.5rem;
+  position: relative;
+  width: 100%;
+}
+
+.notif-modal.is-closing {
+  animation: notifPopOut .2s ease-in forwards;
+}
+
+.notif-modal__head {
+  align-items: center;
+  background: var(--dark);
+  display: flex;
+  gap: 1rem;
+  padding: 1.6rem 3.5rem 1.4rem 1.5rem;
+}
+
+.notif-modal__icon {
+  align-items: center;
+  background: rgba(201, 122, 10, .18);
+  border-radius: 50%;
+  color: #f0ae3c;
+  display: flex;
+  flex-shrink: 0;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.notif-modal__icon svg {
+  height: 22px;
+  width: 22px;
+}
+
+.notif-modal__date {
+  color: var(--amber);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.notif-modal__title {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 4.5vw, 1.7rem);
+  line-height: 1.15;
+  margin-top: .25rem;
+}
+
+.notif-modal__resume {
+  color: var(--teal);
+  font-size: .95rem;
+  font-weight: 600;
+  line-height: 1.6;
+  margin: 1.25rem 1.5rem 0;
+}
+
+.notif-modal__text {
+  color: var(--text);
+  font-size: .925rem;
+  line-height: 1.75;
+  margin: .75rem 1.5rem 0;
+  white-space: pre-line;
+}
+
+.notif-modal__cta {
+  margin: 1.25rem 1.5rem 0;
+}
+
+.notif-modal__close {
+  align-items: center;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, .75);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  height: 34px;
+  justify-content: center;
+  position: absolute;
+  right: .75rem;
+  top: .75rem;
+  transition: background .2s, color .2s, transform .2s;
+  width: 34px;
+  z-index: 1;
+}
+
+.notif-modal__close:hover {
+  background: rgba(255, 255, 255, .22);
+  color: var(--white);
+  transform: rotate(90deg);
+}
+
+.notif-modal__close:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+body.has-notif-modal {
+  overflow: hidden;
+}
+
+@keyframes notifRing {
+  0% { transform: rotate(0); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-12deg); }
+  45% { transform: rotate(9deg); }
+  60% { transform: rotate(-7deg); }
+  75% { transform: rotate(4deg); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes notifDotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+
+@keyframes notifPanelIn {
+  from { opacity: 0; transform: translateY(-8px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes notifOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes notifOverlayOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes notifPopIn {
+  from { opacity: 0; transform: translateY(20px) scale(.93); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes notifPopOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(10px) scale(.96); }
+}
+
+/* Sous 560px le panneau ancré devient une feuille pleine largeur. */
+@media (max-width: 560px) {
+  .notif-panel {
+    left: var(--pad);
+    position: fixed;
+    right: var(--pad);
+    top: calc(70px + .5rem);
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notif-bell.is-ringing .notif-bell__icon,
+  .notif.has-unread .notif-dot,
+  .notif-panel,
+  .notif-modal,
+  .notif-modal-overlay,
+  .notif-modal.is-closing,
+  .notif-modal-overlay.is-closing {
+    animation: none;
+  }
+}
