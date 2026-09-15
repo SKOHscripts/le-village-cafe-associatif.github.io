@@ -56,6 +56,7 @@
       : undefined;
     return {
       id: row.id,
+      type: row.type === 'info' ? 'info' : 'evenement',
       titre: row.titre,
       titre_en: row.titre_en,
       date: row.date,
@@ -71,6 +72,10 @@
       lienInscription: row.lien_inscription,
       lienInscriptionLabel: row.lien_inscription_label,
       lienInscriptionLabel_en: row.lien_inscription_label_en,
+      resume: row.resume,
+      resume_en: row.resume_en,
+      icone: row.icone,
+      notifDebut: row.notif_debut,
       photos: photoPath ? [photoPath] : [],
       photo_alt: row.photo_alt,
       liens: liens,
@@ -79,6 +84,12 @@
 
   // Charge les évènements depuis Supabase. Lance une erreur en cas d'échec ;
   // c'est aux appelants d'afficher un message adapté à l'utilisateur.
+  //
+  // La table héberge aussi les informations de la cloche (type = 'info') :
+  // elles n'ont rien à faire dans l'agenda, on les écarte ici. Le tri se fait
+  // côté client car ces lignes-là n'ont pas de date. Le filtre est volontaire-
+  // ment en JavaScript et non dans la requête : le site continue de fonctionner
+  // tant que la colonne `type` n'a pas été ajoutée en base.
   async function fetchEvenements() {
     const sb = getClient();
     if (!sb) throw new Error('client Supabase indisponible');
@@ -88,11 +99,14 @@
       .eq('visible', true)
       .order('date', { ascending: true });
     if (error) throw error;
-    return (data || []).map(normalize);
+    return (data || []).map(normalize).filter(evt => evt.type !== 'info');
   }
 
   window.VillageSupabase = {
     getClient: getClient,
     fetchEvenements: fetchEvenements,
+    // Exposé pour la cloche, qui lit la vue `notifications_actives` en REST et
+    // doit présenter ses lignes d'évènement à la pop-up de evenements.js.
+    normalizeEvenement: normalize,
   };
 })();
