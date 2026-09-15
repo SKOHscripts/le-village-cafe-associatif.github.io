@@ -446,10 +446,17 @@ body.has-event-modal { overflow:hidden; }
   width: 100%;
 }
 
-.notif-item:hover,
+.notif-item:hover {
+  background: var(--teal-light);
+}
+
+/* Au clavier, un fond seul se remarque mal : on garde l'anneau ambre du
+   reste du site, tracé vers l'intérieur pour ne pas être rogné par le
+   panneau. */
 .notif-item:focus-visible {
   background: var(--teal-light);
-  outline: none;
+  outline: 2px solid var(--amber);
+  outline-offset: -2px;
 }
 
 .notif-list li:last-child .notif-item {
