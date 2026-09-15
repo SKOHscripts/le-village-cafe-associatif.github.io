@@ -111,7 +111,7 @@
       const raw = localStorage.getItem(READ_KEY);
       const parsed = raw ? JSON.parse(raw) : [];
       return Array.isArray(parsed) ? parsed.filter(v => typeof v === 'string') : [];
-    } catch (_) {
+    } catch {
       return [];
     }
   }
@@ -119,7 +119,7 @@
   function persistReadIds(ids) {
     try {
       localStorage.setItem(READ_KEY, JSON.stringify(ids));
-    } catch (_) {
+    } catch {
       // Navigation privée ou stockage refusé : tout reste « non lu », sans casse.
     }
   }
