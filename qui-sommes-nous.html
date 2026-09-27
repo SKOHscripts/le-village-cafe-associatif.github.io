@@ -430,7 +430,7 @@ graph TD
       }
 
       let cachedEquipe = null;
-      fetch('data/equipe.json')
+      fetch('data/equipe.json', { cache: 'no-cache' }) // revalide : l'équipe change sans attendre le cache de 10 min
         .then(r => r.ok ? r.json() : Promise.reject())
         .then(data => { cachedEquipe = data; renderEquipe(data); })
         .catch(() => {});
