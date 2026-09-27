@@ -77,7 +77,7 @@
     .p-qr-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 62%; opacity:.26; mix-blend-mode:multiply; pointer-events:none; }
     .p-qr-center { position:relative; display:flex; flex-direction:column; align-items:center; gap:1.6cqw; }
     .p-qr-card { background:var(--white); border:.9cqw solid var(--teal); border-radius:3.6cqw; padding:2.4cqw; box-shadow:0 2cqw 5cqw rgba(0,95,102,.22); }
-    .p-qr-card svg { display:block; width:23cqw; height:23cqw; color:var(--dark); shape-rendering:crispEdges; }
+    .p-qr-card svg { display:block; width:21cqw; height:21cqw; color:var(--dark); shape-rendering:crispEdges; }
     .p-url { display:inline-flex; align-items:center; gap:1.3cqw; background:var(--amber); color:var(--white); border-radius:100px; padding:1.1cqw 3.4cqw; font-size:3.3cqw; font-weight:800; box-shadow:0 1cqw 3cqw rgba(201,122,10,.3); }
     .p-url svg { width:3.2cqw; height:3.2cqw; }
 
@@ -108,6 +108,15 @@
     .p-ico svg { width:2.8cqw; height:2.8cqw; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
     .p-item h3 { font-family:var(--font-display); font-weight:400; font-size:3cqw; line-height:1.1; color:var(--dark); }
     .p-item p { font-size:1.95cqw; line-height:1.35; color:var(--muted); margin-top:.3cqw; }
+    .p-sec-en { color:var(--muted); letter-spacing:.08em; }
+    /* Carte mise en avant : l'agenda */
+    .p-feature { grid-column:1 / -1; background:var(--teal); border-color:var(--teal); padding:1.3cqw 2.4cqw; }
+    .p-feature .p-ico { background:var(--white); color:var(--teal); width:6.2cqw; height:6.2cqw; }
+    .p-feature .p-ico svg { width:3.4cqw; height:3.4cqw; }
+    .p-feature h3 { color:var(--white); font-size:3.5cqw; }
+    .p-feature p { color:rgba(255,255,255,.8); font-size:2cqw; }
+    .p-feature > div { flex:1; }
+    .p-feature-arrow { font-family:var(--font-hand); font-weight:700; font-size:6cqw; line-height:1; color:var(--amber-bright); }
     .p-soon { position:absolute; top:-1.3cqw; right:2cqw; background:var(--amber); color:var(--white); font-size:1.5cqw; font-weight:800; letter-spacing:.1em; text-transform:uppercase; border-radius:100px; padding:.35cqw 1.5cqw; }
 
     /* Pied : horaires + adresse + réseaux */
@@ -132,7 +141,7 @@
     .fmt-post .p-sub { font-size:2.6cqw; margin-top:1.4cqw; }
     .fmt-post .p-qr-zone { margin-top:1.2cqw; padding:1.4cqw 6cqw; }
     .fmt-post .p-qr-card { padding:2.2cqw; border-width:.8cqw; }
-    .fmt-post .p-qr-card svg { width:20cqw; height:20cqw; }
+    .fmt-post .p-qr-card svg { width:19cqw; height:19cqw; }
     .fmt-post .p-url { font-size:2.9cqw; }
     .fmt-post .p-arrow-l { top:calc(50% - 12cqw); left:6cqw; }
     .fmt-post .p-arrow-r { right:6cqw; }
@@ -142,9 +151,12 @@
     .fmt-post .p-hour-time { font-size:3.3cqw; }
 
     /* Grille compacte en 4 colonnes (post et story) */
-    .fmt-post .p-grid, .fmt-story .p-grid { grid-template-columns:repeat(4,1fr); gap:1.4cqw; }
+    .fmt-post .p-grid, .fmt-story .p-grid { grid-template-columns:repeat(3,1fr); gap:1.4cqw; }
     .fmt-post .p-item, .fmt-story .p-item { flex-direction:column; text-align:center; gap:.7cqw; padding:1.4cqw 1cqw 1.3cqw; }
+    .fmt-post .p-feature, .fmt-story .p-feature { flex-direction:row; text-align:left; gap:2cqw; padding:1.5cqw 2.4cqw; }
     .fmt-post .p-item h3 { font-size:2.5cqw; }
+    .fmt-post .p-feature h3 { font-size:3cqw; }
+    .fmt-post .p-feature p { font-size:1.8cqw; }
     .fmt-post .p-item p { font-size:1.6cqw; }
 
     /* ─── FORMAT STORY 9:16 : zones de sécurité Instagram ─ */
@@ -153,7 +165,7 @@
     .fmt-story .p-title { font-size:8.4cqw; }
     .fmt-story .p-new { font-size:2.1cqw; }
     .fmt-story .p-sub { font-size:3.3cqw; margin-top:2.4cqw; }
-    .fmt-story .p-qr-card svg { width:30cqw; height:30cqw; }
+    .fmt-story .p-qr-card svg { width:26cqw; height:26cqw; }
     .fmt-story .p-qr-card { padding:3.4cqw; border-width:1cqw; }
     .fmt-story .p-url { font-size:4.2cqw; }
     .fmt-story .p-arrow span { font-size:5.8cqw; }
@@ -164,10 +176,12 @@
     .fmt-story .p-sec-label { font-size:2.5cqw; margin-top:3cqw; }
     .fmt-story .p-item h3 { font-size:2.9cqw; }
     .fmt-story .p-item p { font-size:1.9cqw; }
+    .fmt-story .p-feature h3 { font-size:3.6cqw; }
+    .fmt-story .p-feature p { font-size:2.3cqw; }
     .fmt-story .p-ico { width:5.6cqw; height:5.6cqw; }
     .fmt-story .p-ico svg { width:3.1cqw; height:3.1cqw; }
     .fmt-story .p-story-tip { display:block; font-family:var(--font-hand); font-weight:700; font-size:4.6cqw; line-height:1; color:var(--teal); text-align:center; }
-    .fmt-story .p-foot { padding:3.2cqw 6cqw 9cqw; }
+    .fmt-story .p-foot { padding:3cqw 6cqw 8cqw; }
     .fmt-story .p-social { display:none; }
 
     /* ─── IMPRESSION : affiche A4 pleine page ─────────── */
@@ -207,7 +221,7 @@
             <h1 class="p-title">Le Village a <em>son&nbsp;site</em>&nbsp;!</h1>
           </div>
         </header>
-        <p class="p-sub">Agenda, adhésion, carte… <strong>tout le café dans votre poche.</strong></p>
+        <p class="p-sub">Événements, adhésion, carte… <strong>tout le café dans votre poche.</strong></p>
 
         <section class="p-qr-zone" aria-label="QR code vers le site">
           <img class="p-qr-bg" src="assets/images/aquarelle.jpeg" alt="">
@@ -237,11 +251,12 @@
           </div>
         </section>
 
-        <p class="p-sec-label">Ce que vous trouverez sur le site</p>
+        <p class="p-sec-label">Ce que vous trouverez sur le site <span class="p-sec-en">· FR &amp; EN</span></p>
         <div class="p-grid">
-          <div class="p-item">
+          <div class="p-item p-feature">
             <span class="p-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></span>
-            <div><h3>Agenda</h3><p>Ateliers, soirées, animations</p></div>
+            <div><h3>Agenda&nbsp;: tous les prochains événements</h3><p>Ateliers, soirées, animations : dates, horaires et inscriptions.</p></div>
+            <span class="p-feature-arrow" aria-hidden="true">→</span>
           </div>
           <div class="p-item">
             <span class="p-ico a"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.3l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>
@@ -267,10 +282,6 @@
             <span class="p-soon">Bientôt</span>
             <span class="p-ico"><svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span>
             <div><h3>Faire un don</h3><p>Soutenir le café, en ligne</p></div>
-          </div>
-          <div class="p-item">
-            <span class="p-ico a"><svg viewBox="0 0 24 24"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg></span>
-            <div><h3>FR · EN</h3><p>Le site existe aussi en anglais</p></div>
           </div>
         </div>
 
