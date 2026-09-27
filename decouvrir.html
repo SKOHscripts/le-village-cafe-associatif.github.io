@@ -121,36 +121,28 @@
     .p-feature-arrow { font-family:var(--font-hand); font-weight:700; font-size:6cqw; line-height:1; color:var(--amber-bright); }
     .p-soon { position:absolute; top:-1.3cqw; right:2cqw; background:var(--amber); color:var(--white); font-size:1.5cqw; font-weight:800; letter-spacing:.1em; text-transform:uppercase; border-radius:100px; padding:.35cqw 1.5cqw; }
 
-    /* Pied : horaires + adresse + réseaux */
+    /* Pied : adresse + réseaux (les horaires restent sur le site, une seule source) */
     .p-foot { background:var(--teal); color:var(--white); padding:2.8cqw 6cqw; }
-    .p-addr-line { display:none; font-size:2.1cqw; font-weight:600; color:rgba(255,255,255,.85); margin-top:1.6cqw; }
-    .fmt-post .p-addr-line, .fmt-story .p-addr-line { display:block; }
-    .fmt-story .p-addr-line { font-size:2.6cqw; }
-    .p-hours { display:grid; grid-template-columns:repeat(3,1fr); gap:2cqw; }
-    .p-hour { border-left:.5cqw solid var(--amber-bright); padding-left:2cqw; }
-    .p-hour-day { font-size:1.9cqw; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--amber-bright); }
-    .p-hour-time { font-family:var(--font-display); font-size:3.8cqw; line-height:1.1; }
-    .p-hour-note { font-size:1.75cqw; color:rgba(255,255,255,.65); }
-    .p-social { display:flex; flex-wrap:wrap; justify-content:space-between; gap:1cqw 3cqw; margin-top:2cqw; padding-top:1.8cqw; border-top:.2cqw solid rgba(255,255,255,.18); font-size:2cqw; font-weight:600; color:rgba(255,255,255,.88); }
-    .p-social span { display:inline-flex; align-items:center; gap:1.1cqw; }
-    .p-social svg { width:2.6cqw; height:2.6cqw; }
-    .p-story-tip { display:none; }
+    .p-social { display:grid; grid-template-columns:1fr auto; gap:1.4cqw 3cqw; font-size:2.2cqw; font-weight:600; color:rgba(255,255,255,.9); }
+    .p-social span { display:inline-flex; align-items:center; gap:1.2cqw; white-space:nowrap; }
+    .p-social svg { width:2.8cqw; height:2.8cqw; flex-shrink:0; }
+    /* « ou lien en bio » : formats réseaux sociaux uniquement */
+    .p-bio-tip { display:none; font-family:var(--font-hand); font-weight:700; line-height:1; color:var(--teal); text-align:center; }
 
     /* ─── FORMAT POST 4:5 : plus compact ──────────────── */
-    .fmt-post .p-inner { padding:3.6cqw 6cqw 2.6cqw; }
+    .fmt-post .p-inner { padding:3.2cqw 6cqw 2.4cqw; }
     .fmt-post .p-logo { width:22cqw; }
-    .fmt-post .p-title { font-size:7cqw; }
+    .fmt-post .p-title { font-size:6.6cqw; }
     .fmt-post .p-sub { font-size:2.6cqw; margin-top:1.4cqw; }
     .fmt-post .p-qr-zone { margin-top:1.2cqw; padding:1.4cqw 6cqw; }
     .fmt-post .p-qr-card { padding:2.2cqw; border-width:.8cqw; }
-    .fmt-post .p-qr-card svg { width:19cqw; height:19cqw; }
+    .fmt-post .p-qr-card svg { width:17cqw; height:17cqw; }
     .fmt-post .p-url { font-size:2.9cqw; }
     .fmt-post .p-arrow-l { top:calc(50% - 12cqw); left:6cqw; }
     .fmt-post .p-arrow-r { right:6cqw; }
-    .fmt-post .p-sec-label { margin:1.8cqw 0 1.6cqw; }
+    .fmt-post .p-sec-label { margin:1.4cqw 0 1.4cqw; }
     .fmt-post .p-foot { padding:2.2cqw 6cqw; }
-    .fmt-post .p-social { display:none; }
-    .fmt-post .p-hour-time { font-size:3.3cqw; }
+    .fmt-post .p-bio-tip { display:block; font-size:3.4cqw; }
 
     /* Grille compacte en 4 colonnes (post et story) */
     .fmt-post .p-grid, .fmt-story .p-grid { grid-template-columns:repeat(3,1fr); gap:1.4cqw; }
@@ -162,29 +154,30 @@
     .fmt-post .p-item p { font-size:1.6cqw; }
 
     /* ─── FORMAT STORY 9:16 : zones de sécurité Instagram ─ */
-    .fmt-story .p-inner { padding:10cqw 6cqw 3cqw; }
+    .fmt-story .p-inner { padding:9cqw 6cqw 3cqw; }
     .fmt-story .p-logo { width:30cqw; }
     .fmt-story .p-title { font-size:8.4cqw; }
     .fmt-story .p-new { font-size:2.1cqw; }
     .fmt-story .p-sub { font-size:3.3cqw; margin-top:2.4cqw; }
-    .fmt-story .p-qr-card svg { width:26cqw; height:26cqw; }
-    .fmt-story .p-qr-card { padding:3.4cqw; border-width:1cqw; }
+    .fmt-story .p-qr-card svg { width:24cqw; height:24cqw; }
+    .fmt-story .p-qr-card { padding:3cqw; border-width:1cqw; }
     .fmt-story .p-url { font-size:4.2cqw; }
     .fmt-story .p-arrow span { font-size:5.8cqw; }
     .fmt-story .p-arrow small { font-size:3.8cqw; }
     .fmt-story .p-arrow-l { top:calc(50% - 27cqw); left:3cqw; }
     .fmt-story .p-arrow-r { top:calc(50% - 10cqw); right:3cqw; }
     .fmt-story .p-arrow svg { width:14cqw; }
-    .fmt-story .p-sec-label { font-size:2.5cqw; margin-top:3cqw; }
+    .fmt-story .p-sec-label { font-size:2.5cqw; margin-top:2.4cqw; }
     .fmt-story .p-item h3 { font-size:2.9cqw; }
     .fmt-story .p-item p { font-size:1.9cqw; }
     .fmt-story .p-feature h3 { font-size:3.6cqw; }
     .fmt-story .p-feature p { font-size:2.3cqw; }
     .fmt-story .p-ico { width:5.6cqw; height:5.6cqw; }
     .fmt-story .p-ico svg { width:3.1cqw; height:3.1cqw; }
-    .fmt-story .p-story-tip { display:block; font-family:var(--font-hand); font-weight:700; font-size:4.6cqw; line-height:1; color:var(--teal); text-align:center; }
-    .fmt-story .p-foot { padding:3cqw 6cqw 8cqw; }
-    .fmt-story .p-social { display:none; }
+    .fmt-story .p-bio-tip { display:block; font-size:4.6cqw; }
+    .fmt-story .p-foot { padding:3.4cqw 6cqw 9cqw; }
+    .fmt-story .p-social { font-size:2.8cqw; gap:2cqw 3cqw; }
+    .fmt-story .p-social svg { width:3.4cqw; height:3.4cqw; }
 
     /* ─── IMPRESSION : affiche A4 pleine page ─────────── */
     @page { size:A4 portrait; margin:0; }
@@ -243,7 +236,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               cafe-levillage.org
             </span>
-            <p class="p-story-tip">ou lien en bio&nbsp;!</p>
+            <p class="p-bio-tip">ou lien en bio&nbsp;!</p>
           </div>
 
           <div class="p-arrow p-arrow-r" aria-hidden="true">
@@ -290,12 +283,6 @@
       </div>
 
       <footer class="p-foot">
-        <div class="p-hours">
-          <div class="p-hour"><p class="p-hour-day">Mardi</p><p class="p-hour-time">14h30 – 19h</p><p class="p-hour-note">Ateliers, goûter, jeux</p></div>
-          <div class="p-hour"><p class="p-hour-day">Vendredi</p><p class="p-hour-time">16h – 21h</p><p class="p-hour-note">22h en heures d'été</p></div>
-          <div class="p-hour"><p class="p-hour-day">Dimanche</p><p class="p-hour-time">10h – 13h</p><p class="p-hour-note">Pendant le marché</p></div>
-        </div>
-        <p class="p-addr-line">8 rue du Chalumeaux · Lyon 8e · ouvert à tous</p>
         <div class="p-social">
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>8 rue du Chalumeaux, Lyon 8e</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01"/></svg>@cafe_associatif_le_village</span>
