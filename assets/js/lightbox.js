@@ -14,6 +14,13 @@
   let closeBtn = null;
   let lastTrigger = null;
 
+  // Libellés dans la langue affichée (village-i18n.js).
+  function isEn() { return !!(window.i18n && window.i18n.locale === 'en'); }
+  function txt(fr, en) { return isEn() ? en : fr; }
+  function zoomLabel(alt) {
+    return alt ? txt('Agrandir : ', 'Enlarge: ') + alt : txt('Agrandir l’image', 'Enlarge image');
+  }
+
   function ensureOverlay() {
     if (overlay) return;
 
@@ -21,12 +28,12 @@
     overlay.className = 'lb-overlay';
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-label', 'Vue agrandie');
+    overlay.setAttribute('aria-label', txt('Vue agrandie', 'Enlarged view'));
 
     closeBtn = document.createElement('button');
     closeBtn.type = 'button';
     closeBtn.className = 'lb-close';
-    closeBtn.setAttribute('aria-label', 'Fermer la vue agrandie');
+    closeBtn.setAttribute('aria-label', txt('Fermer la vue agrandie', 'Close enlarged view'));
     closeBtn.innerHTML = '&times;';
 
     overlayImg = document.createElement('img');
@@ -51,7 +58,8 @@
     ensureOverlay();
     const alt = img.getAttribute('alt') || '';
     overlayImg.src = img.currentSrc || img.src;
-    overlayImg.alt = alt ? 'Vue agrandie : ' + alt : 'Vue agrandie';
+    closeBtn.setAttribute('aria-label', txt('Fermer la vue agrandie', 'Close enlarged view'));
+    overlayImg.alt = alt ? txt('Vue agrandie : ', 'Enlarged view: ') + alt : txt('Vue agrandie', 'Enlarged view');
     overlay.setAttribute('aria-label', overlayImg.alt);
     overlay.classList.add('is-open');
     document.body.style.overflow = 'hidden';
@@ -77,8 +85,9 @@
     if (!img.hasAttribute('tabindex')) img.setAttribute('tabindex', '0');
     if (!img.hasAttribute('role')) img.setAttribute('role', 'button');
     if (!img.hasAttribute('aria-label')) {
-      const alt = img.getAttribute('alt') || '';
-      img.setAttribute('aria-label', alt ? 'Agrandir : ' + alt : 'Agrandir l’image');
+      // Libellé calculé ici : on le recalcule au changement de langue.
+      img.dataset.zoomAutoLabel = '1';
+      img.setAttribute('aria-label', zoomLabel(img.getAttribute('alt') || ''));
     }
     img.addEventListener('click', function () { open(img); });
     img.addEventListener('keydown', function (e) {
@@ -111,6 +120,12 @@
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
+
+    document.addEventListener('i18n:changed', function () {
+      document.querySelectorAll('img[data-zoom-auto-label="1"]').forEach(function (img) {
+        img.setAttribute('aria-label', zoomLabel(img.getAttribute('alt') || ''));
+      });
+    });
   }
 
   if (document.readyState === 'loading') {

@@ -54,11 +54,21 @@ function showAuthModal(levelRequired, onSuccess) {
   const existing = document.getElementById('auth-modal');
   if (existing) existing.remove();
 
+  // Libellés FR/EN : data-fr/data-en suivent aussi un changement de langue
+  // fait pendant que la modale est ouverte (village-i18n.js).
+  const en = !!(window.i18n && window.i18n.locale === 'en');
   const labels = {
-    1: { titre: 'Espace bénévoles', icon: '🤝', desc: 'Entrez le code bénévoles' },
-    2: { titre: 'Espace CA',        icon: '⚙️', desc: 'Entrez le code CA' },
+    1: { icon: '🤝', titre: ['Espace bénévoles', 'Volunteers area'], desc: ['Entrez le code bénévoles', 'Enter the volunteers code'] },
+    2: { icon: '⚙️', titre: ['Espace CA', 'Board area'],            desc: ['Entrez le code CA', 'Enter the board code'] },
   };
   const info = labels[levelRequired] || labels[1];
+  const TXT = {
+    cancel: ['Annuler', 'Cancel'],
+    submit: ['Accéder →', 'Enter →'],
+    error:  ['Code incorrect. Réessayez.', 'Wrong code. Please try again.'],
+  };
+  const pick = pair => pair[en ? 1 : 0];
+  const i18nAttrs = pair => `data-fr="${pair[0]}" data-en="${pair[1]}"`;
 
   const modal = document.createElement('div');
   modal.id = 'auth-modal';
@@ -69,8 +79,8 @@ function showAuthModal(levelRequired, onSuccess) {
     <div class="auth-overlay" id="auth-overlay"></div>
     <div class="auth-box">
       <div class="auth-icon">${info.icon}</div>
-      <h2 class="auth-title" id="auth-modal-title">${info.titre}</h2>
-      <p class="auth-desc">${info.desc}</p>
+      <h2 class="auth-title" id="auth-modal-title" ${i18nAttrs(info.titre)}>${pick(info.titre)}</h2>
+      <p class="auth-desc" ${i18nAttrs(info.desc)}>${pick(info.desc)}</p>
       <input
         class="auth-input"
         type="password"
@@ -81,8 +91,8 @@ function showAuthModal(levelRequired, onSuccess) {
       >
       <p class="auth-error" id="auth-error" role="alert" aria-live="assertive"></p>
       <div class="auth-actions">
-        <button class="auth-btn-cancel" id="auth-cancel">Annuler</button>
-        <button class="auth-btn-submit" id="auth-submit">Accéder →</button>
+        <button class="auth-btn-cancel" id="auth-cancel" ${i18nAttrs(TXT.cancel)}>${pick(TXT.cancel)}</button>
+        <button class="auth-btn-submit" id="auth-submit" ${i18nAttrs(TXT.submit)}>${pick(TXT.submit)}</button>
       </div>
     </div>
   `;
@@ -242,11 +252,11 @@ function showAuthModal(levelRequired, onSuccess) {
 
     // Échec
     input.classList.add('error');
-    errorEl.textContent = 'Code incorrect. Réessayez.';
+    errorEl.textContent = pick(TXT.error);
     input.value = '';
     input.focus();
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Accéder →';
+    submitBtn.textContent = pick(TXT.submit);
   }
 
   submitBtn.addEventListener('click', tryLogin);
