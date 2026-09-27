@@ -49,6 +49,7 @@
     .org-wrapper { background:var(--white); border-radius:var(--r-xl); overflow:hidden; cursor:zoom-in; box-shadow:var(--shadow-lg); transition:opacity .2s; padding:1.5rem 1rem; }
     .org-wrapper:hover { opacity:.92; }
     .org-wrapper .mermaid { display:flex; justify-content:center; }
+    .org-wrapper .mermaid:not([data-processed]) { visibility:hidden; min-height:420px; }
     .org-hint { display:flex; align-items:center; gap:.4rem; font-size:.78rem; color:rgba(255,255,255,.4); padding:.6rem 0 .2rem; }
     .org-caption { font-size:.78rem; color:rgba(255,255,255,.3); margin-top:.4rem; line-height:1.5; }
 
@@ -238,6 +239,8 @@ graph TD
         Brigitte2["Brigitte"]
         Colette3["Colette"]
         Florent2["Florent"]
+        Corentin2["Corentin"]
+        Andrès2["Andrès"]
     end
     subgraph ben["Pôle gestion bénévoles"]
         Corinne2["Corinne"]
@@ -326,12 +329,16 @@ graph TD
         el.textContent = src;
         mermaid.run({ nodes: [el] });
       }
-      mermaid.initialize({ startOnLoad: false });
+      // Libellés en texte SVG (htmlLabels: false) : Mermaid les mesure alors
+      // exactement, alors que ses libellés HTML sortaient rognés d'une lettre.
+      mermaid.initialize({ startOnLoad: false, htmlLabels: false, flowchart: { htmlLabels: false, padding: 24 } });
       // Premier rendu une fois la page et les polices chargées : Mermaid
       // mesure les libellés, une police encore absente les tronquerait.
       function start() {
-        var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-        ready.then(function () {
+        var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+        // Au plus 2 s d'attente : si une police tarde, on dessine quand même.
+        var timeout = new Promise(function (resolve) { setTimeout(resolve, 2000); });
+        Promise.race([fonts, timeout]).then(function () {
           draw();
           document.addEventListener('i18n:changed', draw);
         });

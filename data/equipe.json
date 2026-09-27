@@ -9,11 +9,11 @@
     "title.geek":      { "fr": "Service informatique", "en": "IT services"         }
   },
   "membres": [
-    { "nom": "Andrès",  "poles": ["pole.animation"],                              "photo": "" },
+    { "nom": "Andrès",  "poles": ["pole.animation", "pole.comm"],                 "photo": "" },
     { "nom": "Béatrice","poles": ["pole.animation", "pole.daily"],                "photo": "" },
     { "nom": "Brigitte","poles": ["pole.admin", "pole.comm"],                     "photo": "" },
     { "nom": "Colette", "poles": ["pole.animation", "pole.daily", "pole.comm"],   "photo": "" },
-    { "nom": "Corentin","poles": ["pole.finance"], "titre": "title.geek",         "photo": "" },
+    { "nom": "Corentin","poles": ["pole.finance", "pole.comm"], "titre": "title.geek", "photo": "" },
     { "nom": "Corinne", "poles": ["pole.daily", "pole.volunteers"],               "photo": "" },
     { "nom": "Florent", "poles": ["pole.comm", "pole.daily"],                     "photo": "" },
     { "nom": "Lionel",  "poles": ["pole.finance"],                                "photo": "" },
