@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Découvrir le site — Le Village · Café Associatif Lyon 8e</title>
+  <meta name="description" content="Affiche de communication du Café Associatif Le Village : un QR code et tout ce que vous trouverez sur le site.">
+  <!-- Support de communication (affiche / réseaux sociaux) : pas destiné aux moteurs de recherche -->
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
+
+
+  <style>
+    /* ─── POLICES auto-hébergées (sous-ensemble latin, licence OFL) :
+       même origine que la page, donc intégrées correctement à l'export PNG ── */
+    @font-face { font-family:'DM Serif Display'; font-style:normal; font-weight:400; font-display:block; src:url(assets/fonts/dm-serif-display.woff2) format('woff2'); }
+    @font-face { font-family:'DM Serif Display'; font-style:italic; font-weight:400; font-display:block; src:url(assets/fonts/dm-serif-display-italic.woff2) format('woff2'); }
+    @font-face { font-family:'Caveat'; font-style:normal; font-weight:400 700; font-display:block; src:url(assets/fonts/caveat.woff2) format('woff2'); }
+    @font-face { font-family:'Plus Jakarta Sans'; font-style:normal; font-weight:200 800; font-display:block; src:url(assets/fonts/plus-jakarta-sans.woff2) format('woff2'); }
+
+    /* ─── TOKENS (repris de village-shared.css) ───────── */
+    :root {
+      --teal:#005F66; --teal-mid:#007A82; --teal-light:#E6F3F4;
+      --amber:#C97A0A; --amber-bright:#F5A30F; --amber-light:#FEF3DC;
+      --cream:#F7F5F1; --cream-dark:#EDE9E3;
+      --dark:#1A2B2C; --text:#2E3D3E; --muted:#6C7D7E; --border:#D8D1CC; --white:#FFFFFF;
+      --font-display:'DM Serif Display', Georgia, serif;
+      --font-body:'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-hand:'Caveat', cursive;
+    }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html, body { background:#E4DED6; color:var(--text); font-family:var(--font-body); -webkit-font-smoothing:antialiased; }
+
+    /* ─── BARRE D'OUTILS (hors affiche) ───────────────── */
+    .toolbar { position:sticky; top:0; z-index:10; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:.5rem 1rem; padding:.75rem 16px; background:var(--dark); color:var(--white); }
+    .toolbar-title { font-size:.8rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+    .toolbar-group { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .tb-btn { font:600 .82rem var(--font-body); color:var(--white); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); border-radius:100px; padding:.4rem .95rem; cursor:pointer; transition:background .15s; }
+    .tb-btn:hover { background:rgba(255,255,255,.16); }
+    .tb-btn[aria-pressed="true"] { background:var(--amber); border-color:var(--amber); }
+    .tb-btn.primary { background:var(--teal-mid); border-color:var(--teal-mid); }
+    .tb-hint { width:100%; text-align:center; font-size:.75rem; color:rgba(255,255,255,.45); }
+
+    .stage { display:flex; justify-content:center; padding:24px 16px 48px; }
+
+    /* ─── AFFICHE ─────────────────────────────────────── */
+    /* Toutes les tailles internes sont en cqw (1cqw = 1 % de la largeur de l'affiche) :
+       la composition est identique quelle que soit l'échelle d'affichage ou d'export. */
+    .poster {
+      --ratio: 1.4142;
+      width:min(calc(100vw - 32px), calc((100svh - 140px) / var(--ratio)), 820px);
+      aspect-ratio:1 / var(--ratio);
+      container-type:inline-size;
+      position:relative; overflow:hidden;
+      background:var(--cream);
+      box-shadow:0 20px 60px rgba(0,0,0,.18);
+      display:flex; flex-direction:column;
+      -webkit-print-color-adjust:exact; print-color-adjust:exact;
+    }
+    .poster.fmt-post  { --ratio: 1.25; }
+    .poster.fmt-story { --ratio: 1.7778; }
+
+    .p-inner { flex:1; display:flex; flex-direction:column; padding:4cqw 6cqw 3cqw; min-height:0; }
+
+    /* En-tête : logo + titre */
+    .p-head { display:flex; align-items:center; gap:4cqw; }
+    .p-logo { width:26cqw; height:auto; display:block; margin-left:-1.5cqw; flex-shrink:0; }
+    .p-new { display:inline-flex; align-items:center; gap:1cqw; background:var(--teal); color:var(--white); border-radius:100px; padding:.8cqw 2.2cqw; font-size:1.8cqw; font-weight:800; letter-spacing:.12em; text-transform:uppercase; white-space:nowrap; }
+    .p-new-dot { width:1.2cqw; height:1.2cqw; border-radius:50%; background:var(--amber-bright); }
+    .p-title { font-family:var(--font-display); font-weight:400; color:var(--dark); font-size:7cqw; line-height:.98; margin-top:1.2cqw; letter-spacing:-.01em; }
+    .p-title em { color:var(--amber); font-style:italic; }
+    .p-sub { font-size:2.75cqw; line-height:1.4; color:var(--text); margin-top:2cqw; }
+    .p-sub strong { color:var(--teal); font-weight:700; }
+
+    /* Zone QR : absorbe l'espace libre, QR toujours centré */
+    .p-qr-zone { position:relative; flex:1; display:flex; align-items:center; justify-content:center; margin:2cqw -6cqw 0; padding:1.8cqw 6cqw; }
+    .p-qr-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 62%; opacity:.26; mix-blend-mode:multiply; pointer-events:none; }
+    .p-qr-center { position:relative; display:flex; flex-direction:column; align-items:center; gap:1.6cqw; }
+    .p-qr-card { background:var(--white); border:.9cqw solid var(--teal); border-radius:3.6cqw; padding:2.4cqw; box-shadow:0 2cqw 5cqw rgba(0,95,102,.22); }
+    .p-qr-card svg { display:block; width:23cqw; height:23cqw; color:var(--dark); shape-rendering:crispEdges; }
+    .p-url { display:inline-flex; align-items:center; gap:1.3cqw; background:var(--amber); color:var(--white); border-radius:100px; padding:1.1cqw 3.4cqw; font-size:3.3cqw; font-weight:800; box-shadow:0 1cqw 3cqw rgba(201,122,10,.3); }
+    .p-url svg { width:3.2cqw; height:3.2cqw; }
+
+    /* Flèches manuscrites */
+    .p-arrow { position:absolute; display:flex; flex-direction:column; color:var(--teal); font-family:var(--font-hand); font-weight:700; line-height:.95; }
+    .p-arrow span { font-size:5.4cqw; }
+    .p-arrow small { font-size:3.3cqw; color:var(--amber); font-weight:600; }
+    .p-arrow svg { width:16cqw; height:auto; overflow:visible; }
+    .p-arrow-l { left:5cqw; top:calc(50% - 15cqw); align-items:flex-start; transform:rotate(-6deg); }
+    .p-arrow-l svg { margin:1cqw 0 0 6cqw; }
+    .p-arrow-r { right:5cqw; top:calc(50% - 2cqw); align-items:flex-end; text-align:right; transform:rotate(5deg); }
+    .p-arrow-r svg { margin:0 5cqw 1cqw 0; order:-1; }
+    @media screen and (prefers-reduced-motion:no-preference) {
+      .p-arrow-l svg { animation:nudge-r 1.6s ease-in-out infinite; }
+      .p-arrow-r svg { animation:nudge-l 1.6s ease-in-out infinite; }
+      .exporting .p-arrow svg { animation:none; }
+    }
+    @keyframes nudge-r { 50% { transform:translate(1.2cqw, .6cqw); } }
+    @keyframes nudge-l { 50% { transform:translate(-1.2cqw, -.6cqw); } }
+
+    /* Contenu du site */
+    .p-sec-label { display:flex; align-items:center; gap:2cqw; font-size:2cqw; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); margin:2cqw 0 1.6cqw; }
+    .p-sec-label::after { content:''; flex:1; height:.25cqw; background:var(--border); border-radius:1cqw; }
+    .p-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.1cqw 1.5cqw; }
+    .p-item { position:relative; display:flex; align-items:center; gap:2cqw; background:var(--white); border:.25cqw solid var(--border); border-radius:2.2cqw; padding:1.1cqw 2cqw; }
+    .p-ico { flex-shrink:0; width:5cqw; height:5cqw; border-radius:50%; background:var(--teal-light); color:var(--teal); display:flex; align-items:center; justify-content:center; }
+    .p-ico.a { background:var(--amber-light); color:var(--amber); }
+    .p-ico svg { width:2.8cqw; height:2.8cqw; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .p-item h3 { font-family:var(--font-display); font-weight:400; font-size:3cqw; line-height:1.1; color:var(--dark); }
+    .p-item p { font-size:1.95cqw; line-height:1.35; color:var(--muted); margin-top:.3cqw; }
+    .p-soon { position:absolute; top:-1.3cqw; right:2cqw; background:var(--amber); color:var(--white); font-size:1.5cqw; font-weight:800; letter-spacing:.1em; text-transform:uppercase; border-radius:100px; padding:.35cqw 1.5cqw; }
+
+    /* Pied : horaires + adresse + réseaux */
+    .p-foot { background:var(--teal); color:var(--white); padding:2.8cqw 6cqw; }
+    .p-addr-line { display:none; font-size:2.1cqw; font-weight:600; color:rgba(255,255,255,.85); margin-top:1.6cqw; }
+    .fmt-post .p-addr-line, .fmt-story .p-addr-line { display:block; }
+    .fmt-story .p-addr-line { font-size:2.6cqw; }
+    .p-hours { display:grid; grid-template-columns:repeat(3,1fr); gap:2cqw; }
+    .p-hour { border-left:.5cqw solid var(--amber-bright); padding-left:2cqw; }
+    .p-hour-day { font-size:1.9cqw; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--amber-bright); }
+    .p-hour-time { font-family:var(--font-display); font-size:3.8cqw; line-height:1.1; }
+    .p-hour-note { font-size:1.75cqw; color:rgba(255,255,255,.65); }
+    .p-social { display:flex; flex-wrap:wrap; justify-content:space-between; gap:1cqw 3cqw; margin-top:2cqw; padding-top:1.8cqw; border-top:.2cqw solid rgba(255,255,255,.18); font-size:2cqw; font-weight:600; color:rgba(255,255,255,.88); }
+    .p-social span { display:inline-flex; align-items:center; gap:1.1cqw; }
+    .p-social svg { width:2.6cqw; height:2.6cqw; }
+    .p-story-tip { display:none; }
+
+    /* ─── FORMAT POST 4:5 : plus compact ──────────────── */
+    .fmt-post .p-inner { padding:3.6cqw 6cqw 2.6cqw; }
+    .fmt-post .p-logo { width:22cqw; }
+    .fmt-post .p-title { font-size:7cqw; }
+    .fmt-post .p-sub { font-size:2.6cqw; margin-top:1.4cqw; }
+    .fmt-post .p-qr-zone { margin-top:1.2cqw; padding:1.4cqw 6cqw; }
+    .fmt-post .p-qr-card { padding:2.2cqw; border-width:.8cqw; }
+    .fmt-post .p-qr-card svg { width:20cqw; height:20cqw; }
+    .fmt-post .p-url { font-size:2.9cqw; }
+    .fmt-post .p-arrow-l { top:calc(50% - 12cqw); left:6cqw; }
+    .fmt-post .p-arrow-r { right:6cqw; }
+    .fmt-post .p-sec-label { margin:1.8cqw 0 1.6cqw; }
+    .fmt-post .p-foot { padding:2.2cqw 6cqw; }
+    .fmt-post .p-social { display:none; }
+    .fmt-post .p-hour-time { font-size:3.3cqw; }
+
+    /* Grille compacte en 4 colonnes (post et story) */
+    .fmt-post .p-grid, .fmt-story .p-grid { grid-template-columns:repeat(4,1fr); gap:1.4cqw; }
+    .fmt-post .p-item, .fmt-story .p-item { flex-direction:column; text-align:center; gap:.7cqw; padding:1.4cqw 1cqw 1.3cqw; }
+    .fmt-post .p-item h3 { font-size:2.5cqw; }
+    .fmt-post .p-item p { font-size:1.6cqw; }
+
+    /* ─── FORMAT STORY 9:16 : zones de sécurité Instagram ─ */
+    .fmt-story .p-inner { padding:10cqw 6cqw 3cqw; }
+    .fmt-story .p-logo { width:30cqw; }
+    .fmt-story .p-title { font-size:8.4cqw; }
+    .fmt-story .p-new { font-size:2.1cqw; }
+    .fmt-story .p-sub { font-size:3.3cqw; margin-top:2.4cqw; }
+    .fmt-story .p-qr-card svg { width:30cqw; height:30cqw; }
+    .fmt-story .p-qr-card { padding:3.4cqw; border-width:1cqw; }
+    .fmt-story .p-url { font-size:4.2cqw; }
+    .fmt-story .p-arrow span { font-size:5.8cqw; }
+    .fmt-story .p-arrow small { font-size:3.8cqw; }
+    .fmt-story .p-arrow-l { top:calc(50% - 27cqw); left:3cqw; }
+    .fmt-story .p-arrow-r { top:calc(50% - 10cqw); right:3cqw; }
+    .fmt-story .p-arrow svg { width:14cqw; }
+    .fmt-story .p-sec-label { font-size:2.5cqw; margin-top:3cqw; }
+    .fmt-story .p-item h3 { font-size:2.9cqw; }
+    .fmt-story .p-item p { font-size:1.9cqw; }
+    .fmt-story .p-ico { width:5.6cqw; height:5.6cqw; }
+    .fmt-story .p-ico svg { width:3.1cqw; height:3.1cqw; }
+    .fmt-story .p-story-tip { display:block; font-family:var(--font-hand); font-weight:700; font-size:4.6cqw; line-height:1; color:var(--teal); text-align:center; }
+    .fmt-story .p-foot { padding:3.2cqw 6cqw 9cqw; }
+    .fmt-story .p-social { display:none; }
+
+    /* ─── IMPRESSION : affiche A4 pleine page ─────────── */
+    @page { size:A4 portrait; margin:0; }
+    @media print {
+      html, body { background:var(--white); }
+      .toolbar { display:none; }
+      .stage { padding:0; }
+      .poster { width:210mm; box-shadow:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar" role="toolbar" aria-label="Choix du format">
+    <span class="toolbar-title">Le Village · support de com'</span>
+    <div class="toolbar-group" id="fmt-group">
+      <button class="tb-btn" data-fmt="a4" aria-pressed="true">Affiche A4</button>
+      <button class="tb-btn" data-fmt="post" aria-pressed="false">Post 4:5</button>
+      <button class="tb-btn" data-fmt="story" aria-pressed="false">Story 9:16</button>
+    </div>
+    <div class="toolbar-group">
+      <button class="tb-btn primary" id="btn-png">Télécharger en PNG</button>
+      <button class="tb-btn" id="btn-print">Imprimer / PDF (A4)</button>
+    </div>
+    <p class="tb-hint" id="tb-hint"></p>
+  </div>
+
+  <main class="stage">
+    <article class="poster fmt-a4" id="poster" aria-label="Affiche : découvrez le site du Village">
+      <div class="p-inner">
+
+        <header class="p-head">
+          <img class="p-logo" src="assets/images/logo-detoure-orange.png" alt="Café associatif Le Village — Grand Trou · Moulin à Vent · Petite Guille">
+          <div>
+            <span class="p-new"><span class="p-new-dot"></span>Nouveau&nbsp;: notre site</span>
+            <h1 class="p-title">Le Village a <em>son&nbsp;site</em>&nbsp;!</h1>
+          </div>
+        </header>
+        <p class="p-sub">Agenda, adhésion, carte… <strong>tout le café dans votre poche.</strong></p>
+
+        <section class="p-qr-zone" aria-label="QR code vers le site">
+          <img class="p-qr-bg" src="assets/images/aquarelle.jpeg" alt="">
+
+          <div class="p-arrow p-arrow-l" aria-hidden="true">
+            <span>Scannez-moi&nbsp;!</span>
+            <small>avec l'appareil photo</small>
+            <svg viewBox="0 0 20 12" fill="none" stroke="#C97A0A" stroke-width=".75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1 C 5 1, 9 3, 12 7 S 17 10, 19 10"/><path d="M15.5 7.6 L 19 10 L 15.2 11.4"/></svg>
+          </div>
+
+          <div class="p-qr-center">
+            <div class="p-qr-card">
+              <!-- QR code → https://cafe-levillage.org/?utm_source=qr (fichier : assets/images/qr-site.svg) -->
+              <svg role="img" aria-label="QR code vers cafe-levillage.org" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 33"><path stroke="currentColor" d="M0 0.5h7m1 0h4m1 0h1m1 0h1m1 0h5m1 0h1m2 0h7m-33 1h1m5 0h1m2 0h2m5 0h2m2 0h1m5 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m2 0h2m2 0h6m3 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m4 0h4m5 0h1m1 0h3m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m3 0h2m4 0h1m4 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m1 0h2m1 0h2m1 0h2m4 0h3m1 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-24 1h1m3 0h1m2 0h1m4 0h1m1 0h2m-24 1h7m1 0h1m2 0h2m1 0h1m1 0h2m3 0h1m1 0h1m2 0h2m3 0h1m-33 1h1m7 0h2m1 0h2m3 0h1m1 0h4m1 0h2m1 0h2m1 0h2m1 0h1m-33 1h1m1 0h1m2 0h2m4 0h1m6 0h1m1 0h3m2 0h2m1 0h1m1 0h2m-32 1h2m1 0h1m1 0h1m4 0h4m1 0h2m4 0h2m2 0h1m2 0h3m1 0h1m-32 1h1m1 0h1m1 0h2m1 0h1m3 0h4m2 0h1m6 0h1m1 0h3m-30 1h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h2m2 0h4m1 0h1m3 0h4m-33 1h2m3 0h2m1 0h2m1 0h1m1 0h5m1 0h1m1 0h2m2 0h3m1 0h1m1 0h1m-32 1h2m1 0h1m5 0h1m1 0h1m1 0h1m1 0h2m1 0h5m2 0h2m3 0h1m-31 1h2m1 0h1m1 0h3m1 0h1m1 0h2m5 0h2m2 0h1m1 0h2m1 0h2m3 0h1m-33 1h6m4 0h2m1 0h4m2 0h2m1 0h2m2 0h2m1 0h4m-32 1h1m2 0h4m4 0h3m1 0h1m1 0h1m2 0h2m1 0h5m1 0h2m-30 1h2m1 0h1m4 0h1m1 0h3m5 0h4m1 0h8m-32 1h1m2 0h3m2 0h4m5 0h2m2 0h1m2 0h1m2 0h2m1 0h2m-33 1h1m3 0h2m2 0h1m2 0h4m1 0h1m4 0h3m1 0h2m2 0h1m2 0h1m-33 1h1m1 0h1m2 0h2m4 0h4m2 0h1m4 0h1m6 0h1m1 0h1m-32 1h1m2 0h1m3 0h3m2 0h1m5 0h1m2 0h1m1 0h1m1 0h2m3 0h2m-32 1h1m1 0h1m3 0h1m3 0h1m2 0h3m6 0h8m2 0h1m-25 1h1m1 0h2m1 0h1m1 0h2m2 0h3m2 0h1m3 0h1m1 0h1m1 0h1m-33 1h7m1 0h2m1 0h1m1 0h2m1 0h1m4 0h1m1 0h2m1 0h1m1 0h1m1 0h2m-32 1h1m5 0h1m1 0h1m1 0h1m1 0h1m4 0h1m2 0h5m3 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h3m3 0h1m1 0h2m2 0h1m1 0h6m1 0h2m-33 1h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1m4 0h4m2 0h2m2 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m1 0h2m3 0h4m2 0h1m2 0h1m1 0h2m1 0h1m-30 1h1m5 0h1m1 0h2m1 0h2m3 0h1m1 0h2m1 0h2m5 0h3m-31 1h7m7 0h3m1 0h1m3 0h6m1 0h1m1 0h1"/></svg>
+            </div>
+            <span class="p-url">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              cafe-levillage.org
+            </span>
+            <p class="p-story-tip">ou lien en bio&nbsp;!</p>
+          </div>
+
+          <div class="p-arrow p-arrow-r" aria-hidden="true">
+            <svg viewBox="0 0 20 12" fill="none" stroke="#C97A0A" stroke-width=".75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 11 C 15 11, 11 9, 8 5 S 3 2, 1 2"/><path d="M4.5 0.5 L 1 2 L 4.2 4.4"/></svg>
+            <span>C'est par ici&nbsp;!</span>
+            <small>ou tapez l'adresse</small>
+          </div>
+        </section>
+
+        <p class="p-sec-label">Ce que vous trouverez sur le site</p>
+        <div class="p-grid">
+          <div class="p-item">
+            <span class="p-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></span>
+            <div><h3>Agenda</h3><p>Ateliers, soirées, animations</p></div>
+          </div>
+          <div class="p-item">
+            <span class="p-ico a"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.3l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></span>
+            <div><h3>Adhésion</h3><p>5&nbsp;€/an, en ligne ou sur place</p></div>
+          </div>
+          <div class="p-item">
+            <span class="p-ico"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></span>
+            <div><h3>La Carte</h3><p>Boissons, en-cas &amp; prix</p></div>
+          </div>
+          <div class="p-item">
+            <span class="p-ico a"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></span>
+            <div><h3>Qui sommes‑nous</h3><p>Histoire, valeurs, règlement</p></div>
+          </div>
+          <div class="p-item">
+            <span class="p-ico"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span>
+            <div><h3>Boîte à idées</h3><p>Proposez vos envies &amp; projets</p></div>
+          </div>
+          <div class="p-item">
+            <span class="p-ico a"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div><h3>Contact</h3><p>Adresse, plan, email, réseaux</p></div>
+          </div>
+          <div class="p-item">
+            <span class="p-soon">Bientôt</span>
+            <span class="p-ico"><svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span>
+            <div><h3>Faire un don</h3><p>Soutenir le café, en ligne</p></div>
+          </div>
+          <div class="p-item">
+            <span class="p-ico a"><svg viewBox="0 0 24 24"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg></span>
+            <div><h3>FR · EN</h3><p>Le site existe aussi en anglais</p></div>
+          </div>
+        </div>
+
+      </div>
+
+      <footer class="p-foot">
+        <div class="p-hours">
+          <div class="p-hour"><p class="p-hour-day">Mardi</p><p class="p-hour-time">14h30 – 19h</p><p class="p-hour-note">Ateliers, goûter, jeux</p></div>
+          <div class="p-hour"><p class="p-hour-day">Vendredi</p><p class="p-hour-time">16h – 21h</p><p class="p-hour-note">22h en heures d'été</p></div>
+          <div class="p-hour"><p class="p-hour-day">Dimanche</p><p class="p-hour-time">10h – 13h</p><p class="p-hour-note">Pendant le marché</p></div>
+        </div>
+        <p class="p-addr-line">8 rue du Chalumeaux · Lyon 8e · ouvert à tous</p>
+        <div class="p-social">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>8 rue du Chalumeaux, Lyon 8e</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4zM17.5 6.5h.01"/></svg>@cafe_associatif_le_village</span>
+          <span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Café Associatif Le Village</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>contact@cafe-levillage.org</span>
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.13/dist/html-to-image.js"></script>
+  <script>
+    (function () {
+      var poster = document.getElementById('poster');
+      var hint = document.getElementById('tb-hint');
+      var buttons = document.querySelectorAll('#fmt-group .tb-btn');
+      // Largeur de sortie du PNG, en pixels (A4 à 300 dpi, formats Instagram/Facebook)
+      var FORMATS = {
+        a4:    { width: 2480, hint: "Affiche A4 : imprimez-la (ou enregistrez en PDF) pour l'entrée du café." },
+        post:  { width: 1080, hint: 'Post Instagram / Facebook 1080 × 1350 px.' },
+        story: { width: 1080, hint: 'Story Instagram / Facebook 1080 × 1920 px : ajoutez un sticker « lien » vers le site.' }
+      };
+      var current = 'a4';
+
+      function setFormat(fmt) {
+        if (!FORMATS[fmt]) return;
+        current = fmt;
+        poster.classList.remove('fmt-a4', 'fmt-post', 'fmt-story');
+        poster.classList.add('fmt-' + fmt);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.fmt === fmt ? 'true' : 'false'); });
+        hint.textContent = FORMATS[fmt].hint;
+        try { history.replaceState(null, '', '#' + fmt); } catch (e) {}
+      }
+
+      buttons.forEach(function (b) { b.addEventListener('click', function () { setFormat(b.dataset.fmt); }); });
+      setFormat((location.hash || '').slice(1) || 'a4');
+      window.addEventListener('hashchange', function () { setFormat(location.hash.slice(1)); });
+
+      document.getElementById('btn-print').addEventListener('click', function () {
+        setFormat('a4');
+        window.print();
+      });
+
+      document.getElementById('btn-png').addEventListener('click', function () {
+        var btn = this;
+        if (!window.htmlToImage) { alert("L'export n'a pas pu se charger. Faites une capture d'écran de l'affiche."); return; }
+        btn.disabled = true;
+        btn.textContent = 'Export en cours…';
+        poster.classList.add('exporting');
+        var ratio = FORMATS[current].width / poster.offsetWidth;
+        document.fonts.ready
+          .then(function () { return window.htmlToImage.toPng(poster, { pixelRatio: ratio, cacheBust: true }); })
+          .then(function (dataUrl) {
+            var a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = 'le-village-site-' + current + '.png';
+            a.click();
+          })
+          .catch(function () { alert("L'export a échoué. Faites une capture d'écran de l'affiche."); })
+          .then(function () {
+            poster.classList.remove('exporting');
+            btn.disabled = false;
+            btn.textContent = 'Télécharger en PNG';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
