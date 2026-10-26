@@ -15,6 +15,7 @@ scripts sont idempotents, on peut les relancer.
 |--------|-------|
 | [`2026-09-11_lien-inscription.sql`](../supabase/2026-09-11_lien-inscription.sql) | Ajoute `lien_inscription`, `lien_inscription_label`, `lien_inscription_label_en` |
 | [`2026-09-15_notifications.sql`](../supabase/2026-09-15_notifications.sql) | Ajoute `type`, `resume`, `resume_en`, `icone`, `notif_jours`, `notif_debut` et la vue `notifications_actives` |
+| [`2026-10-26_novembre-mercredi.sql`](../supabase/2026-10-26_novembre-mercredi.sql) | Notification « mardi → mercredi » (90 jours) et évènements de novembre 2026 |
 
 ## Au quotidien (sans toucher au code)
 
