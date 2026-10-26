@@ -38,6 +38,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Codacy Analysis CLI 4.0.0 embarque un client Docker en API 1.39, que le
+      # démon Docker des runners refuse désormais (minimum 1.40) : sans cette
+      # étape, chaque outil plante et le SARIF sort vide.
+      - name: Accept older Docker API clients
+        run: |
+          sudo mkdir -p /etc/systemd/system/docker.service.d
+          printf '[Service]\nEnvironment=DOCKER_MIN_API_VERSION=1.24\n' | sudo tee /etc/systemd/system/docker.service.d/min-api.conf
+          sudo systemctl daemon-reload
+          sudo systemctl restart docker
+
       # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@d840f886c4bd4edc059706d09c6a1586111c540b
